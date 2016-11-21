@@ -1,0 +1,20 @@
+<html>
+<body>
+<script type="application/javascript">
+    function fill(a) {
+        for (var k in a) {
+            $('[name="' + k + '"]').val(a[k]);
+        }
+    }
+
+    array_example = {"God": "Jesus", "Holy": "Spirit"};
+
+    fill(array_example);
+</script>
+<form>
+    <input name="God">
+    <input name="Holy">
+</form>
+
+</body>
+</html>

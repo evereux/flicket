@@ -1,0 +1,113 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ title }}</h1>
+
+    <form class="form-horizontal" action="" method="post" name="user_edit">
+        {{ form.hidden_tag() }}
+
+        <div class="col-sm-3">
+        </div>
+
+
+        <div class="col-sm-6 text-center">
+
+            <p>
+                You can't edit your user name / login id: <span class="amber_span">{{ g.user.username }}</span>.
+            </p>
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Username</label>
+                <div class="col-sm-9">
+                    {{ form.username(class="form-control", readonly=True) }}
+                </div>
+            </div>
+            {% if form.username.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Name</label>
+                <div class="col-sm-9">
+                    {{ form.name(class="form-control") }}
+                </div>
+            </div>
+            {% if form.name.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.name.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-9">
+                    {{ form.email(class="form-control") }}
+                </div>
+            </div>
+            {% if form.email.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.email.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    {{ form.password(class="form-control", placeholder="password") }}
+                </div>
+            </div>
+            {% if form.password.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.password.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="alert alert-warning">
+                Enter details below only if you want to change your password.
+            </p>
+
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">New Password</label>
+                <div class="col-sm-9">
+                    {{ form.new_password(class="form-control", placeholder="new password") }}
+                </div>
+            </div>
+            {% if form.new_password.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.new_password.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Repeat Password</label>
+                <div class="col-sm-9">
+                    {{ form.confirm(class="form-control", placeholder="repeat password") }}
+                </div>
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="edit user"/>
+
+        </div>
+
+
+        <div class="col-sm-3">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

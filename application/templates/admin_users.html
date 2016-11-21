@@ -1,0 +1,30 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Administration</h1>
+    {% include 'admin_menu.html' %}
+    <h2>{{ title }}</h2>
+    <p>
+        Click on username to edit.
+    </p>
+    <table class="table table-striped">
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Delete User</th>
+        </tr>
+        {% for u in users %}
+        <tr>
+            <td><a href="{{ url_for('admin_edit_user', id=u.id) }}">{{
+                u.username }}</a></td>
+            <td>{{ u.name }}</td>
+            <td>{{ u.email }}</td>
+            <td><a href="{{ url_for('admin_delete_user', id=u.id) }}">delete
+                {{u.username }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

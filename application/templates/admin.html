@@ -1,0 +1,21 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Administration</h1>
+    {% include 'admin_menu.html' %}
+    <h2>{{ title }}</h2>
+    <p>
+        Body text
+    </p>
+    {% if g.user.is_admin %}
+    <p>
+        You are admin
+    </p>
+    {% else %}
+    <p>
+        You are not admin
+    </p>
+    {% endif %}
+</div>
+{% endblock %}

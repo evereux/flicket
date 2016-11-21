@@ -1,0 +1,79 @@
+<p>
+   Ticket contents supports markdown syntax. Please refer to </span><a href="http://commonmark.org/help/">md help</a>.
+</p>
+<form action=""
+      class="form-horizontal"
+      enctype="multipart/form-data"
+      method="post"
+      name="create_ticket">
+    {{ form.hidden_tag() }}
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Ticket Title</label>
+        <div class="col-sm-9">
+            {{ form.title(class="form-control") }}
+        </div>
+    </div>
+    {% if form.title.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.title.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Content</label>
+        <div class="col-sm-9">
+            {{ form.content(class="form-control") }}
+        </div>
+    </div>
+    {% if form.content.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.content.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Priority Level</label>
+        <div class="col-sm-3">
+            {{ form.priority(class="form-control") }}
+        </div>
+        <label class="col-sm-3 control-label">Category</label>
+        <div class="col-sm-3">
+            {{ form.category(class="form-control") }}
+        </div>
+    </div>
+
+    {% if form.priority.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.priority.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    {% if form.category.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.category.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <div class="form-group">
+        <label class="col-sm-3 control-label">Add Documents</label>
+        <div class="col-sm-3">
+            <input type="file" name="file[]" multiple>
+        </div>
+        <div class="col-sm-6 text-right">
+            <input class="btn btn-primary" type="submit" value="submit ticket"/>
+        </div>
+    </div>
+
+</form>

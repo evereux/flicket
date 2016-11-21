@@ -1,0 +1,144 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+    <div class="container">
+
+
+        <h1>{{ title }}</h1>
+
+        <h2 class="flicket-title">#{{ ticket.id_zfill }} - {{ ticket.title }}</h2>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h3><label class="small">status</label> {{ ticket.current_status.status }}</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3><label class="small">priority</label> {{ ticket.ticket_priority.priority }}</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3><label class="small">assigned</label>
+                    {% if ticket.assigned.username %}{{ ticket.assigned.name }}{% else %}ticket not
+                        claimed{% endif %}</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h3><label class="small">department</label> {{ ticket.category.department.department }}</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3><label class="small">category</label> {{ ticket.category.category }}</h3>
+            </div>
+            <div class="col-sm-4">
+                <h3>
+                    {% if g.user.is_admin %}
+                        <a class="btn btn-danger"
+                           href="{{ url_for('delete_ticket', ticket_id = ticket.id) }}">delete</a>
+                    {% endif %}
+                    <a class="btn btn-default" href="{{ url_for('ticket_claim', ticket_id = ticket.id) }}">claim</a>
+                    <a class="btn btn-default" href="{{ url_for('release', ticket_id = ticket.id) }}">release</a>
+                    <a class="btn btn-default"
+                       href="{{ url_for('ticket_assign', ticket_id = ticket.id) }}">assign</a>
+                    {% if g.user.is_admin or (ticket.user == g.user) %}
+                        {% if ticket.current_status.status != 'Closed' %}
+                            <a class="btn btn-danger"
+                               href="{{ url_for('change_status', ticket_id = ticket.id, status = 'Closed') }}">close</a>
+                        {% endif %}
+                    {% endif %}
+                </h3>
+            </div>
+        </div>
+
+        <ul class="pagination pagination-sm">{% for page in replies.iter_pages() %}
+            {% if page %}
+                {% if page != replies.page %}
+                    <li>
+                        <a href="{{ url_for('ticket_view', ticket_id=ticket.id, page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% else %}
+                    <li class="active"><a
+                            href="{{ url_for('ticket_view', ticket_id=ticket.id, page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li><a href="">...</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+
+
+        {% include 'flicket/flicket_ticket_header.html' %}
+        <hr>
+
+        <!-- flicket ticket replies -->
+        {% for r in replies.items %}
+
+            <div class="row flicket-row flicket-post-author">
+
+
+                <div class="col-sm-2">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"
+                                {%- if r.user.is_admin -%}
+                              style="color:red"
+                                {%- endif %}>
+                        </span> {{ r.user.name }}<br>
+                </div>
+
+                <div class="col-sm-10 flicket-main">
+
+
+                    <div class="row flicket-post-header">
+                        <div class="col-sm-6 ">
+                            Reply #{{ (replies.page - 1) * replies.per_page + loop.index }}
+                            | {{ r.date_added.strftime('%d-%m-%Y %H:%M') }}
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            {% if ( g.user.id == r.user_id ) or (g.user.isadmin) %}
+
+                                <a href="{{ url_for('edit_post', post_id = r.id) }}">
+                                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+                    <div class="flicket-post-content">
+                        {{- r.content|markdown -}}
+                        {%- if r.modified_by -%}
+                            <div class="flicket-post-modified">
+                                This post was modified by {{ r.modified.name }}
+                                on {{ r.date_modified }}</div>
+                        {%- endif -%}
+                    </div>
+
+                    <div class="flicket-post-attachments">
+                        <div class="col-sm-8">
+                            {%- if r.post_uploads -%}
+                                {%- for upload in r.post_uploads %}
+                                    <a href="{{ url_for('view_ticket_uploads', filename=upload.filename) }}"
+                                       title="{{ upload.original_filename }}"
+                                       target="_blank">{{ upload.original_filename }}<span
+                                            class="glyphicon glyphicon-file" aria-hidden="true"></span></a>
+                                {%- endfor -%}
+                            {% endif %}
+                        </div>
+                        <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
+                            <a class="btn btn-default"
+                               href=" {{ url_for('ticket_view', ticket_id=r.ticket_id, page=page, post_id=r.id) }}">reply</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        {% endfor %}
+
+        {% include('flicket/flicket_include_reply.html') %}
+
+
+    </div>
+
+
+    </div>
+{% endblock %}

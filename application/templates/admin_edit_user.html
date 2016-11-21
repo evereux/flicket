@@ -1,0 +1,75 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Administration</h1>
+    {% include 'admin_menu.html' %}
+    <h2>Administration</h2>
+    {% include 'admin_menu.html' %}
+    <h2>{{ title }}</h2>
+    <form action="" method="post" name="edit_user">
+        {{ form.hidden_tag() }}
+        <p>
+            Please users credentials.
+        </p>
+        <table class="table table-width-400">
+            <tr>
+                <th>Username</th>
+                <td>{{ form.username(size=(24)) }}</td>
+                <td>
+                    {% if form.username.errors %}
+                    <span style="color: red;">
+                    {% for error in form.username.errors %}
+                    [{{ error }}]
+                    {% endfor %}
+                    </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ form.name(size=(24)) }}</td>
+                <td>
+                    {% if form.name.errors %}
+                    <span style="color: red;">
+                    {% for error in form.name.errors %}
+                    [{{ error }}]
+                    {% endfor %}
+                    </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ form.email(size=(24)) }}</td>
+                <td>
+                    {% if form.email.errors %}
+                    <span style="color: red;">
+                    {% for error in form.email.errors %}
+                    [{{ error }}]
+                    {% endfor %}
+                    </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th valign="top">Groups</th>
+                <td>{{ form.groups() }}</td>
+                <td>
+                    {% if form.groups.errors %}
+                    <span style="color: red;">
+                    {% for error in form.email.errors %}
+                    [{{ error }}]
+                    {% endfor %}
+                    </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right"><input type="submit" value="edit user"/></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

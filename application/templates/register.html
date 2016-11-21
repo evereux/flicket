@@ -1,0 +1,95 @@
+<!-- extend from base layout -->
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ title }}</h1>
+    <form action="" method="post" name="register">
+        {{ form.hidden_tag() }}
+
+        <div class="col-sm-4">
+        </div>
+
+
+        <div class="col-sm-4 text-center">
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Username</span>
+                    {{ form.username(class="form-control", placeholder="username") }}
+                </div>
+                {% if form.username.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.username.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Name</span>
+                    {{ form.name(class="form-control", placeholder="name") }}
+                </div>
+                {% if form.name.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.name.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Emai</span>
+                    {{ form.email(class="form-control", placeholder="email@address.com") }}
+                </div>
+                {% if form.email.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.email.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Password</span>
+                    {{ form.password(class="form-control", placeholder="password") }}
+                </div>
+                {% if form.password.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.password.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Confirm</span>
+                    {{ form.confirm(class="form-control", placeholder="confirm password") }}
+                </div>
+                {% if form.confirm.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.confirm.errors %}
+                    {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                &nbsp;<br>
+                <input type="submit" value="register" class="btn btn-default"/>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+        </div>
+    </form>
+</div>
+{% endblock %}

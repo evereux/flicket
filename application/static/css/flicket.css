@@ -1,0 +1,115 @@
+
+/* flicket specific css */
+/* everything else should be inhetied from bootstrap */
+
+/* offset body content for fixed navbar */
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+hr { border-top: 1px solid #F1592A; }
+
+blockquote { background-color:#FAFAFA; }
+
+.navbar {
+    border-bottom: 1px solid #F1592A;
+}
+
+footer {
+    text-align: center;
+    border-top: solid 1px #F1592A;
+    padding: 20px;
+    margin-top: 20pt;
+}
+
+.white_space {
+    white-space: pre-wrap;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.alert-message {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.table-width-400 {
+    width: 400px;
+}
+
+.table-header-center {
+    text-align: center;
+}
+
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+
+
+.flicket-post-attachments {
+    padding: 10px;
+    border-top: solid #9acfea 1px;
+}
+
+
+.flicket-title {
+    border-bottom: silver solid 1px;
+    background-color: Whitesmoke;
+    padding: 10px;
+}
+
+.flicket-row {
+    margin-top: 20px;
+    background-color: #FAFAFA;
+    padding: 5px;
+    border-radius: 5pt;
+    border: solid 1px #cbcbcb;
+}
+
+.flicket-main {
+    border-radius: 3pt;
+    border: 1px solid Silver;
+    background-color: White;
+}
+
+.flicket-post-author {
+    margin-bottom: 10px;
+}
+
+
+.flicket-post-header {
+    padding: 10px;
+    border-bottom: solid Silver 1px;
+}
+
+.flicket-post-content {
+    padding: 10px;
+}
+
+.flicket-post-attachments {
+    padding: 10px;
+    padding-right: 0px;
+    border-top: solid Silver 1px;
+}
+
+.flicket-post-modified {
+    font-style: italic;
+    background-color: #FAFAFA;
+    margin-top: 10px;
+    padding: 5px;
+    white-space: normal;
+}
+
+.flicket-form {
+    margin-top: 10px;
+}
+
+.flicket-btn {
+    margin-top: 5px;
+}
