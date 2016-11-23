@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from application import db
 from application.admin.models.user import User
 from config import BaseConfiguration
@@ -119,4 +122,3 @@ class FlicketUploads(Base):
 
     filename = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['upload_filename']))
     original_filename = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['upload_filename']))
-

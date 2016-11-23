@@ -1,5 +1,5 @@
-import datetime
-import os
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
 from flask import render_template
 
@@ -10,7 +10,6 @@ from application import app
 # to do mark down view
 @flicket_bp.route(app.config['FLICKETHOME'] + 'todo/')
 def todo():
-
     with open('TODO.md', 'r') as myfile:
         content = myfile.read()
 
@@ -20,7 +19,6 @@ def todo():
 # faq mark down view
 @flicket_bp.route(app.config['FLICKETHOME'] + 'faq/')
 def faq():
-
     with open('FAQ.md', 'r') as myfile:
         content = myfile.read()
 

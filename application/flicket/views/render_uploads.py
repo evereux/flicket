@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import os
 from flask import send_from_directory
 from flask_login import login_required

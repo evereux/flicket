@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import datetime
 
 from flask import render_template, g
@@ -15,7 +18,6 @@ from application.flicket.models.flicket_models import (FlicketTicket,
 @flicket_bp.route(app.config['FLICKETHOME'], methods=['GET', 'POST'])
 @login_required
 def index():
-
     print(help(flicket_bp))
     """ View showing flicket main page. We use this to display some stats."""
     s_closed = 'Closed'
@@ -46,7 +48,6 @@ def index():
                            total=total,
                            in_work=in_work,
                            _open=_open,
-                           total_days = total_days,
+                           total_days=total_days,
                            days=days,
                            department_count=department_count)
-

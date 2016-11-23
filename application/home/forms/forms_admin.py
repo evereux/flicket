@@ -1,9 +1,17 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import bcrypt
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectMultipleField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, Length
 
-from application.admin.models.user import Group, User, username_maxlength, name_maxlength, email_maxlength, group_maxlength
+from application.admin.models.user import (Group,
+                                           User,
+                                           username_maxlength,
+                                           name_maxlength,
+                                           email_maxlength,
+                                           group_maxlength)
 
 
 def group_exists(form, field):

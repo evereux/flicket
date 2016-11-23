@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from urllib.parse import urlparse, urljoin
 
 from flask import (flash,

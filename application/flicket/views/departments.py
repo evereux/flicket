@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask import flash, redirect, url_for, render_template
 from flask_login import login_required
 
@@ -12,18 +15,15 @@ from application.flicket.models.flicket_models import FlicketDepartment
 @flicket_bp.route(app.config['FLICKETHOME'] + 'departments/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def departments(page=1):
-
     form = DepartmentForm()
     departments = FlicketDepartment.query
 
     if form.validate_on_submit():
-
         add_department = FlicketDepartment(department=form.department.data)
         db.session.add(add_department)
         db.session.commit()
         flash('New department {} added.'.format(form.department.data))
         return redirect(url_for('flicket_bp.departments'))
-
 
     departments = departments.paginate(page, app.config['POSTS_PER_PAGE'])
 
@@ -37,12 +37,10 @@ def departments(page=1):
 @flicket_bp.route(app.config['FLICKETHOME'] + 'department_edit/<int:department_id>/', methods=['GET', 'POST'])
 @login_required
 def department_edit(department_id=False):
-
     if department_id:
 
         form = DepartmentForm()
         department = FlicketDepartment.query.filter_by(id=department_id).first()
-
 
         if form.validate_on_submit():
             department.department = form.department.data
@@ -51,7 +49,6 @@ def department_edit(department_id=False):
             return redirect(url_for('flicket_bp.departments'))
 
         form.department.data = department.department
-
 
         return render_template('flicket_department_edit.html',
                                title='Flicket - Edit Department',

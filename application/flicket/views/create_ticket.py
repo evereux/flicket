@@ -1,6 +1,14 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import datetime
 
-from flask import flash, redirect, url_for, request, render_template, g
+from flask import (flash,
+                   redirect,
+                   url_for,
+                   request,
+                   render_template,
+                   g)
 from flask_login import login_required
 
 from . import flicket_bp
@@ -54,7 +62,7 @@ def ticket_create():
         db.session.commit()
 
         flash('New Ticket created.', category='success')
-        return redirect(url_for('flicket_bp.ticket_view', ticket_id = new_ticket.id))
+        return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
     return render_template('flicket_create.html',
                            title='Flicket - Create Ticket',

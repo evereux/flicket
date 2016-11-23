@@ -15,6 +15,9 @@ from application.admin.models.user import User, Group
 from application.flicket.forms.forms_main import RegisterForm
 from application.flicket.scripts.hash_password import hash_password
 from application.home.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm
+# ! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from . import admin_bp
 
 principals = Principal(app)

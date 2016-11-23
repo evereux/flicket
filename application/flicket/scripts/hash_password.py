@@ -1,7 +1,8 @@
-#!/usr/local/bin/python3
-# -*- coding: utf-8 -*-
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
 import bcrypt
+
 
 def hash_password(password):
     """ Convert input with bcrypt and return """
@@ -10,4 +11,3 @@ def hash_password(password):
     password = bcrypt.hashpw(password, bcrypt.gensalt())
 
     return password
-

@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask import flash, redirect, render_template, url_for
 
 from application import app, db

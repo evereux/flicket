@@ -1,5 +1,10 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+
+"""
+testing module. lots of work to do here yet ...
+"""
+
 import datetime
 import os
 import unittest
@@ -9,12 +14,9 @@ from coverage import coverage
 
 import setup
 
-cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
-cov.start()
-
 from application import app, db, lm
 from application.flicket.scripts import hash_password
-from application.models import User
+from application.admin.models.user import User
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,6 +26,10 @@ def dump_to_tmp(contents, filename):
 
     with  open(filename, 'w') as f:
         f.write(contents)
+
+
+cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
+cov.start()
 
 
 class TestCase(unittest.TestCase):
@@ -109,7 +115,6 @@ class TestCase(unittest.TestCase):
 
     def test_flicket_main(self):
         """ Test the loading of the flicket home page. """
-
 
         with self.client:
             self.populate_db_skeleton()

@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask import flash, redirect, url_for, render_template
 from flask_login import login_required
 
@@ -11,7 +14,6 @@ from application.flicket.models.flicket_models import FlicketCategory, FlicketDe
 @flicket_bp.route(app.config['FLICKETHOME'] + 'categories/<int:department_id>/', methods=['GET', 'POST'])
 @login_required
 def categories(department_id=False):
-
     form = CategoryForm()
     categories = FlicketCategory.query.filter_by(department_id=department_id)
     department = FlicketDepartment.query.filter_by(id=department_id).first()
@@ -19,7 +21,6 @@ def categories(department_id=False):
     form.department_id.data = department_id
 
     if form.validate_on_submit():
-
         add_category = FlicketCategory(category=form.category.data, department=department)
         db.session.add(add_category)
         db.session.commit()
@@ -36,13 +37,11 @@ def categories(department_id=False):
 @flicket_bp.route(app.config['FLICKETHOME'] + 'category_edit/<int:category_id>/', methods=['GET', 'POST'])
 @login_required
 def category_edit(category_id=False):
-
     if category_id:
 
         form = CategoryForm()
         category = FlicketCategory.query.filter_by(id=category_id).first()
         form.department_id.data = category.department_id
-
 
         if form.validate_on_submit():
             category.category = form.category.data
@@ -51,7 +50,6 @@ def category_edit(category_id=False):
             return redirect(url_for('flicket_bp.departments'))
 
         form.category.data = category.category
-
 
         return render_template('flicket_category_edit.html',
                                title='Flicket - Edit Category',

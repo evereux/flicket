@@ -1,4 +1,8 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from application.flicket.models.flicket_models import FlicketTicket, FlicketPost
+
 
 class FlicketUserDetails():
     """
@@ -18,4 +22,5 @@ class FlicketUserDetails():
     def num_posts(self):
         """ return number of post made by user """
 
-        return FlicketTicket.query.filter_by(started_id = self.id).count() + FlicketPost.query.filter_by(user_id=self.id).count()
+        return FlicketTicket.query.filter_by(started_id=self.id).count() + FlicketPost.query.filter_by(
+            user_id=self.id).count()

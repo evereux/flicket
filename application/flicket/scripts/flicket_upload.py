@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import os
 
 from flask import flash
@@ -15,10 +18,9 @@ def allowed_file(filename):
 
 
 def upload_documents(files):
-
     new_files = []
 
-    if len(files) == 0 :
+    if len(files) == 0:
         return None
 
     if files[0].filename != '':
@@ -55,12 +57,10 @@ def upload_documents(files):
                 # There has been a problem uploading some documents.
                 return False
 
-
     return new_files
 
 
 def add_upload_to_db(new_files, object, post_type=False):
-
     topic = None
     post = None
 

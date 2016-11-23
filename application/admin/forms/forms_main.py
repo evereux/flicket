@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import bcrypt
 from flask import g
 from flask_wtf import FlaskForm

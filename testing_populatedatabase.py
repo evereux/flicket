@@ -1,9 +1,15 @@
-#! python3
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+"""
+This script populates the flicket database with randomly generated text.
+Run calling python script_name.py.
+"""
 
 import datetime
 from random import randint
 
-from application.models import User
+from application.admin.models.user import User
 from random_words import LoremIpsum, RandomWords, RandomNicknames, RandomEmails
 
 from application import db

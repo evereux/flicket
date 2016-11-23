@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import datetime
 import decimal
 import json
@@ -26,7 +29,6 @@ def alchemyencoder(obj):
 @flicket_bp.route(app.config['FLICKETHOME'] + 'api/<r_db>/', methods=['GET', 'POST'])
 @login_required
 def api_query(r_db=None):
-
     filter = request.args.get('filter')
 
     json_dump = ''
@@ -49,7 +51,4 @@ def api_query(r_db=None):
 
         json_dump = json.dumps(listy)
 
-
-
-
-    return(json_dump)
+    return (json_dump)

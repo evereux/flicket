@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired
@@ -46,7 +49,8 @@ def does_category_exist(form, field):
     :param field:
     :return True / False:
     """
-    result = FlicketCategory.query.filter_by(category=form.category.data).filter_by(department_id=form.department_id.data).count()
+    result = FlicketCategory.query.filter_by(category=form.category.data).filter_by(
+        department_id=form.department_id.data).count()
     if result > 0:
         field.errors.append('Category already exists.')
         return False
@@ -55,7 +59,6 @@ def does_category_exist(form, field):
 
 
 class CreateTicket(FlaskForm):
-
     def __init__(self, *args, **kwargs):
         form = super(CreateTicket, self).__init__(*args, **kwargs)
         self.priority.choices = [(p.id, p.priority) for p in FlicketPriority.query.all()]

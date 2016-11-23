@@ -1,4 +1,5 @@
-import os
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
 from flask import Flask
 from flask_login import LoginManager
@@ -47,5 +48,3 @@ from .admin.views import admin
 app.register_blueprint(home_bp)
 app.register_blueprint(flicket_bp)
 app.register_blueprint(admin_bp)
-# print(home_bp.static_folder)
-# print(flicket_bp.static_folder)

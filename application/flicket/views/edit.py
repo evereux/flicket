@@ -1,5 +1,7 @@
-import datetime
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
+import datetime
 
 from flask import redirect, url_for, flash, render_template, g, request
 from flask_login import login_required
@@ -11,11 +13,11 @@ from application.flicket.models.flicket_models import FlicketTicket, FlicketPost
 from application.flicket.scripts.flicket_functions import is_ticket_closed
 from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_documents
 
+
 # edit ticket
 @flicket_bp.route(app.config['FLICKETHOME'] + 'edit_ticket/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket(ticket_id):
-
     form = CreateTicket()
 
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -34,7 +36,6 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
-
         ticket.content = form.content.data
         ticket.title = form.title.data
         ticket.modified = g.user
@@ -64,7 +65,6 @@ def edit_ticket(ticket_id):
 @flicket_bp.route(app.config['FLICKETHOME'] + 'edit_post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-
     form = ContentForm()
 
     post = FlicketPost.query.filter_by(id=post_id).first()

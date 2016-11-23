@@ -1,5 +1,5 @@
-#!/usr/local/bin/python3
-# -*- coding: utf-8 -*-
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
 import bcrypt
 from flask_wtf import FlaskForm
@@ -26,6 +26,7 @@ def login_user_exist(form, field):
         return False
 
     return True
+
 
 class LogInForm(FlaskForm):
     """ Log in form. """

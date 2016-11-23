@@ -1,5 +1,7 @@
-import datetime
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
+import datetime
 
 from flask import render_template, redirect, url_for, g, request, flash
 from flask_login import login_required
@@ -11,12 +13,12 @@ from application.flicket.models.flicket_models import FlicketTicket, FlicketStat
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
 
+
 # view ticket details
 @flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_view/<ticket_id>/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def ticket_view(ticket_id, page=1):
-
     # is ticket number legitimate
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
@@ -57,7 +59,6 @@ def ticket_view(ticket_id, page=1):
 
         db.session.add(new_reply)
 
-
         open = FlicketStatus.query.filter_by(status='Open').first()
         ticket.current_status = open
         db.session.commit()
@@ -75,7 +76,7 @@ def ticket_view(ticket_id, page=1):
 
     # get post id and populate contents for auto quoting
     if post_id:
-        query = FlicketPost.query.filter_by(id = post_id).first()
+        query = FlicketPost.query.filter_by(id=post_id).first()
         reply_contents = "{} wrote on {}\r\n\r\n{}".format(query.user.name, query.date_added, query.content)
         form.content.data = block_quoter(reply_contents)
     if ticket_rid:

@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask import redirect, url_for, flash, g
 from flask_login import login_required
 
@@ -11,7 +14,6 @@ from application.flicket.scripts.flicket_functions import announcer_post
 @flicket_bp.route(app.config['FLICKETHOME'] + 'release/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def release(ticket_id=False):
-
     if ticket_id:
 
         ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -37,6 +39,5 @@ def release(ticket_id=False):
 
         flash('You released ticket: {}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
-
 
     return redirect(url_for('flicket_bp.tickets_main'))

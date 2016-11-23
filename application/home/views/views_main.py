@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 from flask import (render_template)
 
 from application import app
@@ -18,5 +21,3 @@ def print_errors(form):
 @home_bp.route(app.config['WEBHOME'], methods=['GET'])
 def index():
     return render_template('index.html', title='Flicket Ticket System')
-
-

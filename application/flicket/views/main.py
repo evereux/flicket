@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import time
 
 from flask import redirect, url_for, request, render_template
@@ -12,8 +15,6 @@ from application.flicket.models.flicket_models import (FlicketStatus,
                                                        FlicketPost,
                                                        FlicketCategory)
 from . import flicket_bp
-
-# from application.views_main import print_errors
 
 
 # tickets main
@@ -39,7 +40,6 @@ def tickets_main(page=1):
 
     if form.validate_on_submit():
 
-
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             user_id = user.id
@@ -52,7 +52,6 @@ def tickets_main(page=1):
                                 user_id=user_id,
                                 status=status,
                                 ))
-
 
     tickets = FlicketTicket.query
     if status:
