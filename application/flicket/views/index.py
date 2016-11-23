@@ -18,7 +18,6 @@ from application.flicket.models.flicket_models import (FlicketTicket,
 @flicket_bp.route(app.config['FLICKETHOME'], methods=['GET', 'POST'])
 @login_required
 def index():
-    print(help(flicket_bp))
     """ View showing flicket main page. We use this to display some stats."""
     s_closed = 'Closed'
     s_open = 'Open'

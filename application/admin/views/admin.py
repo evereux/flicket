@@ -33,6 +33,19 @@ def index():
     return render_template('admin.html', title='Admin')
 
 
+# shows all users
+@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/<int:page>', methods=['GET', 'POST'])
+@login_required
+@admin_permission.require(http_exception=403)
+def admin_users(page=1):
+    users = User.query.order_by(User.username)
+    users = users.paginate(page, app.config['POSTS_PER_PAGE'])
+
+    return render_template('admin_users.html', title='Users', users=users)
+
+
+# add user
 @admin_bp.route(app.config['ADMINHOME'] + 'add_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
@@ -47,21 +60,9 @@ def add_user():
                         date_added=datetime.datetime.now())
         db.session.add(register)
         db.session.commit()
-        flash('You have succesfully registered new user {}.'.format(form.username.data))
+        flash('You have successfully registered new user {}.'.format(form.username.data))
         return redirect(url_for('admin_bp.admin_users'))
     return render_template('admin_add_user.html', title='Add User', form=form)
-
-
-# edit users: display list of users, select which to edit
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/', methods=['GET', 'POST'])
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/<int:page>', methods=['GET', 'POST'])
-@login_required
-@admin_permission.require(http_exception=403)
-def admin_users(page=1):
-    users = User.query.order_by(User.username)
-    users = users.paginate(page, app.config['POSTS_PER_PAGE'])
-
-    return render_template('admin_users.html', title='Users', users=users)
 
 
 # edit user

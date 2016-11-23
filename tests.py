@@ -12,10 +12,11 @@ from io import BytesIO
 
 from coverage import coverage
 
-import setup
+from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, \
+    for_testing_only
 
 from application import app, db, lm
-from application.flicket.scripts import hash_password
+from application.flicket.scripts.hash_password import hash_password
 from application.admin.models.user import User
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -26,10 +27,6 @@ def dump_to_tmp(contents, filename):
 
     with  open(filename, 'w') as f:
         f.write(contents)
-
-
-cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
-cov.start()
 
 
 class TestCase(unittest.TestCase):
@@ -55,10 +52,11 @@ class TestCase(unittest.TestCase):
 
     def populate_db_skeleton(self):
         """ Populate the database with defaults defined in setup.py """
-        setup.create_admin(username='admin', password='admin', email='admin@localhost.com', silent=True)
-        setup.create_default_priority_levels(silent=True)
-        setup.create_default_depts(silent=True)
-        setup.create_default_priority_levels(silent=True)
+        create_admin(username='admin', password='admin', email='admin@localhost.com', silent=True)
+        create_admin_group(silent=True)
+        create_default_priority_levels(silent=True)
+        create_default_depts(silent=True)
+        for_testing_only(silent=True)
         db.session.commit()
 
     def create_user(self, username='john_1234', email='good@email.com', password='12345'):
@@ -86,24 +84,51 @@ class TestCase(unittest.TestCase):
                                     'file[]': file
                                 }, follow_redirects=True)
 
+    ####################################################################################################################
     ### TESTS ###
-    def test_login_logout(self):
-        """ Test that the login and logout views work as expected. """
-        username = 'admin'
-        password = 'admin'
-        email = 'admin@localhost.com'
 
-        _user = self.create_user(username=username, email=email, password=password)
+    def test_index(self):
+        rv = self.client.get('/', follow_redirects=True)
+        assert b'holding page' in rv.data
 
-        rv = self.login(username=_user.username, password=password)
+    def test_admin(self):
+        with self.client as tc:
+            self.populate_db_skeleton()
 
-        assert b'You were logged in' in rv.data
-        rv = self.logout()
-        assert b'You were logged out' in rv.data
-        rv = self.login('adminx', 'default')
-        assert b'Invalid username' in rv.data
-        rv = self.login(_user.username, 'defaultx')
-        assert b'Invalid password' in rv.data
+            # admin view requires admin login.
+            rv = self.login(username='admin', password='admin')
+
+            # load admin page
+            rv = self.client.get('admin/', follow_redirects=True)
+            assert b'Administration' in rv.data
+
+            # test already logged in user.
+            self.populate_db_skeleton()
+            rv = self.login(username='paul', password='12345')
+            rv = self.client.get('admin/', follow_redirects=True)
+            assert b'Flicket is a simple Flask driven ticket system.' not in rv.data
+
+            self.logout()
+            rv = self.login(username='admin', password='admin')
+            rv = self.client.get('admin/', follow_redirects=True)
+            assert b'Administration' in rv.data
+
+            rv = self.client.get('admin/admin_users/', follow_redirects=True)
+            assert b'Click on username to edit.' in rv.data
+
+            rv = self.client.get('admin/add_user/')
+            assert b'Please add new users details.' in rv.data
+
+            rv = self.client.post('admin/add_user/',
+                                data={
+                                    'username': 'lalala',
+                                    'email': 'lala@lala.com',
+                                    'name': 'lala lalala',
+                                    'password': 'aaaAAA',
+                                    'confirm': 'aaaAAA'
+                                }, follow_redirects=True)
+            dump_to_tmp(rv.data.decode(), 'dump.html')
+            assert b'You have successfully registered new user' in rv.data
 
     def test_flicket_index(self):
         """ Test the loading of the flicket home page. """
@@ -112,6 +137,20 @@ class TestCase(unittest.TestCase):
         # Test the main page
         rv = self.client.get('flicket/', follow_redirects=True)
         assert b'Flicket is a simple Flask driven ticket system.' in rv.data
+
+    def test_login_logout(self):
+        """ Test that the login and logout views work as expected. """
+        self.populate_db_skeleton()
+
+        rv = self.login(username='admin', password='admin')
+
+        assert b'You were logged in' in rv.data
+        rv = self.logout()
+        assert b'You were logged out' in rv.data
+        rv = self.login('adminx', 'default')
+        assert b'Invalid username' in rv.data
+        rv = self.login('admin', 'defaultx')
+        assert b'Invalid password' in rv.data
 
     def test_flicket_main(self):
         """ Test the loading of the flicket home page. """
@@ -129,7 +168,6 @@ class TestCase(unittest.TestCase):
                                       'content': 'nipples'
                                   }, follow_redirects=True)
 
-            dump_to_tmp(rv.data.decode(), 'dump.html')
             assert b'Flicket - Tickets' in rv.data
 
     def test_flicket_creation(self):
@@ -184,6 +222,8 @@ class TestCase(unittest.TestCase):
 
 if __name__ == '__main__':
 
+    cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
+    cov.start()
     try:
         unittest.main()
     except:

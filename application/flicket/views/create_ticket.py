@@ -40,7 +40,7 @@ def ticket_create():
 
         if new_files is False:
             flash('There was a problem uploading files.', category='danger')
-            return redirect(url_for('tickets_main'))
+            return redirect(url_for('flicket_bp.tickets_main'))
 
         # submit ticket data to database
         new_ticket = FlicketTicket(title=form.title.data,

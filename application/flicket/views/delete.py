@@ -3,7 +3,7 @@
 
 import os
 
-from flask import redirect, g
+from flask import flash, g, redirect, url_for, render_template
 from flask_login import login_required
 
 from application import app, db
@@ -43,7 +43,7 @@ def delete_ticket(ticket_id):
         # commit changes
         db.session.commit()
         flash('ticket deleted', category='success')
-        return redirect(url_for('tickets_main'))
+        return redirect(url_for('flicket_bp.tickets_main'))
 
     return render_template('flicket/flicket_deletetopic.html',
                            form=form,
@@ -77,7 +77,7 @@ def delete_post(post_id):
         # commit changes
         db.session.commit()
         flash('ticket deleted', category='success')
-        return redirect(url_for('tickets_main'))
+        return redirect(url_for('flicket_bp.tickets_main'))
 
     return render_template('flicket/flicket_deletepost.html',
                            form=form,

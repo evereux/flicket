@@ -44,7 +44,7 @@ def tickets_main(page=1):
         if user:
             user_id = user.id
 
-        return redirect(url_for('tickets_main',
+        return redirect(url_for('flicket_bp.tickets_main',
                                 content=form.content.data,
                                 page=page,
                                 category=category,

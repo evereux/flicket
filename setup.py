@@ -1,6 +1,3 @@
-#! python 3
-""" Initiliases server defaults. """
-
 import datetime
 import getpass
 
@@ -69,10 +66,10 @@ def create_announcer():
                         date_added=datetime.datetime.now())
         db.session.add(add_user)
         print("Announcer user added.")
-        ############################################################
 
 
-def for_testing_only():
+
+def for_testing_only(silent=False):
     """ adds some generic users. this is for testing only! """
     users = [
         ('paul', 'paul wauly', '12345', 'evereux1@gmail.com'),
@@ -94,17 +91,20 @@ def for_testing_only():
                 date_added=datetime.datetime.now()
             )
             db.session.add(add_user)
-            print("user {} added.".format(u[1]))
-            ############################################################
+
+            if silent is False:
+                print("user {} added.".format(u[1]))
 
 
-def create_admin_group():
+
+def create_admin_group(silent=False):
     """ creates admin group and assigns admin to group. """
     query = Group.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME'])
     if query.count() == 0:
         add_group = Group(group_name=app.config['ADMIN_GROUP_NAME'])
         db.session.add(add_group)
-        print("Admin group added")
+        if silent is False:
+            print("Admin group added")
 
     user = User.query.filter_by(username=ADMIN).first()
     group = Group.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME']).first()
@@ -116,7 +116,8 @@ def create_admin_group():
             break
     if not in_group:
         group.users.append(user)
-        print("Added admin user to admin group.")
+        if silent is False:
+            print("Added admin user to admin group.")
 
 
 def create_default_ticket_status():

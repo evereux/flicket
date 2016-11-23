@@ -58,7 +58,7 @@ class BaseConfiguration(object):
 
     # ticket system config
     ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-    TICKET_UPLOAD_FOLDER = 'application/static/flicket_uploads'
+    TICKET_UPLOAD_FOLDER = 'application/flicket/static/flicket_uploads'
     ANNOUNCER = {'name': 'announcer',
                  'username': 'announcer',
                  'password': 'm3r4nd0mstr1ng',

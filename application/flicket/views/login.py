@@ -96,7 +96,7 @@ def on_identity_loaded(sender, identity):
 def login():
     # if the user is already logged in redirect to homepage.
     if g.user is not None and g.user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('flicket_bp.index'))
     # load the LogInForm from forms.py
     form = LogInForm()
 
