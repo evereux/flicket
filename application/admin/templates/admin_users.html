@@ -1,0 +1,44 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Administration</h1>
+        {% include 'admin_menu.html' %}
+        <h2>{{ title }}</h2>
+        <p>
+            Click on username to edit.
+        </p>
+        <ul class="pagination pagination-sm">{% for page in users.iter_pages() %}
+            {% if page %}
+                {% if page != users.page %}
+                    <li><a href="{{ url_for('admin_bp.admin_users', page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% else %}
+                    <li class="active"><a
+                            href="{{ url_for('admin_bp.admin_users', page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li><a href="">...</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <table class="table table-striped">
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Delete User</th>
+            </tr>
+            {% for u in users.items %}
+                <tr>
+                    <td><a href="{{ url_for('admin_bp.admin_edit_user', id=u.id) }}">{{ u.username }}</a></td>
+                    <td>{{ u.name }}</td>
+                    <td>{{ u.email }}</td>
+                    <td><a href="{{ url_for('admin_bp.admin_delete_user', id=u.id) }}">delete
+                        {{ u.username }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<!-- flicket ticket header -->
+<div class="row flicket-row">
+    <div class="col-sm-2 flicket-post-author">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"
+                                {%- if ticket.user.is_admin %} style="color:red"
+                                {%- endif %}>
+                        </span>
+        {{ ticket.user.name }}<br>
+
+    </div>
+    <div class="col-sm-10 flicket-main">
+
+        <div class="row flicket-post-header">
+            <div class="col-sm-6">
+                {{ ticket.date_added.strftime('%d-%m-%Y %H:%M') }}
+            </div>
+            <div class="col-sm-6 text-right">
+                {% if (g.user.username == ticket.user.username) or (g.user.isadmin) %}
+                    <a href="{{ url_for('flicket_bp.edit_ticket', ticket_id = ticket.id) }}">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="flicket-post-content">
+            {{- ticket.content|markdown -}}
+            {%- if ticket.modified_by -%}
+                <div class="flicket-post-modified">This post was modified by {{ ticket.modified.name }}
+                    on {{ ticket.date_modified }}</div>
+            {%- endif -%}
+        </div>
+
+        <!-- display post -->
+        <div class="flicket-post-attachments">
+            <div class="col-sm-8">
+                {%- if ticket.topic_uploads -%}
+                    {%- for upload in ticket.topic_uploads %}
+                        <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
+                           title="{{ upload.original_filename }}"
+                           target="_blank">{{ upload.original_filename }}<span
+                                class="glyphicon glyphicon-file" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                    {%- endfor -%}
+                {% endif %}
+            </div>
+            <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
+                <a class="btn btn-default"
+                   href=" {{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, ticket_rid=ticket.id) }}">reply</a>
+            </div>
+        </div>
+        <!-- display post /end -->
+
+    </div>
+</div>
+<!-- end flicket ticket head -->

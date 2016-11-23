@@ -6,6 +6,7 @@ class BaseConfiguration(object):
 
     DEBUG = False
     TESTING = False
+    EXPLAIN_TEMPLATE_LOADING = False
 
     # user login information for database user.
     username = 'flask-ticket' # not required for sqlite connection
@@ -41,6 +42,7 @@ class BaseConfiguration(object):
     WEBHOME = '/'
     # The base url for flicket.
     FLICKETHOME = WEBHOME + 'flicket/'
+    ADMINHOME = '/admin/'
 
     # posts per page
     POSTS_PER_PAGE = 20

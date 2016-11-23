@@ -1,0 +1,35 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+{% block content %}
+    <div class="container">
+        <form class="form-horizontal" action="" method="post" name="create_ticket">
+            {{ form.hidden_tag() }}
+
+            <h1>{{ title }}</h1>
+
+            <p>{{ post.id }}</p>
+            <p>{{ post.content }}</p>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-9">
+                        {{ form.password(class="form-control") }}
+                    </div>
+                </div>
+                {% if form.password.errors %}
+                    <div class="alert alert-warning small">
+                        {% for error in form.password.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="form-group text-center">
+                    <input class="btn btn-danger" type="submit" name="delete" value="delete ticket"/>
+                </div>
+        </form>
+    </div>
+
+
+    </div>
+{% endblock %}

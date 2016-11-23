@@ -9,9 +9,6 @@ several very good open source options out there but they felt like overkill.
 If you already have a flask drive website hopefully this project is structured
 in such a way that makes merging this into that not too much of a chore.
 
-## Caveats
-I'm no programmer or web designer. Test first.
-
 ## Flicket Requirements
 * Python 3.5.2 - I developed this application using this version of python.
 * MySQL Database server
@@ -40,5 +37,3 @@ Best practise is to set-up a virtual environment and do `pip install -r requirem
     alembic revision --autogenerate -m "initialise database"
     alembic upgrade head
     
-
-

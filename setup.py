@@ -5,9 +5,9 @@ import datetime
 import getpass
 
 from application import db, app
-from flicket_application.flicket_models import FlicketStatus, FlicketPriority, FlicketDepartment, FlicketCategory
-from application.functions import hash_password
-from application.models import User, Group
+from application.admin.models.user import User, Group
+from application.flicket.models.flicket_models import FlicketStatus, FlicketPriority, FlicketDepartment, FlicketCategory
+from application.flicket.scripts.hash_password import hash_password
 
 ADMIN = 'admin'
 

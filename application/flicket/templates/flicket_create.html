@@ -1,0 +1,10 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>{{ title }}</h1>
+        {% include 'flicket_include_ticket.html' %}
+    </div>
+{% endblock %}

@@ -1,18 +1,18 @@
 #! python3
 
-from random import randint
 import datetime
+from random import randint
 
+from application.models import User
 from random_words import LoremIpsum, RandomWords, RandomNicknames, RandomEmails
 
 from application import db
-from application.models import User
-from application.functions import hash_password
-from flicket_application.flicket_models import FlicketTicket, \
+from application.flicket.models.flicket_models import FlicketTicket, \
     FlicketStatus, \
     FlicketPriority, \
     FlicketCategory, \
     FlicketPost
+from application.flicket.scripts import hash_password
 
 num_topics = 5000
 num_replies = 25

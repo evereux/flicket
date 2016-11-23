@@ -1,22 +1,20 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
-import os, unittest, datetime
-import setup
-import pprint
+import datetime
+import os
+import unittest
 from io import BytesIO
 
 from coverage import coverage
-from flask_login import current_user
-from flask_sqlalchemy import SQLAlchemy
+
+import setup
 
 cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
 cov.start()
 
 from application import app, db, lm
-from application.functions import hash_password
+from application.flicket.scripts import hash_password
 from application.models import User
-
-from flicket_application.flicket_models import FlicketCategory, FlicketPriority
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

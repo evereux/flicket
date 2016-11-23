@@ -1,0 +1,38 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>{{ title }}</h1>
+        <h3><label class="small">Department</label> {{ department }}</h3>
+
+        <form action=""
+              class="form-horizontal"
+              enctype="multipart/form-data"
+              method="post"
+              name="create_ticket">
+            {{ form.hidden_tag() }}
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-3">
+                    {{ form.category(class="form-control") }}
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary" type="submit" value="edit category"/>
+                </div>
+            </div>
+            {% if form.category.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.category.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </form>
+
+    </div>
+{% endblock %}

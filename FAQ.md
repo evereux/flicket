@@ -4,7 +4,7 @@
 ## What is Flicket?
 
 Flicket is a simple open source ticketing system driven by the python flask 
-web framework. 
+web micro framework. 
 
 Flicket also uses the following python packages:
 
@@ -25,13 +25,11 @@ For set-up instructions see `README.md` available on github.
 
 1. How do I create a ticket?
 
-   Navigate to [flicket home page](/flicket/) and press the 
-   'create ticket' button. This will take you to form to create a new 
-   ticket.
+   Select 'create ticket' from the Flicket pull down menu.
    
 2. How do I assign a ticket?
 
-   You have raised a ticket and you know to whom the ticket should be 
+   Scenario: You have raised a ticket and you know to whom the ticket should be 
    assigned.
 
    Navigate to [flicket home page](/flicket/) and select the ticket you 
@@ -39,7 +37,7 @@ For set-up instructions see `README.md` available on github.
    
 3. How do I release a ticket?
 
-   You've been assigned a ticket but the ticket isn't your repsonsibility
+   Scenario: You have been assigned a ticket but the ticket isn't your repsonsibility
    to complete or you are unable to for another reason.
    
    Navgiate to [flicket home page](/flicket/) and select the ticket to
@@ -48,7 +46,8 @@ For set-up instructions see `README.md` available on github.
    
 4. How do I close a ticket?
 
-   The ticket has been resolved satifactorily and you want to close the ticket.
+   Scenario: The ticket has been resolved to your satisfaction and you 
+   want to close the ticket.
    
    Navgiate to [flicket home page](/flicket/) and select the ticket
    which you would like to close. Within the ticket page is a button
@@ -64,7 +63,7 @@ For set-up instructions see `README.md` available on github.
 1. What are quick filters?
 
    Quick filters are simply buttons that enable you to quick filter tickets
-   by department, category and status.
+   by department, category and status etc.
 
 2. What does the search box search?
 

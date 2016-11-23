@@ -1,18 +1,16 @@
 
 # Flicket Todo List
 
-## General
-* There seems to be a lot of dupilcated html pages. There must be a 
-better way.
-* Tickets view - Make toggle view state persistent over pages.
-* Put Flicket specific settings in database and make editable.
+## High
+* allow postee to delete existing uploaded images
 
-### Edit
-* allow user to delete existing uploaded images
+## Medium
 * lock tickets after x number of days?
+* add function for admin to edit users passwords.
+* show if ticket contents were modified (edited replies are)
 
-
-## Write set-up
-
-
-
+## Low
+* There seems to be a lot of dupilcated html in pages. There must be a 
+better way?
+* Tickets view - Make toggle form view state persistent over pages.
+* Put Flicket specific settings in database and make editable.

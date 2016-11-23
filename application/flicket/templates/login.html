@@ -1,0 +1,57 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ title }}</h1>
+    <div class="col-sm-3">
+
+    </div>
+    <div class="col-sm-6">
+        <form class="form-horizontal" action="" method="post" name="login">
+            {{ form.hidden_tag() }}
+            <p>
+                Please enter your credentials to login or <a href="{{ url_for('flicket_bp.register') }}">register</a>.
+            </p>
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Username</label>
+                <div class="col-sm-9">
+                    {{ form.username(class="form-control") }}
+                </div>
+            </div>
+            {% if form.username.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.username.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    {{ form.password(class="form-control") }}
+                </div>
+            </div>
+            {% if form.password.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.password.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+
+            <div class="form-group  form-group-sm text-center">
+                {{ form.remember_me }} Remember Me
+            </div>
+            <div class="form-group  form-group-sm text-center">
+                <input class="btn btn-default" type="submit" value="log in"/>
+            </div>
+        </form>
+    </div>
+    <div>
+        <div class="col-sm-3">
+        </div>
+    </div>
+</div>
+{% endblock %}
