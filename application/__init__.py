@@ -6,9 +6,11 @@ from flask_login import LoginManager
 from flask_misaka import Misaka
 from flask_sqlalchemy import SQLAlchemy
 
-from .home.views import home_bp
-from .flicket.views import flicket_bp
 from .admin.views import admin_bp
+from .flicket.views import flicket_bp
+from .flicket_api.views import flicket_api_bp
+from .home.views import home_bp
+
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
@@ -19,13 +21,17 @@ Misaka(app)
 
 db = SQLAlchemy(app)
 
+# import models so alembic can see them
+from .admin.models import user
+from .flicket.models import flicket_models
+
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'flicket_bp.login'
 
-from .home.views import views_main
-from .flicket.views import (api,
-                            assign,
+
+from .admin.views import admin
+from .flicket.views import (assign,
                             categories,
                             claim,
                             close,
@@ -43,8 +49,10 @@ from .flicket.views import (api,
                             user_edit,
                             users,
                             view)
-from .admin.views import admin
+from .flicket_api.views import api
+from .home.views import views_main
 
-app.register_blueprint(home_bp)
-app.register_blueprint(flicket_bp)
 app.register_blueprint(admin_bp)
+app.register_blueprint(flicket_bp)
+app.register_blueprint(flicket_api_bp)
+app.register_blueprint(home_bp)

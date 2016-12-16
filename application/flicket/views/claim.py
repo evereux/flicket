@@ -11,7 +11,7 @@ from application.flicket.scripts.flicket_functions import announcer_post
 
 
 # view for self claim a ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_claim/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_claim/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def ticket_claim(ticket_id=False):
     if ticket_id:

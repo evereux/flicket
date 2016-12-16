@@ -8,7 +8,7 @@ from application import app
 
 
 # to do mark down view
-@flicket_bp.route(app.config['FLICKETHOME'] + 'todo/')
+@flicket_bp.route(app.config['FLICKET'] + 'todo/')
 def todo():
     with open('TODO.md', 'r') as myfile:
         content = myfile.read()
@@ -17,7 +17,7 @@ def todo():
 
 
 # faq mark down view
-@flicket_bp.route(app.config['FLICKETHOME'] + 'faq/')
+@flicket_bp.route(app.config['FLICKET'] + 'faq/')
 def faq():
     with open('FAQ.md', 'r') as myfile:
         content = myfile.read()

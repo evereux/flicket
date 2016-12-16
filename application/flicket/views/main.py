@@ -3,33 +3,33 @@
 
 import time
 
+import requests
+
 from flask import redirect, url_for, request, render_template
 from flask_login import login_required
 
 from application import app
 from application.admin.models.user import User
-from application.flicket.forms.flicket_forms import SearchTicketForm
+from application.flicket.forms.search import SearchTicketForm
 from application.flicket.models.flicket_models import (FlicketStatus,
                                                        FlicketDepartment,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketCategory)
+from application.flicket.scripts.forms import print_errors
+from application.flicket.scripts.url import generate_url
+from application.flicket_api.views import flicket_api_bp
+
 from . import flicket_bp
 
 
 # tickets main
-@flicket_bp.route(app.config['FLICKETHOME'] + 'tickets_main/', methods=['GET', 'POST'])
-@flicket_bp.route(app.config['FLICKETHOME'] + 'tickets_main/<int:page>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'tickets_main/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'tickets_main/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def tickets_main(page=1):
-    start = time.time()
 
     form = SearchTicketForm()
-
-    # These are used to generate the quick filter buttons in form.
-    ticket_status = FlicketStatus.query.all()
-    ticket_department = FlicketDepartment.query.all()
-    ticket_category = FlicketCategory.query.all()
 
     # get request arguments from the url
     status = request.args.get('status')
@@ -38,29 +38,55 @@ def tickets_main(page=1):
     content = request.args.get('content')
     user_id = request.args.get('user_id')
 
+
+
     if form.validate_on_submit():
+
+        department = ''
+        category = ''
+        status = ''
 
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             user_id = user.id
 
+        # convert form inputs to it's table title
+        if form.department.data:
+            department = FlicketDepartment.query.filter_by(id=form.department.data).first().department
+        if form.category.data:
+            category = FlicketCategory.query.filter_by(id=form.category.data).first().category
+        if form.status.data:
+            status = FlicketStatus.query.filter_by(id=form.status.data).first().status
+
         return redirect(url_for('flicket_bp.tickets_main',
                                 content=form.content.data,
                                 page=page,
-                                category=category,
                                 department=department,
-                                user_id=user_id,
+                                category=category,
                                 status=status,
+                                user_id=user_id,
                                 ))
+
+
+    # fixes url if first ends with and second starts with /
+    uri = generate_url(request.url_root, url_for('flicket_api_bp.api_tickets', page=1, department=department))
+    r = requests.get(uri)
+    json_response = r.text
+
+    print(json_response)
+
 
     tickets = FlicketTicket.query
     if status:
         tickets = tickets.filter(FlicketTicket.current_status.has(FlicketStatus.status == status))
+        form.status.data = FlicketStatus.query.filter_by(status=status).first().id
     if category:
         tickets = tickets.filter(FlicketTicket.category.has(FlicketCategory.category == category))
+        form.category.data = FlicketCategory.query.filter_by(category=category).first().id
     if department:
         department_filter = FlicketDepartment.query.filter_by(department=department).first()
         tickets = tickets.filter(FlicketTicket.category.has(FlicketCategory.department == department_filter))
+        form.department.data = department_filter.id
     if user_id:
         tickets = tickets.filter_by(assigned_id=int(user_id))
 
@@ -78,7 +104,6 @@ def tickets_main(page=1):
 
     tickets = tickets.paginate(page, app.config['POSTS_PER_PAGE'])
 
-    duration = round(time.time() - start, 3)
 
     return render_template('flicket_main.html',
                            title='Flicket - Tickets',
@@ -87,9 +112,7 @@ def tickets_main(page=1):
                            page=page,
                            number_results=number_results,
                            status=status,
-                           ticket_status=ticket_status,
                            department=department,
-                           ticket_category=ticket_category,
-                           ticket_department=ticket_department,
-                           duration=duration
+                           category=category,
+                           user_id=user_id
                            )

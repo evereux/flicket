@@ -1,3 +1,6 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -41,7 +44,8 @@ class BaseConfiguration(object):
     # The base url for your application.
     WEBHOME = '/'
     # The base url for flicket.
-    FLICKETHOME = WEBHOME + 'flicket/'
+    FLICKET = WEBHOME + 'flicket/'
+    FLICKET_API = WEBHOME + 'flicket-api/'
     ADMINHOME = '/admin/'
 
     # posts per page

@@ -15,7 +15,7 @@ from application.flicket.models.flicket_models import (FlicketTicket,
 
 
 # view users
-@flicket_bp.route(app.config['FLICKETHOME'], methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'], methods=['GET', 'POST'])
 @login_required
 def index():
     """ View showing flicket main page. We use this to display some stats."""

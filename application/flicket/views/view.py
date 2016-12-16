@@ -15,10 +15,11 @@ from application.flicket.scripts.flicket_upload import upload_documents, add_upl
 
 
 # view ticket details
-@flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_view/<ticket_id>/', methods=['GET', 'POST'])
-@flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def ticket_view(ticket_id, page=1):
+
     # is ticket number legitimate
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 

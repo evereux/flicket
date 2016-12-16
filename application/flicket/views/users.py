@@ -12,8 +12,8 @@ from . import flicket_bp
 
 
 # view users
-@flicket_bp.route(app.config['FLICKETHOME'] + 'users/', methods=['GET', 'POST'])
-@flicket_bp.route(app.config['FLICKETHOME'] + 'users/<int:page>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'users/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'users/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def flicket_users(page=1):
     form = SearchUserForm()

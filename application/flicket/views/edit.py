@@ -15,7 +15,7 @@ from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_
 
 
 # edit ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'edit_ticket/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'edit_ticket/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket(ticket_id):
     form = CreateTicket()
@@ -62,7 +62,7 @@ def edit_ticket(ticket_id):
 
 
 # edit post
-@flicket_bp.route(app.config['FLICKETHOME'] + 'edit_post/<int:post_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'edit_post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
     form = ContentForm()

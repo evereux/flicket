@@ -11,7 +11,7 @@ from application.flicket.scripts.flicket_functions import announcer_post
 
 
 # view to release a ticket user has been assigned.
-@flicket_bp.route(app.config['FLICKETHOME'] + 'release/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'release/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def release(ticket_id=False):
     if ticket_id:

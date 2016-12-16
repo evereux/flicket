@@ -22,7 +22,7 @@ from application.flicket.scripts.flicket_upload import upload_documents, add_upl
 
 
 # create ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_create/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_create/', methods=['GET', 'POST'])
 @login_required
 def ticket_create():
     form = CreateTicket()

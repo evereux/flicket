@@ -5,15 +5,21 @@
 /* offset body content for fixed navbar */
 body {
   min-height: 2000px;
-  padding-top: 70px;
+}
+
+.anchor, body {
+    padding-top: 70px;
 }
 
 hr { border-top: 1px solid #F1592A; }
 
-blockquote { background-color:#FAFAFA; }
+blockquote {
+    background-color: #faf7d7;
+    font-size: inherit}
 
 .navbar {
     border-bottom: 1px solid #F1592A;
+
 }
 
 footer {
@@ -112,4 +118,9 @@ footer {
 
 .flicket-btn {
     margin-top: 5px;
+}
+
+.flicket-form-control {
+    margin: 0;
+    padding: 2pt;
 }

@@ -13,7 +13,7 @@ from . import flicket_bp
 
 
 # tickets main
-@flicket_bp.route(app.config['FLICKETHOME'] + 'ticket_assign/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_assign/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def ticket_assign(ticket_id=False):
     form = SearchEmailForm()

@@ -77,10 +77,7 @@ class ContentForm(FlaskForm):
     content = TextAreaField('content', validators=[DataRequired()])
 
 
-class SearchTicketForm(FlaskForm):
-    """ Search form. """
-    email = StringField('email', validators=[does_email_exist])
-    content = StringField('content', validators=[])
+
 
 
 class SearchUserForm(FlaskForm):

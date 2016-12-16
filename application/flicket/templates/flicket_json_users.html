@@ -1,9 +1,9 @@
     <script>
          $(function() {
-            $( "#autocomplete-1" ).autocomplete({
+            $( "#autocomplete-email" ).autocomplete({
                source: function( request, response ) {
                    $.ajax( {
-                       url: "/flicket/api/users/",
+                       url: "/flicket-api/users/",
                        datatype: "jsonp",
                        data: {
                            filter: request.term

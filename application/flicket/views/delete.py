@@ -17,7 +17,7 @@ from . import flicket_bp
 
 
 # delete ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'delete_ticket/<ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete_ticket/<ticket_id>', methods=['GET', 'POST'])
 @login_required
 def delete_ticket(ticket_id):
     # check is user is authorised to delete tickets. Currently, only admins can delete tickets.
@@ -45,14 +45,14 @@ def delete_ticket(ticket_id):
         flash('ticket deleted', category='success')
         return redirect(url_for('flicket_bp.tickets_main'))
 
-    return render_template('flicket/flicket_deletetopic.html',
+    return render_template('flicket_deletetopic.html',
                            form=form,
                            ticket=ticket,
                            title='Flicket - Delete Ticket')
 
 
 # delete post
-@flicket_bp.route(app.config['FLICKETHOME'] + 'delete_post/<post_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete_post/<post_id>', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
     # check user is authorised to delete posts. Only admin can do this.
@@ -79,14 +79,14 @@ def delete_post(post_id):
         flash('ticket deleted', category='success')
         return redirect(url_for('flicket_bp.tickets_main'))
 
-    return render_template('flicket/flicket_deletepost.html',
+    return render_template('flicket_deletepost.html',
                            form=form,
                            post=post,
                            title='Flicket - Delete post')
 
 
 # delete category
-@flicket_bp.route(app.config['FLICKETHOME'] + 'delete/category/<int:category_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete/category/<int:category_id>', methods=['GET', 'POST'])
 @login_required
 def delete_category(category_id=False):
     if category_id:
@@ -125,7 +125,7 @@ def delete_category(category_id=False):
 
 
 # delete department
-@flicket_bp.route(app.config['FLICKETHOME'] + 'delete/department/<int:department_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete/department/<int:department_id>', methods=['GET', 'POST'])
 @login_required
 def delete_department(department_id=False):
     if department_id:

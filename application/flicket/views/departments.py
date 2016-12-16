@@ -11,8 +11,8 @@ from application.flicket.models.flicket_models import FlicketDepartment
 
 
 # create ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'departments/', methods=['GET', 'POST'])
-@flicket_bp.route(app.config['FLICKETHOME'] + 'departments/<int:page>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'departments/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'departments/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def departments(page=1):
     form = DepartmentForm()
@@ -34,7 +34,7 @@ def departments(page=1):
                            departments=departments)
 
 
-@flicket_bp.route(app.config['FLICKETHOME'] + 'department_edit/<int:department_id>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'department_edit/<int:department_id>/', methods=['GET', 'POST'])
 @login_required
 def department_edit(department_id=False):
     if department_id:

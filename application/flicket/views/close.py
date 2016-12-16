@@ -11,7 +11,7 @@ from application.flicket.scripts.flicket_functions import announcer_post
 
 
 # close ticket
-@flicket_bp.route(app.config['FLICKETHOME'] + 'change_status/<ticket_id>/<status>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'change_status/<ticket_id>/<status>', methods=['GET', 'POST'])
 @login_required
 def change_status(ticket_id, status):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()

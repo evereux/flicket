@@ -5,76 +5,15 @@
 {% block content %}
 
     {% include('flicket_json_users.html') %}
+    {% include('flicket_json_departments.html') %}
 
-    <script>
-        $(document).ready(function () {
-            $("#qf-toggle").click(function () {
-                $("#toggle-qf").toggle(500);
-            });
-
-            $("#sf-toggle").click(function () {
-                $("#toggle-sf").toggle(500);
-            });
-
-        });
-    </script>
 
     <div class="container">
-        <h1>{{ title }}</h1>
-        <hr>
+
+                <h1>{{ title }}</h1>
+
+
         <div class="row">
-            <div class="col-sm-6">
-                <h2>Quick Filters <span class="btn btn-default" style="font-size: 8pt"
-                                        id="qf-toggle">toggle filters</span></h2>
-            </div>
-        </div>
-        <div id="toggle-qf">
-            <div class="row">
-                <div class="col-sm-4">
-                    <h3>My Tickets</h3>
-                    <div class="btn-group-sm">
-                        <a class="btn btn-default flicket-btn"
-                           href="{{ url_for('flicket_bp.tickets_main', page=page, user_id=g.user.id) }}">my tickets</a>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Status</h3>
-                    <div class="btn-group-sm">
-                        {% for ts in ticket_status %}
-                            <a class="btn {% if ts.status == request.args.get('status') %} btn-info {% else %} btn-default {% endif %} flicket-btn"
-                               href="{{ url_for('flicket_bp.tickets_main', page=page, status=ts.status, department=department, category=category, content=content) }}">{{ ts.status }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <h3>Department</h3>
-                    <div class="btn-group-sm">
-                        {% for dt in ticket_department %}
-                            <a class="btn {% if dt.department == request.args.get('department') %} btn-info {% else %} btn-default {% endif %} flicket-btn"
-                               href="{{ url_for('flicket_bp.tickets_main', page=page, department=dt.department, category=category, status=status, content=content) }}">{{ dt.department }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-10">
-                    <h3>Category</h3>
-                    <div class="btn-group-sm">
-                        {% for ct in ticket_category %}
-                            <a class="btn  {% if ct.category == request.args.get('category') %} btn-info {% else %} btn-default {% endif %} flicket-btn"
-                               href="{{ url_for('flicket_bp.tickets_main', page=page, department=ct.department.department, category=ct.category, status=status, content=content) }}">{{ ct.department.department }}
-                                - {{ ct.category }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-
-        <h2>Search Form <span class="btn btn-default" style="font-size: 8pt"
-                             id="sf-toggle">toggle form</span></h2>
-        <div id="toggle-sf">
             <!-- Flicket search form -->
             <form action=""
                   class="form-horizontal flicket-form"
@@ -85,13 +24,23 @@
 
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="autocomplete-1">Email</label>
-                    <div class="col-sm-3">
-                        {{ form.email(class="form-control", id="autocomplete-1") }}
+                    <div class="col-sm-2 flicket-form-control">
+                        {{ form.department(class="form-control", id="department") }}
                     </div>
-                    <label class="col-sm-2 control-label">Search Tickets</label>
-                    <div class="col-sm-5">
-                        {{ form.content(class="form-control") }}
+                    <div class="col-sm-2 flicket-form-control">
+                        {{ form.category(class="form-control", id="category") }}
+                    </div>
+                    <div class="col-sm-2 flicket-form-control">
+                        {{ form.status(class="form-control") }}
+                    </div>
+                    <div class="col-sm-2 flicket-form-control">
+                        {{ form.email(class="form-control", placeholder="email", id="autocomplete-1") }}
+                    </div>
+                    <div class="col-sm-3 flicket-form-control">
+                        {{ form.content(class="form-control", placeholder="contents") }}
+                    </div>
+                    <div class="col-sm-1 flicket-form-control">
+                        <input class="btn btn-primary" type="submit" value="search"/>
                     </div>
                 </div>
                 {% if form.email.errors %}
@@ -108,38 +57,12 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                <div class="form-group">
-                    <div class="col-sm-6 text-right">
-                        <input class="btn btn-primary" type="submit" value="search"/>
-                    </div>
-                </div>
             </form>
             <!-- / flicket search form -->
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-6 text-right">
-                <a class="btn btn-primary" href="{{ url_for('flicket_bp.ticket_create') }}">create ticket</a>
-            </div>
 
-        </div>
 
-        <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
-            {% if page %}
-                {% if page != tickets.page %}
-                    <li><a href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a></li>
-                {% else %}
-                    <li class="active"><a
-                            href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a>
-                    </li>
-                {% endif %}
-            {% else %}
-                <li><a href="">...</a></li>
-            {% endif %}
-        {% endfor %}
-        </ul>
 
-        <p>Script took {{ duration }} seconds to run.</p>
 
 
         <table class="table table-bordered">
@@ -204,6 +127,24 @@
                 </tr>
             {% endfor %}
         </table>
+
+        <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
+            {% if page %}
+                {% if page != tickets.page %}
+                    <li><a href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% else %}
+                    <li class="active"><a
+                            href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
+                {% endif %}
+            {% else %}
+                <li><a href="">...</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+
+        <p>Script took {{ duration }} seconds to run.</p>
 
     </div>
 {% endblock %}
