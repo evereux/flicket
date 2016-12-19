@@ -1,15 +1,21 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
-
 import datetime
+import os
 
 from flask import redirect, url_for, flash, render_template, g, request
 from flask_login import login_required
 
 from . import flicket_bp
 from application import app, db
-from application.flicket.forms.flicket_forms import CreateTicket, ContentForm
-from application.flicket.models.flicket_models import FlicketTicket, FlicketPost
+from application.flicket.forms.flicket_forms import ContentForm, EditTicket
+from application.flicket.models.flicket_models import (FlicketCategory,
+                                                       FlicketDepartment,
+                                                       FlicketTicket,
+                                                       FlicketPost,
+                                                       FlicketPriority,
+                                                       FlicketStatus,
+                                                       FlicketUploads)
 from application.flicket.scripts.flicket_functions import is_ticket_closed
 from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_documents
 
@@ -18,7 +24,8 @@ from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_
 @flicket_bp.route(app.config['FLICKET'] + 'edit_ticket/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket(ticket_id):
-    form = CreateTicket()
+
+    form = EditTicket(ticket_id=ticket_id)
 
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
@@ -36,10 +43,33 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
+
+        # loop through the selected uploads
+        if len(form.uploads.data) > 0:
+            for i in form.uploads.data:
+                # get the upload documment information from the database.
+                query = FlicketUploads.query.filter_by(id = i).first()
+                # define the full uploaded filename
+                the_file = os.path.join(app.config['TICKET_UPLOAD_FOLDER'], query.filename)
+
+                if os.path.isfile(the_file):
+                    # delete the file from the folder
+                    os.remove(the_file)
+
+                db.session.delete(query)
+
+        ticket_status = FlicketStatus.query.filter_by(status='open').first()
+        ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
+        ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
+
         ticket.content = form.content.data
         ticket.title = form.title.data
         ticket.modified = g.user
         ticket.date_modified = datetime.datetime.now()
+        ticket.current_status = ticket_status
+        ticket.ticket_priority = ticket_priority
+        ticket.category = ticket_category
+
 
         files = request.files.getlist("file[]")
         new_files = upload_documents(files)
@@ -52,9 +82,11 @@ def edit_ticket(ticket_id):
         flash('Ticket topic edited.', category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
-    form.title.data = ticket.title
     form.content.data = ticket.content
     form.priority.data = ticket.ticket_priority_id
+    form.title.data = ticket.title
+    form.category.data = ticket.category_id
+
 
     return render_template('flicket_edittopic.html',
                            title='Flicket - Edit Ticket',

@@ -3,10 +3,6 @@
 /* everything else should be inhetied from bootstrap */
 
 /* offset body content for fixed navbar */
-body {
-  min-height: 2000px;
-}
-
 .anchor, body {
     padding-top: 70px;
 }
