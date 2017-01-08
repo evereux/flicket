@@ -8,7 +8,7 @@ from flask_login import login_required
 
 from . import flicket_bp
 from application import app, db
-from application.flicket.forms.flicket_forms import ContentForm
+from application.flicket.forms.flicket_forms import ReplyForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
@@ -33,17 +33,17 @@ def ticket_view(ticket_id, page=1):
     post_id = request.args.get('post_id')
     ticket_rid = request.args.get('ticket_rid')
 
-    form = ContentForm()
+    form = ReplyForm()
 
     # add reply post
     if form.validate_on_submit():
 
         # upload file if user has selected one and the file is in accepted list of
-        files = request.files.getlist("file[]")
+        files = request.files.getlist("file")
 
         new_files = upload_documents(files)
 
-        if new_files == False:
+        if new_files is False:
             flash('There was a problem uploading files for your post.', category='danger')
             return redirect(url_for('flicket_bp.tickets_main'))
 
@@ -60,20 +60,14 @@ def ticket_view(ticket_id, page=1):
 
         db.session.add(new_reply)
 
+        # change ticket status to open.
         open = FlicketStatus.query.filter_by(status='Open').first()
         ticket.current_status = open
         db.session.commit()
 
+        flash('You have replied to ticket {}: {}.'.format(ticket.id_zfill, ticket.title), category="success")
+
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
-
-    if request.method == 'POST':
-        if request.form['close-ticket'] == 'close':
-            ticket_status = FlicketStatus.query.filter_by(status='closed').first()
-            ticket.current_status = ticket_status
-            db.session.commit()
-            flash('Ticket closed!')
-
-            return redirect(url_for('flicket_bp.tickets_main'))
 
     # get post id and populate contents for auto quoting
     if post_id:

@@ -11,10 +11,10 @@ from wtforms.validators import (DataRequired,
                                 Length,
                                 EqualTo)
 
-from application.admin.models.user import (User,
-                                           username_maxlength,
-                                           name_maxlength,
-                                           email_maxlength)
+from application.flicket.models.user import (User,
+                                             username_maxlength,
+                                             name_maxlength,
+                                             email_maxlength)
 from application.flicket.scripts.functions_login import check_email_format
 
 
@@ -36,13 +36,12 @@ def does_username_exist(form, field):
 def check_password_formatting(form, field):
     """
     Check formatting of password.
-    :param form:
     :param field:
     :return True / False:
     """
     ok = True
     min = 6
-    if (len(field.data) < min):
+    if len(field.data) < min:
         field.errors.append('Password must be more than {} characters.'.format(min))
         ok = False
     if not any(s.isupper() for s in field.data) and not any(s.islower() for s in field.data):
@@ -81,16 +80,23 @@ def check_email(form, field):
 
 
 def change_email(form, field):
-    ok = True
+    """
+    Ensure the form email matches the users email.
+    :param form:
+    :param field:
+    :return:
+    """
 
     if form.email.data == g.user.email:
         return True
+    else:
+        return False
 
-    check_email(form, field)
 
-
-class CheckPasswordCorrect(object):
-    # check if password exists
+class CheckPasswordCorrect:
+    """
+    Check that the entered password matches that in the database.
+    """
     def __call__(self, form, field):
         self.username = form.username.data
         self.password = form.password.data

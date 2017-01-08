@@ -5,8 +5,8 @@ from flask import render_template, redirect, url_for, request
 from flask_login import login_required
 
 from application import app
-from application.admin.models.user import User
 from application.flicket.forms.flicket_forms import SearchUserForm
+from application.flicket.models.user import User
 from application.flicket.scripts.flicket_user_details import FlicketUserDetails
 from . import flicket_bp
 

@@ -2,14 +2,14 @@ import datetime
 import getpass
 
 from application import db, app
-from application.admin.models.user import User, Group
 from application.flicket.models.flicket_models import FlicketStatus, FlicketPriority, FlicketDepartment, FlicketCategory
+from application.flicket.models.user import User, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
 
-ADMIN = 'admin'
+ADMIN = 'flicket_admin'
 
 # departments and categories defaults for flicket
-departcategories = [
+depart_categories = [
     {'department': 'Design', 'category': ['Dataset', 'ECN', 'ECR', 'CATIA', 'Other']},
     {'department': 'Manufacturing', 'category': ['Process Planning', 'Tooling', 'Equipment', 'Other']},
     {'department': 'IT', 'category': ['Internet', 'Intranet', 'PC', 'Sharepoint', 'CATIA']},
@@ -26,7 +26,7 @@ def get_admin_details():
     _username = ADMIN
     match = False
 
-    email = input("Enter admin email: ")
+    email = input("Enter flicket_admin email: ")
 
     while match is False:
         password1 = getpass.getpass("Enter password: ")
@@ -36,12 +36,11 @@ def get_admin_details():
             print("Passwords do not match, please try again.\n\n")
             match = False
         else:
-            match = True
             return _username, password1, email
 
 
 def create_admin(username, password, email, silent=False):
-    """ creates admin user. """
+    """ creates flicket_admin user. """
     query = User.query.filter_by(username=username)
     if query.count() == 0:
         add_user = User(username=username,
@@ -56,7 +55,7 @@ def create_admin(username, password, email, silent=False):
 
 
 def create_announcer():
-    """ cretes announcer user """
+    """ creates announcer user """
     query = User.query.filter_by(username=app.config['ANNOUNCER']['username'])
     if query.count() == 0:
         add_user = User(username=app.config['ANNOUNCER']['username'],
@@ -66,7 +65,6 @@ def create_announcer():
                         date_added=datetime.datetime.now())
         db.session.add(add_user)
         print("Announcer user added.")
-
 
 
 def for_testing_only(silent=False):
@@ -96,20 +94,19 @@ def for_testing_only(silent=False):
                 print("user {} added.".format(u[1]))
 
 
-
 def create_admin_group(silent=False):
-    """ creates admin group and assigns admin to group. """
-    query = Group.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME'])
+    """ creates flicket_admin group and assigns flicket_admin to group. """
+    query = FlicketGroup.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME'])
     if query.count() == 0:
-        add_group = Group(group_name=app.config['ADMIN_GROUP_NAME'])
+        add_group = FlicketGroup(group_name=app.config['ADMIN_GROUP_NAME'])
         db.session.add(add_group)
         if silent is False:
             print("Admin group added")
 
     user = User.query.filter_by(username=ADMIN).first()
-    group = Group.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME']).first()
+    group = FlicketGroup.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME']).first()
     in_group = False
-    # see if user admin is already in admin group.
+    # see if user flicket_admin is already in flicket_admin group.
     for g in group.users:
         if g.username == ADMIN:
             in_group = True
@@ -117,7 +114,7 @@ def create_admin_group(silent=False):
     if not in_group:
         group.users.append(user)
         if silent is False:
-            print("Added admin user to admin group.")
+            print("Added flicket_admin user to flicket_admin group.")
 
 
 def create_default_ticket_status():
@@ -149,7 +146,7 @@ def create_default_priority_levels(silent=False):
 
 def create_default_depts(silent=False):
     """ creates default departments and categories. """
-    for d in departcategories:
+    for d in depart_categories:
 
         department = d['department']
         categories = d['category']

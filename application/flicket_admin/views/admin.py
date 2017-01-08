@@ -1,28 +1,24 @@
 import datetime
 
-import bcrypt
 from flask import (flash,
                    g,
                    redirect,
                    render_template,
                    request,
                    url_for)
-from flask_login import login_required, current_user
+from flask_login import login_required
 from flask_principal import Permission, Principal, RoleNeed
 
 from application import app, db
-from application.admin.models.user import User, Group
 from application.flicket.forms.forms_main import RegisterForm
+from application.flicket.models.user import User, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
-from application.home.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm
-# ! usr/bin/python3
-# -*- coding: utf8 -*-
-
+from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm
 from . import admin_bp
 
 principals = Principal(app)
-# define admin role need
-admin_only = RoleNeed('admin')
+# define flicket_admin role need
+admin_only = RoleNeed('flicket_admin')
 admin_permission = Permission(admin_only)
 
 
@@ -30,7 +26,7 @@ admin_permission = Permission(admin_only)
 @login_required
 @admin_permission.require(http_exception=403)
 def index():
-    return render_template('admin.html', title='Admin')
+    return render_template('flicket_admin.html', title='Admin')
 
 
 # shows all users
@@ -92,7 +88,7 @@ def admin_edit_user():
             user.groups = []  # this is beautifully simply though
             # add the user to selected groups
             for g in groups:
-                group_id = Group.query.filter_by(id=g).first()
+                group_id = FlicketGroup.query.filter_by(id=g).first()
                 group_id.users.append(user)
             db.session.commit()
             flash("User {} edited.".format(user.username))
@@ -109,7 +105,7 @@ def admin_edit_user():
         form.groups.data = groups
     else:
         flash("Could not find user.")
-        return redirect(url_for('admin'))
+        return redirect(url_for('flicket_admin'))
 
     return render_template('admin_edit_user.html', title='Edit User', form=form, user=user)
 
@@ -123,10 +119,10 @@ def admin_delete_user():
     id = request.args.get('id')
     user_details = User.query.filter_by(id=id).first()
 
-    # we won't ever delete the admin user (id = 1)
+    # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':
-        flash('Can\'t delete default admin user.')
-        return redirect(url_for('admin_bp.admin'))
+        flash('Can\'t delete default flicket_admin user.')
+        return redirect(url_for('admin_bp.flicket_admin'))
 
     if form.validate_on_submit():
         # delete the user.
@@ -146,9 +142,9 @@ def admin_delete_user():
 @admin_permission.require(http_exception=403)
 def admin_groups():
     form = AddGroupForm()
-    groups = Group.query.all()
+    groups = FlicketGroup.query.all()
     if form.validate_on_submit():
-        add_group = Group(
+        add_group = FlicketGroup(
             group_name=form.group_name.data
         )
         db.session.add(add_group)
@@ -166,17 +162,17 @@ def admin_groups():
 def admin_edit_group():
     form = AddGroupForm()
     id = request.args.get('id')
-    group = Group.query.filter_by(id=id).first()
+    group = FlicketGroup.query.filter_by(id=id).first()
 
     # if group can't be found in database.
     if not group:
         flash('Could not find group {}'.format(group.group_name))
         return redirect(url_for('admin_bp.index'))
 
-    # prevent editing of admin group name as this is hard coded into admin view permissions.
+    # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
     if group.group_name == app.config['ADMIN_GROUP_NAME']:
         flash('Can\'t edit group {}'.format(app.config['ADMIN_GROUP_NAME']))
-        return redirect(url_for('admin'))
+        return redirect(url_for('flicket_admin'))
 
     if form.validate_on_submit():
         group.group_name = form.group_name.data
@@ -194,12 +190,12 @@ def admin_edit_group():
 def admin_delete_group():
     form = EnterPasswordForm()
     id = request.args.get('id')
-    group_details = Group.query.filter_by(id=id).first()
+    group_details = FlicketGroup.query.filter_by(id=id).first()
 
-    # we won't ever delete the admin group (id = 1)
+    # we won't ever delete the flicket_admin group (id = 1)
     if id == '1':
-        flash('Can\'t delete default admin group.')
-        return redirect(url_for('admin'))
+        flash('Can\'t delete default flicket_admin group.')
+        return redirect(url_for('flicket_admin'))
 
     if form.validate_on_submit():
         # delete the group.

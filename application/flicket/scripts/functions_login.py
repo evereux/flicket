@@ -5,7 +5,7 @@ import re
 
 import bcrypt
 
-from application.admin.models.user import User
+from application.flicket.models.user import User
 
 
 def check_password_format(password):

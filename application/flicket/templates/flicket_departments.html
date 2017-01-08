@@ -16,12 +16,12 @@
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">Department</label>
+                <label class="col-sm-2 control-label">{{ form.department.label }}</label>
                 <div class="col-sm-3">
                     {{ form.department(class="form-control") }}
                 </div>
                 <div class="col-sm-2">
-                    <input class="btn btn-primary" type="submit" value="add department"/>
+                    {{ form.submit }}
                 </div>
             </div>
             {% if form.department.errors %}

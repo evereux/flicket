@@ -5,8 +5,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, HiddenField
 from wtforms.validators import DataRequired
 
-from application.admin.models.user import User
 from application.flicket.models.flicket_models import FlicketPriority, FlicketDepartment, FlicketCategory
+from application.flicket.models.user import User
 
 
 def does_email_exist(form, field):

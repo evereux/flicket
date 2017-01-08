@@ -1,5 +1,5 @@
 <p>
-    Ticket contents supports markdown syntax. Please refer to </span><a href="http://commonmark.org/help/">md help</a>.
+    Ticket contents supports markdown syntax. Please refer to <a href="http://commonmark.org/help/">md help</a>.
 </p>
 <form action=""
       class="form-horizontal"
@@ -71,9 +71,9 @@
 
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">Add Documents</label>
+        <label class="col-sm-3 control-label">{{ form.file.label }}</label>
         <div class="col-sm-3">
-            <input type="file" name="file[]" multiple>
+            {{ form.file }}
         </div>
         <div class="col-sm-6 text-right">
             {{ form.submit(class="btn btn-primary") }}

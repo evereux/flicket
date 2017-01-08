@@ -9,8 +9,7 @@ Run calling python script_name.py.
 import datetime
 from random import randint
 
-from application.admin.models.user import User
-from random_words import LoremIpsum, RandomWords, RandomNicknames, RandomEmails
+from random_words import LoremIpsum, RandomWords, RandomNicknames
 
 from application import db
 from application.flicket.models.flicket_models import FlicketTicket, \
@@ -18,14 +17,14 @@ from application.flicket.models.flicket_models import FlicketTicket, \
     FlicketPriority, \
     FlicketCategory, \
     FlicketPost
-from application.flicket.scripts import hash_password
+from application.flicket.models.user import User
+from application.flicket.scripts.hash_password import hash_password
 
-num_topics = 5000
+num_topics = 1000
 num_replies = 25
-num_users = 1000
+num_users = 200
 
 rn = RandomNicknames()
-re = RandomEmails()
 
 
 # get a list of users and return a random one
@@ -57,7 +56,7 @@ def get_random_category():
     return FlicketCategory.query.filter_by(id=id).first()
 
 
-def get_random_sentance(number=10):
+def get_random_sentence(number=10):
     li = LoremIpsum()
     return li.get_sentences(number)
 
@@ -73,7 +72,7 @@ def get_random_words():
 def create_ticket_reply(new_ticket):
     new_reply = FlicketPost(
         ticket=new_ticket,
-        content=get_random_sentance(),
+        content=get_random_sentence(),
         user=get_random_user(),
         date_added=datetime.datetime.now()
     )
@@ -83,11 +82,11 @@ def create_ticket_reply(new_ticket):
 
 def create_random_user():
     nicknames = rn.random_nicks(gender='u', count=2)
-    email = re.randomMails()[0]
     password = rn.random_nick(gender='u')
 
     username = '{}{}'.format(nicknames[0], nicknames[1]).lower()
     name = '{} {}'.format(nicknames[0], nicknames[1])
+    email = '{}@testemail.com'.format(username)
 
     return username, name, password, email
 
@@ -132,7 +131,7 @@ def topic_creation():
 
         new_ticket = FlicketTicket(
             title=get_random_words(),
-            content=get_random_sentance(),
+            content=get_random_sentence(),
             user=get_random_user(),
             date_added=datetime.datetime.now(),
             current_status=get_random_status(),

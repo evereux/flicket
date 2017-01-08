@@ -8,9 +8,8 @@ from flask_login import login_required
 
 from . import flicket_bp
 from application import app, db
-from application.flicket.forms.flicket_forms import ContentForm, EditTicket
+from application.flicket.forms.flicket_forms import EditTicketForm, EditReplyForm
 from application.flicket.models.flicket_models import (FlicketCategory,
-                                                       FlicketDepartment,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketPriority,
@@ -24,8 +23,7 @@ from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_
 @flicket_bp.route(app.config['FLICKET'] + 'edit_ticket/<int:ticket_id>', methods=['GET', 'POST'])
 @login_required
 def edit_ticket(ticket_id):
-
-    form = EditTicket(ticket_id=ticket_id)
+    form = EditTicketForm(ticket_id=ticket_id)
 
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
@@ -34,7 +32,7 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.flicket_main'))
 
     # check to see if topic is closed. ticket can't be edited once it's closed.
-    if is_ticket_closed(ticket.current_status.status, ticket.id):
+    if is_ticket_closed(ticket.current_status.status):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     # check user is authorised to edit ticket. Currently, only admin or author can do this.
@@ -47,8 +45,8 @@ def edit_ticket(ticket_id):
         # loop through the selected uploads
         if len(form.uploads.data) > 0:
             for i in form.uploads.data:
-                # get the upload documment information from the database.
-                query = FlicketUploads.query.filter_by(id = i).first()
+                # get the upload document information from the database.
+                query = FlicketUploads.query.filter_by(id=i).first()
                 # define the full uploaded filename
                 the_file = os.path.join(app.config['TICKET_UPLOAD_FOLDER'], query.filename)
 
@@ -70,8 +68,7 @@ def edit_ticket(ticket_id):
         ticket.ticket_priority = ticket_priority
         ticket.category = ticket_category
 
-
-        files = request.files.getlist("file[]")
+        files = request.files.getlist("file")
         new_files = upload_documents(files)
 
         # add files to database.
@@ -87,7 +84,6 @@ def edit_ticket(ticket_id):
     form.title.data = ticket.title
     form.category.data = ticket.category_id
 
-
     return render_template('flicket_edittopic.html',
                            title='Flicket - Edit Ticket',
                            form=form)
@@ -97,7 +93,7 @@ def edit_ticket(ticket_id):
 @flicket_bp.route(app.config['FLICKET'] + 'edit_post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    form = ContentForm()
+    form = EditReplyForm('Post', post_id=post_id)
 
     post = FlicketPost.query.filter_by(id=post_id).first()
 
@@ -106,7 +102,7 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.flicket_main'))
 
     # check to see if topic is closed. ticket can't be edited once it's closed.
-    if is_ticket_closed(post.ticket.current_status.status, post.ticket.id):
+    if is_ticket_closed(post.ticket.current_status.status):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket.id))
 
     # check user is authorised to edit post. Only author or admin can do this.
@@ -119,10 +115,10 @@ def edit_post(post_id):
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
 
-        files = request.files.getlist("file[]")
+        files = request.files.getlist("file")
         new_files = upload_documents(files)
 
-        if new_files == False:
+        if new_files is False:
             flash('There was a problem uploading files.', category='danger')
             return redirect(url_for('flicket_bp.tickets_main'))
 
@@ -136,6 +132,7 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 
     form.content.data = post.content
+    print(form.uploads)
 
     return render_template('flicket_editpost.html',
                            title='Flicket - Edit Post',

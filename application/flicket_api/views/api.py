@@ -9,18 +9,18 @@ from flask import request
 from flask_login import login_required
 
 from application import app
-from application.admin.models.user import User
 from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketDepartment,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketStatus)
+from application.flicket.models.user import User
 from . import flicket_api_bp
 
 
-def alchemyencoder(obj):
+def alchemy_encoder(obj):
     """
-    JSON enncoder function for sQLAlchemy special cases.
+    JSON encoder function for SQLAlchemy special cases.
     Take from: http://codeandlife.com/2014/12/07/sqlalchemy-results-to-json-the-easy-way/
     """
     if isinstance(obj, datetime.date):
@@ -40,7 +40,7 @@ def api_users():
     if filter:
         query = query.filter(User.username.ilike('%{}%'.format(filter)))
 
-    listy = []
+    my_list = []
     for u in query:
         sub_dict = {
             'id': u.id,
@@ -48,30 +48,30 @@ def api_users():
             'email_': u.email,
             'name': u.name
         }
-        listy.append(sub_dict)
+        my_list.append(sub_dict)
 
-    json_dump = json.dumps(listy)
+    json_dump = json.dumps(my_list)
 
-    return (json_dump)
+    return json_dump
 
 
 # json api to display departments
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'department/', methods=['GET', 'POST'])
 @login_required
-def api_deparments():
+def api_departments():
     departments = FlicketDepartment.query.all()
 
-    listy = []
+    my_list = []
     for d in departments:
         sub_dict = {
             'id': d.id,
             'department': d.department,
         }
-        listy.append(sub_dict)
+        my_list.append(sub_dict)
 
-    json_dump = json.dumps(listy)
+    json_dump = json.dumps(my_list)
 
-    return (json_dump)
+    return json_dump
 
 
 # json api to display categories
@@ -85,17 +85,18 @@ def api_categories(id=None):
     if id:
         categories = categories.filter_by(department_id=id)
 
-    listy = []
+    my_list = []
     for c in categories:
         sub_dict = {
             'id': c.id,
             'category': c.category,
         }
-        listy.append(sub_dict)
+        my_list.append(sub_dict)
 
-    json_dump = json.dumps(listy)
+    json_dump = json.dumps(my_list)
 
-    return (json_dump)
+    return json_dump
+
 
 # json api to display tickets
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'tickets/<int:page>/', methods=['GET', 'POST'])
@@ -131,11 +132,10 @@ def api_tickets(page=1):
 
     tickets = tickets.paginate(page, app.config['POSTS_PER_PAGE'])
 
-    listy = []
+    my_list = []
     for t in tickets.items:
 
         assigned = '-'
-        department = ''
 
         if t.assigned_id:
             assigned = t.assigned.username
@@ -153,8 +153,8 @@ def api_tickets(page=1):
             'status': t.current_status.status,
             'assigned': assigned,
         }
-        listy.append(sub_dict)
+        my_list.append(sub_dict)
 
-    json_dump = json.dumps(listy)
+    json_dump = json.dumps(my_list)
 
-    return (json_dump)
+    return json_dump

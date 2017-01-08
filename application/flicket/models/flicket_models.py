@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 from application import db
-from application.admin.models.user import User
+from application.flicket.models.user import User
 from config import BaseConfiguration
 
 Base = db.Model
@@ -72,8 +72,8 @@ class FlicketTicket(Base):
     posts = db.relationship("FlicketPost", back_populates="ticket")
 
     # find all the images associated with the topic
-    topic_uploads = db.relationship('FlicketUploads',
-                                    primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
+    uploads = db.relationship('FlicketUploads',
+                              primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
 
     @property
     def replies(self):
@@ -105,8 +105,8 @@ class FlicketPost(Base):
     modified = db.relationship(User, foreign_keys='FlicketPost.modified_by')
 
     # finds all the images associated with the post
-    post_uploads = db.relationship('FlicketUploads',
-                                   primaryjoin="and_(FlicketPost.id == FlicketUploads.posts_id)")
+    uploads = db.relationship('FlicketUploads',
+                              primaryjoin="and_(FlicketPost.id == FlicketUploads.posts_id)")
 
 
 class FlicketUploads(Base):

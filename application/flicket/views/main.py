@@ -1,25 +1,17 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
 
-import time
-
-import requests
-
 from flask import redirect, url_for, request, render_template
 from flask_login import login_required
 
 from application import app
-from application.admin.models.user import User
 from application.flicket.forms.search import SearchTicketForm
 from application.flicket.models.flicket_models import (FlicketStatus,
                                                        FlicketDepartment,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketCategory)
-from application.flicket.scripts.forms import print_errors
-from application.flicket.scripts.url import generate_url
-from application.flicket_api.views import flicket_api_bp
-
+from application.flicket.models.user import User
 from . import flicket_bp
 
 
@@ -37,8 +29,6 @@ def tickets_main(page=1):
     category = request.args.get('category')
     content = request.args.get('content')
     user_id = request.args.get('user_id')
-
-
 
     if form.validate_on_submit():
 
@@ -67,14 +57,11 @@ def tickets_main(page=1):
                                 user_id=user_id,
                                 ))
 
-
     # todo: get data from api
     # fixes url if first ends with and second starts with /
     # uri = generate_url(request.url_root, url_for('flicket_api_bp.api_tickets', page=1, department=department))
     # r = requests.get(uri)
     # json_response = r.text
-
-
 
     tickets = FlicketTicket.query
     if status:
@@ -103,7 +90,6 @@ def tickets_main(page=1):
     number_results = tickets.count()
 
     tickets = tickets.paginate(page, app.config['POSTS_PER_PAGE'])
-
 
     return render_template('flicket_main.html',
                            title='Flicket - Tickets',

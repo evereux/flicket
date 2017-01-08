@@ -5,9 +5,9 @@ from flask import redirect, url_for, flash, g, render_template
 from flask_login import login_required
 
 from application import app, db
-from application.admin.models.user import User
 from application.flicket.forms.flicket_forms import SearchEmailForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
+from application.flicket.models.user import User
 from application.flicket.scripts.flicket_functions import announcer_post
 from . import flicket_bp
 

@@ -27,7 +27,7 @@ def change_status(ticket_id, status):
         edit = True
 
     if not edit:
-        flash('Only the person to which the ticket has been assigned, creator or adminstrator can close this ticket.',
+        flash('Only the person to which the ticket has been assigned, creator or Admin can close this ticket.',
               category='warning')
         return redirect(url_for('ticket_view', ticket_id=ticket_id))
 

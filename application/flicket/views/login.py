@@ -22,14 +22,14 @@ from flask_principal import (Identity,
                              UserNeed)
 
 from application import app, lm, db
-from application.admin.models.user import User
 from application.flicket.forms.form_login import LogInForm
+from application.flicket.models.user import User
+from application.flicket_admin.views import admin_bp
 from . import flicket_bp
-from application.admin.views import admin_bp
 
 principals = Principal(flicket_bp)
-# define admin role need
-admin_only = RoleNeed('admin')
+# define flicket_admin role need
+admin_only = RoleNeed('flicket_admin')
 admin_permission = Permission(admin_only)
 
 
@@ -37,8 +37,7 @@ admin_permission = Permission(admin_only)
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
 
 
 def get_redirect_target():
@@ -65,6 +64,7 @@ def before_request():
 @app.errorhandler(403)
 def not_found_error(error):
     return render_template('403.html'), 403
+
 
 # add 404 error handler
 @app.errorhandler(404)

@@ -12,14 +12,16 @@ email_maxlength = 60
 
 group_maxlength = 64
 
-groups = db.Table('groups',
-                  db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-                  db.Column('group_id', db.Integer, db.ForeignKey('group.id'))
-                  )
+flicket_groups = db.Table('flicket-groups',
+                          db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                          db.Column('group_id', db.Integer, db.ForeignKey('flicket-group.id'))
+                          )
 
 
 class User(Base):
-    # defines tablename as it will be create in SQL
+    '''
+    User model class
+    '''
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -54,7 +56,7 @@ class User(Base):
 
     @property
     def is_admin(self):
-        """ returns true if the user is a member of the 'admin' group"""
+        """ returns true if the user is a member of the 'flicket_admin' group"""
         user = User.query.filter_by(id=self.id).first()
         for g in user.groups:
             if g.group_name == app.config['ADMIN_GROUP_NAME']:
@@ -64,19 +66,23 @@ class User(Base):
         return str(self.id)
 
 
-class Group(Base):
+class FlicketGroup(Base):
+    '''
+    Flicket Group model class
+    '''
+    __tablename__ = 'flicket-group'
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(group_maxlength))
     users = db.relationship(User,
-                            secondary=groups,
-                            backref=db.backref('groups',
+                            secondary=flicket_groups,
+                            backref=db.backref('flicket-groups',
                                                lazy='dynamic',
                                                order_by=group_name
                                                )
                             )
 
     # this is for when a group has many groups
-    # ie everyone in group 'admin' can be a member of group 'all'
+    # ie everyone in group 'flicket_admin' can be a member of group 'all'
     # parents = db.relationship('Group',
     #                           secondary=group_to_group,
     #                           primaryjoin=id==group_to_group.c.parent_id,

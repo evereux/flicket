@@ -10,10 +10,10 @@ from wtforms.validators import (DataRequired,
                                 Length,
                                 EqualTo)
 
-from application.admin.models.user import (User,
-                                           username_maxlength,
-                                           name_maxlength,
-                                           email_maxlength)
+from application.flicket.models.user import (User,
+                                             username_maxlength,
+                                             name_maxlength,
+                                             email_maxlength)
 from application.flicket.scripts.functions_login import check_email_format
 
 

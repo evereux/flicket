@@ -1,17 +1,16 @@
 <!-- extend base layout -->
-{% extends "base.html" %}
+{% extends "flicket_base.html" %}
 {% block content %}
 <div class="container">
     <h1>An unexpected error has occurred</h1>
     <p>
-        Please report this error to your administrator. Please provide the following details:<br/>
+        Please report this error to your administrator. Please provide the following details:
+    </p>
     <ul>
         <li>Page you were navigating.</li>
         <li>Time you saw this error.</li>
         <li>Any other information that may help reproduce the error.</li>
     </ul>
-
-    </p>
     <p><a href="{{ url_for('home_bp.index') }}">Back</a></p>
 </div>
 {% endblock %}

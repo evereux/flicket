@@ -20,7 +20,7 @@
                     {{ form.name(class="form-control") }}
                 </div>
                 <div class="col-sm-2">
-                    <input class="btn btn-primary" type="submit" value="search"/>
+                    {{ form.submit }}
                 </div>
                 <div class="col-sm-2">
                     <a class="btn btn-default" href="{{ url_for('flicket_bp.flicket_users') }}">reset</a>

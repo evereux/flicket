@@ -13,7 +13,7 @@ from flask_login import login_required
 
 from . import flicket_bp
 from application import app, db
-from application.flicket.forms.flicket_forms import CreateTicket
+from application.flicket.forms.flicket_forms import CreateTicketForm
 from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketStatus,
                                                        FlicketPriority,
@@ -25,7 +25,7 @@ from application.flicket.scripts.flicket_upload import upload_documents, add_upl
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_create/', methods=['GET', 'POST'])
 @login_required
 def ticket_create():
-    form = CreateTicket()
+    form = CreateTicketForm()
 
     if form.validate_on_submit():
 

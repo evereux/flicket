@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired
 
-from application.admin.models.user import User
+from application.flicket.models.user import User
 
 
 def login_user_exist(form, field):
