@@ -1,0 +1,13 @@
+<!-- extend from base layout -->
+{% extends "email_base.html" %}
+
+{% block content %}
+    <h1>
+        {{ title }}
+    </h1>
+    <p>
+        {{ ticket.user.username }} has been assinged to ticket: <a href="{{ ticket_url }}">{{ number }}</a>
+    </p>
+    {% include('email_include_details.html') %}
+
+{% endblock %}

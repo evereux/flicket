@@ -13,7 +13,6 @@
 
 
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/flicket.css') }}">
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/jquery-ui.min.css') }}">
 
@@ -32,10 +31,7 @@
 {% include 'flicket_menu.html' %}
 {% include 'flicket_flashmessages.html' %}
 {% block content %}{% endblock %}
-
 {% include 'flicket_footer.html' %}
-
 <!-- end body -->
-
 </body>
 </html>

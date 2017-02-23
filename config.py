@@ -12,16 +12,16 @@ class BaseConfiguration(object):
     EXPLAIN_TEMPLATE_LOADING = False
 
     # user login information for database user.
-    username = 'flicket'  # not required for sqlite connection
-    password = 'flicket'  # not required for sqlite connection
+    db_username = 'flicket'  # not required for sqlite connection
+    db_password = 'flicket'  # not required for sqlite connection
     # database connection details
-    db_type = 'mysql'  # not required for sqlite connection
+    db_type = 'mysql+pymysql'  # not required for sqlite connection
     db_port = '3306'  # not required for sqlite connection
     db_name = 'flicket-development'
 
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@localhost:{}/{}'.format(db_type,
-                                                                  username,
-                                                                  password,
+                                                                  db_username,
+                                                                  db_password,
                                                                   db_port,
                                                                   db_name)
     SQLALCHEMY_TRACK_MODIFICATIONS = True
@@ -42,24 +42,17 @@ class BaseConfiguration(object):
     # The base url for your application.
     WEBHOME = '/'
     # The base url for flicket.
-    FLICKET = WEBHOME + 'flicket/'
+    FLICKET = WEBHOME + ''
     FLICKET_API = WEBHOME + 'flicket-api/'
     ADMINHOME = '/flicket_admin/'
 
+    # todo: delete these commented out values if flicket works from db values ok.
     # posts per page
-    POSTS_PER_PAGE = 20
-
-    # email server
-    MAIL_SERVER = ''
-    MAIL_PORT = 25
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = False
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    # posts_per_page = 20
 
     # ticket system config
-    ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
-    TICKET_UPLOAD_FOLDER = 'application/flicket/static/flicket_uploads'
+    # allowed_extensions = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
+    #  = 'application/flicket/static/flicket_uploads'
     ANNOUNCER = {'name': 'announcer',
                  'username': 'announcer',
                  'password': 'm3r4nd0mstr1ng',

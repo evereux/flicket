@@ -40,4 +40,4 @@ def user_details():
     form.email.data = g.user.email
     form.username.data = g.user.username
 
-    return render_template('edit_user.html', form=form, title='Edit User Details')
+    return render_template('flicket_edituser.html', form=form, title='Edit User Details')

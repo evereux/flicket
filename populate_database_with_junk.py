@@ -86,7 +86,7 @@ def create_random_user():
 
     username = '{}{}'.format(nicknames[0], nicknames[1]).lower()
     name = '{} {}'.format(nicknames[0], nicknames[1])
-    email = '{}@testemail.com'.format(username)
+    email = '{}@contoso.com'.format(username)
 
     return username, name, password, email
 

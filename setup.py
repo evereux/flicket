@@ -2,11 +2,18 @@ import datetime
 import getpass
 
 from application import db, app
+from application.flicket_admin.models.flicket_config import FlicketConfig
 from application.flicket.models.flicket_models import FlicketStatus, FlicketPriority, FlicketDepartment, FlicketCategory
 from application.flicket.models.user import User, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
 
 ADMIN = 'flicket_admin'
+
+# configuration defaults for flicket
+flicket_config = {'posts_per_page': 50,
+                  'allowed_extensions': ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'],
+                  'ticket_upload_folder': 'application/flicket/static/flicket_uploads'
+                  }
 
 # departments and categories defaults for flicket
 depart_categories = [
@@ -20,9 +27,26 @@ depart_categories = [
 ]
 
 
+def set_config_defaults():
+    count = FlicketConfig.query.count()
+    if count > 0:
+        print('Flicket Config database seems to already be populated. Check values via application.')
+        return
+
+    set_config = FlicketConfig(
+        posts_per_page = flicket_config['posts_per_page'],
+        allowed_extensions= ', '.join(flicket_config['allowed_extensions']),
+        ticket_upload_folder=flicket_config['ticket_upload_folder'],
+    )
+
+    print('Adding config values to database.')
+    db.session.add(set_config)
+    db.session.commit()
+
+
+
 def get_admin_details():
-    # todo: add some password validation to prevent easy passwords being
-    # entered
+    # todo: add some password validation to prevent easy passwords being entered
     _username = ADMIN
     match = False
 
@@ -176,7 +200,7 @@ def create_default_depts(silent=False):
 
 if __name__ == '__main__':
     username, password, email = get_admin_details()
-
+    set_config_defaults()
     create_admin(username=username, password=password, email=email)
     create_announcer()
     for_testing_only()  # todo: remove this!

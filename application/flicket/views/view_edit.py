@@ -48,7 +48,7 @@ def edit_ticket(ticket_id):
                 # get the upload document information from the database.
                 query = FlicketUploads.query.filter_by(id=i).first()
                 # define the full uploaded filename
-                the_file = os.path.join(app.config['TICKET_UPLOAD_FOLDER'], query.filename)
+                the_file = os.path.join(app.config['ticket_upload_folder'], query.filename)
 
                 if os.path.isfile(the_file):
                     # delete the file from the folder

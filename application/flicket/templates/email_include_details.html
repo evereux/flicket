@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <th style="text-align: left">Status</th>
+        <td>{{ ticket.current_status.status }}</td>
+    </tr>
+    <tr>
+        <th style="text-align: left">Priority</th>
+        <td>{{ ticket.ticket_priority.priority }}</td>
+    </tr>
+    <tr>
+        <th style="text-align: left">Assigned</th>
+        <td>{% if ticket.assigned.username %}{{ ticket.assigned.name }}{% else %}ticket not claimed{% endif %}</td>
+    </tr>
+</table>

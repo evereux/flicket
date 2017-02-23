@@ -80,7 +80,7 @@ class CreateTicketForm(FlaskForm):
     priority = SelectField('priority', validators=[DataRequired()], coerce=int)
     category = SelectField('category', validators=[DataRequired()], coerce=int)
     file = FileField('Upload Documents', render_kw={'multiple': True})
-    submit = SubmitField('Submit', validators=[DataRequired()])
+    submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])
 
 
 class MultiCheckBoxField(SelectMultipleField):
@@ -105,7 +105,7 @@ class EditTicketForm(CreateTicketForm):
             self.uploads.choices.append((x[0], uri_label))
 
     uploads = MultiCheckBoxField('Label', coerce=int)
-    submit = SubmitField('Edit Ticket', validators=[DataRequired()])
+    submit = SubmitField('Edit Ticket', render_kw=form_class_button, validators=[DataRequired()])
 
 
 class ReplyForm(FlaskForm):
@@ -121,7 +121,7 @@ class EditReplyForm(ReplyForm):
         self.uploads.choices = generate_choices('Post', id=post_id)
 
     uploads = MultiCheckBoxField('Label', coerce=int)
-    submit = SubmitField('Edit Ticket', validators=[DataRequired()])
+    submit = SubmitField('Edit Ticket', render_kw=form_class_button, validators=[DataRequired()])
 
 
 class SearchUserForm(FlaskForm):

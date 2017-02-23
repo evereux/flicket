@@ -89,7 +89,7 @@ def tickets_main(page=1):
     tickets = tickets.order_by(FlicketTicket.id.desc())
     number_results = tickets.count()
 
-    tickets = tickets.paginate(page, app.config['POSTS_PER_PAGE'])
+    tickets = tickets.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_main.html',
                            title='Flicket - Tickets',

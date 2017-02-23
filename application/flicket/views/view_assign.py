@@ -9,6 +9,7 @@ from application.flicket.forms.flicket_forms import SearchEmailForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
 from application.flicket.models.user import User
 from application.flicket.scripts.flicket_functions import announcer_post
+from application.flicket.scripts.email import FlicketMail, get_recipients
 from . import flicket_bp
 
 
@@ -35,6 +36,10 @@ def ticket_assign(ticket_id=False):
 
         # add post to say user claimed ticket.
         announcer_post(ticket_id, g.user, 'Ticket assigned to {} by'.format(user.username))
+
+        # send email to state ticket has been assigned.
+        mail = FlicketMail()
+        mail.assign_ticket(ticket)
 
         flash('You reassigned ticket:{}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))

@@ -2,10 +2,9 @@
 # -*- coding: utf8 -*-
 
 from application import db
+from application.flicket.models import Base
 from application.flicket.models.user import User
 from config import BaseConfiguration
-
-Base = db.Model
 
 
 class FlicketStatus(Base):

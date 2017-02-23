@@ -1,0 +1,47 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Administration - Configuration</h1>
+        {% include 'admin_menu.html' %}
+
+        <form class="form-horizontal" action="" method="post" name="register">
+            {{ form.hidden_tag() }}
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Field
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                </tr>
+                {% for field in form if field.widget.input_type != 'hidden' and field.widget.input_type != 'submit' %}
+                        <tr>
+                            <td>
+                                {{ field.label }}
+                            </td>
+                            <td>
+                                {{ field }}
+                                {% if field.name == 'allowed_extensions' %}
+                                This must be a comma delimited list.
+                                {% endif %}
+
+                                {% if field.errors %}<span class="alert alert-warning">
+                                    {% for error in field.errors %}
+                                        {{ error }}.
+                                    {% endfor %}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                {% endfor %}
+            </table>
+            <div class="form-group">
+                <div class="text-center">
+                    {{ form.submit }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

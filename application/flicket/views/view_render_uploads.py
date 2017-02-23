@@ -13,5 +13,5 @@ from application import app
 @flicket_bp.route(app.config['WEBHOME'] + 'flicket_uploads/<path:filename>', methods=['GET', 'POST'])
 @login_required
 def view_ticket_uploads(filename):
-    path = os.path.join(os.getcwd(), app.config['TICKET_UPLOAD_FOLDER'])
+    path = os.path.join(os.getcwd(), app.config['ticket_upload_folder'])
     return send_from_directory(path, filename)

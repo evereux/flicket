@@ -35,7 +35,7 @@ def delete_ticket(ticket_id):
         images = FlicketUploads.query.filter_by(topic_id=ticket_id)
         for i in images:
             # delete files
-            os.remove(os.path.join(os.getcwd(), app.config['TICKET_UPLOAD_FOLDER'] + '/' + i.file_name))
+            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.file_name))
             # remove from database
             db.session.delete(i)
 
@@ -69,7 +69,7 @@ def delete_post(post_id):
         images = FlicketUploads.query.filter_by(posts_id=post_id)
         for i in images:
             # delete files
-            os.remove(os.path.join(os.getcwd(), app.config['TICKET_UPLOAD_FOLDER'] + '/' + i.file_name))
+            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.file_name))
             # remove from database
             db.session.delete(i)
 

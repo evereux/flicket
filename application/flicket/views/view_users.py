@@ -32,7 +32,7 @@ def flicket_users(page=1):
         form.name.data = filter
 
     users = users.order_by(User.username.asc())
-    users = users.paginate(page, app.config['POSTS_PER_PAGE'])
+    users = users.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_users.html',
                            title='Flicket - Users',

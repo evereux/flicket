@@ -4,7 +4,7 @@
 import datetime
 
 from application import db, app
-from application.home.models import Base
+from application.flicket.models import Base
 
 username_maxlength = 24
 name_maxlength = 60
@@ -14,7 +14,7 @@ group_maxlength = 64
 
 flicket_groups = db.Table('flicket-groups',
                           db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-                          db.Column('group_id', db.Integer, db.ForeignKey('flicket-group.id'))
+                          db.Column('group_id', db.Integer, db.ForeignKey('flicket_group.id'))
                           )
 
 
@@ -58,7 +58,7 @@ class User(Base):
     def is_admin(self):
         """ returns true if the user is a member of the 'flicket_admin' group"""
         user = User.query.filter_by(id=self.id).first()
-        for g in user.groups:
+        for g in user.flicket_groups:
             if g.group_name == app.config['ADMIN_GROUP_NAME']:
                 return True
 
@@ -70,12 +70,12 @@ class FlicketGroup(Base):
     '''
     Flicket Group model class
     '''
-    __tablename__ = 'flicket-group'
+    __tablename__ = 'flicket_group'
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(group_maxlength))
     users = db.relationship(User,
                             secondary=flicket_groups,
-                            backref=db.backref('flicket-groups',
+                            backref=db.backref('flicket_groups',
                                                lazy='dynamic',
                                                order_by=group_name
                                                )

@@ -14,7 +14,7 @@ from config import BaseConfiguration
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1] in app.config['allowed_extensions']
 
 
 def upload_documents(files):
@@ -29,7 +29,7 @@ def upload_documents(files):
 
             target_file = False
             if f and allowed_file(f.filename):
-                target_file = os.path.join(app.config['TICKET_UPLOAD_FOLDER'], f.filename)
+                target_file = os.path.join(app.config['ticket_upload_folder'], f.filename)
                 target_file = secure_filename(target_file)
                 f.save(target_file)
 
@@ -42,7 +42,7 @@ def upload_documents(files):
                     new_name_size = BaseConfiguration.db_field_size['ticket']['upload_filename'] - len(
                         os.path.splitext(target_file)[1])
                     new_name = random_string(new_name_size) + os.path.splitext(target_file)[1]
-                    new_name = os.path.join(app.config['TICKET_UPLOAD_FOLDER'], new_name)
+                    new_name = os.path.join(app.config['ticket_upload_folder'], new_name)
                     # make sure new name doesn't already exist
                     if not os.path.isfile(new_name):
                         break

@@ -25,7 +25,7 @@ def departments(page=1):
         flash('New department {} added.'.format(form.department.data))
         return redirect(url_for('flicket_bp.departments'))
 
-    departments = departments.paginate(page, app.config['POSTS_PER_PAGE'])
+    departments = departments.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_departments.html',
                            title='Flicket - Departments',

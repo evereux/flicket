@@ -12,13 +12,15 @@ from application.flicket.forms.flicket_forms import ReplyForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
-
+from application.flicket.scripts.email import FlicketMail, get_recipients
 
 # view ticket details
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def ticket_view(ticket_id, page=1):
+
+    # todo: make sure underscores aren't allowed in usernames as it breaks markdown.
 
     # is ticket number legitimate
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -34,6 +36,7 @@ def ticket_view(ticket_id, page=1):
     ticket_rid = request.args.get('ticket_rid')
 
     form = ReplyForm()
+
 
     # add reply post
     if form.validate_on_submit():
@@ -65,8 +68,11 @@ def ticket_view(ticket_id, page=1):
         ticket.current_status = open
         db.session.commit()
 
-        flash('You have replied to ticket {}: {}.'.format(ticket.id_zfill, ticket.title), category="success")
+        # send email notification
+        mail = FlicketMail()
+        mail.reply_ticket(ticket=ticket)
 
+        flash('You have replied to ticket {}: {}.'.format(ticket.id_zfill, ticket.title), category="success")
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # get post id and populate contents for auto quoting
@@ -78,7 +84,7 @@ def ticket_view(ticket_id, page=1):
         reply_contents = "{} wrote on {}\r\n\r\n{}".format(ticket.user.name, ticket.date_added, ticket.content)
         form.content.data = block_quoter(reply_contents)
 
-    replies = replies.paginate(page, app.config['POSTS_PER_PAGE'])
+    replies = replies.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_view.html',
                            title='Flicket - View Ticket',

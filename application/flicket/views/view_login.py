@@ -13,24 +13,18 @@ from flask import (flash,
 from flask_login import (current_user,
                          login_user,
                          logout_user)
+from flask_mail import Mail
 from flask_principal import (Identity,
-                             identity_changed,
-                             identity_loaded,
-                             Permission,
-                             Principal,
-                             RoleNeed,
-                             UserNeed)
+                             identity_changed)
 
 from application import app, lm, db
 from application.flicket.forms.form_login import LogInForm
 from application.flicket.models.user import User
+from application.flicket.scripts.flicket_config import set_flicket_config
 from application.flicket_admin.views import admin_bp
 from . import flicket_bp
 
-principals = Principal(flicket_bp)
-# define flicket_admin role need
-admin_only = RoleNeed('flicket_admin')
-admin_permission = Permission(admin_only)
+
 
 
 # functions for redirecting user back from whence they came.
@@ -54,10 +48,13 @@ def load_user(user_id):
 
 
 # before any view is generated the user must be checked.
-@flicket_bp.before_request
-@admin_bp.before_request
+# @flicket_bp.before_request
+# @admin_bp.before_request
+@app.before_request
 def before_request():
+    set_flicket_config()
     g.user = current_user
+
 
 
 # add 404 error handler
@@ -77,23 +74,6 @@ def not_found_error(error):
 def internal_error(error):
     db.session.rollback()
     return render_template('500.html'), 500
-
-
-# add permissions
-@identity_loaded.connect_via(app)
-def on_identity_loaded(sender, identity):
-    # set the identity user object
-    identity.user = current_user
-    # Add the UserNeed to the identity
-    if hasattr(current_user, 'id'):
-        identity.provides.add(UserNeed(current_user.id))
-
-    # Assuming the User model has a list of groups, update the
-    # identity with the groups that the user provides
-    if hasattr(current_user, 'groups'):
-        the_user = User.query.filter_by(id=current_user.id).first()
-        for g in the_user.groups:
-            identity.provides.add(RoleNeed('{}'.format(g.group_name)))
 
 
 # login page

@@ -130,7 +130,7 @@ def api_tickets(page=1):
 
     tickets = tickets.order_by(FlicketTicket.id.desc())
 
-    tickets = tickets.paginate(page, app.config['POSTS_PER_PAGE'])
+    tickets = tickets.paginate(page, app.config['posts_per_page'])
 
     my_list = []
     for t in tickets.items:
