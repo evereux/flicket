@@ -6,6 +6,7 @@ from application.flicket.models.flicket_models import FlicketPost
 from application.flicket.scripts.decorators import async
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
+
 def get_recipients(ticket):
     """
     Returns a list of emails of all users who have responded to ticket.
@@ -35,7 +36,7 @@ def pad_ticket_id(ticket):
     return str(ticket.id).zfill(6)
 
 
-class FlicketMail():
+class FlicketMail:
     """
     FlicketMail class to send emails.
     """
@@ -107,15 +108,21 @@ class FlicketMail():
 
         title = 'Ticket "{} - {}" - has been assigned'.format(pad_ticket_id(ticket), ticket.title)
         ticket_url = url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        print(ticket_url)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=pad_ticket_id(ticket),
                                     ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)
 
-
     @async
     def send_email(self, subject, sender, recipients, html_body):
+        """
+
+        :param subject:
+        :param sender:
+        :param recipients:
+        :param html_body:
+        :return:
+        """
         message = Message(subject, sender=sender, recipients=recipients)
         message.html = html_body
 

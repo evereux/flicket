@@ -11,7 +11,7 @@ from application.flicket.models.flicket_models import (FlicketStatus,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketCategory)
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from . import flicket_bp
 
 
@@ -36,7 +36,7 @@ def tickets_main(page=1):
         category = ''
         status = ''
 
-        user = User.query.filter_by(email=form.email.data).first()
+        user = FlicketUser.query.filter_by(email=form.email.data).first()
         if user:
             user_id = user.id
 

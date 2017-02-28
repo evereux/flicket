@@ -4,10 +4,10 @@ import getpass
 from application import db, app
 from application.flicket_admin.models.flicket_config import FlicketConfig
 from application.flicket.models.flicket_models import FlicketStatus, FlicketPriority, FlicketDepartment, FlicketCategory
-from application.flicket.models.user import User, FlicketGroup
+from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
 
-ADMIN = 'flicket_admin'
+admin = 'flicket_admin'
 
 # configuration defaults for flicket
 flicket_config = {'posts_per_page': 50,
@@ -47,7 +47,7 @@ def set_config_defaults():
 
 def get_admin_details():
     # todo: add some password validation to prevent easy passwords being entered
-    _username = ADMIN
+    _username = admin
     match = False
 
     email = input("Enter flicket_admin email: ")
@@ -65,13 +65,13 @@ def get_admin_details():
 
 def create_admin(username, password, email, silent=False):
     """ creates flicket_admin user. """
-    query = User.query.filter_by(username=username)
+    query = FlicketUser.query.filter_by(username=username)
     if query.count() == 0:
-        add_user = User(username=username,
-                        name=username,
-                        password=hash_password(password),
-                        email=email,
-                        date_added=datetime.datetime.now())
+        add_user = FlicketUser(username=username,
+                               name=username,
+                               password=hash_password(password),
+                               email=email,
+                               date_added=datetime.datetime.now())
         db.session.add(add_user)
 
         if silent is False:
@@ -80,42 +80,15 @@ def create_admin(username, password, email, silent=False):
 
 def create_announcer():
     """ creates announcer user """
-    query = User.query.filter_by(username=app.config['ANNOUNCER']['username'])
+    query = FlicketUser.query.filter_by(username=app.config['ANNOUNCER']['username'])
     if query.count() == 0:
-        add_user = User(username=app.config['ANNOUNCER']['username'],
-                        name=app.config['ANNOUNCER']['name'],
-                        password=hash_password(app.config['ANNOUNCER']['password']),
-                        email=app.config['ANNOUNCER']['email'],
-                        date_added=datetime.datetime.now())
+        add_user = FlicketUser(username=app.config['ANNOUNCER']['username'],
+                               name=app.config['ANNOUNCER']['name'],
+                               password=hash_password(app.config['ANNOUNCER']['password']),
+                               email=app.config['ANNOUNCER']['email'],
+                               date_added=datetime.datetime.now())
         db.session.add(add_user)
         print("Announcer user added.")
-
-
-def for_testing_only(silent=False):
-    """ adds some generic users. this is for testing only! """
-    users = [
-        ('paul', 'paul wauly', '12345', 'evereux1@gmail.com'),
-        ('bill', 'billy bob', '12345', 'evereux2@gmail.com'),
-        ('nicola', 'nicola pikola', '12345', 'evereux3@gmail.com'),
-        ('jenny', 'jenny wenny', '12345', 'evereux4@gmail.com'),
-        ('ryan', 'ryan newby', '12345', 'evereux6@gmail.com'),
-        ('luke', 'luke newby', '12345', 'evereux7@gmail.com'),
-    ]
-    for u in users:
-
-        user = User.query.filter_by(username=u[0]).first()
-        if not user:
-            add_user = User(
-                username=u[0],
-                name=u[1],
-                password=hash_password(u[2]),
-                email=u[3],
-                date_added=datetime.datetime.now()
-            )
-            db.session.add(add_user)
-
-            if silent is False:
-                print("user {} added.".format(u[1]))
 
 
 def create_admin_group(silent=False):
@@ -127,12 +100,12 @@ def create_admin_group(silent=False):
         if silent is False:
             print("Admin group added")
 
-    user = User.query.filter_by(username=ADMIN).first()
+    user = FlicketUser.query.filter_by(username=admin).first()
     group = FlicketGroup.query.filter_by(group_name=app.config['ADMIN_GROUP_NAME']).first()
     in_group = False
     # see if user flicket_admin is already in flicket_admin group.
     for g in group.users:
-        if g.username == ADMIN:
+        if g.username == admin:
             in_group = True
             break
     if not in_group:
@@ -198,15 +171,27 @@ def create_default_depts(silent=False):
                         print("category {} added.".format(c))
 
 
+def set_email_config():
+    """
+    To stop mail send errors after intial set-up set the email configuration value for suppress
+    send will be set to True
+    :return:
+    """
+    query = FlicketConfig.query.first()
+    if query.first().mail_server is None:
+        query.mail_suppress_send = True
+        db.session.commit()
+
+
 if __name__ == '__main__':
     username, password, email = get_admin_details()
     set_config_defaults()
     create_admin(username=username, password=password, email=email)
     create_announcer()
-    for_testing_only()  # todo: remove this!
     create_admin_group()
     create_default_ticket_status()
     create_default_priority_levels()
     create_default_depts()
     # commit changes to the database
+    set_email_config()
     db.session.commit()

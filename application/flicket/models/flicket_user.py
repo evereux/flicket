@@ -13,16 +13,16 @@ email_maxlength = 60
 group_maxlength = 64
 
 flicket_groups = db.Table('flicket-groups',
-                          db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+                          db.Column('user_id', db.Integer, db.ForeignKey('flicket_users.id')),
                           db.Column('group_id', db.Integer, db.ForeignKey('flicket_group.id'))
                           )
 
 
-class User(Base):
+class FlicketUser(Base):
     '''
     User model class
     '''
-    __tablename__ = 'users'
+    __tablename__ = 'flicket_users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(username_maxlength), index=True, unique=True)
@@ -57,7 +57,7 @@ class User(Base):
     @property
     def is_admin(self):
         """ returns true if the user is a member of the 'flicket_admin' group"""
-        user = User.query.filter_by(id=self.id).first()
+        user = FlicketUser.query.filter_by(id=self.id).first()
         for g in user.flicket_groups:
             if g.group_name == app.config['ADMIN_GROUP_NAME']:
                 return True
@@ -73,7 +73,7 @@ class FlicketGroup(Base):
     __tablename__ = 'flicket_group'
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(group_maxlength))
-    users = db.relationship(User,
+    users = db.relationship(FlicketUser,
                             secondary=flicket_groups,
                             backref=db.backref('flicket_groups',
                                                lazy='dynamic',

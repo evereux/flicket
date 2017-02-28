@@ -13,7 +13,7 @@ from io import BytesIO
 from coverage import coverage
 
 from application import app, db, lm
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, \
     for_testing_only
@@ -64,7 +64,7 @@ class TestCase(unittest.TestCase):
     def create_user(self, username='john_1234', email='good@email.com', password='12345'):
         # create a new user
         password = hash_password(password)
-        _user = User(
+        _user = FlicketUser(
             username=username,
             name=username,
             password=password,

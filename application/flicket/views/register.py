@@ -7,7 +7,7 @@ from flask import flash, redirect, render_template, url_for
 
 from application import app, db
 from application.flicket.forms.forms_main import RegisterForm
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from . import flicket_bp
 
@@ -18,11 +18,11 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         password = hash_password(form.password.data)
-        _register = User(username=form.username.data,
-                         email=form.email.data,
-                         name=form.name.data,
-                         password=password,
-                         date_added=datetime.datetime.now())
+        _register = FlicketUser(username=form.username.data,
+                                email=form.email.data,
+                                name=form.name.data,
+                                password=password,
+                                date_added=datetime.datetime.now())
         db.session.add(_register)
         db.session.commit()
         flash('You have successfully registered.')

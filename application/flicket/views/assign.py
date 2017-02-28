@@ -7,7 +7,7 @@ from flask_login import login_required
 from application import app, db
 from application.flicket.forms.flicket_forms import SearchEmailForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_functions import announcer_post
 from application.flicket.scripts.email import FlicketMail, get_recipients
 from . import flicket_bp
@@ -25,7 +25,7 @@ def ticket_assign(ticket_id=False):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        user = FlicketUser.query.filter_by(email=form.email.data).first()
 
         # assign ticket
         # set status to in work

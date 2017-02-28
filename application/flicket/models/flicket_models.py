@@ -3,7 +3,7 @@
 
 from application import db
 from application.flicket.models import Base
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from config import BaseConfiguration
 
 
@@ -47,14 +47,14 @@ class FlicketTicket(Base):
     title = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['title']), index=True)
     content = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['description']))
 
-    started_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    user = db.relationship(User, foreign_keys='FlicketTicket.started_id')
+    started_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    user = db.relationship(FlicketUser, foreign_keys='FlicketTicket.started_id')
 
     date_added = db.Column(db.DateTime())
     date_modified = db.Column(db.DateTime())
 
-    modified_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    modified = db.relationship(User, foreign_keys='FlicketTicket.modified_id')
+    modified_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    modified = db.relationship(FlicketUser, foreign_keys='FlicketTicket.modified_id')
 
     status_id = db.Column(db.Integer, db.ForeignKey(FlicketStatus.id))
     current_status = db.relationship(FlicketStatus)
@@ -62,8 +62,8 @@ class FlicketTicket(Base):
     category_id = db.Column(db.Integer, db.ForeignKey(FlicketCategory.id))
     category = db.relationship(FlicketCategory)
 
-    assigned_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    assigned = db.relationship(User, foreign_keys='FlicketTicket.assigned_id')
+    assigned_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    assigned = db.relationship(FlicketUser, foreign_keys='FlicketTicket.assigned_id')
 
     ticket_priority_id = db.Column(db.Integer, db.ForeignKey(FlicketPriority.id))
     ticket_priority = db.relationship(FlicketPriority)
@@ -94,14 +94,14 @@ class FlicketPost(Base):
 
     content = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['description']))
 
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    user = db.relationship(User, foreign_keys='FlicketPost.user_id')
+    user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    user = db.relationship(FlicketUser, foreign_keys='FlicketPost.user_id')
 
     date_added = db.Column(db.DateTime())
     date_modified = db.Column(db.DateTime())
 
-    modified_by = db.Column(db.Integer, db.ForeignKey(User.id))
-    modified = db.relationship(User, foreign_keys='FlicketPost.modified_by')
+    modified_by = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    modified = db.relationship(FlicketUser, foreign_keys='FlicketPost.modified_by')
 
     # finds all the images associated with the post
     uploads = db.relationship('FlicketUploads',

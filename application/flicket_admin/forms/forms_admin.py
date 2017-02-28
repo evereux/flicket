@@ -6,12 +6,12 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectMultipleField, PasswordField, HiddenField
 from wtforms.validators import DataRequired, Length
 
-from application.flicket.models.user import (FlicketGroup,
-                                             User,
-                                             username_maxlength,
-                                             name_maxlength,
-                                             email_maxlength,
-                                             group_maxlength)
+from application.flicket.models.flicket_user import (FlicketGroup,
+                                                     FlicketUser,
+                                                     username_maxlength,
+                                                     name_maxlength,
+                                                     email_maxlength,
+                                                     group_maxlength)
 
 
 def group_exists(form, field):
@@ -31,7 +31,7 @@ def group_exists(form, field):
 def check_password(form, field):
     """ Is users password correct. """
     ok = True
-    result = User.query.filter_by(id=form.id.data).first()
+    result = FlicketUser.query.filter_by(id=form.id.data).first()
 
     if bcrypt.hashpw(form.password.data.encode('utf-8'), result.password) != result.password:
         field.errors.append('Entered password is incorrect.')

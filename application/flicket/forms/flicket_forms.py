@@ -12,7 +12,7 @@ from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketDepartment,
                                                        FlicketPriority,
                                                        FlicketTicket)
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.upload_choice_generator import generate_choices
 
 form_class_button = {'class': 'btn btn-primary'}
@@ -26,7 +26,7 @@ def does_email_exist(form, field):
     :return True / False:
     """
     if form.email.data:
-        result = User.query.filter_by(email=form.email.data).count()
+        result = FlicketUser.query.filter_by(email=form.email.data).count()
         if result == 0:
             field.errors.append('Can\'t find user.')
             return False

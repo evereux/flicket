@@ -9,7 +9,7 @@ from flask import flash
 
 from application import db, app
 from application.flicket.models.flicket_models import FlicketPost
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 
 
 def random_string(characters=5):
@@ -20,7 +20,7 @@ def random_string(characters=5):
 
 
 def announcer_post(ticket_id, user, contents):
-    announcer = User.query.filter_by(username=app.config['ANNOUNCER']['username']).first()
+    announcer = FlicketUser.query.filter_by(username=app.config['ANNOUNCER']['username']).first()
     if not announcer:
         flash('There is no user allocated to close tickets.')
         return False

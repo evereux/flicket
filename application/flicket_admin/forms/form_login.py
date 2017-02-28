@@ -7,7 +7,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired
 
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 
 
 def login_user_exist(form, field):
@@ -17,7 +17,7 @@ def login_user_exist(form, field):
     :param field:
     :return True False:
     """
-    result = User.query.filter_by(username=form.username.data)
+    result = FlicketUser.query.filter_by(username=form.username.data)
     if result.count() == 0:
         field.errors.append('Invalid username.')
         return False

@@ -10,10 +10,10 @@ from wtforms.validators import (DataRequired,
                                 Length,
                                 EqualTo)
 
-from application.flicket.models.user import (User,
-                                             username_maxlength,
-                                             name_maxlength,
-                                             email_maxlength)
+from application.flicket.models.flicket_user import (FlicketUser,
+                                                     username_maxlength,
+                                                     name_maxlength,
+                                                     email_maxlength)
 from application.flicket.scripts.functions_login import check_email_format
 
 
@@ -24,7 +24,7 @@ def does_username_exist(form, field):
     :param field:
     :return True / False:
     """
-    result = User.query.filter_by(username=form.username.data).count()
+    result = FlicketUser.query.filter_by(username=form.username.data).count()
     if result > 0:
         field.errors.append('A user with this username has already registered.')
         return False
@@ -59,7 +59,7 @@ def check_password(form, field):
     :return True / False:
     """
     ok = True
-    result = User.query.filter_by(username=g.user.username).first()
+    result = FlicketUser.query.filter_by(username=g.user.username).first()
     if bcrypt.hashpw(form.password.data.encode('utf-8'), result.password) != result.password:
         field.errors.append('Entered password is incorrect.')
         return False
@@ -71,7 +71,7 @@ def check_email(form, field):
     if not check_email_format(field.data):
         field.errors.append('Please enter a valid email address.')
         ok = False
-    result = User.query.filter_by(email=form.email.data).count()
+    result = FlicketUser.query.filter_by(email=form.email.data).count()
     if result > 0:
         field.errors.append('A user with this email address has already registered.')
         ok = False
@@ -95,7 +95,7 @@ class CheckPasswordCorrect(object):
         self.password = form.password.data
         self.password = self.password.encode('utf-8')
         ok = True
-        user = User.query.filter_by(username=form.username.data).first()
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
         # hashed = user.password
         if user and not bcrypt.hashpw(self.password, user.password) == user.password:
             field.errors.append('Your username and password do not match those in the database.')

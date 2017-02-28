@@ -11,7 +11,7 @@ from flask_principal import Permission, Principal, RoleNeed, identity_loaded, Us
 
 from application import app, db
 from application.flicket.forms.forms_main import RegisterForm
-from application.flicket.models.user import User, FlicketGroup
+from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
 from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm
 from . import admin_bp
@@ -34,7 +34,7 @@ def on_identity_loaded(sender, identity):
     # Assuming the User model has a list of groups, update the
     # identity with the groups that the user provides
     if hasattr(current_user, 'flicket_groups'):
-        the_user = User.query.filter_by(id=current_user.id).first()
+        the_user = FlicketUser.query.filter_by(id=current_user.id).first()
         for g in the_user.flicket_groups:
             identity.provides.add(RoleNeed('{}'.format(g.group_name)))
 
@@ -52,7 +52,7 @@ def index():
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_users(page=1):
-    users = User.query.order_by(User.username)
+    users = FlicketUser.query.order_by(FlicketUser.username)
     users = users.paginate(page, app.config['posts_per_page'])
 
     return render_template('admin_users.html', title='Users', users=users)
@@ -66,11 +66,11 @@ def add_user():
     form = RegisterForm()
     if form.validate_on_submit():
         password = hash_password(form.password.data)
-        register = User(username=form.username.data,
-                        email=form.email.data,
-                        name=form.name.data,
-                        password=password,
-                        date_added=datetime.datetime.now())
+        register = FlicketUser(username=form.username.data,
+                               email=form.email.data,
+                               name=form.name.data,
+                               password=password,
+                               date_added=datetime.datetime.now())
         db.session.add(register)
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
@@ -85,12 +85,12 @@ def add_user():
 def admin_edit_user():
     form = EditUserForm()
     id = request.args.get('id')
-    user = User.query.filter_by(id=id).first()
+    user = FlicketUser.query.filter_by(id=id).first()
     if user:
         if form.validate_on_submit():
             # check the username is unique
             if (user.username != form.username.data):
-                query = User.query.filter_by(username=form.username.data)
+                query = FlicketUser.query.filter_by(username=form.username.data)
                 if query.count() > 0:
                     flash('Username already exists')
                 else:
@@ -134,7 +134,7 @@ def admin_edit_user():
 def admin_delete_user():
     form = EnterPasswordForm()
     id = request.args.get('id')
-    user_details = User.query.filter_by(id=id).first()
+    user_details = FlicketUser.query.filter_by(id=id).first()
 
     # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':

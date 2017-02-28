@@ -4,6 +4,7 @@
 from application import db
 from application.flicket.models import Base
 
+
 class FlicketConfig(Base):
     """
     Server email configuration settings. https://flask-mail.readthedocs.io/en/latest/ for
@@ -12,10 +13,12 @@ class FlicketConfig(Base):
     __tablename__ = 'flicket_config'
 
     def __init__(self, **kwargs):
-
+        """
+        Initialisation used for initial setup.py file.
+        :param kwargs:
+        """
         for key, value in kwargs.items():
             setattr(self, key, value)
-
 
     id = db.Column(db.Integer, primary_key=True)
     mail_server = db.Column(db.String(128))

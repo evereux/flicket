@@ -14,7 +14,7 @@ from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketStatus)
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from . import flicket_api_bp
 
 
@@ -35,10 +35,10 @@ def alchemy_encoder(obj):
 def api_users():
     filter = request.args.get('filter')
 
-    query = User.query
+    query = FlicketUser.query
 
     if filter:
-        query = query.filter(User.username.ilike('%{}%'.format(filter)))
+        query = query.filter(FlicketUser.username.ilike('%{}%'.format(filter)))
 
     my_list = []
     for u in query:

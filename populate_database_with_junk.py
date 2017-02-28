@@ -6,6 +6,8 @@ This script populates the flicket database with randomly generated text.
 Run calling python script_name.py.
 """
 
+
+import sys
 import datetime
 from random import randint
 
@@ -17,8 +19,9 @@ from application.flicket.models.flicket_models import FlicketTicket, \
     FlicketPriority, \
     FlicketCategory, \
     FlicketPost
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
+from setup import admin
 
 num_topics = 1000
 num_replies = 25
@@ -26,13 +29,28 @@ num_users = 200
 
 rn = RandomNicknames()
 
+# Check to see if set-up has been run.
+query = FlicketUser.query.filter_by(username=admin)
+if query.count() != 1:
+    print('Setup has not get been run!')
+    exit()
+
+mismatch = True
+while mismatch is True:
+    base_email = input('Please enter your email for testing> ')
+    base_email_confirm = input('Please confirm your email> ')
+    if base_email == base_email_confirm:
+        mismatch = False
+    else:
+        print('Your email address did not match. Please try again.')
+
 
 # get a list of users and return a random one
 def get_random_user():
-    user = User.query
+    user = FlicketUser.query
     id = randint(1, user.count())
 
-    return User.query.filter_by(id=id).first()
+    return FlicketUser.query.filter_by(id=id).first()
 
 
 def get_random_status():
@@ -93,7 +111,7 @@ def create_random_user():
 
 def user_creation():
     # count how many users are in database. if it is already populated don't add any more.
-    user_count = User.query.count()
+    user_count = FlicketUser.query.count()
     if user_count == num_users:
         print('Number of users already satisfied.')
         return
@@ -103,14 +121,14 @@ def user_creation():
         username, name, password, email = create_random_user()
 
         # check username doesn't already exist
-        query = User.query.filter_by(username=username).first()
+        query = FlicketUser.query.filter_by(username=username).first()
 
         if not query:
-            new_user = User(
+            new_user = FlicketUser(
                 username=username,
                 name=name,
                 password=hash_password(password),
-                email=email,
+                email='{}+{}'.format(username, base_email),
                 date_added=datetime.datetime.now()
             )
             db.session.add(new_user)

@@ -5,7 +5,7 @@ import re
 
 import bcrypt
 
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 
 
 def check_password_format(password):
@@ -39,7 +39,7 @@ def is_user_registered(username):
     :return: True if registered
     """
 
-    query = User.query.filter_by(username=username)
+    query = FlicketUser.query.filter_by(username=username)
     if query.count() == 1:
         return True
     return False
@@ -52,7 +52,7 @@ def is_registered_password_correct(username, password):
     :return: True if password is correct
     """
 
-    user = User.query.filter_by(username=username).first()
+    user = FlicketUser.query.filter_by(username=username).first()
     hashed = user.password
     password = password.encode('utf-8')
 

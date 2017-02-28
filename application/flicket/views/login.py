@@ -19,7 +19,7 @@ from flask_principal import (Identity,
 
 from application import app, lm, db
 from application.flicket.forms.form_login import LogInForm
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_config import set_flicket_config
 from application.flicket_admin.views import admin_bp
 from . import flicket_bp
@@ -44,7 +44,7 @@ def get_redirect_target():
 
 @lm.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return FlicketUser.query.get(int(user_id))
 
 
 # before any view is generated the user must be checked.
@@ -86,7 +86,7 @@ def login():
     form = LogInForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
         session['remember_me'] = form.remember_me.data
         identity_changed.send(app, identity=Identity(user.id))
         login_user(user)

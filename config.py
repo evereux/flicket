@@ -12,8 +12,8 @@ class BaseConfiguration(object):
     EXPLAIN_TEMPLATE_LOADING = False
 
     # user login information for database user.
-    db_username = 'flicket'  # not required for sqlite connection
-    db_password = 'flicket'  # not required for sqlite connection
+    db_username = 'flicket-db'  # not required for sqlite connection
+    db_password = 'cP8OD,PYd5?^gQT0i/ox'  # not required for sqlite connection
     # database connection details
     db_type = 'mysql+pymysql'  # not required for sqlite connection
     db_port = '3306'  # not required for sqlite connection

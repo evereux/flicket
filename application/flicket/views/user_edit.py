@@ -6,7 +6,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.flicket.forms.forms_main import EditUserForm
-from application.flicket.models.user import User
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.functions_login import check_password_format
 from application.flicket.scripts.hash_password import hash_password
 from . import flicket_bp
@@ -21,7 +21,7 @@ def user_details():
     if form.validate_on_submit():
 
         # find the user in db to edit
-        user = User.query.filter_by(id=g.user.id).first()
+        user = FlicketUser.query.filter_by(id=g.user.id).first()
         user.name = form.name.data
         user.email = form.email.data
         flash('You have edited your user details.', category='success')
