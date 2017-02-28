@@ -47,7 +47,8 @@ from .flicket.views import (assign,
                             release_ticket,
                             render_uploads,
                             user_edit,
-                            users)
+                            users,
+                            view)
 from .flicket_api.views import api
 
 app.register_blueprint(admin_bp)
