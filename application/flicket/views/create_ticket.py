@@ -64,8 +64,8 @@ def ticket_create():
         db.session.commit()
 
         # send email notification
-        mail = FlicketMail()
-        mail.create_ticket(ticket=new_ticket)
+        f_mail = FlicketMail()
+        f_mail.create_ticket(ticket=new_ticket)
 
         flash('New Ticket created.', category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))

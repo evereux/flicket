@@ -11,7 +11,7 @@ from application.flicket.scripts.flicket_functions import announcer_post
 
 
 # close ticket
-@flicket_bp.route(app.config['FLICKET'] + 'change_status/<ticket_id>/<status>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'change_status/<ticket_id>/<status>/', methods=['GET', 'POST'])
 @login_required
 def change_status(ticket_id, status):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -29,7 +29,7 @@ def change_status(ticket_id, status):
     if not edit:
         flash('Only the person to which the ticket has been assigned, creator or Admin can close this ticket.',
               category='warning')
-        return redirect(url_for('ticket_view', ticket_id=ticket_id))
+        return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # Check to see if the ticket is already closed.
     if ticket.current_status.status == 'Closed':

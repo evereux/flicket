@@ -8,10 +8,11 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
 from application.flicket.scripts.flicket_functions import announcer_post
+from application.flicket.scripts.email import FlicketMail
 
 
 # view for self claim a ticket
-@flicket_bp.route(app.config['FLICKET'] + 'ticket_claim/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_claim/<int:ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def ticket_claim(ticket_id=False):
     if ticket_id:
@@ -26,6 +27,10 @@ def ticket_claim(ticket_id=False):
 
         # add post to say user claimed ticket.
         announcer_post(ticket_id, g.user, 'Ticket assigned to')
+
+        # send email notifications
+        f_mail = FlicketMail()
+        f_mail.assign_ticket(ticket=ticket)
 
         flash('You claimed ticket:{}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))

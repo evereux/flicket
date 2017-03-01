@@ -33,12 +33,13 @@ def alchemy_encoder(obj):
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'users/', methods=['GET', 'POST'])
 @login_required
 def api_users():
-    filter = request.args.get('filter')
+
+    __filter = request.args.get('filter')
 
     query = FlicketUser.query
 
-    if filter:
-        query = query.filter(FlicketUser.username.ilike('%{}%'.format(filter)))
+    if __filter:
+        query = query.filter(FlicketUser.username.ilike('%{}%'.format(__filter)))
 
     my_list = []
     for u in query:

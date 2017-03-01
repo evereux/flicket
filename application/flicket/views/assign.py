@@ -14,7 +14,7 @@ from . import flicket_bp
 
 
 # tickets main
-@flicket_bp.route(app.config['FLICKET'] + 'ticket_assign/<int:ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'ticket_assign/<int:ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def ticket_assign(ticket_id=False):
     form = SearchEmailForm()
@@ -38,8 +38,8 @@ def ticket_assign(ticket_id=False):
         announcer_post(ticket_id, g.user, 'Ticket assigned to {} by'.format(user.username))
 
         # send email to state ticket has been assigned.
-        mail = FlicketMail()
-        mail.assign_ticket(ticket)
+        f_mail = FlicketMail()
+        f_mail.assign_ticket(ticket)
 
         flash('You reassigned ticket:{}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))

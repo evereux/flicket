@@ -17,13 +17,13 @@ from . import flicket_bp
 
 
 # delete ticket
-@flicket_bp.route(app.config['FLICKET'] + 'delete_ticket/<ticket_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete_ticket/<ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_ticket(ticket_id):
     # check is user is authorised to delete tickets. Currently, only admins can delete tickets.
     if not g.user.is_admin:
         flash('You are not authorised to delete tickets.', category='warning')
-        return redirect(url_for('ticket_view', ticket_id=ticket_id))
+        return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     form = ConfirmPassword()
 
@@ -52,7 +52,7 @@ def delete_ticket(ticket_id):
 
 
 # delete post
-@flicket_bp.route(app.config['FLICKET'] + 'delete_post/<post_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete_post/<post_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
     # check user is authorised to delete posts. Only admin can do this.
@@ -86,7 +86,7 @@ def delete_post(post_id):
 
 
 # delete category
-@flicket_bp.route(app.config['FLICKET'] + 'delete/category/<int:category_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete/category/<int:category_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_category(category_id=False):
     if category_id:
@@ -125,7 +125,7 @@ def delete_category(category_id=False):
 
 
 # delete department
-@flicket_bp.route(app.config['FLICKET'] + 'delete/department/<int:department_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'delete/department/<int:department_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_department(department_id=False):
     if department_id:

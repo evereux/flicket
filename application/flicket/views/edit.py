@@ -90,10 +90,13 @@ def edit_ticket(ticket_id):
 
 
 # edit post
-@flicket_bp.route(app.config['FLICKET'] + 'edit_post/<int:post_id>', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'edit_post/<int:post_id>/', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    form = EditReplyForm('Post', post_id=post_id)
+
+    print(post_id)
+
+    form = EditReplyForm(post_id=post_id)
 
     post = FlicketPost.query.filter_by(id=post_id).first()
 
@@ -132,7 +135,6 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 
     form.content.data = post.content
-    print(form.uploads)
 
     return render_template('flicket_editpost.html',
                            title='Flicket - Edit Post',

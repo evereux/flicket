@@ -121,7 +121,7 @@ class EditReplyForm(ReplyForm):
         self.uploads.choices = generate_choices('Post', id=post_id)
 
     uploads = MultiCheckBoxField('Label', coerce=int)
-    submit = SubmitField('Edit Ticket', render_kw=form_class_button, validators=[DataRequired()])
+    submit = SubmitField('Edit Reply', render_kw=form_class_button, validators=[DataRequired()])
 
 
 class SearchUserForm(FlaskForm):

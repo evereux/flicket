@@ -26,15 +26,19 @@
             {{ form.uploads }}
         {% endif %}
 
-        <label class="col-sm-2 control-label">{{ form.file.label }}</label>
-        <div class="col-sm-3">
-            {{ form.file }}
+        <div class="form-group">
+
+            <label class="col-sm-2 control-label">{{ form.file.label }}</label>
+            <div class="col-sm-3">
+                {{ form.file }}
+            </div>
+
+            <div class="col-sm-7 text-right">
+                {{ form.submit }}
+            </div>
+
         </div>
 
-
-        <div class="form-group text-center">
-            {{ form.submit }}
-        </div>
 
     </div>
 </form>

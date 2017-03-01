@@ -28,7 +28,7 @@ in such a way that makes integrating Flicket not too much of a chore.
 # Initial Set Up
 1. Create your database and a database user that will access the flicket
 database.
-2. Edit config.py username password defaults for your admin and database users. 
+2. Edit config.py username password for your flicket database user.
 3. Do __not__ leave the password defaults as is.
 4. If you are using a database server other than MySQL you can easily 
 switch to that by editing the db_type value. See [SQLAlchemy documentation](http://docs.sqlalchemy.org/en/latest/core/engines.html) 
@@ -39,3 +39,5 @@ Best practise is to set-up a virtual environment. Once done run `pip install -r 
     `alembic revision --autogenerate -m "initialise database"`
     
     `alembic upgrade head`
+7. Running developement version of Flicket `python3 wsgi.py` or `python wsgi.py`. This 
+will depend on your operating system.
