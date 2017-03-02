@@ -12,7 +12,7 @@ email_maxlength = 60
 
 group_maxlength = 64
 
-flicket_groups = db.Table('flicket-groups',
+flicket_groups = db.Table('flicket_groups',
                           db.Column('user_id', db.Integer, db.ForeignKey('flicket_users.id')),
                           db.Column('group_id', db.Integer, db.ForeignKey('flicket_group.id'))
                           )

@@ -100,8 +100,8 @@ class FlicketPost(Base):
     date_added = db.Column(db.DateTime())
     date_modified = db.Column(db.DateTime())
 
-    modified_by = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
-    modified = db.relationship(FlicketUser, foreign_keys='FlicketPost.modified_by')
+    modified_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    modified = db.relationship(FlicketUser, foreign_keys='FlicketPost.modified_id')
 
     # finds all the images associated with the post
     uploads = db.relationship('FlicketUploads',

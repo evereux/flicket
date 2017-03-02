@@ -106,7 +106,7 @@
 
                     <div class="flicket-post-content">
                         {{- r.content|markdown -}}
-                        {%- if r.modified_by -%}
+                        {%- if r.modified_id -%}
                             <div class="flicket-post-modified">
                                 This post was modified by {{ r.modified.name }}
                                 on {{ r.date_modified }}</div>
