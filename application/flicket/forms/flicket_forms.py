@@ -96,7 +96,7 @@ class EditTicketForm(CreateTicketForm):
 
         # define the multi select box for document uploads
         uploads = []
-        for u in ticket.topic_uploads:
+        for u in ticket.uploads:
             uploads.append((u.id, u.filename, u.original_filename))
         self.uploads.choices = []
         for x in uploads:

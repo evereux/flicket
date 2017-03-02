@@ -115,8 +115,8 @@
 
                     <div class="flicket-post-attachments">
                         <div class="col-sm-8">
-                            {%- if r.post_uploads -%}
-                                {%- for upload in r.post_uploads %}
+                            {%- if r.uploads -%}
+                                {%- for upload in r.uploads %}
                                     <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
                                        title="{{ upload.original_filename }}"
                                        target="_blank">{{ upload.original_filename }}<span

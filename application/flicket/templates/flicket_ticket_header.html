@@ -34,8 +34,8 @@
         <!-- display post -->
         <div class="flicket-post-attachments">
             <div class="col-sm-8">
-                {%- if ticket.topic_uploads -%}
-                    {%- for upload in ticket.topic_uploads %}
+                {%- if ticket.uploads -%}
+                    {%- for upload in ticket.uploads %}
                         <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
                            title="{{ upload.original_filename }}"
                            target="_blank">{{ upload.original_filename }}<span

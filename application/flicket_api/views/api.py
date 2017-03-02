@@ -148,7 +148,7 @@ def api_tickets(page=1):
             'submitted_by': t.user.username,
             'priority': t.ticket_priority.priority,
             'date': t.date_added.strftime('%d/%m/%Y'),
-            'replies': t.replies,
+            'replies': t.num_replies,
             'department': t.category.department.department,
             'category': t.category.category,
             'status': t.current_status.status,

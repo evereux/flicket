@@ -75,9 +75,9 @@ class FlicketTicket(Base):
                               primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
 
     @property
-    def replies(self):
-        num_replies = FlicketPost.query.filter_by(ticket_id=self.id).count()
-        return num_replies
+    def num_replies(self):
+        n_replies = FlicketPost.query.filter_by(ticket_id=self.id).count()
+        return n_replies
 
     @property
     def id_zfill(self):

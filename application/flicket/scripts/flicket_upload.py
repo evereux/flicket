@@ -18,6 +18,12 @@ def allowed_file(filename):
 
 
 def upload_documents(files):
+    """
+    Function to upload files to the static temp folder.
+    The file is given a random unique file name.
+    :param files:
+    :return:
+    """
     new_files = []
 
     if len(files) == 0:
@@ -29,14 +35,14 @@ def upload_documents(files):
 
             target_file = False
             if f and allowed_file(f.filename):
-                target_file = os.path.join(app.config['ticket_upload_folder'], f.filename)
-                target_file = secure_filename(target_file)
+
+                target_file = secure_filename(f.filename)
+                target_file = os.path.join(app.config['ticket_upload_folder'], target_file)
+                print(target_file)
                 f.save(target_file)
 
             # rename file
             if os.path.isfile(target_file):
-
-                new_name = False
 
                 while True:
                     new_name_size = BaseConfiguration.db_field_size['ticket']['upload_filename'] - len(
@@ -49,7 +55,6 @@ def upload_documents(files):
 
                 # rename uploaded file to unique name
                 os.rename(target_file, new_name)
-
                 new_files.append((new_name, f.filename))
 
             else:
