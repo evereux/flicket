@@ -37,7 +37,7 @@ class FlicketPriority(Base):
     __tablename__ = 'flicket_priorities'
 
     id = db.Column(db.Integer, primary_key=True)
-    priority = db.Column(db.String(12))
+    priority = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['priority']))
 
 
 class FlicketTicket(Base):

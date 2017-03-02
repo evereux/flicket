@@ -44,7 +44,6 @@ def set_config_defaults():
     db.session.commit()
 
 
-
 def get_admin_details():
     # todo: add some password validation to prevent easy passwords being entered
     _username = admin
@@ -116,7 +115,7 @@ def create_admin_group(silent=False):
 
 def create_default_ticket_status():
     # set up default status levels
-    sl = ['Open', 'Closed', 'In Work']
+    sl = ['Open', 'Closed', 'In Work', 'Awaiting Information']
     for s in sl:
         status = FlicketStatus.query.filter_by(status=s).first()
 
@@ -178,9 +177,10 @@ def set_email_config():
     :return:
     """
     query = FlicketConfig.query.first()
-    if query.first().mail_server is None:
+    if query.mail_server is None:
         query.mail_suppress_send = True
         db.session.commit()
+        print('Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
 
 
 if __name__ == '__main__':
@@ -193,5 +193,6 @@ if __name__ == '__main__':
     create_default_priority_levels()
     create_default_depts()
     # commit changes to the database
-    set_email_config()
     db.session.commit()
+    set_email_config()
+

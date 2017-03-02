@@ -74,7 +74,7 @@ For set-up instructions see `README.md` available on github.
 
 1. Some actions within Flicket require elevated permission levels. If you 
    require an action that requires elevated permissions you should raise
-   a ticket and assign the ticket to the persons who have the required
+   a ticket and assign the ticket to the persons who have the appropriate
    access.
 
 ## Departments

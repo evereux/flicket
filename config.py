@@ -28,10 +28,11 @@ class BaseConfiguration(object):
 
     db_field_size = {'ticket': {'title': 50,
                                 'description': 5000,
-                                'status': 10,
+                                'status': 20,
                                 'department': 30,
                                 'category': 30,
-                                'upload_filename': 24}
+                                'upload_filename': 24,
+                                'priority': 12}
                      }
 
     # default flicket_admin group name
