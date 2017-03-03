@@ -1,6 +1,7 @@
-from flask_mail import Mail
+#! usr/bin/python3
+# -*- coding: utf8 -*-
 
-from application import app, mail
+from application import app
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
 def set_flicket_config():

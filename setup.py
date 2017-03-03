@@ -27,10 +27,11 @@ depart_categories = [
 ]
 
 
-def set_config_defaults():
+def set_config_defaults(silent=False):
     count = FlicketConfig.query.count()
     if count > 0:
-        print('Flicket Config database seems to already be populated. Check values via application.')
+        if not silent:
+            print('Flicket Config database seems to already be populated. Check values via application.')
         return
 
     set_config = FlicketConfig(
@@ -39,7 +40,9 @@ def set_config_defaults():
         ticket_upload_folder=flicket_config['ticket_upload_folder'],
     )
 
-    print('Adding config values to database.')
+    if not silent:
+        print('Adding config values to database.')
+
     db.session.add(set_config)
     db.session.commit()
 
@@ -73,7 +76,7 @@ def create_admin(username, password, email, silent=False):
                                date_added=datetime.datetime.now())
         db.session.add(add_user)
 
-        if silent is False:
+        if not silent:
             print("Admin user added.")
 
 
@@ -96,7 +99,7 @@ def create_admin_group(silent=False):
     if query.count() == 0:
         add_group = FlicketGroup(group_name=app.config['ADMIN_GROUP_NAME'])
         db.session.add(add_group)
-        if silent is False:
+        if not silent:
             print("Admin group added")
 
     user = FlicketUser.query.filter_by(username=admin).first()
@@ -109,7 +112,7 @@ def create_admin_group(silent=False):
             break
     if not in_group:
         group.users.append(user)
-        if silent is False:
+        if not silent:
             print("Added flicket_admin user to flicket_admin group.")
 
 
@@ -136,7 +139,7 @@ def create_default_priority_levels(silent=False):
             add_priority = FlicketPriority(priority=p)
             db.session.add(add_priority)
 
-            if silent is False:
+            if not silent:
                 print('Added priority level {}'.format(p))
 
 
@@ -154,7 +157,7 @@ def create_default_depts(silent=False):
             )
             db.session.add(add_department)
 
-            if silent is False:
+            if not silent:
                 print("department {} added.".format(department))
 
             for c in categories:
@@ -170,7 +173,7 @@ def create_default_depts(silent=False):
                         print("category {} added.".format(c))
 
 
-def set_email_config():
+def set_email_config(silent=False):
     """
     To stop mail send errors after intial set-up set the email configuration value for suppress
     send will be set to True
@@ -180,12 +183,14 @@ def set_email_config():
     if query.mail_server is None:
         query.mail_suppress_send = True
         db.session.commit()
-        print('Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
+        if not silent:
+            print('Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
 
 
 if __name__ == '__main__':
     username, password, email = get_admin_details()
     set_config_defaults()
+    set_email_config()
     create_admin(username=username, password=password, email=email)
     create_announcer()
     create_admin_group()
@@ -194,5 +199,3 @@ if __name__ == '__main__':
     create_default_depts()
     # commit changes to the database
     db.session.commit()
-    set_email_config()
-

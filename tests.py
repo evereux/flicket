@@ -15,8 +15,7 @@ from coverage import coverage
 from application import app, db, lm
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
-from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, \
-    for_testing_only
+from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, set_config_defaults, set_email_config
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -35,6 +34,9 @@ class TestCase(unittest.TestCase):
         self.client = app.test_client()
         db.create_all()
 
+        set_config_defaults(silent=True)
+        set_email_config(silent=True)
+
     def tearDown(self):
         db.session.remove()
         db.drop_all()
@@ -50,14 +52,13 @@ class TestCase(unittest.TestCase):
         return self.client.get('/logout', follow_redirects=True)
 
     @staticmethod
-    def populate_db_skeleton(self):
-        """ Populate the database with defaults defined in setup.py """
+    def populate_db_skeleton():
+        """ Populate defaults in the database.  """
         create_admin(username='flicket_admin', password='flicket_admin', email='flicket_admin@localhost.com',
                      silent=True)
         create_admin_group(silent=True)
         create_default_priority_levels(silent=True)
         create_default_depts(silent=True)
-        for_testing_only(silent=True)
         db.session.commit()
 
     @staticmethod
@@ -91,7 +92,7 @@ class TestCase(unittest.TestCase):
 
     def test_index(self):
         rv = self.client.get('/', follow_redirects=True)
-        assert b'holding page' in rv.data
+        assert b'Flicket is a simple Flask driven ticket system.' in rv.data
 
     def test_admin(self):
         with self.client as tc:
@@ -128,16 +129,8 @@ class TestCase(unittest.TestCase):
                 'password': 'aaaAAA',
                 'confirm': 'aaaAAA'
             }, follow_redirects=True)
-            dump_to_tmp(rv.data.decode(), 'dump.html')
+
             assert b'You have successfully registered new user' in rv.data
-
-    def test_flicket_index(self):
-        """ Test the loading of the flicket home page. """
-        self.populate_db_skeleton()
-
-        # Test the main page
-        rv = self.client.get('flicket/', follow_redirects=True)
-        assert b'Flicket is a simple Flask driven ticket system.' in rv.data
 
     def test_login_logout(self):
         """ Test that the login and logout views work as expected. """
@@ -159,17 +152,19 @@ class TestCase(unittest.TestCase):
         with self.client:
             self.populate_db_skeleton()
 
-            rv = self.client.get('flicket/tickets_main/', follow_redirects=True)
+            rv = self.client.get('tickets_main/', follow_redirects=True)
             assert b'Flicket - Tickets' in rv.data
+            dump_to_tmp(rv.data.decode(), 'dump1.html')
 
-            # Test page with form search
-            rv = self.client.post('flicket/tickets_main/?status=Open&category=PC&department=IT',
-                                  data={
-                                      'email': 'flicket_admin@localhost.com',
-                                      'content': 'nipples'
-                                  }, follow_redirects=True)
-
-            assert b'Flicket - Tickets' in rv.data
+            # # Test page with form search
+            # rv = self.client.get('tickets_main/?status=Open&category=PC&department=IT',
+            #                       data={
+            #                           'email': 'flicket_admin@localhost.com',
+            #                           'content': 'nipples'
+            #                       }, follow_redirects=True)
+            #
+            # assert b'Flicket - Tickets' in rv.data
+            # dump_to_tmp(rv.data.decode(), 'dump2.html')
 
     def test_flicket_creation(self):
         """ Tests the creation of tickets. """
@@ -181,12 +176,12 @@ class TestCase(unittest.TestCase):
             rv = self.login(username='flicket_admin', password='flicket_admin')
 
             # load the create ticket page
-            rv = self.client.get('flicket/ticket_create/', follow_redirects=True)
+            rv = self.client.get('ticket_create/', follow_redirects=True)
             assert b'Create Ticket' in rv.data
 
             # define ticket contents
             title = 'some random title'
-            content = 'some random ceontent'
+            content = 'some random content'
             file = [(BytesIO(b'hello there'), 'hello.txt')]
 
             # add ticket with a file.

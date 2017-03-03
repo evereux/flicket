@@ -25,7 +25,7 @@ from setup import admin
 
 num_topics = 1000
 num_replies = 25
-num_users = 200
+num_users = 50
 
 rn = RandomNicknames()
 
@@ -37,8 +37,9 @@ if query.count() != 1:
 
 mismatch = True
 while mismatch is True:
-    base_email = input('Please enter your email for testing> ')
-    base_email_confirm = input('Please confirm your email> ')
+    print('When population with junk users will be added with <username>+<youremail> email addresses.')
+    base_email = input('Please enter your email for testing > ')
+    base_email_confirm = input('Please confirm your email > ')
     if base_email == base_email_confirm:
         mismatch = False
     else:
