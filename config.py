@@ -1,29 +1,41 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
 
+
+import json
 import os
+
+from scripts.create_json import WriteConfigJson, config_file
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-
 class BaseConfiguration(object):
+
+    WriteConfigJson().json_exists()
+
+    # get data from config file
+    with open(config_file, 'r') as f:
+        config_data = json.load(f)
+
     DEBUG = False
     TESTING = False
     EXPLAIN_TEMPLATE_LOADING = False
 
     # user login information for database user.
-    db_username = 'flicket-db'  # not required for sqlite connection
-    db_password = 'cP8OD,PYd5?^gQT0i/ox'  # not required for sqlite connection
+    db_username = config_data['db_username']
+    db_password = config_data['db_password']
     # database connection details
-    db_type = 'mysql+pymysql'  # not required for sqlite connection
-    db_port = '3306'  # not required for sqlite connection
-    db_name = 'flicket-development'
+    db_url = config_data['db_url']
+    db_port = config_data['db_port']
+    db_name = config_data['db_name']
+    db_type = 'mysql+pymysql'
 
-    SQLALCHEMY_DATABASE_URI = '{}://{}:{}@localhost:{}/{}'.format(db_type,
-                                                                  db_username,
-                                                                  db_password,
-                                                                  db_port,
-                                                                  db_name)
+    SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(db_type,
+                                                           db_username,
+                                                           db_password,
+                                                           db_url,
+                                                           db_port,
+                                                           db_name)
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     db_field_size = {'ticket': {'title': 50,
@@ -47,13 +59,6 @@ class BaseConfiguration(object):
     FLICKET_API = WEBHOME + 'flicket-api/'
     ADMINHOME = '/flicket_admin/'
 
-    # todo: delete these commented out values if flicket works from db values ok.
-    # posts per page
-    # posts_per_page = 20
-
-    # ticket system config
-    # allowed_extensions = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
-    #  = 'application/flicket/static/flicket_uploads'
     ANNOUNCER = {'name': 'announcer',
                  'username': 'announcer',
                  'password': 'm3r4nd0mstr1ng',

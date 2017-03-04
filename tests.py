@@ -15,10 +15,9 @@ from coverage import coverage
 from application import app, db, lm
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
-from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, set_config_defaults, set_email_config
+from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, set_db_config_defaults, set_email_config
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 def dump_to_tmp(contents, filename):
     filename = os.path.join(basedir, "tmp/{}".format(filename))
@@ -34,7 +33,7 @@ class TestCase(unittest.TestCase):
         self.client = app.test_client()
         db.create_all()
 
-        set_config_defaults(silent=True)
+        set_db_config_defaults(silent=True)
         set_email_config(silent=True)
 
     def tearDown(self):
