@@ -6,6 +6,7 @@
 
     {% include('flicket_json_users.html') %}
     {% include('flicket_json_departments.html') %}
+    {% include('flicket_json_statuses.html') %}
 
 
     <div class="container">
@@ -31,7 +32,7 @@
                         {{ form.category(class="form-control", id="category") }}
                     </div>
                     <div class="col-sm-2 flicket-form-control">
-                        {{ form.status(class="form-control") }}
+                        {{ form.status(class="form-control", id="status")}}
                     </div>
                     <div class="col-sm-2 flicket-form-control">
                         {{ form.email(class="form-control", placeholder="email", id="autocomplete-email") }}

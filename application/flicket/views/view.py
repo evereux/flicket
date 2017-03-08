@@ -37,7 +37,6 @@ def ticket_view(ticket_id, page=1):
 
     form = ReplyForm()
 
-
     # add reply post
     if form.validate_on_submit():
 
@@ -47,7 +46,7 @@ def ticket_view(ticket_id, page=1):
         new_files = upload_documents(files)
 
         if new_files is False:
-            flash('There was a problem uploading files for your post.', category='danger')
+            flash('There was a problem uploading files.', category='danger')
             return redirect(url_for('flicket_bp.tickets_main'))
 
         new_reply = FlicketPost(

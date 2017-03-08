@@ -8,7 +8,10 @@ __pycache__/
 __archive__
 screenshots*
 config.json
+users.json
 migrations
 test.db
+test.py
+
 
 env*/

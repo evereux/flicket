@@ -36,7 +36,7 @@ def ticket_create():
         ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
         ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
 
-        files = request.files.getlist("file[]")
+        files = request.files.getlist("file")
 
         new_files = upload_documents(files)
 

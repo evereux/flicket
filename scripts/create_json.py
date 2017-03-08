@@ -5,10 +5,8 @@ import os
 from getpass import getpass
 import json
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 config_file = 'config.json'
-config_file = os.path.join(basedir, config_file)
+config_file = os.path.join(os.getcwd(), config_file)
 
 
 class WriteConfigJson(object):
@@ -18,7 +16,7 @@ class WriteConfigJson(object):
         if os.path.isfile(config_file):
             return True
         else:
-            print('Config json file does not exist. Exiting application.')
+            print('Config json file "{}" does not exist. Exiting application.'.format(config_file))
             exit()
 
     @staticmethod

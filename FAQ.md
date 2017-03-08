@@ -8,7 +8,7 @@ web micro framework.
 
 Flicket also uses the following python packages:
 
-    alembic, bcrypt, flask-admin, flask-login, flask-principal, flask-sqlalchemy, flask-wtf, jinja2, misaka, WTForms
+    alembic, bcrypt, flask-admin, flask-login, flask-migrate, flask-principal, flask-sqlalchemy, flask-script, flask-wtf, jinja2, misaka, WTForms
     
 See `README.md` for full requirements.
 

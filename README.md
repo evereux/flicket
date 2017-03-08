@@ -52,3 +52,28 @@ Best practise is to set-up a virtual environment. Once done run `pip install -r 
     (my-env) $ python manage.py runserver
     ```
     
+# Production Environment
+If using this for a production environment you should edit `manage.py` and set the debugger and reloader variables
+to False or remove them completely. Example:
+```
+manager.add_command('runserver', Server(host="0.0.0.0", port=5000, use_reloader=False, use_debugger=False))
+```
+
+# Exporting / Importing Flicket Users
+## Exporting
+If you need to export the users from the Flicket database you can run the following command:
+    ```
+    (my-env) $ python manage.py export_users
+    ```
+    
+This will output a json file formatted thus:
+    ```
+    [{'username': 'jblogs', name: 'Joe Blogs', email:'jblogs@email.com', 'password': 'bcrypt_encoded_string'}]
+    ```
+## Importing
+If you need to import users run the following command:
+    ```
+    (my-env) $ python manage.py import_users
+    ```
+The file has to formatted as shown in the Exporting example.
+

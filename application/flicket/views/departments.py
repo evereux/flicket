@@ -1,6 +1,8 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
 
+import requests
+
 from flask import flash, redirect, url_for, render_template
 from flask_login import login_required
 
@@ -8,6 +10,7 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import DepartmentForm
 from application.flicket.models.flicket_models import FlicketDepartment
+from application.flicket_api.views.api import api_departments
 
 
 # create ticket
@@ -16,7 +19,7 @@ from application.flicket.models.flicket_models import FlicketDepartment
 @login_required
 def departments(page=1):
     form = DepartmentForm()
-    departments = FlicketDepartment.query
+    query = FlicketDepartment.query
 
     if form.validate_on_submit():
         add_department = FlicketDepartment(department=form.department.data)
@@ -25,7 +28,7 @@ def departments(page=1):
         flash('New department {} added.'.format(form.department.data))
         return redirect(url_for('flicket_bp.departments'))
 
-    departments = departments.paginate(page, app.config['posts_per_page'])
+    departments = query.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_departments.html',
                            title='Flicket - Departments',
@@ -40,20 +43,20 @@ def department_edit(department_id=False):
     if department_id:
 
         form = DepartmentForm()
-        department = FlicketDepartment.query.filter_by(id=department_id).first()
+        query = FlicketDepartment.query.filter_by(id=department_id).first()
 
         if form.validate_on_submit():
-            department.department = form.department.data
+            query.department = form.department.data
             db.session.commit()
             flash('Depart {} edited.'.format(form.department.data))
             return redirect(url_for('flicket_bp.departments'))
 
-        form.department.data = department.department
+        form.department.data = query.department
 
         return render_template('flicket_department_edit.html',
                                title='Flicket - Edit Department',
                                form=form,
-                               department=department
+                               department=query
                                )
 
     return redirect(url_for('flicket_bp.departments'))

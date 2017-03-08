@@ -21,7 +21,7 @@ from . import flicket_api_bp
 def alchemy_encoder(obj):
     """
     JSON encoder function for SQLAlchemy special cases.
-    Take from: http://codeandlife.com/2014/12/07/sqlalchemy-results-to-json-the-easy-way/
+    Taken from: http://codeandlife.com/2014/12/07/sqlalchemy-results-to-json-the-easy-way/
     """
     if isinstance(obj, datetime.date):
         return obj.isoformat()
@@ -58,10 +58,10 @@ def api_users():
 
 # json api to display departments
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'department/', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def api_departments():
-    departments = FlicketDepartment.query.all()
 
+    departments = FlicketDepartment.query.all()
     my_list = []
     for d in departments:
         sub_dict = {
@@ -76,13 +76,12 @@ def api_departments():
 
 
 # json api to display categories
-# todo: change int to string to prevent 404 form errors.
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'category/', methods=['GET', 'POST'])
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'category/<int:id>/', methods=['GET', 'POST'])
 @login_required
 def api_categories(id=None):
-    categories = FlicketCategory.query
 
+    categories = FlicketCategory.query
     if id:
         categories = categories.filter_by(department_id=id)
 
@@ -91,6 +90,25 @@ def api_categories(id=None):
         sub_dict = {
             'id': c.id,
             'category': c.category,
+        }
+        my_list.append(sub_dict)
+
+    json_dump = json.dumps(my_list)
+
+    return json_dump
+
+
+# json api to get statuses from db
+@flicket_api_bp.route(app.config['FLICKET_API'] + 'statuses/', methods=['GET', 'POST'])
+@login_required
+def api_statuses():
+    statuses = FlicketStatus.query.all()
+
+    my_list = []
+    for s in statuses:
+        sub_dict = {
+            'id': s.id,
+            'status': s.status,
         }
         my_list.append(sub_dict)
 
