@@ -26,7 +26,6 @@
         <div class="flicket-post-content">
             {{- ticket.content|markdown -}}
             {%- if ticket.modified_id -%}
-                <p>asva</p>
                 <div class="flicket-post-modified">This post was modified by {{ ticket.modified.name }}
                     on {{ ticket.date_modified }}</div>
             {%- endif -%}
