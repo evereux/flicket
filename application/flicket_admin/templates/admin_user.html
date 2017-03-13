@@ -7,6 +7,7 @@
 
        <form class="form-horizontal" action="" method="post" name="register">
         {{ form.hidden_tag() }}
+        {% if form.user_id %}{{ form.user_id() }}{% endif %}
 
         <div class="col-sm-4">
         </div>
@@ -15,7 +16,7 @@
         <div class="col-sm-4 text-center">
                 <h2>{{ title }}</h2>
             <p>
-                Please add new users details.
+                {{ comment }}
             </p>
 
             <div class="form-group form-group-sm">
@@ -88,9 +89,19 @@
             </div>
             {% endif %}
 
+            {% if admin_edit %}
+                <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Groups</label>
+                    <div class="col-sm-9">
+                        {{ form.groups(class="form-control") }}
+
+                </div>
+                </div>
+
+            {% endif %}
+
             <div class="text-center">
-                &nbsp;<br>
-                <input type="submit" value="add user" class="btn btn-primary"/>
+                {{ form.submit(class="btn btn-primary") }}
             </div>
         </div>
 

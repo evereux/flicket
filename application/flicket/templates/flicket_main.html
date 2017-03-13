@@ -92,9 +92,9 @@
                 <th>
                     Status
                 </th>
-                <td>
+                <th>
                     Assigned
-                </td>
+                </th>
             </tr>
             {% for t in tickets.items %}
                 <tr {%- if t.current_status.status == 'Closed' %} class="success"{% endif %}>

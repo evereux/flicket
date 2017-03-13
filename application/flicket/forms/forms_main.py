@@ -13,9 +13,14 @@ from wtforms.validators import (DataRequired,
                                 EqualTo)
 
 from application.flicket.models.flicket_user import (FlicketUser,
-                                                     username_maxlength,
                                                      name_maxlength,
-                                                     email_maxlength)
+                                                     name_minlength,
+                                                     email_maxlength,
+                                                     email_minlength,
+                                                     group_maxlength,
+                                                     password_minlength,
+                                                     password_maxlength)
+
 from application.flicket.scripts.functions_login import check_email_format
 
 
@@ -112,27 +117,14 @@ class CheckPasswordCorrect:
         return ok
 
 
-class RegisterForm(FlaskForm):
-    """ Register user form. """
-    username = StringField('username', validators=[Length(min=4, max=username_maxlength), does_username_exist])
-    name = StringField('name', validators=[Length(min=4, max=name_maxlength)])
-    email = StringField('email', validators=[Length(min=5, max=email_maxlength)])
-    password = PasswordField('password', validators=[
-        DataRequired(),
-        EqualTo('confirm', message='Passwords must match'),
-        check_password_formatting
-    ])
-    confirm = PasswordField('Repeat Password')
-
-
 class EditUserForm(FlaskForm):
     username = StringField('username')
-    name = StringField('name', validators=[Length(min=4, max=24)])
-    email = StringField('email', validators=[Length(min=4, max=24), change_email])
+    name = StringField('name', validators=[Length(min=name_minlength, max=name_maxlength)])
+    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), change_email])
     password = PasswordField('password',
                              validators=[DataRequired(),
-                                         CheckPasswordCorrect()
-                                         ])
+                                         CheckPasswordCorrect(),
+                                         Length(min=password_minlength, max=password_maxlength)])
     new_password = PasswordField('new_password',
                                  validators=[EqualTo('confirm',
                                                      message='Passwords must match'),

@@ -5,16 +5,21 @@
 
 import bcrypt
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectMultipleField, PasswordField, HiddenField
+from wtforms import StringField, SelectMultipleField, PasswordField, HiddenField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 from application.flicket.scripts.functions_login import check_email_format
 from application.flicket.models.flicket_user import (FlicketGroup,
                                                      FlicketUser,
                                                      username_maxlength,
+                                                     username_minlength,
                                                      name_maxlength,
+                                                     name_minlength,
                                                      email_maxlength,
-                                                     group_maxlength)
+                                                     email_minlength,
+                                                     group_maxlength,
+                                                     password_minlength,
+                                                     password_maxlength)
 
 
 def does_username_exist(form, field):
@@ -26,10 +31,30 @@ def does_username_exist(form, field):
     """
     result = FlicketUser.query.filter_by(username=form.username.data).count()
     if result > 0:
-        field.errors.append('A user with this username has already registered.')
+        field.errors.append('The user "{}" is already registered.'.format(form.username.data))
         return False
 
     return True
+
+
+def check_username_edit(form, field):
+
+    query = FlicketUser.query.filter_by(id=form.user_id.data).first()
+
+    if form.username.data == query.username:
+        return True
+
+    does_username_exist(form, field)
+
+
+def check_email_edit(form, field):
+
+    query = FlicketUser.query.filter_by(id=form.user_id.data).first()
+
+    if form.email.data == query.email:
+        return True
+
+    check_email(form, field)
 
 
 def group_exists(form, field):
@@ -68,15 +93,24 @@ def check_password_formatting(form, field):
     :return True / False:
     """
     ok = True
-    _min = 6
-    if len(field.data) < _min:
-        field.errors.append('Password must be more than {} characters.'.format(min))
-        ok = False
     if not any(s.isupper() for s in field.data) and not any(s.islower() for s in field.data):
         field.errors.append('Password must contain upper and lower characters.')
         ok = False
 
     return ok
+
+
+def check_password_edit(form, field):
+    """
+    If the password has been entered for an edit.
+    :param form:
+    :param field:
+    :return:
+    """
+
+    if form.password.data == form.confirm.data == '':
+        return True
+    check_password_formatting(form, field)
 
 
 def check_email(form, field):
@@ -92,34 +126,41 @@ def check_email(form, field):
         ok = False
     result = FlicketUser.query.filter_by(email=form.email.data).count()
     if result > 0:
-        field.errors.append('A user with this email address is already registered.')
+        field.errors.append('A user with the email {} is already registered.'.format(form.email.data))
         ok = False
 
     return ok
 
 
-class RegisterForm(FlaskForm):
+class AddUserForm(FlaskForm):
     """ Register user form. """
-    username = StringField('username', validators=[Length(min=4, max=username_maxlength), does_username_exist])
-    name = StringField('name', validators=[Length(min=4, max=name_maxlength)])
-    email = StringField('email', validators=[Length(min=5, max=email_maxlength), check_email])
+    username = StringField('username',
+                           validators=[Length(min=username_minlength, max=username_maxlength), does_username_exist])
+    name = StringField('name', validators=[Length(min=name_minlength, max=name_maxlength)])
+    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), check_email])
     password = PasswordField('password', validators=[
         DataRequired(),
         EqualTo('confirm', message='Passwords must match'),
-        check_password_formatting
+        check_password_formatting, Length(min=password_minlength, max=password_maxlength)
     ])
     confirm = PasswordField('Repeat Password')
+    submit = SubmitField('add_user')
 
 
-class EditUserForm(FlaskForm):
+class EditUserForm(AddUserForm):
+    user_id = HiddenField('user_id')
+    username = StringField('username',
+                           validators=[Length(min=username_minlength, max=username_maxlength), check_username_edit])
+    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), check_email_edit])
+    password = PasswordField('password', validators=[
+        EqualTo('confirm', message='Passwords must match'), check_password_edit])
+    confirm = PasswordField('Repeat Password')
+    groups = SelectMultipleField('groups', coerce=int)
+    submit = SubmitField('edit_user')
+
     def __init__(self, *args, **kwargs):
         form = super(EditUserForm, self).__init__(*args, **kwargs)
         self.groups.choices = [(g.id, g.group_name) for g in FlicketGroup.query.all()]
-
-    username = StringField('username', validators=[Length(min=4, max=username_maxlength)])
-    name = StringField('name', validators=[Length(min=4, max=name_maxlength)])
-    email = StringField('email', validators=[Length(min=5, max=email_maxlength), check_email])
-    groups = SelectMultipleField('groups', coerce=int)
 
 
 class AddGroupForm(FlaskForm):

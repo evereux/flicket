@@ -8,9 +8,14 @@ import datetime
 from application import db, app
 from application.flicket.models import Base
 
+username_minlength = 4
 username_maxlength = 24
+name_minlength = 4
 name_maxlength = 60
+email_minlength = 6
 email_maxlength = 60
+password_minlength = 8
+password_maxlength = 64
 
 group_maxlength = 64
 

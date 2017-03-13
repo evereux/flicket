@@ -15,10 +15,9 @@ from flask_login import current_user, login_required
 from flask_principal import Permission, Principal, RoleNeed, identity_loaded, UserNeed
 
 from application import app, db
-from application.flicket.forms.forms_main import RegisterForm
 from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
-from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm
+from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm, AddUserForm
 from . import admin_bp
 
 
@@ -26,6 +25,7 @@ principals = Principal(app)
 # define flicket_admin role need
 admin_only = RoleNeed('flicket_admin')
 admin_permission = Permission(admin_only)
+
 
 # add permissions
 @identity_loaded.connect_via(app)
@@ -68,7 +68,7 @@ def admin_users(page=1):
 @login_required
 @admin_permission.require(http_exception=403)
 def add_user():
-    form = RegisterForm()
+    form = AddUserForm()
     if form.validate_on_submit():
         password = hash_password(form.password.data)
         register = FlicketUser(username=form.username.data,
@@ -80,7 +80,7 @@ def add_user():
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
         return redirect(url_for('admin_bp.admin_users'))
-    return render_template('admin_add_user.html', title='Add User', form=form)
+    return render_template('admin_user.html', title='Add User', form=form)
 
 
 # edit user
@@ -88,13 +88,13 @@ def add_user():
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_edit_user():
-    form = EditUserForm()
-    id = request.args.get('id')
-    user = FlicketUser.query.filter_by(id=id).first()
+    _id = request.args.get('id')
+    user = FlicketUser.query.filter_by(id=_id).first()
     if user:
+        form = EditUserForm()
         if form.validate_on_submit():
             # check the username is unique
-            if (user.username != form.username.data):
+            if user.username != form.username.data:
                 query = FlicketUser.query.filter_by(username=form.username.data)
                 if query.count() > 0:
                     flash('Username already exists')
@@ -103,6 +103,7 @@ def admin_edit_user():
                     user.username = form.username.data
             user.email = form.email.data
             user.name = form.name.data
+            user.password = hash_password(form.password.data)
             groups = form.groups.data
             # bit hacky but until i get better at this.
             # at least it keeps the groups table clean. :/
@@ -117,6 +118,7 @@ def admin_edit_user():
             return redirect(url_for('admin_bp.admin_users'))
 
         # populate form with form data retrieved from database.
+        form.user_id.data = user.id
         form.username.data = user.username
         form.email.data = user.email
         form.name.data = user.name
@@ -129,7 +131,7 @@ def admin_edit_user():
         flash("Could not find user.")
         return redirect(url_for('flicket_admin'))
 
-    return render_template('admin_edit_user.html', title='Edit User', form=form, user=user)
+    return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True, form=form, user=user)
 
 
 # Delete user
