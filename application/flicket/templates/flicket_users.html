@@ -1,10 +1,11 @@
 <!-- extend from base layout -->
-{% extends "flicket_base.html" %}
-
+{% extends 'flicket_base.html' %}
 
 {% block content %}
     <div class="container">
         <h1>{{ title }}</h1>
+
+        {% include 'flicket_json_users.html' %}
 
         <form action=""
               class="form-horizontal"
@@ -15,9 +16,9 @@
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">Name</label>
+                <label class="col-sm-2 control-label" for="autocomplete-email">Name</label>
                 <div class="col-sm-5">
-                    {{ form.name(class="form-control") }}
+                    {{ form.name(class="form-control", id="autocomplete-email") }}
                 </div>
                 <div class="col-sm-2">
                     {{ form.submit }}

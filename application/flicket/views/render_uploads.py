@@ -1,5 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import os
 from flask import send_from_directory

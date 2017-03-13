@@ -1,5 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import datetime
 
@@ -12,7 +14,6 @@ from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketStatus,
                                                        FlicketDepartment,
                                                        FlicketCategory)
-
 
 # view users
 @flicket_bp.route(app.config['FLICKET'], methods=['GET', 'POST'])

@@ -1,5 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import redirect, url_for, request, render_template
 from flask_login import login_required
@@ -58,10 +60,6 @@ def tickets_main(page=1):
                                 ))
 
     # todo: get data from api
-    # fixes url if first ends with and second starts with /
-    # uri = generate_url(request.url_root, url_for('flicket_api_bp.api_tickets', page=1, department=department))
-    # r = requests.get(uri)
-    # json_response = r.text
 
     tickets = FlicketTicket.query
     if status:

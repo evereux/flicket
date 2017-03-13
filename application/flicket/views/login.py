@@ -1,5 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from urllib.parse import urlparse, urljoin
 

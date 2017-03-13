@@ -1,11 +1,14 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField
 
 from .flicket_forms import does_email_exist
-from application.flicket.models.flicket_models import  FlicketCategory, FlicketDepartment, FlicketStatus
+from application.flicket_api.scripts.api_class import FlicketApi
+
 
 class SearchTicketForm(FlaskForm):
 
@@ -15,13 +18,13 @@ class SearchTicketForm(FlaskForm):
         # todo: There must be a better way. See below.
         """ department and category choices are over written by jquery. I can't seem to access the data
         unless I generate the data here. :( """
-        self.department.choices = [(d.id, d.department) for d in FlicketDepartment.query.all()]
+        self.department.choices = [(d['id'], d['department']) for d in FlicketApi.get_departments()]
         self.department.choices.insert(0, (0, 'department'))
 
-        self.category.choices = [(c.id, c.category) for c in FlicketCategory.query.all()]
+        self.category.choices = [(c['id'], c['category']) for c in FlicketApi.get_categories()]
         self.category.choices.insert(0, (0, 'category'))
 
-        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]
+        self.status.choices = [(s['id'], s['id']) for s in FlicketApi.get_statuses()]
         self.status.choices.insert(0, (0, 'status'))
 
     """ Search form. """

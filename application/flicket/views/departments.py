@@ -1,7 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
-
-import requests
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import flash, redirect, url_for, render_template
 from flask_login import login_required
@@ -10,7 +10,6 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import DepartmentForm
 from application.flicket.models.flicket_models import FlicketDepartment
-from application.flicket_api.views.api import api_departments
 
 
 # create ticket

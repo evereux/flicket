@@ -1,5 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import datetime
 import decimal
@@ -18,6 +20,7 @@ from application.flicket.models.flicket_user import FlicketUser
 from . import flicket_api_bp
 
 
+# todo currently unused
 def alchemy_encoder(obj):
     """
     JSON encoder function for SQLAlchemy special cases.
@@ -32,14 +35,16 @@ def alchemy_encoder(obj):
 # json api to query users
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'users/', methods=['GET', 'POST'])
 @login_required
-def api_users():
+def api_users(__filter=None):
 
-    __filter = request.args.get('filter')
+    if 'filter' in request.args:
+        __filter = request.args.get('filter')
 
     query = FlicketUser.query
 
     if __filter:
-        query = query.filter(FlicketUser.username.ilike('%{}%'.format(__filter)))
+        print(__filter)
+        query = query.filter(FlicketUser.email.ilike('%{}%'.format(__filter)))
 
     my_list = []
     for u in query:
@@ -58,7 +63,7 @@ def api_users():
 
 # json api to display departments
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'department/', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def api_departments():
 
     departments = FlicketDepartment.query.all()
@@ -118,6 +123,7 @@ def api_statuses():
 
 
 # json api to display tickets
+# todo probably won't use this unitl I understand how to implement my pagination understanding
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'tickets/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def api_tickets(page=1):

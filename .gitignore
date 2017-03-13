@@ -12,7 +12,5 @@ users.json
 migrations
 test.db
 test.py
-populate_database_with_junk.py
-
 
 env*/

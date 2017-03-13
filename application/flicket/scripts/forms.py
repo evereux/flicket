@@ -1,3 +1,7 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 # used for debugging purposes only
 def print_errors(form):

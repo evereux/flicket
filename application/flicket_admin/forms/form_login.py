@@ -1,6 +1,7 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import bcrypt
 from flask_wtf import FlaskForm

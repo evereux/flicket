@@ -1,4 +1,7 @@
-import datetime
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import (flash,
                    redirect,
@@ -41,11 +44,9 @@ def flicket_config():
         config_details.allowed_extensions = form.allowed_extensions.data,
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
 
-
         db.session.commit()
         flash('Config details updated.')
         return redirect(url_for('admin_bp.flicket_config'))
-
 
     # populate form with details from database.
     form.mail_server.data = config_details.mail_server

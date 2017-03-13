@@ -1,3 +1,8 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
+
 from flask import render_template, url_for
 from flask_mail import Mail, Message
 

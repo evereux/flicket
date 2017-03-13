@@ -1,3 +1,8 @@
+#! usr/bin/python3
+# -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
+
 import datetime
 
 from flask import (flash,
@@ -117,7 +122,7 @@ def admin_edit_user():
         form.name.data = user.name
         # define list of preselect groups.
         groups = []
-        for g in user.groups:
+        for g in user.flicket_groups:
             groups.append(g.id)
         form.groups.data = groups
     else:
