@@ -4,7 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, BooleanField
+from wtforms import StringField, SubmitField, IntegerField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, NumberRange, Length
 
 form_class_button = {'class': 'btn btn-primary'}
@@ -18,7 +18,7 @@ class ConfigForm(FlaskForm):
     mail_use_ssl = BooleanField('mail_use_ssl', validators=[])
     mail_debug = BooleanField('mail_debug', validators=[])
     mail_username = StringField('mail_username', validators=[])
-    mail_password = StringField('mail_password', validators=[])
+    mail_password = PasswordField('mail_password', validators=[])
     mail_default_sender = StringField('mail_default_sender', validators=[])
     mail_max_emails = IntegerField('mail_max_emails', validators=[])
     mail_suppress_send = BooleanField('mail_suppress_send', validators=[])
