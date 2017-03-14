@@ -52,6 +52,9 @@ class RunSetUP(Command):
     @staticmethod
     def set_db_config_defaults(silent=False):
 
+        print('Please site base url including port. For example this would be "http://192.168.1.1:8000".')
+        base_url = input('Base url> ')
+
         count = FlicketConfig.query.count()
         if count > 0:
             if not silent:
@@ -62,6 +65,7 @@ class RunSetUP(Command):
             posts_per_page=flicket_config['posts_per_page'],
             allowed_extensions=', '.join(flicket_config['allowed_extensions']),
             ticket_upload_folder=flicket_config['ticket_upload_folder'],
+            base_url=base_url
         )
 
         if not silent:
