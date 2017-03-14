@@ -41,7 +41,8 @@
         <ul class="pagination pagination-sm">{% for page in users.iter_pages() %}
             {% if page %}
                 {% if page != users.page %}
-                    <li><a href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}"> {{ page }}</a></li>
+                    <li><a href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}"> {{ page }}</a>
+                    </li>
                 {% else %}
                     <li class="active"><a
                             href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}"> {{ page }}</a>
@@ -53,7 +54,7 @@
         {% endfor %}
         </ul>
 
-        <table class="table table-bordered">
+        <table class="table table-striped">
             <tr>
                 <th>
                     Username
@@ -64,10 +65,10 @@
                 <th>
                     email
                 </th>
-                <th>
+                <th class="text-center">
                     posts
                 </th>
-                <th>
+                <th class="text-center">
                     Assigned
                 </th>
             </tr>
@@ -82,12 +83,12 @@
                     <td>
                         {{ u.email }}
                     </td>
-                <td>
-                    {{ details(u).num_posts }}
-                </td>
-                    <td>
-                    {{ details(u).num_assigned }}
-                </td>
+                    <td class="text-center">
+                        {{ details(u).num_posts }}
+                    </td>
+                    <td class="text-center">
+                        {{ details(u).num_assigned }}
+                    </td>
                 </tr>
             {% endfor %}
         </table>

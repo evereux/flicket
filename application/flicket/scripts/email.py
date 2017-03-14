@@ -153,8 +153,7 @@ class FlicketMail:
         :param html_body:
         :return:
         """
-        message = Message(subject, sender=sender, recipients=recipients)
-        message.html = html_body
+        message = Message(subject, sender=sender, recipients=recipients, html=html_body)
 
         with app.app_context():
             self.mail.send(message)

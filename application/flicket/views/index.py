@@ -4,7 +4,6 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import datetime
-import pprint
 
 from flask import render_template, g
 from flask_login import login_required
@@ -15,7 +14,6 @@ from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketStatus,
                                                        FlicketDepartment,
                                                        FlicketCategory)
-from application.flicket_api.scripts.api_class import FlicketApi
 
 # view users
 @flicket_bp.route(app.config['FLICKET'], methods=['GET', 'POST'])
@@ -55,10 +53,6 @@ def index():
             department_filter = query.filter(FlicketTicket.category.has(FlicketCategory.department_id == d[0]['id']))
             ticket_num = department_filter.filter(FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
             d[1].append(({'status': s[0]['status']}, {'total_num': ticket_num}))
-
-    pp = pprint.PrettyPrinter(indent=4)
-
-    pp.pprint(departments)
 
     return render_template('flicket_index.html',
                            title='Flicket',
