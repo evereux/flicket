@@ -9,7 +9,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import DepartmentForm
-from application.flicket.models.flicket_models import FlicketDepartment
+from application.flicket.models.flicket_models import FlicketDepartment, FlicketCategory
 
 
 # create ticket
@@ -17,7 +17,9 @@ from application.flicket.models.flicket_models import FlicketDepartment
 @flicket_bp.route(app.config['FLICKET'] + 'departments/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def departments(page=1):
+
     form = DepartmentForm()
+
     query = FlicketDepartment.query
 
     if form.validate_on_submit():
@@ -27,13 +29,13 @@ def departments(page=1):
         flash('New department {} added.'.format(form.department.data))
         return redirect(url_for('flicket_bp.departments'))
 
-    departments = query.paginate(page, app.config['posts_per_page'])
+    _departments = query.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_departments.html',
                            title='Flicket - Departments',
                            form=form,
                            page=page,
-                           departments=departments)
+                           departments=_departments)
 
 
 @flicket_bp.route(app.config['FLICKET'] + 'department_edit/<int:department_id>/', methods=['GET', 'POST'])

@@ -24,6 +24,11 @@ class FlicketDepartment(Base):
 
     categories = db.relationship('FlicketCategory', back_populates='department')
 
+    # make the default sort order the department name
+    __mapper_args__ = {
+        "order_by": department.asc()
+    }
+
 
 class FlicketCategory(Base):
     __tablename__ = 'flicket_category'
@@ -33,6 +38,11 @@ class FlicketCategory(Base):
 
     department_id = db.Column(db.Integer, db.ForeignKey(FlicketDepartment.id))
     department = db.relationship(FlicketDepartment, back_populates='categories')
+
+    # make the default sort order the category name
+    __mapper_args__ = {
+        "order_by": category.asc()
+    }
 
 
 class FlicketPriority(Base):
