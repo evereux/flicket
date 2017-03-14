@@ -5,7 +5,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, BooleanField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms.validators import DataRequired, NumberRange, Length
 
 form_class_button = {'class': 'btn btn-primary'}
 
@@ -24,7 +24,9 @@ class ConfigForm(FlaskForm):
     mail_suppress_send = BooleanField('mail_suppress_send', validators=[])
     mail_ascii_attachments = BooleanField('mail_ascii_attachments', validators=[])
 
-    posts_per_page = IntegerField('posts_per_page', validators=[DataRequired(), NumberRange(min=10, max=100)])
+    posts_per_page = IntegerField('posts_per_page', validators=[DataRequired(), NumberRange(min=10, max=200)])
     allowed_extensions = StringField('allowed_extensions', validators=[DataRequired()])
     ticket_upload_folder = StringField('ticket_upload_folder', validators=[DataRequired()])
+    base_url = StringField('base_url', validators=[Length(min=0, max=128)])
+
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])

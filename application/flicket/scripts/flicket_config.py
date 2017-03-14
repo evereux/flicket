@@ -17,4 +17,5 @@ def set_flicket_config():
         posts_per_page=config.posts_per_page,
         allowed_extensions=config.allowed_extensions.split(', '),
         ticket_upload_folder=config.ticket_upload_folder,
+        base_url=config.base_url
     )

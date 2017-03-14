@@ -9,8 +9,14 @@ from application.flicket.models import Base
 
 class FlicketConfig(Base):
     """
-    Server email configuration settings. https://flask-mail.readthedocs.io/en/latest/ for
-    more information.
+    Server configuration table editable by administrators only.
+
+    For email configuration settings see https://flask-mail.readthedocs.io/en/latest/ for more information.
+
+    posts_per_page: dictates how many posts are displayed per page for flicket application.
+    allowed_extensions: a comma delimited list of file extensions users are allowed to attach to a post.
+    ticket_upload_folder: folder into which uploads are stored.
+    base_url: site base url eg http://yourwebsite.com:8000
     """
     __tablename__ = 'flicket_config'
 
@@ -23,6 +29,8 @@ class FlicketConfig(Base):
             setattr(self, key, value)
 
     id = db.Column(db.Integer, primary_key=True)
+
+    # mail settings for Flask-Mail
     mail_server = db.Column(db.String(128))
     mail_port = db.Column(db.Integer)
     mail_use_tls = db.Column(db.BOOLEAN)
@@ -38,5 +46,7 @@ class FlicketConfig(Base):
     posts_per_page = db.Column(db.Integer)
     allowed_extensions = db.Column(db.String(256))
     ticket_upload_folder = db.Column(db.String(256))
+
+    base_url = db.Column(db.String(128))
 
 
