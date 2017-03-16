@@ -26,10 +26,12 @@
         {% endfor  %}
         <h3>Departments</h3>
         {% for d in departments %}
-        <h4>{{ d[0]['department'] }}</h4>
+        <div class="col-sm-3">
+            <h4>{{ d[0]['department'] }}</h4>
             {% for s in d[1] %}
-                <p>There are <mark>{{ s[1]['total_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark>.</p>
+            <div><mark>{{ s[1]['total_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark></div>
             {% endfor %}
+        </div>
         {% endfor %}
     </div>
 {% endblock %}
