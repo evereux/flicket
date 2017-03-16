@@ -6,21 +6,38 @@
 from application import db
 from application.flicket.models import Base
 from application.flicket.models.flicket_user import FlicketUser
-from config import BaseConfiguration
+
+# define field sizes. max are used for forms and database. min just for forms.
+field_size = {
+    'title_min_length': 3,
+    'title_max_length': 128,
+    'content_min_length': 5,
+    'content_max_length': 5000,
+    'status_min_length': 3,
+    'status_max_length': 20,
+    'department_min_length': 3,
+    'department_max_length': 30,
+    'category_min_length': 3,
+    'category_max_length': 30,
+    'filename_min_length': 3,
+    'filename_max_length': 128,
+    'priority_min_length': 3,
+    'priority_max_length': 12
+}
 
 
 class FlicketStatus(Base):
     __tablename__ = 'flicket_status'
 
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['status']))
+    status = db.Column(db.String(field_size['status_max_length']))
 
 
 class FlicketDepartment(Base):
     __tablename__ = 'flicket_department'
 
     id = db.Column(db.Integer, primary_key=True)
-    department = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['department']))
+    department = db.Column(db.String(field_size['department_max_length']))
 
     categories = db.relationship('FlicketCategory', back_populates='department')
 
@@ -34,7 +51,7 @@ class FlicketCategory(Base):
     __tablename__ = 'flicket_category'
 
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['category']))
+    category = db.Column(db.String(field_size['category_max_length']))
 
     department_id = db.Column(db.Integer, db.ForeignKey(FlicketDepartment.id))
     department = db.relationship(FlicketDepartment, back_populates='categories')
@@ -49,15 +66,15 @@ class FlicketPriority(Base):
     __tablename__ = 'flicket_priorities'
 
     id = db.Column(db.Integer, primary_key=True)
-    priority = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['priority']))
+    priority = db.Column(db.String(field_size['priority_max_length']))
 
 
 class FlicketTicket(Base):
     __tablename__ = 'flicket_topic'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['title']), index=True)
-    content = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['description']))
+    title = db.Column(db.String(field_size['title_max_length']), index=True)
+    content = db.Column(db.String(field_size['content_max_length']))
 
     started_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser, foreign_keys='FlicketTicket.started_id')
@@ -104,7 +121,7 @@ class FlicketPost(Base):
     ticket_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
     ticket = db.relationship(FlicketTicket, back_populates='posts')
 
-    content = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['description']))
+    content = db.Column(db.String(field_size['content_max_length']))
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser, foreign_keys='FlicketPost.user_id')
@@ -131,5 +148,5 @@ class FlicketUploads(Base):
     topic_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
     topic = db.relationship(FlicketTicket)
 
-    filename = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['upload_filename']))
-    original_filename = db.Column(db.String(BaseConfiguration.db_field_size['ticket']['upload_filename']))
+    filename = db.Column(db.String(field_size['filename_max_length']))
+    original_filename = db.Column(db.String(field_size['filename_max_length']))

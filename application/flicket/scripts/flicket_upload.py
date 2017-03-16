@@ -9,10 +9,8 @@ from flask import flash
 from werkzeug.utils import secure_filename
 
 from application import app, db
-from application.flicket.models.flicket_models import FlicketUploads
+from application.flicket.models.flicket_models import FlicketUploads, field_size
 from application.flicket.scripts.flicket_functions import random_string
-from config import BaseConfiguration
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -47,7 +45,7 @@ def upload_documents(files):
             if os.path.isfile(target_file):
 
                 while True:
-                    new_name_size = BaseConfiguration.db_field_size['ticket']['upload_filename'] - len(
+                    new_name_size = field_size['filename_max_length'] - len(
                         os.path.splitext(target_file)[1])
                     new_name = random_string(new_name_size) + os.path.splitext(target_file)[1]
                     new_name = os.path.join(app.config['ticket_upload_folder'], new_name)

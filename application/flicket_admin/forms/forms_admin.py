@@ -11,15 +11,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 from application.flicket.scripts.functions_login import check_email_format
 from application.flicket.models.flicket_user import (FlicketGroup,
                                                      FlicketUser,
-                                                     username_maxlength,
-                                                     username_minlength,
-                                                     name_maxlength,
-                                                     name_minlength,
-                                                     email_maxlength,
-                                                     email_minlength,
-                                                     group_maxlength,
-                                                     password_minlength,
-                                                     password_maxlength)
+                                                     user_field_size)
 
 
 def does_username_exist(form, field):
@@ -38,7 +30,6 @@ def does_username_exist(form, field):
 
 
 def check_username_edit(form, field):
-
     query = FlicketUser.query.filter_by(id=form.user_id.data).first()
 
     if form.username.data == query.username:
@@ -48,7 +39,6 @@ def check_username_edit(form, field):
 
 
 def check_email_edit(form, field):
-
     query = FlicketUser.query.filter_by(id=form.user_id.data).first()
 
     if form.email.data == query.email:
@@ -85,10 +75,9 @@ def check_password(form, field):
     return True
 
 
-def check_password_formatting(form, field):
+def check_password_formatting(field):
     """
     Check formatting of password.
-    :param form:
     :param field:
     :return True / False:
     """
@@ -100,17 +89,16 @@ def check_password_formatting(form, field):
     return ok
 
 
-def check_password_edit(form, field):
+def check_password_edit(form):
     """
     If the password has been entered for an edit.
     :param form:
-    :param field:
     :return:
     """
 
     if form.password.data == form.confirm.data == '':
         return True
-    check_password_formatting(form, field)
+    check_password_formatting(form)
 
 
 def check_email(form, field):
@@ -135,13 +123,15 @@ def check_email(form, field):
 class AddUserForm(FlaskForm):
     """ Register user form. """
     username = StringField('username',
-                           validators=[Length(min=username_minlength, max=username_maxlength), does_username_exist])
-    name = StringField('name', validators=[Length(min=name_minlength, max=name_maxlength)])
-    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), check_email])
+                           validators=[Length(min=user_field_size['username_min'], max=user_field_size['username_max']),
+                                       does_username_exist])
+    name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
+    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
+                                             check_email])
     password = PasswordField('password', validators=[
         DataRequired(),
         EqualTo('confirm', message='Passwords must match'),
-        check_password_formatting, Length(min=password_minlength, max=password_maxlength)
+        check_password_formatting, Length(min=user_field_size['password_min'], max=user_field_size['password_max'])
     ])
     confirm = PasswordField('Repeat Password')
     submit = SubmitField('add_user')
@@ -150,8 +140,10 @@ class AddUserForm(FlaskForm):
 class EditUserForm(AddUserForm):
     user_id = HiddenField('user_id')
     username = StringField('username',
-                           validators=[Length(min=username_minlength, max=username_maxlength), check_username_edit])
-    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), check_email_edit])
+                           validators=[Length(min=user_field_size['username_min'], max=user_field_size['username_max']),
+                                       check_username_edit])
+    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
+                                             check_email_edit])
     password = PasswordField('password', validators=[
         EqualTo('confirm', message='Passwords must match'), check_password_edit])
     confirm = PasswordField('Repeat Password')
@@ -166,7 +158,7 @@ class EditUserForm(AddUserForm):
 class AddGroupForm(FlaskForm):
     """ Add group form for flicket_admin section. """
     group_name = StringField('group_name', validators=[
-        Length(min=3, max=group_maxlength),
+        Length(min=user_field_size['group_min'], max=user_field_size['group_max']),
         DataRequired(),
         group_exists])
 
@@ -176,4 +168,6 @@ class EnterPasswordForm(FlaskForm):
     Form to delete user. User password is required.
     """
     id = HiddenField('id')
-    password = PasswordField('password', validators=[DataRequired(), check_password])
+    password = PasswordField('password', validators=[DataRequired(), check_password,
+                                                     Length(min=user_field_size['password_min'],
+                                                            max=user_field_size['password_max'])])

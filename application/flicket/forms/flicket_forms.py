@@ -7,14 +7,15 @@ from flask import url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, HiddenField, SubmitField, FileField
 from wtforms.fields import SelectMultipleField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
 
 from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketDepartment,
                                                        FlicketPriority,
-                                                       FlicketTicket)
-from application.flicket.models.flicket_user import FlicketUser
+                                                       FlicketTicket,
+                                                       field_size)
+from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
 
 form_class_button = {'class': 'btn btn-primary'}
@@ -77,11 +78,14 @@ class CreateTicketForm(FlaskForm):
                                  FlicketCategory.query.all() if c.department]
 
     """ Log in form. """
-    title = StringField('username', validators=[DataRequired()])
-    content = TextAreaField('content', validators=[DataRequired()])
+    title = StringField('username', validators=[DataRequired(), Length(min=field_size['title_min_length'],
+                                                                       max=field_size['title_max_length'])])
+    content = TextAreaField('content', validators=[DataRequired(), Length(min=field_size['content_min_length'],
+                                                                          max=field_size['content_max_length'])])
     priority = SelectField('priority', validators=[DataRequired()], coerce=int)
     category = SelectField('category', validators=[DataRequired()], coerce=int)
-    file = FileField('Upload Documents', render_kw={'multiple': True})
+    file = FileField('Upload Documents', render_kw={'multiple': True},
+                     validators=[Length(max=field_size['filename_max_length'])])
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])
 
 
@@ -112,8 +116,10 @@ class EditTicketForm(CreateTicketForm):
 
 class ReplyForm(FlaskForm):
     """ Content form. Displayed when replying too end editing tickets """
-    content = TextAreaField('Reply', validators=[DataRequired()])
-    file = FileField('Upload Documents', render_kw={'multiple': True})
+    content = TextAreaField('Reply', validators=[DataRequired(), Length(min=field_size['content_min_length'],
+                                                                        max=field_size['content_max_length'])])
+    file = FileField('Upload Documents', render_kw={'multiple': True},
+                     validators=[Length(max=field_size['filename_max_length'])])
     submit = SubmitField('submit reply', render_kw=form_class_button)
 
 
@@ -128,24 +134,31 @@ class EditReplyForm(ReplyForm):
 
 class SearchUserForm(FlaskForm):
     """ Search user. """
-    name = StringField('name', validators=[DataRequired()])
+    name = StringField('name', validators=[DataRequired(), Length(min=user_field_size['username_min'],
+                                                                  max=user_field_size['username_max'])])
     submit = SubmitField('search user', render_kw=form_class_button)
 
 
 class SearchEmailForm(FlaskForm):
     """ Search email form. """
-    email = StringField('email', validators=[DataRequired(), does_email_exist])
+    email = StringField('email', validators=[DataRequired(), does_email_exist, Length(min=user_field_size['email_min'],
+                                                                                      max=user_field_size[
+                                                                                          'email_max'])])
     submit = SubmitField('assign', render_kw=form_class_button)
 
 
 class DepartmentForm(FlaskForm):
     """ Department form. """
-    department = StringField('Department', validators=[DataRequired(), does_department_exist])
+    department = StringField('Department', validators=[DataRequired(), Length(min=field_size['department_min_length'],
+                                                                              max=field_size['department_max_length']),
+                                                       does_department_exist])
     submit = SubmitField('add department', render_kw=form_class_button)
 
 
 class CategoryForm(FlaskForm):
     """ Category form. """
-    category = StringField('Category', validators=[DataRequired(), does_category_exist])
+    category = StringField('Category', validators=[DataRequired(), Length(min=field_size['category_min_length'],
+                                                                          max=field_size['category_max_length']),
+                                                   does_category_exist])
     department_id = HiddenField('department_id')
     submit = SubmitField('add category', render_kw=form_class_button)

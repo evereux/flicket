@@ -38,15 +38,6 @@ class BaseConfiguration(object):
                                                            db_name)
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-    db_field_size = {'ticket': {'title': 50,
-                                'description': 5000,
-                                'status': 20,
-                                'department': 30,
-                                'category': 30,
-                                'upload_filename': 24,
-                                'priority': 12}
-                     }
-
     # default flicket_admin group name
     ADMIN_GROUP_NAME = 'flicket_admin'
 

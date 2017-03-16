@@ -8,16 +8,18 @@ import datetime
 from application import db, app
 from application.flicket.models import Base
 
-username_minlength = 4
-username_maxlength = 24
-name_minlength = 4
-name_maxlength = 60
-email_minlength = 6
-email_maxlength = 60
-password_minlength = 8
-password_maxlength = 64
-
-group_maxlength = 64
+user_field_size = {
+    'username_min': 4,
+    'username_max': 24,
+    'name_min': 4,
+    'name_max': 60,
+    'email_min': 6,
+    'email_max': 60,
+    'password_min': 6,
+    'password_max': 60,
+    'group_min': 3,
+    'group_max': 64
+}
 
 flicket_groups = db.Table('flicket_groups',
                           db.Column('user_id', db.Integer, db.ForeignKey('flicket_users.id')),
@@ -26,16 +28,16 @@ flicket_groups = db.Table('flicket_groups',
 
 
 class FlicketUser(Base):
-    '''
+    """
     User model class
-    '''
+    """
     __tablename__ = 'flicket_users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(username_maxlength), index=True, unique=True)
-    name = db.Column(db.String(name_maxlength))
-    password = db.Column(db.LargeBinary(60))
-    email = db.Column(db.String(email_maxlength), unique=True)
+    username = db.Column(db.String(user_field_size['username_max']), index=True, unique=True)
+    name = db.Column(db.String(user_field_size['name_max']))
+    password = db.Column(db.LargeBinary(user_field_size['password_max']))
+    email = db.Column(db.String(user_field_size['email_max']), unique=True)
     date_added = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime, onupdate=datetime.datetime.now)
 
@@ -74,12 +76,12 @@ class FlicketUser(Base):
 
 
 class FlicketGroup(Base):
-    '''
+    """
     Flicket Group model class
-    '''
+    """
     __tablename__ = 'flicket_group'
     id = db.Column(db.Integer, primary_key=True)
-    group_name = db.Column(db.String(group_maxlength))
+    group_name = db.Column(db.String(user_field_size['group_max']))
     users = db.relationship(FlicketUser,
                             secondary=flicket_groups,
                             backref=db.backref('flicket_groups',

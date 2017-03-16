@@ -13,13 +13,7 @@ from wtforms.validators import (DataRequired,
                                 EqualTo)
 
 from application.flicket.models.flicket_user import (FlicketUser,
-                                                     name_maxlength,
-                                                     name_minlength,
-                                                     email_maxlength,
-                                                     email_minlength,
-                                                     group_maxlength,
-                                                     password_minlength,
-                                                     password_maxlength)
+                                                     user_field_size)
 
 from application.flicket.scripts.functions_login import check_email_format
 
@@ -119,12 +113,12 @@ class CheckPasswordCorrect:
 
 class EditUserForm(FlaskForm):
     username = StringField('username')
-    name = StringField('name', validators=[Length(min=name_minlength, max=name_maxlength)])
-    email = StringField('email', validators=[Length(min=email_minlength, max=email_maxlength), change_email])
+    name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
+    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']), change_email])
     password = PasswordField('password',
                              validators=[DataRequired(),
                                          CheckPasswordCorrect(),
-                                         Length(min=password_minlength, max=password_maxlength)])
+                                         Length(min=user_field_size['password_min'], max=user_field_size['password_max'])])
     new_password = PasswordField('new_password',
                                  validators=[EqualTo('confirm',
                                                      message='Passwords must match'),
