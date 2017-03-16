@@ -19,7 +19,7 @@ def change_status(ticket_id, status):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
     closed = FlicketStatus.query.filter_by(status=status).first()
 
-    # Check to see if user is authorised to close ticket. Currently, only author and admin can do this.
+    # Check to see if user is authorised to close ticket.
     edit = False
     if ticket.user == g.user:
         edit = True
