@@ -43,7 +43,7 @@
                     {% if g.user.is_admin or (ticket.user == g.user) %}
                         {% if ticket.current_status.status != 'Closed' %}
                             <a class="btn btn-danger flicket-btn"
-                               href="{{ url_for('flicket_bp.change_status', ticket_id = ticket.id, status = 'Closed') }}">close</a>
+                               href="{{ url_for('flicket_bp.change_status', ticket_id = ticket.id, status = 'Closed') }}">close_ticket</a>
                         {% endif %}
                     {% endif %}
                 </div>
