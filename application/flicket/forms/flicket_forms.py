@@ -75,7 +75,9 @@ class CreateTicketForm(FlaskForm):
         form = super(CreateTicketForm, self).__init__(*args, **kwargs)
         self.priority.choices = [(p.id, p.priority) for p in FlicketPriority.query.all()]
         self.category.choices = [(c.id, "{} - {}".format(c.department.department, c.category)) for c in
-                                 FlicketCategory.query.all() if c.department]
+                                 FlicketCategory.query.join(FlicketDepartment).order_by(
+                                     FlicketDepartment.department).order_by(FlicketCategory.category).all() if
+                                 c.department]
 
     """ Log in form. """
     title = StringField('username', validators=[DataRequired(), Length(min=field_size['title_min_length'],
