@@ -6,12 +6,13 @@
       name="add_reply">
     {{ form.hidden_tag() }}
 
-    <div class="row flicket-row">
+    <div class="row flicket-row" >
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{ form.content.label }}</label>
+            <a name="reply"><label class="col-sm-2 control-label">{{ form.content.label }}</label></a>
             <div class="col-sm-10">
                 {{ form.content(class="form-control") }}
+                <a class="small" href="http://commonmark.org/help/">MarkDown reference</a>
             </div>
         </div>
         {% if form.content.errors %}
@@ -27,16 +28,13 @@
         {% endif %}
 
         <div class="form-group">
-
             <label class="col-sm-2 control-label">{{ form.file.label }}</label>
             <div class="col-sm-3">
                 {{ form.file }}
             </div>
-
             <div class="col-sm-7 text-right">
                 {{ form.submit }}
             </div>
-
         </div>
 
 

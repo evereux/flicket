@@ -16,12 +16,12 @@ from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
 from application.flicket.scripts.email import FlicketMail, get_recipients
 
+
 # view ticket details
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def ticket_view(ticket_id, page=1):
-
     # todo: make sure underscores aren't allowed in usernames as it breaks markdown.
 
     # is ticket number legitimate
@@ -93,4 +93,4 @@ def ticket_view(ticket_id, page=1):
                            form=form,
                            replies=replies,
                            post_id=post_id,
-page=page)
+                           page=page)

@@ -45,7 +45,7 @@
             </div>
             <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
                 <a class="btn btn-default"
-                   href=" {{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, ticket_rid=ticket.id) }}">reply</a>
+                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, ticket_rid=ticket.id) }}#reply">reply</a>
             </div>
         </div>
         <!-- display post /end -->
