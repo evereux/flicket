@@ -25,6 +25,7 @@
             <p>There are currently <mark>{{ s[1]['ticket_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark>.</p>
         {% endfor  %}
         <h3>Departments</h3>
+    <div class="row">
         {% for d in departments %}
         <div class="col-sm-3">
             <h4>{{ d[0]['department'] }}</h4>
@@ -34,4 +35,6 @@
         </div>
         {% endfor %}
     </div>
+    </div>
+
 {% endblock %}
