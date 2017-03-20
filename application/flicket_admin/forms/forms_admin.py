@@ -75,9 +75,10 @@ def check_password(form, field):
     return True
 
 
-def check_password_formatting(field):
+def check_password_formatting(form, field):
     """
     Check formatting of password.
+    :param form:
     :param field:
     :return True / False:
     """
@@ -89,16 +90,17 @@ def check_password_formatting(field):
     return ok
 
 
-def check_password_edit(form):
+def check_password_edit(form, field):
     """
     If the password has been entered for an edit.
     :param form:
+    :param field:
     :return:
     """
 
     if form.password.data == form.confirm.data == '':
         return True
-    check_password_formatting(form)
+    check_password_formatting(form, field)
 
 
 def check_email(form, field):

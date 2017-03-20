@@ -6,7 +6,6 @@
 
 ## Medium
 * lock tickets after x number of days?
-* add function for admin to edit users passwords.
 * show if ticket contents were modified (edited replies are)
 * implement database recorded logging system so changes to ticket content 'was > is'
 is recorded for quality purposes.

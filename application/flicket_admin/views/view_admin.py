@@ -108,7 +108,7 @@ def admin_edit_user():
             # bit hacky but until i get better at this.
             # at least it keeps the groups table clean. :/
             # delete all groups associated with current user.
-            user.groups = []  # this is beautifully simply though
+            user.flicket_groups = []  # this is beautifully simple though
             # add the user to selected groups
             for g in groups:
                 group_id = FlicketGroup.query.filter_by(id=g).first()

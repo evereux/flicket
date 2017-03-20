@@ -30,8 +30,10 @@ class WriteConfigJson(object):
         create_file = False
         if os.path.isfile(config_file):
             overwrite = input('\n\nConfiguration json file already exists. Do you wish to overwrite? (Y/n) > ')
-            if overwrite != 'Y':
+            if overwrite == 'Y':
                 create_file = True
+            else:
+                exit()
         else:
             create_file = True
 

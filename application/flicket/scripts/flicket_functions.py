@@ -47,12 +47,11 @@ def is_ticket_closed(status):
 
 
 def block_quoter(foo):
-    '''
+    """
     Indents input with '> '. Used for quoting text in posts.
     :param foo:
     :return:
-    '''
-    print(foo)
+    """
 
     foo = foo.strip()
     split_string = foo.split('\n')

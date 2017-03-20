@@ -38,7 +38,6 @@ def upload_documents(files):
 
                 target_file = secure_filename(f.filename)
                 target_file = os.path.join(app.config['ticket_upload_folder'], target_file)
-                print(target_file)
                 f.save(target_file)
 
             # rename file
@@ -65,16 +64,16 @@ def upload_documents(files):
     return new_files
 
 
-def add_upload_to_db(new_files, object, post_type=False):
+def add_upload_to_db(new_files, _object, post_type=False):
     topic = None
     post = None
 
     if post_type == 'Ticket':
-        topic = object
+        topic = _object
     if post_type == 'Post':
-        post = object
+        post = _object
 
-    if post_type == False:
+    if post_type is False:
         flash('There was a problem uploading images.')
 
     # add documents to database.

@@ -97,8 +97,6 @@ def edit_ticket(ticket_id):
 @login_required
 def edit_post(post_id):
 
-    print(post_id)
-
     form = EditReplyForm(post_id=post_id)
 
     post = FlicketPost.query.filter_by(id=post_id).first()
