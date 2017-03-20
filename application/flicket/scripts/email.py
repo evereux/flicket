@@ -31,16 +31,6 @@ def get_recipients(ticket):
     return recipients
 
 
-def pad_ticket_id(ticket):
-    """
-    Pad ticket.id with left zeros
-    :param ticket: ticket object
-    :return: string
-    """
-
-    return str(ticket.id).zfill(6)
-
-
 class FlicketMail:
     """
     FlicketMail class to send emails.
@@ -84,9 +74,9 @@ class FlicketMail:
         """
         recipients = get_recipients(ticket)
 
-        title = 'New Ticket: {} - {}'.format(pad_ticket_id(ticket), ticket.title)
+        title = 'New Ticket: {} - {}'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_create.html', title=title, number=pad_ticket_id(ticket), ticket_url=ticket_url, ticket=ticket)
+        html_body = render_template('email_ticket_create.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
 
         self.send_email(title, self.sender, recipients, html_body)
 
@@ -100,9 +90,9 @@ class FlicketMail:
         if ticket.assigned:
             if ticket.assigned.email not in recipients:
                 recipients.append(ticket.assigned.email)
-        title = 'Ticket Reply: {} - {}'.format(pad_ticket_id(ticket), ticket.title)
+        title = 'Ticket Reply: {} - {}'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_replies.html', title=title, number=pad_ticket_id(ticket), ticket_url=ticket_url, ticket=ticket)
+        html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
 
         self.send_email(title, self.sender, recipients, html_body)
 
@@ -117,9 +107,9 @@ class FlicketMail:
         if ticket.assigned.email not in recipients:
             recipients.append(ticket.assigned.email)
 
-        title = 'Ticket "{} - {}" - has been assigned'.format(pad_ticket_id(ticket), ticket.title)
+        title = 'Ticket "{} - {}" - has been assigned'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_assign.html', ticket=ticket, number=pad_ticket_id(ticket),
+        html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)
@@ -135,9 +125,9 @@ class FlicketMail:
         if ticket.assigned.email not in recipients:
             recipients.append(ticket.assigned.email)
 
-        title = 'Ticket "{} - {}" - has been assigned'.format(pad_ticket_id(ticket), ticket.title)
+        title = 'Ticket "{} - {}" - has been assigned'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_release.html', ticket=ticket, number=pad_ticket_id(ticket),
+        html_body = render_template('email_ticket_release.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)

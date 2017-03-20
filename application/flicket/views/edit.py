@@ -39,7 +39,11 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     # check user is authorised to edit ticket. Currently, only admin or author can do this.
-    if (ticket.user != g.user) or (not g.user.is_admin):
+    not_authorised = True
+    if ticket.user == g.user or g.user.is_admin:
+        not_authorised = False
+
+    if not_authorised:
         flash('You are not authorised to edit this ticket.', category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
@@ -110,7 +114,10 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket.id))
 
     # check user is authorised to edit post. Only author or admin can do this.
-    if (post.user != g.user) or (not g.user.is_admin):
+    not_authorised = True
+    if post.user == g.user or g.user.is_admin:
+        not_authorised = False
+    if not_authorised:
         flash('You are not authorised to edit this ticket.', category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 

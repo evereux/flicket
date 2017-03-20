@@ -15,7 +15,7 @@
                 {{ ticket.date_added.strftime('%d-%m-%Y %H:%M') }}
             </div>
             <div class="col-sm-6 text-right">
-                {% if (g.user.username == ticket.user.username) or (g.user.isadmin) %}
+                {% if (g.user.username == ticket.user.username) or (g.user.is_admin) %}
                     <a href="{{ url_for('flicket_bp.edit_ticket', ticket_id = ticket.id) }}">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                     </a>
