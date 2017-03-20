@@ -64,9 +64,11 @@ def ticket_view(ticket_id, page=1):
 
         db.session.add(new_reply)
 
-        # change ticket status to open.
-        open = FlicketStatus.query.filter_by(status='Open').first()
-        ticket.current_status = open
+        # change ticket status to open if closed.
+        if ticket.current_status.status.lower() == 'closed':
+            ticket_open = FlicketStatus.query.filter_by(status='Open').first()
+            ticket.current_status = ticket_open
+
         db.session.commit()
 
         # send email notification
