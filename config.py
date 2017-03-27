@@ -9,6 +9,7 @@ from scripts.create_json import WriteConfigJson, config_file
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 class BaseConfiguration(object):
 
     WriteConfigJson().json_exists()
@@ -63,3 +64,5 @@ class TestConfiguration(BaseConfiguration):
     TESTING = True
     SESSION_PROTECTION = None
     LOGIN_DISABLED = True
+    config_data = {"db_username": "", "db_port": "", "db_password": "",
+     "db_name": "", "db_url": ""}

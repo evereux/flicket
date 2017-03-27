@@ -220,5 +220,30 @@ class RunSetUP(Command):
             query.mail_suppress_send = True
             db.session.commit()
             if not silent:
-                print(
-                    'Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
+                print( 'Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
+
+
+class TestingSetUp:
+
+    @staticmethod
+    def set_db_config_defaults_testing(silent=False):
+        """
+        Set config defaults. Only used for unit testing
+        :param silent:
+        :return:
+        """
+
+        set_config = FlicketConfig(
+            posts_per_page=10,
+            allowed_extensions='txt,  jpg',
+            ticket_upload_folder='tmp/uploads',
+            base_url='',
+            mail_debug = True,
+            mail_suppress_send = True,
+        )
+
+        if not silent:
+            print('Adding config values to database.')
+
+        db.session.add(set_config)
+        db.session.commit()

@@ -1,229 +1,26 @@
 #! usr/bin/python3
 # -*- coding: utf8 -*-
+#
+# Flicket - copyright Paul Bourne: evereux@gmail.com
 
-"""
-testing module. lots of work to do here yet ...
-"""
-
-import datetime
 import os
+import sys
 import unittest
-from io import BytesIO
 
 from coverage import coverage
 
-from application import app, db, lm
-from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.hash_password import hash_password
-from setup import create_admin, create_default_priority_levels, create_default_depts, create_admin_group, set_db_config_defaults, set_email_config
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-
-def dump_to_tmp(contents, filename):
-    filename = os.path.join(basedir, "tmp/{}".format(filename))
-
-    with open(filename, 'w') as f:
-        f.write(contents)
-
-
-class TestCase(unittest.TestCase):
-    def setUp(self):
-        app.config.from_object('config.TestConfiguration')
-        lm.init_app(app)
-        self.client = app.test_client()
-        db.create_all()
-
-        set_db_config_defaults(silent=True)
-        set_email_config(silent=True)
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
-
-    def login(self, username='', password=''):
-        return self.client.post('/login', data=dict(
-            username=username,
-            password=password,
-            file=''
-        ), follow_redirects=True)
-
-    def logout(self):
-        return self.client.get('/logout', follow_redirects=True)
-
-    @staticmethod
-    def populate_db_skeleton():
-        """ Populate defaults in the database.  """
-        create_admin(username='flicket_admin', password='flicket_admin', email='flicket_admin@localhost.com',
-                     silent=True)
-        create_admin_group(silent=True)
-        create_default_priority_levels(silent=True)
-        create_default_depts(silent=True)
-        db.session.commit()
-
-    @staticmethod
-    def create_user(self, username='john_1234', email='good@email.com', password='12345'):
-        # create a new user
-        password = hash_password(password)
-        _user = FlicketUser(
-            username=username,
-            name=username,
-            password=password,
-            email=email,
-            date_added=datetime.datetime.now()
-        )
-        db.session.add(_user)
-        db.session.commit()
-        return _user
-
-    def add_ticket(self, title, content, priority='1', category='1', file=list):
-        return self.client.post('flicket/ticket_create/', buffered=True,
-                                content_type='multipart/form-data',
-                                data={
-                                    'title': title,
-                                    'content': content,
-                                    'priority': priority,
-                                    'category': category,
-                                    'file[]': file
-                                }, follow_redirects=True)
-
-    ####################################################################################################################
-    # TESTS
-
-    def test_index(self):
-        rv = self.client.get('/', follow_redirects=True)
-        assert b'Flicket is a simple Flask driven ticket system.' in rv.data
-
-    def test_admin(self):
-        with self.client as tc:
-            self.populate_db_skeleton()
-
-            # flicket_admin view requires flicket_admin login.
-            rv = self.login(username='flicket_admin', password='flicket_admin')
-
-            # load flicket_admin page
-            rv = self.client.get('flicket_admin/', follow_redirects=True)
-            assert b'Administration' in rv.data
-
-            # test already logged in user.
-            self.populate_db_skeleton()
-            rv = self.login(username='paul', password='12345')
-            rv = self.client.get('flicket_admin/', follow_redirects=True)
-            assert b'Flicket is a simple Flask driven ticket system.' not in rv.data
-
-            self.logout()
-            rv = self.login(username='flicket_admin', password='flicket_admin')
-            rv = self.client.get('flicket_admin/', follow_redirects=True)
-            assert b'Administration' in rv.data
-
-            rv = self.client.get('flicket_admin/admin_users/', follow_redirects=True)
-            assert b'Click on username to edit.' in rv.data
-
-            rv = self.client.get('flicket_admin/add_user/')
-            assert b'Please add new users details.' in rv.data
-
-            rv = self.client.post('flicket_admin/add_user/', data={
-                'username': 'lalala',
-                'email': 'lala@lala.com',
-                'name': 'lala lalala',
-                'password': 'aaaAAA',
-                'confirm': 'aaaAAA'
-            }, follow_redirects=True)
-
-            assert b'You have successfully registered new user' in rv.data
-
-    def test_login_logout(self):
-        """ Test that the login and logout views work as expected. """
-        self.populate_db_skeleton()
-
-        rv = self.login(username='flicket_admin', password='flicket_admin')
-
-        assert b'You were logged in' in rv.data
-        rv = self.logout()
-        assert b'You were logged out' in rv.data
-        rv = self.login('adminx', 'default')
-        assert b'Invalid username' in rv.data
-        rv = self.login('flicket_admin', 'defaultx')
-        assert b'Invalid password' in rv.data
-
-    def test_flicket_main(self):
-        """ Test the loading of the flicket home page. """
-
-        with self.client:
-            self.populate_db_skeleton()
-
-            rv = self.client.get('tickets_main/', follow_redirects=True)
-            assert b'Flicket - Tickets' in rv.data
-            dump_to_tmp(rv.data.decode(), 'dump1.html')
-
-            # # Test page with form search
-            # rv = self.client.get('tickets_main/?status=Open&category=PC&department=IT',
-            #                       data={
-            #                           'email': 'flicket_admin@localhost.com',
-            #                           'content': 'nipples'
-            #                       }, follow_redirects=True)
-            #
-            # assert b'Flicket - Tickets' in rv.data
-            # dump_to_tmp(rv.data.decode(), 'dump2.html')
-
-    def test_flicket_creation(self):
-        """ Tests the creation of tickets. """
-
-        with self.client as tc:
-            self.populate_db_skeleton()
-
-            # create ticket view requires login.
-            rv = self.login(username='flicket_admin', password='flicket_admin')
-
-            # load the create ticket page
-            rv = self.client.get('ticket_create/', follow_redirects=True)
-            assert b'Create Ticket' in rv.data
-
-            # define ticket contents
-            title = 'some random title'
-            content = 'some random content'
-            file = [(BytesIO(b'hello there'), 'hello.txt')]
-
-            # add ticket with a file.
-            rv = self.add_ticket(title, content, file=file)
-            assert b'New Ticket created.' in rv.data
-            # add ticket without a file
-            file = []
-            rv = self.add_ticket(title, content, file=file)
-            assert b'New Ticket created.' in rv.data
-
-
-# todo: add user to flicket_admin group
-
-# todo: create topic
-
-# todo: create topic with image
-
-# todo: add reply to topic
-
-# todo: add reply with image
-
-# todo: edit topic
-
-# todo: edit reply
-
-# todo: delete topic
-
-# todo: delete reply
-
-# todo: can user edit other user posts
-
-# todo: can user delete other user posts
-
+from tests.base_dir import base_dir
+from tests.main import TestCase
 
 if __name__ == '__main__':
 
-    cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env-linux/*'])
+    cov = coverage(branch=True, omit=['flask/*', 'tests.py', 'env*', 'migrate'])
     cov.start()
     unittest.main()
     cov.stop()
-    cov.save()
-    print('\n\nCoverage Report:\n')
+    cov.start()
+    print('\n\nCoveragae Reports:\n')
     cov.report()
-    print("\nHTML version: {}".format(os.path.join(basedir, "tmp/coverage/index.html")))
+    print('\nHTML version: {}'.format(os.path.join(base_dir, 'tmp/coverage/index.html')))
     cov.html_report(directory='tmp/coverage')
     cov.erase()
