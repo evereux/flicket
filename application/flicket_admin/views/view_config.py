@@ -34,7 +34,7 @@ def flicket_config():
         config_details.mail_use_ssl = form.mail_use_ssl.data
         config_details.mail_debug = form.mail_debug.data
         config_details.mail_username = form.mail_username.data
-        config_details.mail_password = form.mail_password.data
+
         config_details.mail_default_sender = form.mail_default_sender.data
         config_details.mail_max_emails = form.mail_max_emails.data
         config_details.mail_suppress_send = form.mail_suppress_send.data
@@ -44,6 +44,10 @@ def flicket_config():
         config_details.allowed_extensions = form.allowed_extensions.data,
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
         config_details.base_url = form.base_url.data
+
+        # Don't change the password if nothing was entered.
+        if form.mail_password.data != '':
+            config_details.mail_password = form.mail_password.data
 
         db.session.commit()
         flash('Config details updated.')

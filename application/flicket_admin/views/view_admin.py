@@ -101,6 +101,9 @@ def admin_edit_user():
                 else:
                     # change the username.
                     user.username = form.username.data
+            # Don't change the password if nothing was entered.
+            if form.password.data != '':
+                user.password = hash_password(form.password.data)
             user.email = form.email.data
             user.name = form.name.data
             user.password = hash_password(form.password.data)
