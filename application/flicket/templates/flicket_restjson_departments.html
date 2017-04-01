@@ -1,0 +1,24 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/flicket-rest-api/departments',
+            datatype: 'jsonp',
+            headers: {
+                'Content-Type': 'application/vnd.api+json',
+                'Accept': 'application/vnd.api+json'
+            },
+            success: function (data) {
+                var department = document.getElementById('department');
+                $(department).empty();
+                $(department).append($('<option></option>').text('--select--').val('0'));
+                // Load the new options
+                for (var i = 0; i < data.meta.count; i++) {
+                    var dep_id = data.data[i].id;
+                    var dep_name = data.data[i].attributes.department;
+                    $(department).append($('<option></option>').text(dep_name).val(dep_id));
+                }
+            }
+        });
+    })
+</script>

@@ -5,7 +5,7 @@
 
 import json
 
-from application.flicket_api.views.api import api_departments, api_categories, api_statuses, api_users
+from application.flicket_api.views.api import api_departments, api_categories, api_statuses
 
 
 class FlicketApi(object):
@@ -28,7 +28,3 @@ class FlicketApi(object):
 
         return json.loads(api_statuses())
 
-    @staticmethod
-    def get_users(__filter=None):
-
-        return json.loads(api_users(__filter=__filter))

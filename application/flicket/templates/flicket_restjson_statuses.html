@@ -1,0 +1,24 @@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/flicket-rest-api/statuses',
+            datatype: 'jsonp',
+            headers: {
+                'Content-Type': 'application/vnd.api+json',
+                'Accept': 'application/vnd.api+json'
+            },
+            success: function (data) {
+                var status = document.getElementById('status');
+                $(status).empty();
+                $(status).append($('<option></option>').text('--select--').val('0'));
+                // Load the new options
+                for (var i = 0; i < data.meta.count; i++) {
+                    var status_id = data.data[i].id;
+                    var status_name = data.data[i].attributes.status;
+                    $(status).append($('<option></option>').text(status_name).val(status_id));
+                }
+            }
+        });
+    })
+</script>

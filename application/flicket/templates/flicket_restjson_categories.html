@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    $(function () {
+        $('#department').change(function () {
+            var id = $(this).val();
+            if (id != 0) {
+                $.ajax({
+                    url: '/flicket-rest-api/departments/' + id + '/categories',
+                    datatype: 'jsonp',
+                    headers: {
+                        'Content-Type': 'application/vnd.api+json',
+                        'Accept': 'application/vnd.api+json'
+                    },
+                    success: function (data) {
+                        var category = document.getElementById('category');
+                        $(category).empty();
+                        $(category).append($('<option></option>').text('--select--').val('0'));
+                        for (var i = 0; i < data.meta.count; i++) {
+                            var cat_id = data.data[i].id;
+                            var cat_name = data.data[i].attributes.category;
+                            $(category).append($('<option></option>').text(cat_name).val(cat_id));
+                        }
+                    }
+                });
+            } else {
+                var category = document.getElementById('category');
+                $(category).empty();
+                $(category).append($('<option></option>').text('--select--').val('0'));
+            }
+
+        }).change();
+    })
+</script>

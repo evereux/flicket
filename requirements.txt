@@ -11,8 +11,16 @@ Flask-Mail==0.9.1
 Flask-Migrate==2.0.3
 Flask-Misaka==0.4.1
 Flask-Principal==0.4.0
+Flask-REST-JSONAPI==0.12.1
+Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
+Flask-WTF==0.14.2
 itsdangerous==0.24
+Jinja2==2.9.5
+Mako==1.0.6
+MarkupSafe==1.0
+marshmallow==2.13.1
+marshmallow-jsonapi==0.11.0
 misaka==2.1.0
 packaging==16.8
 pycparser==2.17
@@ -20,3 +28,6 @@ PyMySQL==0.7.10
 pyparsing==2.1.10
 python-editor==1.0.3
 six==1.10.0
+SQLAlchemy==1.1.7
+Werkzeug==0.12.1
+WTForms==2.1

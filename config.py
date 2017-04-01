@@ -49,6 +49,7 @@ class BaseConfiguration(object):
     # The base url for flicket.
     FLICKET = WEBHOME + ''
     FLICKET_API = WEBHOME + 'flicket-api/'
+    FLICKET_REST_API = WEBHOME + 'flicket-rest-api'
     ADMINHOME = '/flicket_admin/'
 
     ANNOUNCER = {'name': 'announcer',

@@ -32,35 +32,6 @@ def alchemy_encoder(obj):
         return float(obj)
 
 
-# json api to query users
-@flicket_api_bp.route(app.config['FLICKET_API'] + 'users/', methods=['GET', 'POST'])
-@login_required
-def api_users(__filter=None):
-
-    if 'filter' in request.args:
-        __filter = request.args.get('filter')
-
-    query = FlicketUser.query
-
-    if __filter:
-        print(__filter)
-        query = query.filter(FlicketUser.email.ilike('%{}%'.format(__filter)))
-
-    my_list = []
-    for u in query:
-        sub_dict = {
-            'id': u.id,
-            'username': u.username,
-            'email_': u.email,
-            'name': u.name
-        }
-        my_list.append(sub_dict)
-
-    json_dump = json.dumps(my_list)
-
-    return json_dump
-
-
 # json api to display departments
 @flicket_api_bp.route(app.config['FLICKET_API'] + 'department/', methods=['GET', 'POST'])
 @login_required
