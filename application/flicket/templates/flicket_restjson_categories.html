@@ -11,6 +11,15 @@
                         'Accept': 'application/vnd.api+json'
                     },
                     success: function (data) {
+
+                        // use uri.js to pass the page uri
+                        // didn't use parseQuery because I got unexpected behaviour. it wouldn't filter keyword category properly
+                        // I should probably backport this to other restjson html files.
+                        var result = URI.parse(document.URL);
+                        // get value of category in uri
+                        result = result.query;
+                        result = URI.parseQuery(result).category;
+
                         var category = document.getElementById('category');
                         $(category).empty();
                         $(category).append($('<option></option>').text('--select--').val('0'));
@@ -18,6 +27,18 @@
                             var cat_id = data.data[i].id;
                             var cat_name = data.data[i].attributes.category;
                             $(category).append($('<option></option>').text(cat_name).val(cat_id));
+                        }
+
+                        // set the preselected value
+                        if (result) {
+                            // find id of category
+                            for (var item in data.data) {
+                                var c = data.data[item].attributes.category;
+                                if (c === result) {
+                                    var category_id = data.data[item].id
+                                }
+                            }
+                            $(category).val(category_id)
                         }
                     }
                 });

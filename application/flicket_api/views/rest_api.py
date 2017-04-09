@@ -8,6 +8,7 @@ This rest api is written using flask_rest_jsonapi: http://flask-rest-jsonapi.rea
 See documentation for usage examples if not explicitly defined below.
 """
 
+from flask import url_for
 from flask_rest_jsonapi import ResourceDetail, ResourceList, ResourceRelationship
 from flask_rest_jsonapi.exceptions import ObjectNotFound
 from marshmallow_jsonapi.flask import Schema, Relationship

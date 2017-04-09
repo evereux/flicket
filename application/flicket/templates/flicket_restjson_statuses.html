@@ -9,6 +9,12 @@
                 'Accept': 'application/vnd.api+json'
             },
             success: function (data) {
+                // use uri.js to pass the page uri
+                var result = URI.parseQuery(document.URL);
+                // get value of status in uri
+                result = result.status;
+
+                // populate the status seclection inputs
                 var status = document.getElementById('status');
                 $(status).empty();
                 $(status).append($('<option></option>').text('--select--').val('0'));
@@ -17,6 +23,18 @@
                     var status_id = data.data[i].id;
                     var status_name = data.data[i].attributes.status;
                     $(status).append($('<option></option>').text(status_name).val(status_id));
+                }
+
+                // set the preselected value
+                if (result) {
+                    // find id of status
+                    for (var item in data.data) {
+                        var s = data.data[item].attributes.status;
+                        if (s === result) {
+                            var status_id = data.data[item].id
+                        }
+                    }
+                    $(status).val(status_id)
                 }
             }
         });
