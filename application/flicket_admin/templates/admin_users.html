@@ -28,6 +28,7 @@
                 <th>Username</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Job Title</th>
                 <th>Delete User</th>
             </tr>
             {% for u in users.items %}
@@ -35,6 +36,7 @@
                     <td><a href="{{ url_for('admin_bp.admin_edit_user', id=u.id) }}">{{ u.username }}</a></td>
                     <td>{{ u.name }}</td>
                     <td>{{ u.email }}</td>
+                    <td>{{ u.job_title }}</td>
                     <td><a href="{{ url_for('admin_bp.admin_delete_user', id=u.id) }}">delete
                         {{ u.username }}</a></td>
                 </tr>

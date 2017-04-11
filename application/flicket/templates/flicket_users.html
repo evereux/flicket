@@ -65,6 +65,9 @@
                 <th>
                     email
                 </th>
+                <th>
+                    Job Title
+                </th>
                 <th class="text-center">
                     posts
                 </th>
@@ -75,6 +78,9 @@
             {% for u in users.items %}
                 <tr>
                     <td>
+                        {%- if u.is_admin -%}
+                        <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:red"></span>
+                        {%- endif %}
                         {{ u.username }}
                     </td>
                     <td>
@@ -82,6 +88,9 @@
                     </td>
                     <td>
                         {{ u.email }}
+                    </td>
+                    <td>
+                        {{ u.job_title }}
                     </td>
                     <td class="text-center">
                         {{ details(u).num_posts }}

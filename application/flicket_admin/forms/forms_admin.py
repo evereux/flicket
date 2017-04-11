@@ -146,6 +146,7 @@ class EditUserForm(AddUserForm):
                                        check_username_edit])
     email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
                                              check_email_edit])
+    job_title = StringField('job_title')
     password = PasswordField('password', validators=[
         EqualTo('confirm', message='Passwords must match'), check_password_edit])
     confirm = PasswordField('Repeat Password')

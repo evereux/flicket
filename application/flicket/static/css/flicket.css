@@ -52,25 +52,18 @@ footer {
     border: none;
 }
 
+.flicket-btn {
+    margin-top: 5px;
+}
 
-.flicket-post-attachments {
-    padding: 10px;
-    border-top: solid #9acfea 1px;
+.flicket-form {
+    margin-top: 10px;
 }
 
 
-.flicket-title {
-    border-bottom: silver solid 1px;
-    background-color: Whitesmoke;
-    padding: 10px;
-}
-
-.flicket-row {
-    margin-top: 20px;
-    background-color: #FAFAFA;
-    padding: 5px;
-    border-radius: 5pt;
-    border: solid 1px #cbcbcb;
+.flicket-form-control {
+    margin: 0;
+    padding: 2pt;
 }
 
 .flicket-main {
@@ -79,24 +72,39 @@ footer {
     background-color: White;
 }
 
+.flicket-post-attachments {
+    padding: 10px;
+    border-top: solid #9acfea 1px;
+}
+
+
 .flicket-post-author {
     margin-bottom: 10px;
 }
 
-
-.flicket-post-header {
-    padding: 10px;
-    border-bottom: solid Silver 1px;
+.flicket-post-author-author {
+    font-weight: bold;
+    border-bottom: solid 1pt;
+    margin-bottom: 5pt;
 }
 
-.flicket-post-content {
-    padding: 10px;
+.flicket-post-author-job-title {
+    color: #7a7a7a;
 }
 
 .flicket-post-attachments {
     padding: 10px;
     padding-right: 0px;
     border-top: solid Silver 1px;
+}
+
+.flicket-post-content {
+    padding: 10px;
+}
+
+.flicket-post-header {
+    padding: 10px;
+    border-bottom: solid Silver 1px;
 }
 
 .flicket-post-modified {
@@ -107,15 +115,16 @@ footer {
     white-space: normal;
 }
 
-.flicket-form {
-    margin-top: 10px;
+.flicket-row {
+    margin-top: 20px;
+    background-color: #FAFAFA;
+    padding: 5px;
+    border-radius: 5pt;
+    border: solid 1px #cbcbcb;
 }
 
-.flicket-btn {
-    margin-top: 5px;
-}
-
-.flicket-form-control {
-    margin: 0;
-    padding: 2pt;
+.flicket-title {
+    border-bottom: silver solid 1px;
+    background-color: Whitesmoke;
+    padding: 10px;
 }

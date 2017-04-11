@@ -76,13 +76,19 @@
 
             <div class="row flicket-row flicket-post-author">
 
-
-                <div class="col-sm-2">
-                        <span class="glyphicon glyphicon-user" aria-hidden="true"
+                <div class="col-sm-2 flicket-post-author">
+                    <ul class="list-unstyled">
+                        <li class="flicket-post-author-author">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"
                                 {%- if r.user.is_admin -%}
                               style="color:red"
                                 {%- endif %}>
-                        </span> {{ r.user.name }}<br>
+                        </span> {{ r.user.name }}
+                        </li>
+                        <li class="flicket-post-author-job-title">
+                            {{ r.user.job_title }}
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="col-sm-10 flicket-main">

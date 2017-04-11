@@ -62,6 +62,20 @@
             {% endif %}
 
             <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">Job Title</label>
+                <div class="col-sm-9">
+                    {{ form.job_title(class="form-control", placeholder="job title / role") }}
+                </div>
+            </div>
+            {% if form.job_title.errors %}
+            <div class="alert alert-warning small">
+                {% for error in form.job_title.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
                 <label class="col-sm-3 control-label">Password</label>
                 <div class="col-sm-9">
                     {{ form.password(class="form-control", placeholder="password") }}

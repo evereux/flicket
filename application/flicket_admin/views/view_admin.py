@@ -104,9 +104,11 @@ def admin_edit_user():
             # Don't change the password if nothing was entered.
             if form.password.data != '':
                 user.password = hash_password(form.password.data)
+
             user.email = form.email.data
             user.name = form.name.data
-            user.password = hash_password(form.password.data)
+            user.job_title = form.job_title.data
+
             groups = form.groups.data
             # bit hacky but until i get better at this.
             # at least it keeps the groups table clean. :/
@@ -125,6 +127,7 @@ def admin_edit_user():
         form.username.data = user.username
         form.email.data = user.email
         form.name.data = user.name
+        form.job_title.data = user.job_title
         # define list of preselect groups.
         groups = []
         for g in user.flicket_groups:

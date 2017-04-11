@@ -26,6 +26,7 @@ def user_details():
         user = FlicketUser.query.filter_by(id=g.user.id).first()
         user.name = form.name.data
         user.email = form.email.data
+        user.job_title = form.job_title.data
         flash('You have edited your user details.', category='success')
 
         password = form.new_password.data
@@ -41,5 +42,6 @@ def user_details():
     form.name.data = g.user.name
     form.email.data = g.user.email
     form.username.data = g.user.username
+    form.job_title.data = g.user.job_title
 
     return render_template('flicket_edituser.html', form=form, title='Edit User Details')
