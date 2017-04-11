@@ -10,7 +10,7 @@ from application import app, db
 from application.flicket.forms.flicket_forms import SearchEmailForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.flicket_functions import announcer_post
+from application.flicket.scripts.flicket_functions import notification_post
 from application.flicket.scripts.email import FlicketMail, get_recipients
 from . import flicket_bp
 
@@ -37,7 +37,7 @@ def ticket_assign(ticket_id=False):
         db.session.commit()
 
         # add post to say user claimed ticket.
-        announcer_post(ticket_id, g.user, 'Ticket assigned to {} by'.format(user.username))
+        notification_post(ticket_id, g.user, 'Ticket assigned to {} by'.format(user.username))
 
         # send email to state ticket has been assigned.
         f_mail = FlicketMail()

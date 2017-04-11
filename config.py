@@ -52,10 +52,11 @@ class BaseConfiguration(object):
     FLICKET_REST_API = WEBHOME + 'flicket-rest-api'
     ADMINHOME = '/flicket_admin/'
 
-    ANNOUNCER = {'name': 'announcer',
-                 'username': 'announcer',
+    # flicket user used to post replies to tickets for status changes.
+    NOTIFICATION = {'name': 'notification',
+                 'username': 'notification',
                  'password': 'm3r4nd0mstr1ng',
-                 'email': 'flicket_admin@localhost.com'}
+                 'email': 'admin@localhost'}
 
 
 class TestConfiguration(BaseConfiguration):

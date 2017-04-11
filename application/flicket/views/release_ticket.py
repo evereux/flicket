@@ -10,7 +10,7 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
 from application.flicket.scripts.email import FlicketMail
-from application.flicket.scripts.flicket_functions import announcer_post
+from application.flicket.scripts.flicket_functions import notification_post
 
 
 # view to release a ticket user has been assigned.
@@ -38,7 +38,7 @@ def release(ticket_id=False):
         db.session.commit()
 
         # add post to say user claimed ticket.
-        announcer_post(ticket_id, g.user, 'Ticket unassigned by')
+        notification_post(ticket_id, g.user, 'Ticket unassigned by')
 
         # send email to state ticket has been released.
         f_mail = FlicketMail()

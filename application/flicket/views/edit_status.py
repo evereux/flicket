@@ -9,7 +9,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
-from application.flicket.scripts.flicket_functions import announcer_post
+from application.flicket.scripts.flicket_functions import notification_post
 
 
 # close ticket
@@ -38,7 +38,7 @@ def change_status(ticket_id, status):
         flash('Ticket is already closed.', category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-    announcer_post(ticket_id, g.user, 'Ticket closed by')
+    notification_post(ticket_id, g.user, 'Ticket closed by')
     ticket.current_status = closed
     ticket.assigned_id = None
     db.session.commit()

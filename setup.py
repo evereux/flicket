@@ -13,7 +13,7 @@ from application.flicket.models.flicket_models import FlicketStatus, FlicketPrio
 from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
 
-admin = 'flicket_admin'
+admin = 'admin'
 
 # configuration defaults for flicket
 flicket_config = {'posts_per_page': 50,
@@ -23,12 +23,12 @@ flicket_config = {'posts_per_page': 50,
 
 # departments and categories defaults for flicket
 depart_categories = [
-    {'department': 'Design', 'category': ['Dataset', 'ECN', 'ECR', 'CATIA', 'Other']},
+    {'department': 'Design', 'category': ['Dataset', 'ECN', 'ECR', 'Other']},
     {'department': 'Manufacturing', 'category': ['Process Planning', 'Tooling', 'Equipment', 'Other']},
-    {'department': 'IT', 'category': ['Internet', 'Intranet', 'PC', 'Sharepoint', 'CATIA']},
-    {'department': 'Quality', 'category': ['Work Instruction', 'Other']},
+    {'department': 'IT', 'category': ['Internet', 'Intranet', 'Other']},
+    {'department': 'Quality', 'category': ['Procedures', 'Manuals', 'Other']},
     {'department': 'Human Resources', 'category': ['Holidays', 'Sick Leave', 'Other']},
-    {'department': 'Commercial', 'category': ['Approved Suppliers', 'Dynamics', 'Other']},
+    {'department': 'Commercial', 'category': ['Approved Suppliers', 'Other']},
 
 ]
 
@@ -41,7 +41,7 @@ class RunSetUP(Command):
         self.set_db_config_defaults()
         self.set_email_config()
         self.create_admin(username=username, password=password, email=email)
-        self.create_announcer()
+        self.create_notifier()
         self.create_admin_group()
         self.create_default_ticket_status()
         self.create_default_priority_levels()
@@ -81,7 +81,7 @@ class RunSetUP(Command):
         _username = admin
         match = False
 
-        email = input("Enter flicket_admin email: ")
+        email = input("Enter admin email: ")
 
         while match is False:
             password1 = getpass("Enter password: ")
@@ -110,18 +110,18 @@ class RunSetUP(Command):
                 print("Admin user added.")
 
     @staticmethod
-    def create_announcer():
-        """ creates announcer user """
+    def create_notifier():
+        """ creates user for notifications """
 
-        query = FlicketUser.query.filter_by(username=app.config['ANNOUNCER']['username'])
+        query = FlicketUser.query.filter_by(username=app.config['NOTIFICATION']['username'])
         if query.count() == 0:
-            add_user = FlicketUser(username=app.config['ANNOUNCER']['username'],
-                                   name=app.config['ANNOUNCER']['name'],
-                                   password=hash_password(app.config['ANNOUNCER']['password']),
-                                   email=app.config['ANNOUNCER']['email'],
+            add_user = FlicketUser(username=app.config['NOTIFICATION']['username'],
+                                   name=app.config['NOTIFICATION']['name'],
+                                   password=hash_password(app.config['NOTIFICATION']['password']),
+                                   email=app.config['NOTIFICATION']['email'],
                                    date_added=datetime.datetime.now())
             db.session.add(add_user)
-            print("Announcer user added.")
+            print("Notification user added.")
 
     @staticmethod
     def create_admin_group(silent=False):

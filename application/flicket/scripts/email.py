@@ -143,9 +143,9 @@ class FlicketMail:
         :param html_body:
         :return:
         """
-        # remove announcer from the recipients list.
-        if app.config['ANNOUNCER']['email'] in recipients:
-            i = recipients.index(app.config['ANNOUNCER']['email'])
+        # remove notification user from the recipients list.
+        if app.config['NOTIFICATION']['email'] in recipients:
+            i = recipients.index(app.config['NOTIFICATION']['email'])
             recipients.pop(i)
 
         message = Message(subject, sender=sender, recipients=recipients, html=html_body)
