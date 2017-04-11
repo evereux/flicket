@@ -15,14 +15,15 @@ in such a way that makes integrating Flicket not too much of a chore.
      should be no reason other SQLAlchemy supported databases won't work
      just as well. See initial set-up for further information.
   
-* See requirements.txt for python package requirements. Run `pip install requirements.txt` to install.
-* This will run on either Linux or Windows. 
-    
-    Flask-Misaka will not pip install on Linux without `libffi-dev` .To solve this
-    n Ubuntu you would type `sudo apt-get install libffi-dev`.
+
+* This will run on either Linux or Windows.
+
+    Flask-Misaka will not pip install on Linux without `libffi-dev` and `python3-dev` .To solve this
+    n Ubuntu you would type `sudo apt-get install libffi-dev` and `sudo apt-get instal python3-dev`.
     
     Flask-Misaka will not pip install on windows without Microsoft Studio C++ 
     installed (an ~4GB download).
+* See requirements.txt for python package requirements. Run `pip install requirements.txt` to install.
 
 
 # Initial Set Up
