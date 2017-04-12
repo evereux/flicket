@@ -74,7 +74,7 @@ class FlicketMail:
         """
         recipients = get_recipients(ticket)
 
-        title = 'New Ticket: {} - {}'.format(ticket.id_zfill, ticket.title)
+        title = 'Ticket: #{} - {} created.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_create.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
 
@@ -90,7 +90,7 @@ class FlicketMail:
         if ticket.assigned:
             if ticket.assigned.email not in recipients:
                 recipients.append(ticket.assigned.email)
-        title = 'Ticket Reply: {} - {}'.format(ticket.id_zfill, ticket.title)
+        title = 'Ticket #{} - {} has new replies.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
 
@@ -107,7 +107,7 @@ class FlicketMail:
         if ticket.assigned.email not in recipients:
             recipients.append(ticket.assigned.email)
 
-        title = 'Ticket "{} - {}" - has been assigned'.format(ticket.id_zfill, ticket.title)
+        title = 'Ticket #{} - {}" has been assigned.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
@@ -125,7 +125,7 @@ class FlicketMail:
         if ticket.assigned.email not in recipients:
             recipients.append(ticket.assigned.email)
 
-        title = 'Ticket "{} - {}" - has been assigned'.format(ticket.id_zfill, ticket.title)
+        title = 'Ticket #{} - {} has been released.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_release.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
