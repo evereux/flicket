@@ -49,9 +49,7 @@ def load_user(user_id):
     return FlicketUser.query.get(int(user_id))
 
 
-# before any view is generated the user must be checked.
-# @flicket_bp.before_request
-# @admin_bp.before_request
+# before any view is generated the user must be checked application configuration details pulled from the database.
 @app.before_request
 def before_request():
     set_flicket_config()

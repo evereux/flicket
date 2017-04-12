@@ -19,7 +19,8 @@ user_field_size = {
     'password_max': 60,
     'group_min': 3,
     'group_max': 64,
-    'job_title': 64
+    'job_title': 64,
+    'avatar': 64
 }
 
 flicket_groups = db.Table('flicket_groups',
@@ -42,6 +43,7 @@ class FlicketUser(Base):
     date_added = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime, onupdate=datetime.datetime.now)
     job_title = db.Column(db.String(user_field_size['job_title']))
+    avatar = db.Column(db.String(user_field_size['avatar']))
 
     def __init__(self, username, name, email, password, date_added):
         self.username = username

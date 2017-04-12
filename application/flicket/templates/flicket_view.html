@@ -78,15 +78,28 @@
 
                 <div class="col-sm-2 flicket-post-author">
                     <ul class="list-unstyled">
-                        <li class="flicket-post-author-author">
+                        <li class="flicket-post-author-author text-center">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"
                                 {%- if r.user.is_admin -%}
                               style="color:red"
                                 {%- endif %}>
                         </span> {{ r.user.name }}
                         </li>
-                        <li class="flicket-post-author-job-title">
-                            {{ r.user.job_title }}
+                        <li>
+                            {% if r.user.avatar %}
+                            <img class="center-block"
+                                 src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ r.user.avatar }}"
+                                 style="width: 50%">
+                            {% else %}
+                            <img class="center-block"
+                                 src="{{ url_for('flicket_bp.static', filename='flicket_avatars/profile_default.jpg') }}"
+                                 style="width: 50%">
+                            {% endif %}
+                        </li>
+                        <li class="flicket-post-author-job-title text-center">
+                            {% if r.user.job_title %}
+                            {{ r.user.job_title }}]
+                            {% endif %}
                         </li>
                     </ul>
                 </div>

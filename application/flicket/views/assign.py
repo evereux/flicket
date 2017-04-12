@@ -37,7 +37,7 @@ def ticket_assign(ticket_id=False):
         db.session.commit()
 
         # add post to say user claimed ticket.
-        notification_post(ticket_id, g.user, 'Ticket assigned to {} by'.format(user.username))
+        notification_post(ticket_id, g.user, 'Ticket assigned to {} by {}.'.format(user.name, g.user.name))
 
         # send email to state ticket has been assigned.
         f_mail = FlicketMail()

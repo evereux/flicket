@@ -21,8 +21,9 @@ def random_string(characters=5):
     return output_string
 
 
-def notification_post(ticket_id, user, contents):
-    user = FlicketUser.query.filter_by(username=app.config['ANNOUNCER']['username']).first()
+def notification_post(ticket_id, user, content):
+
+    user = FlicketUser.query.filter_by(username=app.config['NOTIFICATION']['username']).first()
     if not user:
         flash('There is no user allocated to close tickets.')
         return False
@@ -32,7 +33,7 @@ def notification_post(ticket_id, user, contents):
             ticket_id=ticket_id,
             user=user,
             date_added=datetime.datetime.now(),
-            content='{}: {}.'.format(contents, user.username)
+            content='{}'.format(content)
         )
         db.session.add(new_reply)
         db.session.commit()

@@ -9,4 +9,5 @@ is recorded for history tracking purposes.
 * Make SECRET_KEY a randomly generate value when run_set_up is run and store it in the json file.
 
 ## Low
-* Update user profiles to include job description.
+* add ability to filter tickets by who started them aswell as who they're assigned to.
+

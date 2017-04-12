@@ -3,12 +3,13 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import flash, redirect, url_for, render_template, g
+from flask import flash, g, redirect,  render_template, request, url_for
 from flask_login import login_required
 
 from application import app, db
 from application.flicket.forms.forms_main import EditUserForm
 from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.scripts.flicket_upload import upload_documents, UploadAvatar
 from application.flicket.scripts.functions_login import check_password_format
 from application.flicket.scripts.hash_password import hash_password
 from . import flicket_bp
@@ -22,18 +23,32 @@ def user_details():
 
     if form.validate_on_submit():
 
+        avatar = request.files['avatar']
+        if avatar.filename != '':
+            # upload the avatar
+            upload_avatar = UploadAvatar(avatar, g.user)
+            if upload_avatar.upload_file() is False:
+                flash('There was a problem uploading files. Please ensure you are using a valid image file name.', category='danger')
+                return redirect(url_for('flicket_bp.user_details'))
+            avatar_filename = upload_avatar.file_name
+        else:
+            avatar_filename = None
+
         # find the user in db to edit
         user = FlicketUser.query.filter_by(id=g.user.id).first()
+        # set the new details
         user.name = form.name.data
         user.email = form.email.data
         user.job_title = form.job_title.data
-        flash('You have edited your user details.', category='success')
+        user.avatar = avatar_filename
 
+        # change the password if the user has entered a new password.
         password = form.new_password.data
         if (password != '') and (check_password_format(password)):
             password = hash_password(password)
             user.password = password
             flash('You have changed your password.', category='success')
+        flash('You have edited your user details.', category='success')
 
         db.session.commit()
 

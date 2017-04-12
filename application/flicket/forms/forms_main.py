@@ -7,7 +7,8 @@ import bcrypt
 from flask import g
 from flask_wtf import FlaskForm
 from wtforms import (PasswordField,
-                     StringField, )
+                     StringField,
+                     FileField)
 from wtforms.validators import (DataRequired,
                                 Length,
                                 EqualTo)
@@ -115,6 +116,7 @@ class EditUserForm(FlaskForm):
     username = StringField('username')
     name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
     email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']), change_email])
+    avatar = FileField('avatar')
     password = PasswordField('password',
                              validators=[DataRequired(),
                                          CheckPasswordCorrect(),

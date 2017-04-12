@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="text-center">{{ title }}</h1>
 
-    <form class="form-horizontal" action="" method="post" name="user_edit">
+    <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" name="user_edit">
         {{ form.hidden_tag() }}
 
         <div class="col-sm-3">
@@ -18,7 +18,7 @@
             </p>
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Username</label>
+                <label class="col-sm-3 control-label">{{ form.username.label }}</label>
                 <div class="col-sm-9">
                     {{ form.username(class="form-control", readonly=True) }}
                 </div>
@@ -32,7 +32,7 @@
             {% endif %}
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Name</label>
+                <label class="col-sm-3 control-label">{{ form.name.label }}</label>
                 <div class="col-sm-9">
                     {{ form.name(class="form-control") }}
                 </div>
@@ -46,7 +46,7 @@
             {% endif %}
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Email</label>
+                <label class="col-sm-3 control-label">{{ form.email.label }}</label>
                 <div class="col-sm-9">
                     {{ form.email(class="form-control") }}
                 </div>
@@ -59,7 +59,7 @@
             </div>
             {% endif %}
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Job Title</label>
+                <label class="col-sm-3 control-label">{{ form.job_title.label }}</label>
                 <div class="col-sm-9">
                     {{ form.job_title(class="form-control") }}
                 </div>
@@ -72,8 +72,15 @@
             </div>
             {% endif %}
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">{{ form.avatar.label }}</label>
+                <div class="col-sm-3">
+                    {{ form.avatar }}
+                </div>
+            </div>
+
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Password</label>
+                <label class="col-sm-3 control-label">{{ form.password.label }}</label>
                 <div class="col-sm-9">
                     {{ form.password(class="form-control", placeholder="password") }}
                 </div>
@@ -92,7 +99,7 @@
 
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">New Password</label>
+                <label class="col-sm-3 control-label">{{ form.new_password.label }}</label>
                 <div class="col-sm-9">
                     {{ form.new_password(class="form-control", placeholder="new password") }}
                 </div>
@@ -106,7 +113,7 @@
             {% endif %}
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Repeat Password</label>
+                <label class="col-sm-3 control-label">{{ form.confirm.label }}</label>
                 <div class="col-sm-9">
                     {{ form.confirm(class="form-control", placeholder="repeat password") }}
                 </div>

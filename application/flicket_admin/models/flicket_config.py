@@ -46,6 +46,7 @@ class FlicketConfig(Base):
     posts_per_page = db.Column(db.Integer)
     allowed_extensions = db.Column(db.String(256))
     ticket_upload_folder = db.Column(db.String(256))
+    avatar_upload_folder = db.Column(db.String(256))
 
     base_url = db.Column(db.String(128))
 

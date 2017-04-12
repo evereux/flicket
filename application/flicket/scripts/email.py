@@ -3,7 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import render_template, url_for
+from flask import render_template, url_for, flash
 from flask_mail import Mail, Message
 
 from application import app
@@ -136,19 +136,20 @@ class FlicketMail:
     @async
     def send_email(self, subject, sender, recipients, html_body):
         """
-
-        :param subject:
-        :param sender:
-        :param recipients:
-        :param html_body:
-        :return:
+        Sends email via async thread.
+        
+        :param subject: string
+        :param sender: string
+        :param recipients: list()
+        :param html_body: string
+        :return: nowt
         """
         # remove notification user from the recipients list.
         if app.config['NOTIFICATION']['email'] in recipients:
             i = recipients.index(app.config['NOTIFICATION']['email'])
             recipients.pop(i)
 
-        message = Message(subject, sender=sender, recipients=recipients, html=html_body)
-
-        with app.app_context():
-            self.mail.send(message)
+        if not app.config['MAIL_SUPPRESS_SEND']:
+            with app.app_context():
+                message = Message(subject, sender=sender, recipients=recipients, html=html_body)
+                self.mail.send(message)

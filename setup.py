@@ -18,7 +18,8 @@ admin = 'admin'
 # configuration defaults for flicket
 flicket_config = {'posts_per_page': 50,
                   'allowed_extensions': ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'],
-                  'ticket_upload_folder': 'application/flicket/static/flicket_uploads'
+                  'ticket_upload_folder': 'application/flicket/static/flicket_uploads',
+                  'avatar_upload_folder': 'application/flicket/static/flicket_avatars'
                   }
 
 # departments and categories defaults for flicket
@@ -65,6 +66,7 @@ class RunSetUP(Command):
             posts_per_page=flicket_config['posts_per_page'],
             allowed_extensions=', '.join(flicket_config['allowed_extensions']),
             ticket_upload_folder=flicket_config['ticket_upload_folder'],
+            avatar_upload_folder=flicket_config['avatar_upload_folder'],
             base_url=base_url
         )
 
@@ -107,7 +109,9 @@ class RunSetUP(Command):
             db.session.add(add_user)
 
             if not silent:
-                print("Admin user added.")
+                print('Admin user added.')
+        else:
+            print('Admin user is already added.')
 
     @staticmethod
     def create_notifier():
@@ -122,6 +126,8 @@ class RunSetUP(Command):
                                    date_added=datetime.datetime.now())
             db.session.add(add_user)
             print("Notification user added.")
+        else:
+            print('Notification user already added.')
 
     @staticmethod
     def create_admin_group(silent=False):
