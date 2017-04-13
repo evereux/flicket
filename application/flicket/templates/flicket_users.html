@@ -78,10 +78,12 @@
             {% for u in users.items %}
                 <tr>
                     <td>
+
+                        <a href="{{ url_for('flicket_bp.flicket_user', user_id=u.id) }}">
                         {%- if u.is_admin -%}
                         <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:red"></span>
                         {%- endif %}
-                        {{ u.username }}
+                        {{ u.username }}</a>
                     </td>
                     <td>
                         {{ u.name }}

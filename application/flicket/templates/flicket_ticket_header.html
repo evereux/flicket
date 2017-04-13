@@ -13,7 +13,7 @@
                 {% if ticket.user.avatar %}
                 <img class="center-block" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ ticket.user.avatar }}" style="width: 50%">
                 {% else %}
-                <img class="center-block" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/profile_default.jpg') }}" style="width: 50%">
+                <img class="center-block" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/__default_profile.png') }}" style="width: 50%">
                 {% endif %}
             </li>
             <li class="flicket-post-author-job-title text-center">

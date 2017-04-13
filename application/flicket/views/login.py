@@ -57,7 +57,7 @@ def before_request():
 
 
 
-# add 404 error handler
+# add 403 error handler
 @app.errorhandler(403)
 def not_found_error(error):
     return render_template('403.html'), 403

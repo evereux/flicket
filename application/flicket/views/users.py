@@ -43,3 +43,14 @@ def flicket_users(page=1):
                            users=users,
                            form=form,
                            details=FlicketUserDetails)
+
+@flicket_bp.route(app.config['FLICKET'] + 'user/<int:user_id>/', methods=['GET', 'POST'])
+@login_required
+def flicket_user(user_id):
+
+    user = FlicketUser.query.filter_by(id=user_id).one()
+
+    return render_template('flicket_user_details.html',
+                           title='Flicket - User',
+                           user=user,
+                           details=FlicketUserDetails)
