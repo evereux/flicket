@@ -19,7 +19,7 @@ from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketStatus,
                                                        FlicketUploads)
 from application.flicket.scripts.flicket_functions import is_ticket_closed
-from application.flicket.scripts.flicket_upload import add_upload_to_db, upload_documents
+from application.flicket.scripts.flicket_upload import UploadAttachment
 
 
 # edit ticket
@@ -49,7 +49,7 @@ def edit_ticket(ticket_id):
 
     if form.validate_on_submit():
 
-        # loop through the selected uploads
+        # loop through the selected uploads for deletion.
         if len(form.uploads.data) > 0:
             for i in form.uploads.data:
                 # get the upload document information from the database.
@@ -76,11 +76,12 @@ def edit_ticket(ticket_id):
         ticket.category = ticket_category
 
         files = request.files.getlist("file")
-        new_files = upload_documents(files)
+        upload_attachments = UploadAttachment(files)
+        if upload_attachments.are_attachements():
+            upload_attachments.upload_files()
 
         # add files to database.
-        post_type = 'Ticket'
-        add_upload_to_db(new_files, ticket, post_type)
+        upload_attachments.populate_db(ticket)
 
         db.session.commit()
         flash('Ticket topic edited.', category='success')
@@ -122,20 +123,33 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 
     if form.validate_on_submit():
+
+        # loop through the selected uploads for deletion.
+        if len(form.uploads.data) > 0:
+            for i in form.uploads.data:
+                # get the upload document information from the database.
+                query = FlicketUploads.query.filter_by(id=i).first()
+                # define the full uploaded filename
+                the_file = os.path.join(app.config['ticket_upload_folder'], query.filename)
+
+                if os.path.isfile(the_file):
+                    # delete the file from the folder
+                    os.remove(the_file)
+
+                db.session.delete(query)
+
+
         post.content = form.content.data
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
 
         files = request.files.getlist("file")
-        new_files = upload_documents(files)
-
-        if new_files is False:
-            flash('There was a problem uploading files.', category='danger')
-            return redirect(url_for('flicket_bp.tickets_main'))
+        upload_attachments = UploadAttachment(files)
+        if upload_attachments.are_attachements():
+            upload_attachments.upload_files()
 
         # add files to database.
-        post_type = 'Post'
-        add_upload_to_db(new_files, post, post_type)
+        upload_attachments.populate_db(post)
 
         db.session.commit()
         flash('Flicket edited.', category='success')

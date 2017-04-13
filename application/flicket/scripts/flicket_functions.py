@@ -4,21 +4,12 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import datetime
-import random
-import string
 
 from flask import flash
 
 from application import db, app
 from application.flicket.models.flicket_models import FlicketPost
 from application.flicket.models.flicket_user import FlicketUser
-
-
-def random_string(characters=5):
-    chars = string.ascii_lowercase + string.digits
-    output_string = ''.join(random.choice(chars) for _ in range(characters))
-
-    return output_string
 
 
 def notification_post(ticket_id, user, content):

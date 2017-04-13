@@ -12,17 +12,16 @@ from flask import (flash,
                    render_template,
                    g)
 from flask_login import login_required
-from flask_mail import Message
 
 from . import flicket_bp
-from application import app, db, mail
+from application import app, db
 from application.flicket.forms.flicket_forms import CreateTicketForm
 from application.flicket.scripts.email import FlicketMail
 from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketStatus,
                                                        FlicketPriority,
                                                        FlicketCategory)
-from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
+from application.flicket.scripts.flicket_upload import UploadAttachment
 
 
 # create ticket
@@ -39,12 +38,10 @@ def ticket_create():
         ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
 
         files = request.files.getlist("file")
+        upload_attachments = UploadAttachment(files)
+        if upload_attachments.are_attachements():
+            upload_attachments.upload_files()
 
-        new_files = upload_documents(files)
-
-        if new_files is False:
-            flash('There was a problem uploading files.', category='danger')
-            return redirect(url_for('flicket_bp.tickets_main'))
 
         # submit ticket data to database
         new_ticket = FlicketTicket(title=form.title.data,
@@ -57,10 +54,8 @@ def ticket_create():
                                    )
         db.session.add(new_ticket)
 
-        # add files to database.
-        if new_files is not None:
-            post_type = 'Ticket'
-            add_upload_to_db(new_files, new_ticket, post_type)
+        # add attachments to the dataabase.
+        upload_attachments.populate_db(new_ticket)
 
         # commit changes to the database
         db.session.commit()

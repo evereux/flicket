@@ -9,7 +9,7 @@ from flask_login import login_required
 from application import app, db
 from application.flicket.forms.forms_main import EditUserForm
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.flicket_upload import upload_documents, UploadAvatar
+from application.flicket.scripts.flicket_upload import UploadAvatar
 from application.flicket.scripts.functions_login import check_password_format
 from application.flicket.scripts.hash_password import hash_password
 from . import flicket_bp

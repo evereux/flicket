@@ -11,96 +11,18 @@ from flask import flash
 from werkzeug.utils import secure_filename
 
 from application import app, db
-from application.flicket.models.flicket_models import FlicketUploads, field_size
+from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.flicket_functions import random_string
 
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['allowed_extensions']
-
-def allowed_avatar(filename):
-    allowed_image_types = ['jpg']
-    return allowed_image_types
-
-
-def upload_documents(files, avatar_upload=False):
-    """
-    Function to upload files to the static temp folder.
-    The file is given a random unique file name.
-    :param files:
-    :return:
-    """
-    new_files = []
-
-    if avatar_upload:
-        check_extension = allowed_avatar
-        upload_folder = 'application/flicket/static/flicket_avatars'
-    else:
-        check_extension = allowed_file
-        upload_folder = app.config['ticket_upload_folder']
-
-    if len(files) == 0:
-        return None
-
-    if files[0].filename != '':
-
-        for f in files:
-
-            target_file = False
-            if f and check_extension(f.filename):
-
-                target_file = secure_filename(f.filename)
-                target_file = os.path.join(upload_folder, target_file)
-                f.save(target_file)
-
-            # rename file
-            if os.path.isfile(target_file):
-
-                while True:
-                    new_name_size = field_size['filename_max_length'] - len(
-                        os.path.splitext(target_file)[1])
-                    new_name = random_string(new_name_size) + os.path.splitext(target_file)[1]
-                    new_name = os.path.join(upload_folder, new_name)
-                    # make sure new name doesn't already exist
-                    if not os.path.isfile(new_name):
-                        break
-
-                # rename uploaded file to unique name
-                os.rename(target_file, new_name)
-                new_files.append((new_name, f.filename))
-
-            else:
-
-                # There has been a problem uploading some documents.
-                return False
-
-    return new_files
-
-
-def add_upload_to_db(new_files, _object, post_type=False):
-    topic = None
-    post = None
-
-    if post_type == 'Ticket':
-        topic = _object
-    if post_type == 'Post':
-        post = _object
-
-    if post_type is False:
-        flash('There was a problem uploading images.')
-
-    # add documents to database.
-    if len(new_files) > 0:
-        for f in new_files:
-            new_image = FlicketUploads(topic=topic, post=post, filename=os.path.basename(f[0]), original_filename=f[1])
-            db.session.add(new_image)
 
 
 class UploadFile:
 
     def __init__(self, file):
+        """
+        Takes a file object from form submission.
+        :param file: 
+        """
 
         self.file = file
         self.file_extension = self.get_extension()
@@ -154,6 +76,7 @@ class UploadFile:
         if self.file_name and self.upload_folder:
             self.target_file = os.path.join(self.upload_folder, self.file_name)
         else:
+            print('Problem with file_name {} or upload_folder {}.'.format(self.file_name, self.upload_folder))
             return False
 
         # Is the file extension in the list of allowed extensions.
@@ -161,6 +84,7 @@ class UploadFile:
             self.file.save(self.target_file)
             return self.file
         else:
+            print('There was a problem with the files extension.')
             return False
 
 
@@ -175,9 +99,13 @@ class UploadAvatar(UploadFile):
 
     def delete_existing_avatar(self):
         """
+        
         Clean up old avatar before uploading new one.
-        :return: 
+        
+        :return: nowt
+        
         """
+
         # Find filename in the database.
         _user = FlicketUser.query.filter_by(id=self.user.id).one()
         # remove the file if it exists
@@ -186,3 +114,80 @@ class UploadAvatar(UploadFile):
             # null the database entry.
             _user.avatar = None
             db.session.commit()
+
+
+class UploadAttachment(object):
+    """
+    
+    Class created for the uploading of attachements to tickets and comments.
+    
+    Initialised with a list of file objects from form submission.
+    
+    """
+
+    def __init__(self, files):
+        self.files = files
+        self.allowed_extensions = app.config['allowed_extensions']
+        self.upload_folder = app.config['ticket_upload_folder']
+        self.new_files = None
+
+
+    def are_attachements(self):
+        """
+        Check self.files to see if any files were added to the upload form. Return True if there were.
+        :return: Boolean
+        """
+
+        if len(self.files) == 0:
+            return False
+
+        if self.files[0].filename == '':
+            return False
+
+        return True
+
+
+    def upload_files(self):
+        """
+        Upload files to self.upload_upload. 
+        :return: list[str(original_filename), str(new_filename)]
+        """
+
+        # Were any files added to form?
+        if not self.are_attachements():
+            return False
+
+        self.new_files = list()
+        for file in self.files:
+            uploaded_file = UploadFile(file)
+            uploaded_file.upload_folder = self.upload_folder
+            uploaded_file.allowed_extensions = self.allowed_extensions
+
+            new_file_name = False
+            if uploaded_file.upload_file():
+                new_file_name = uploaded_file.file_name
+            self.new_files.append((file.filename, new_file_name))
+
+        return self.new_files
+
+    def populate_db(self, flicketobject):
+        topic = None
+        post = None
+        if type(flicketobject).__name__ == 'FlicketTicket':
+            topic = flicketobject
+        if type(flicketobject).__name__ == 'FlicketPost':
+            post = flicketobject
+        if self.new_files:
+            for new_file in self.new_files:
+                if new_file[1] is False:
+                    flash('There was a problem uploading one of the files.')
+                else:
+                    # all looks good, so add file to the datbase.
+                    new_image = FlicketUploads(
+                        topic=topic,
+                        post=post,
+                        filename=new_file[1],
+                        original_filename=new_file[0]
+                    )
+                    db.session.add(new_image)
+

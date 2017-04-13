@@ -13,8 +13,8 @@ from application import app, db
 from application.flicket.forms.flicket_forms import ReplyForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost
 from application.flicket.scripts.flicket_functions import block_quoter
-from application.flicket.scripts.flicket_upload import upload_documents, add_upload_to_db
-from application.flicket.scripts.email import FlicketMail, get_recipients
+from application.flicket.scripts.flicket_upload import UploadAttachment
+from application.flicket.scripts.email import FlicketMail
 
 
 # view ticket details
@@ -44,12 +44,9 @@ def ticket_view(ticket_id, page=1):
 
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
-
-        new_files = upload_documents(files)
-
-        if new_files is False:
-            flash('There was a problem uploading files.', category='danger')
-            return redirect(url_for('flicket_bp.tickets_main'))
+        upload_attachments = UploadAttachment(files)
+        if upload_attachments.are_attachements():
+            upload_attachments.upload_files()
 
         new_reply = FlicketPost(
             ticket=ticket,
@@ -57,12 +54,10 @@ def ticket_view(ticket_id, page=1):
             date_added=datetime.datetime.now(),
             content=form.content.data
         )
-
-        # add documents to database
-        post_type = 'Post'
-        add_upload_to_db(new_files, new_reply, post_type)
-
         db.session.add(new_reply)
+
+        # add files to database.
+        upload_attachments.populate_db(new_reply)
 
         # change ticket status to open if closed.
         if ticket.current_status.status.lower() == 'closed':

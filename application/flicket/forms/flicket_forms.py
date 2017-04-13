@@ -86,8 +86,7 @@ class CreateTicketForm(FlaskForm):
                                                                           max=field_size['content_max_length'])])
     priority = SelectField('priority', validators=[DataRequired()], coerce=int)
     category = SelectField('category', validators=[DataRequired()], coerce=int)
-    file = FileField('Upload Documents', render_kw={'multiple': True},
-                     validators=[Length(max=field_size['filename_max_length'])])
+    file = FileField('Upload Documents', render_kw={'multiple': True})
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])
 
 
@@ -120,8 +119,7 @@ class ReplyForm(FlaskForm):
     """ Content form. Displayed when replying too end editing tickets """
     content = TextAreaField('Reply', validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                         max=field_size['content_max_length'])])
-    file = FileField('Upload Documents', render_kw={'multiple': True},
-                     validators=[Length(max=field_size['filename_max_length'])])
+    file = FileField('Upload Documents', render_kw={'multiple': True})
     submit = SubmitField('submit reply', render_kw=form_class_button)
 
 
