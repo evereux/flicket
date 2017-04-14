@@ -1,13 +1,14 @@
 # Flicket
 
+## What is Flicket
+Flicket is a simple web based ticketing system written in Python using the flask web framework.
+
 ## Why Flicket?
-I could not find a simple ticketing system written in python / flask. 
+I could not find a simple ticketing system written in python / flask or any other language that I really liked.
 Also, I wanted a project to further my python / flask knowledge and development. 
 
-If you already have a flask driven website hopefully this project is structured
-in such a way that makes integrating Flicket not too much of a chore.
-
-## Flicket Requirements
+## Requirements
+Prior to installing and running Flicket please read these requirements.
 * Python 3.5.2 - I have not tested earlier versions of Python 3.
 * SQL Database server
 
