@@ -42,7 +42,8 @@
             {{- ticket.content|markdown -}}
             {%- if ticket.modified_id -%}
                 <div class="flicket-post-modified">This post was modified by {{ ticket.modified.name }}
-                    on {{ ticket.date_modified }}</div>
+                    on {{ ticket.date_modified }} | <a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">edit history</a>
+                </div>
             {%- endif -%}
         </div>
 

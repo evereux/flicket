@@ -13,6 +13,7 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import EditTicketForm, EditReplyForm
 from application.flicket.models.flicket_models import (FlicketCategory,
+                                                       FlicketHistory,
                                                        FlicketTicket,
                                                        FlicketPost,
                                                        FlicketPriority,
@@ -48,6 +49,21 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
+
+        # before we make any changes store the original post content in the history table if it has changed.
+        if ticket.modified_id:
+            history_id = ticket.modified_id
+        else:
+            history_id = ticket.started_id
+        if ticket.content != form.content.data:
+            history = FlicketHistory(
+                original_content = ticket.content,
+                topic=ticket,
+                date_modified = datetime.datetime.now(),
+                user_id = history_id
+            )
+            db.session.add(history)
+
 
         # loop through the selected uploads for deletion.
         if len(form.uploads.data) > 0:
@@ -123,6 +139,20 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 
     if form.validate_on_submit():
+
+        # before we make any changes store the original post content in the history table if it has changed.
+        if post.modified_id:
+            history_id = post.modified_id
+        else:
+            history_id = post.user_id
+        if post.content != form.content.data:
+            history = FlicketHistory(
+                original_content = post.content,
+                post=post,
+                date_modified = datetime.datetime.now(),
+                user_id = history_id
+            )
+            db.session.add(history)
 
         # loop through the selected uploads for deletion.
         if len(form.uploads.data) > 0:

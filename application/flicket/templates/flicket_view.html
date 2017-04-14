@@ -113,8 +113,7 @@
                             | {{ r.date_added.strftime('%d-%m-%Y %H:%M') }}
                         </div>
                         <div class="col-sm-6 text-right">
-                            {% if ( g.user.id == r.user_id ) or (g.user.isadmin) %}
-
+                            {% if ( g.user.id == r.user_id ) or (g.user.is_admin) %}
                                 <a href="{{ url_for('flicket_bp.edit_post', post_id = r.id) }}">
                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 </a>
@@ -128,7 +127,8 @@
                         {%- if r.modified_id -%}
                             <div class="flicket-post-modified">
                                 This post was modified by {{ r.modified.name }}
-                                on {{ r.date_modified }}</div>
+                                on {{ r.date_modified }} | <a href="{{ url_for('flicket_bp.flicket_history_post', post_id=r.id) }}">edit history</a>
+                            </div>
                         {%- endif -%}
                     </div>
 

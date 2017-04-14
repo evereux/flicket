@@ -150,3 +150,22 @@ class FlicketUploads(Base):
 
     filename = db.Column(db.String(field_size['filename_max_length']))
     original_filename = db.Column(db.String(field_size['filename_max_length']))
+
+
+class FlicketHistory(Base):
+    __tablename__ = 'flicket_history'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    post_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
+    post = db.relationship(FlicketPost)
+
+    topic_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
+    topic = db.relationship(FlicketTicket)
+
+    date_modified = db.Column(db.DateTime())
+
+    original_content = db.Column(db.String(field_size['content_max_length']))
+
+    user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    user = db.relationship(FlicketUser)

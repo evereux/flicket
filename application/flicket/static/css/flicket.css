@@ -4,7 +4,7 @@
 
 /* offset body content for fixed navbar */
 .anchor, body {
-    padding-top: 70px;
+    padding-top: 50px;
 }
 
 hr { border-top: 1px solid #F1592A; }
@@ -22,6 +22,12 @@ footer {
     border-top: solid 1px #F1592A;
     padding: 20px;
     margin-top: 20pt;
+}
+
+header {
+    background-color: #F1592A;
+    color: white;
+    padding: 20pt;
 }
 
 .white_space {
