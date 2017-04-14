@@ -11,9 +11,10 @@
             success: function (data) {
 
                 // use uri.js to pass the page uri
-                var result = URI.parseQuery(document.URL);
+                var result = URI.parse(document.URL);
                 // get value of department in uri
-                result = result.department;
+                result = result.query;
+                result = URI.parseQuery(result).department;
 
                 // populate the department selection inputs
                 var department = document.getElementById('department');
