@@ -130,6 +130,7 @@ class AddUserForm(FlaskForm):
     name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
     email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
                                              check_email])
+    job_title = StringField('job_title', validators=[Length(max=user_field_size['job_title'])])
     password = PasswordField('password', validators=[
         DataRequired(),
         EqualTo('confirm', message='Passwords must match'),

@@ -126,7 +126,7 @@ class EditUserForm(FlaskForm):
                                                      message='Passwords must match'),
                                              ])
     confirm = PasswordField('Repeat Password')
-    job_title = StringField('job_title')
+    job_title = StringField('job_title', validators=[Length(max=user_field_size['job_title'])])
 
 
 class ConfirmPassword(FlaskForm):

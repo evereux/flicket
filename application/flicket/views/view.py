@@ -85,7 +85,7 @@ def ticket_view(ticket_id, page=1):
     replies = replies.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_view.html',
-                           title='Flicket - View Ticket',
+                           title='View Ticket',
                            ticket=ticket,
                            form=form,
                            replies=replies,

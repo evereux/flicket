@@ -38,7 +38,7 @@ def flicket_users(page=1):
 
 
     return render_template('flicket_users.html',
-                           title='Flicket - Users',
+                           title='Users',
                            users=users,
                            form=form,
                            details=FlicketUserDetails)
@@ -50,6 +50,6 @@ def flicket_user(user_id):
     user = FlicketUser.query.filter_by(id=user_id).one()
 
     return render_template('flicket_user_details.html',
-                           title='Flicket - User',
+                           title='User Details',
                            user=user,
                            details=FlicketUserDetails)

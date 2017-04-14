@@ -37,6 +37,6 @@ def flicket_history_post(post_id):
 
     return render_template(
         'flicket_history.html',
-        title='Flicket - History',
+        title='History',
         history=history,
         ticket=ticket)

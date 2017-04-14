@@ -30,7 +30,7 @@ def categories(department_id=False):
         return redirect(url_for('flicket_bp.categories', department_id=department_id))
 
     return render_template('flicket_categories.html',
-                           title='Flicket - Categories',
+                           title='Categories',
                            form=form,
                            categories=categories,
                            department=department)
@@ -54,7 +54,7 @@ def category_edit(category_id=False):
         form.category.data = category.category
 
         return render_template('flicket_category_edit.html',
-                               title='Flicket - Edit Category',
+                               title='Edit Category',
                                form=form,
                                category=category,
                                department=category.department.department

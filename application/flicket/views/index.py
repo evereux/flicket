@@ -55,7 +55,6 @@ def index():
             d[1].append(({'status': s[0]['status']}, {'total_num': ticket_num}))
 
     return render_template('flicket_index.html',
-                           title='Flicket',
                            total=total,
                            total_days=total_days,
                            days=days,
