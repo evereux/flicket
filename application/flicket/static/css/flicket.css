@@ -21,7 +21,7 @@ footer {
     text-align: center;
     border-top: solid 1px #F1592A;
     padding: 20px;
-    margin-top: 20pt;
+    margin-top: 20px;
 }
 
 header {
@@ -130,7 +130,7 @@ header {
 
 .flicket-row {
     margin-top: 20px;
-    background-color: #FAFAFA;
+    background-color: #fadfcf;
     padding: 5px;
     border-radius: 5pt;
     border: solid 1px #cbcbcb;
