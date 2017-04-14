@@ -10,12 +10,14 @@ from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
 from application.flicket.scripts.flicket_functions import notification_post
+from application.flicket.scripts.email import FlicketMail
 
 
 # close ticket
 @flicket_bp.route(app.config['FLICKET'] + 'change_status/<ticket_id>/<status>/', methods=['GET', 'POST'])
 @login_required
 def change_status(ticket_id, status):
+
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
     closed = FlicketStatus.query.filter_by(status=status).first()
 
@@ -38,10 +40,15 @@ def change_status(ticket_id, status):
         flash('Ticket is already closed.', category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-    notification_post(ticket_id, g.user, 'Ticket closed by')
+    f_mail = FlicketMail()
+    f_mail.close_ticket(ticket)
+
+    notification_post(ticket_id, g.user, 'Ticket closed by {}'.format(g.user.name))
     ticket.current_status = closed
     ticket.assigned_id = None
     db.session.commit()
+
+
 
     flash('Ticket {} closed.'.format(str(ticket_id).zfill(5)), category='success')
 

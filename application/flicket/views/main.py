@@ -100,3 +100,15 @@ def tickets_main(page=1):
                            category=category,
                            user_id=user_id
                            )
+
+
+# @app.context_processor
+# def my_utility_processor():
+#
+#     def return_header(input='erferf'):
+#
+#         h1 = '<h1>{}</h1>'.format(input)
+#
+#         return h1
+#
+#     return dict(return_header=return_header)

@@ -107,7 +107,7 @@ class FlicketMail:
         if ticket.assigned.email not in recipients:
             recipients.append(ticket.assigned.email)
 
-        title = 'Ticket #{} - {}" has been assigned.'.format(ticket.id_zfill, ticket.title)
+        title = 'Ticket #{} - {} has been assigned.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
@@ -129,6 +129,23 @@ class FlicketMail:
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_release.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
+
+        self.send_email(title, self.sender, recipients, html_body)
+
+    def close_ticket(self, ticket):
+        """
+        :param ticket: ticket object
+        :return:
+        """
+
+        recipients = get_recipients(ticket)
+        # add the user to whom the ticket was been assigned.
+        if ticket.assigned.email not in recipients:
+            recipients.append(ticket.assigned.email)
+
+        title = 'Ticket #{} - {} has been closed.'.format(ticket.id_zfill, ticket.title)
+        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        html_body = render_template('email_ticket_close.html', ticket=ticket, ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)
 
