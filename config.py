@@ -42,7 +42,7 @@ class BaseConfiguration(object):
     # default flicket_admin group name
     ADMIN_GROUP_NAME = 'flicket_admin'
 
-    SECRET_KEY = 'lkliaeo239jfj'
+    SECRET_KEY = config_data['SECRET_KEY']
 
     # The base url for your application.
     WEBHOME = '/'
@@ -55,7 +55,7 @@ class BaseConfiguration(object):
     # flicket user used to post replies to tickets for status changes.
     NOTIFICATION = {'name': 'notification',
                  'username': 'notification',
-                 'password': 'm3r4nd0mstr1ng',
+                 'password': config_data['NOTIFICATION_USER_PASSWORD'],
                  'email': 'admin@localhost'}
 
 

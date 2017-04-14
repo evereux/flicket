@@ -59,7 +59,6 @@ The following changes should be made for a production environment:
 
 * `manage.py` set the debugger and reloader variables to False and change the host IP (if required). Example: `
 manager.add_command('runserver', Server(host="0.0.0.0", port=5000, use_reloader=False, use_debugger=False))`
-* `config.py` change the SECRET_KEY variable. change the NOTIFICATION password variable. 
 
 # Exporting / Importing Flicket Users
 ## Exporting
