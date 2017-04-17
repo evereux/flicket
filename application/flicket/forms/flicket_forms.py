@@ -19,6 +19,7 @@ from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
 
 form_class_button = {'class': 'btn btn-primary'}
+form_danger_button = {'class': 'btn btn-danger'}
 
 
 def does_email_exist(form, field):
@@ -121,6 +122,7 @@ class ReplyForm(FlaskForm):
                                                                         max=field_size['content_max_length'])])
     file = FileField('Upload Documents', render_kw={'multiple': True})
     submit = SubmitField('submit reply', render_kw=form_class_button)
+    submit_close = SubmitField('reply and close', render_kw=form_danger_button)
 
 
 class EditReplyForm(ReplyForm):

@@ -40,12 +40,6 @@
                        href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">release</a>
                     <a class="btn btn-default flicket-btn"
                        href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">assign</a>
-                    {% if g.user.is_admin or (ticket.user == g.user) %}
-                        {% if ticket.current_status.status != 'Closed' %}
-                            <a class="btn btn-danger flicket-btn"
-                               href="{{ url_for('flicket_bp.change_status', ticket_id = ticket.id, status = 'Closed') }}">close_ticket</a>
-                        {% endif %}
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -169,6 +163,7 @@
                             {% endif %}
                         </div>
                         <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
+
                             <a class="btn btn-default"
                                href="{{ url_for('flicket_bp.ticket_view', ticket_id=r.ticket_id, page=page, post_id=r.id) }}#reply">reply</a>
                         </div>
