@@ -122,8 +122,9 @@ class FlicketMail:
 
         recipients = get_recipients(ticket)
         # add the user to whom the ticket was been assigned.
-        if ticket.assigned.email not in recipients:
-            recipients.append(ticket.assigned.email)
+        if ticket.assigned is not None:
+            if ticket.assigned.email not in recipients:
+                recipients.append(ticket.assigned.email)
 
         title = 'Ticket #{} - {} has been released.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
@@ -140,8 +141,9 @@ class FlicketMail:
 
         recipients = get_recipients(ticket)
         # add the user to whom the ticket was been assigned.
-        if ticket.assigned.email not in recipients:
-            recipients.append(ticket.assigned.email)
+        if ticket.assigned is not None:
+            if ticket.assigned.email not in recipients:
+                recipients.append(ticket.assigned.email)
 
         title = 'Ticket #{} - {} has been closed.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)

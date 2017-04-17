@@ -1,15 +1,7 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-    <div class="container">
-        <h1>About</h1>
-        <p>
-            Flicket is a simple Flask driven ticket system.
-        </p>
-        <h1>FAQ</h1>
-        <p>See <a href="{{ url_for('flicket_bp.faq') }}">FAQ</a> for frequently asked questions.</p>
-        <h1>Tickets</h1>
-        <p>Go to the <a href="{{ url_for('flicket_bp.tickets_main') }}"></a> for all raised tickets.</p>
+<div class="container">
         <h1>Stats</h1>
         <h2>Overall</h2>
         <p>

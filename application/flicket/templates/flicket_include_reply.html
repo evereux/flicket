@@ -33,6 +33,11 @@
                 {{ form.file }}
             </div>
             <div class="col-sm-7 text-right">
+                {% if g.user.is_admin or (ticket.user == g.user) %}
+                {% if ticket.current_status.status != 'Closed' %}
+                {{ form.submit_close }}
+                {% endif %}
+                {% endif %}
                 {{ form.submit }}
             </div>
         </div>

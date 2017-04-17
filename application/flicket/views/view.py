@@ -71,6 +71,12 @@ def ticket_view(ticket_id, page=1):
         mail.reply_ticket(ticket=ticket)
 
         flash('You have replied to ticket {}: {}.'.format(ticket.id_zfill, ticket.title), category="success")
+
+        # if the reply has been submitted for closure.
+        if form.submit_close.data:
+
+            return redirect(url_for('flicket_bp.change_status', ticket_id=ticket.id, status='Closed'))
+
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # get post id and populate contents for auto quoting
