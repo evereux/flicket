@@ -95,6 +95,7 @@ header {
     margin-bottom: 10px;
 }
 
+
 .flicket-post-author-author {
     font-weight: bold;
     border-bottom: solid 1pt;
@@ -104,6 +105,7 @@ header {
 .flicket-post-author-job-title {
     color: #7a7a7a;
 }
+
 
 .flicket-post-attachments {
     padding: 10px;
@@ -134,6 +136,10 @@ header {
     padding: 5px;
     border-radius: 5pt;
     border: solid 1px #cbcbcb;
+}
+
+.flicket-row-notification {
+    background-color: #d1fafa;
 }
 
 .flicket-title {

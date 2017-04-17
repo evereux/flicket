@@ -74,7 +74,32 @@
         <!-- flicket ticket replies -->
         {% for r in replies.items %}
 
-            <div class="row flicket-row flicket-post-author">
+        {% if r.user.name == 'notification' %}
+            <div class="row flicket-row flicket-row-notification">
+                <div class="col-sm-2 flicket-post-author">
+                    <ul class="list-unstyled">
+                        <li>
+                            <img class="center-block"
+                                 src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ r.user.avatar }}"
+                                 style="max-width: 50pt; max-height: 50pt">
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-10 flicket-main">
+                    <div class="row flicket-post-header" >
+                        <div class="col-sm-6 ">
+                            <a class="anchor" id="{{ r.id }}" href="#{{ r.id }}">Reply #{{ (replies.page - 1) * replies.per_page + loop.index }}</a>
+                            | {{ r.date_added.strftime('%d-%m-%Y %H:%M') }}
+                        </div>
+                    </div>
+                    <div class="flicket-post-content">
+                        {{- r.content|markdown -}}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+
+            <div class="row flicket-row">
 
                 <div class="col-sm-2 flicket-post-author">
                     <ul class="list-unstyled">
@@ -152,6 +177,8 @@
                 </div>
 
             </div>
+
+        {% endif %}
         {% endfor %}
 
         {% include('flicket_include_reply.html') %}
