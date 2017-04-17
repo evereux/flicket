@@ -19,14 +19,11 @@ from flask_mail import Mail
 from flask_principal import (Identity,
                              identity_changed)
 
-from application import app, lm, db
+from application import app, lm, db, flicket_bp
+from application import __version__
 from application.flicket.forms.form_login import LogInForm
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_config import set_flicket_config
-from application.flicket_admin.views import admin_bp
-from . import flicket_bp
-
-
 
 
 # functions for redirecting user back from whence they came.
@@ -54,6 +51,7 @@ def load_user(user_id):
 def before_request():
     set_flicket_config()
     g.user = current_user
+    g.__version__ = __version__
 
 
 

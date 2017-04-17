@@ -6,7 +6,7 @@
 import datetime
 import time
 
-from flask import render_template, g
+from flask import render_template
 from flask_login import login_required
 
 from . import flicket_bp
@@ -18,6 +18,7 @@ from application.flicket.models.flicket_models import (FlicketTicket,
 
 # view users
 @flicket_bp.route(app.config['FLICKET'], methods=['GET', 'POST'])
+@login_required
 def index():
 
     """ View showing flicket main page. We use this to display some statistics."""
