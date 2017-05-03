@@ -11,7 +11,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import ReplyForm
-from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost
+from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost, FlicketSubscription
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import UploadAttachment
 from application.flicket.scripts.email import FlicketMail
@@ -63,6 +63,14 @@ def ticket_view(ticket_id, page=1):
         if ticket.current_status.status.lower() == 'closed':
             ticket_open = FlicketStatus.query.filter_by(status='Open').first()
             ticket.current_status = ticket_open
+
+        # subscribe to the ticket
+        if not ticket.is_subscribed(g.user):
+            subscribe = FlicketSubscription(
+                ticket=ticket,
+                user=g.user
+            )
+            db.session.add(subscribe)
 
         db.session.commit()
 

@@ -103,6 +103,9 @@ class FlicketTicket(Base):
     uploads = db.relationship('FlicketUploads',
                               primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
 
+    # finds all the users who are subscribed to the ticket.
+    subscribers = db.relationship('FlicketSubscription')
+
     @property
     def num_replies(self):
         n_replies = FlicketPost.query.filter_by(ticket_id=self.id).count()
@@ -111,6 +114,13 @@ class FlicketTicket(Base):
     @property
     def id_zfill(self):
         return str(self.id).zfill(5)
+
+    def is_subscribed(self, user):
+        for s in self.subscribers:
+            if s.user == user:
+                return True
+        return False
+
 
 
 class FlicketPost(Base):
@@ -166,6 +176,18 @@ class FlicketHistory(Base):
     date_modified = db.Column(db.DateTime())
 
     original_content = db.Column(db.String(field_size['content_max_length']))
+
+    user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    user = db.relationship(FlicketUser)
+
+
+class FlicketSubscription(Base):
+    __tablename__ = 'flicket_ticket_subscription'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    ticket_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
+    ticket = db.relationship(FlicketTicket)
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser)

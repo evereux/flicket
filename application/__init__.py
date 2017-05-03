@@ -51,6 +51,7 @@ from .flicket.views import (assign,
                             markdowns,
                             release_ticket,
                             render_uploads,
+                            subscribe,
                             user_edit,
                             users,
                             view)

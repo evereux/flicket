@@ -65,9 +65,21 @@ header {
     border: none;
 }
 
-.flicket-btn {
+
+.flicket-btn, flicket-btn-subscribe, flicket-btn-unsubscribe {
     margin-top: 5px;
 }
+
+.flicket-btn-subscribe {
+    background-color: rgb(241, 86, 39);
+    color: white;
+}
+
+.flicket-btn-unsubscribe {
+    background-color: rgb(237, 187, 173);
+    color: black;
+}
+
 
 .flicket-form {
     margin-top: 10px;

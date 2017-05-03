@@ -23,24 +23,55 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4">
-                <h3><label class="small">department</label> {{ ticket.category.department.department }}</h3>
+            <div class="col-sm-8">
+                <h3><label class="small">department / category</label> {{ ticket.category.department.department }} / {{ ticket.category.category }}</h3>
             </div>
             <div class="col-sm-4">
-                <h3><label class="small">category</label> {{ ticket.category.category }}</h3>
+                <h3><label class="small">Subscribed users</label>
+                    {% for subscrition in ticket.subscribers %}
+                        {{ subscrition.user.name }}
+                    {% if not loop.last %}
+                        ,
+                    {% endif %}
+                    {% endfor %}
+                </h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8">
+                <ul class="list-inline">
+                    <li>
+                        <a class="btn btn-default flicket-btn"
+                           href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">claim</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-default flicket-btn"
+                           href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">release</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-default flicket-btn"
+                           href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">assign</a>
+                    </li>
+                </ul>
             </div>
             <div class="col-sm-4">
-                <div class="btn-group-sm">
-                    {% if g.user.is_admin %}
+                <ul class="list-inline">
+                    <li>
+                        {% if ticket.is_subscribed(g.user) %}
+                            <a class="btn btn-default flicket-btn flicket-btn-unsubscribe"
+                           href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">unsubscribe</a>
+                        {% else %}
+                            <a class="btn btn-default flicket-btn flicket-btn-subscribe"
+                           href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">subscribe</a>
+                        {% endif %}
+                    </li>
+                    <li>{% if g.user.is_admin %}
                         <a class="btn btn-danger flicket-btn"
                            href="{{ url_for('flicket_bp.delete_ticket', ticket_id = ticket.id) }}">delete</a>
-                    {% endif %}
-                    <a class="btn btn-default flicket-btn" href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">claim</a>
-                    <a class="btn btn-default flicket-btn"
-                       href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">release</a>
-                    <a class="btn btn-default flicket-btn"
-                       href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">assign</a>
-                </div>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
 
