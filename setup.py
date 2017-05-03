@@ -53,7 +53,7 @@ class RunSetUP(Command):
     @staticmethod
     def set_db_config_defaults(silent=False):
 
-        print('Please site base url including port. For example this would be "http://192.168.1.1:8000".')
+        print('Please enter site base url including port. For example this would be "http://192.168.1.1:8000".')
         base_url = input('Base url> ')
 
         count = FlicketConfig.query.count()

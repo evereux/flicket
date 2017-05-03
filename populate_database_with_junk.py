@@ -32,7 +32,7 @@ rn = RandomNicknames()
 # Check to see if set-up has been run.
 query = FlicketUser.query.filter_by(username=admin)
 if query.count() != 1:
-    print('Setup has not get been run!')
+    print('Setup has not yet been run! You should do `python manage.py run_set_up`.')
     exit()
 
 mismatch = True
