@@ -104,7 +104,7 @@ class FlicketTicket(Base):
                               primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
 
     # finds all the users who are subscribed to the ticket.
-    subscribers = db.relationship('FlicketSubscription')
+    subscribers = db.relationship('FlicketSubscription', order_by='FlicketSubscription.user_def')
 
     @property
     def num_replies(self):
@@ -122,7 +122,10 @@ class FlicketTicket(Base):
         return False
 
     def get_subscriber_emails(self):
-
+        """
+        Function to return a list of email addresses of subscribed users.
+        :return: 
+        """
         emails = list()
         for user in self.subscribers:
             emails.append(user.user.email)
@@ -199,3 +202,5 @@ class FlicketSubscription(Base):
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser)
+
+    user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
