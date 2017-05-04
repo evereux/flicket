@@ -8,6 +8,8 @@
     {% include('email_include_details.html') %}
     <p>
         There are new replies to ticket: <a href="{{ ticket_url }}">{{ number }}</a>.
-        Please visit ticket page to view replies.
+    </p>
+    <p>
+        {{ reply.user.name }} replied:<br><i>{{ reply.content }}</i>
     </p>
 {% endblock %}

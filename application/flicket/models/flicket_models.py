@@ -121,6 +121,14 @@ class FlicketTicket(Base):
                 return True
         return False
 
+    def get_subscriber_emails(self):
+
+        emails = list()
+        for user in self.subscribers:
+            emails.append(user.user.email)
+
+        return emails
+
 
 
 class FlicketPost(Base):
