@@ -41,7 +41,7 @@ class RunSetUP(Command):
         username, password, email = self.get_admin_details()
         self.set_db_config_defaults()
         self.set_email_config()
-        self.create_admin(username=username, password=password, email=email)
+        self.create_admin(username=username, password=password, email=email, job_title='admin')
         self.create_notifier()
         self.create_admin_group()
         self.create_default_ticket_status()
