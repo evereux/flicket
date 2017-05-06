@@ -51,8 +51,9 @@
         <div class="col-sm-3 flicket-ticket-details-wrapper">
             <div class="flicket-ticket-details">
                 <strong>Assigned</strong><br>
-                {% if ticket.assigned.username %}{
-                { ticket.assigned.name }}{% else %}ticket not assigned{% endif %}
+                {% if ticket.assigned.username %}
+                {{ ticket.assigned.name }}
+                {% else %}ticket not assigned{% endif %}
             </div>
         </div>
     </div>
