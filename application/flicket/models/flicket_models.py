@@ -204,3 +204,14 @@ class FlicketSubscription(Base):
     user = db.relationship(FlicketUser)
 
     user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
+
+
+class FlicketAction(Base):
+    __tablename__  = 'flicket_ticket_action'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    ticket_id = db.Column(db.Interger, db.ForeignKey(FlicketTicket.id))
+    ticket = db.relationshhip(FlicketTicket)
+
+    action = db.Column(db.String(field_size=512))

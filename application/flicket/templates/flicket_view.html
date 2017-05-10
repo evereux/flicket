@@ -51,8 +51,20 @@
         <div class="col-sm-3 flicket-ticket-details-wrapper">
             <div class="flicket-ticket-details">
                 <strong>Assigned</strong><br>
-                {% if ticket.assigned.username %}{
-                { ticket.assigned.name }}{% else %}ticket not assigned{% endif %}
+                {% if ticket.assigned.username %}
+                {{ ticket.assigned.name }}
+                {% else %}ticket not assigned{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 flicket-ticket-details-wrapper">
+            <div class="flicket-ticket-details">
+                <strong>Subscribers</strong>
+                {% for s in ticket.subscribers %}
+                    <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
+                {% endfor %}
             </div>
         </div>
     </div>
