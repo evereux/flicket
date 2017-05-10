@@ -2,6 +2,8 @@
 /* everything else should be inhetied from bootstrap */
 
 /* offset body content for fixed navbar */
+
+/* color pallete http://paletton.com/#uid=20c0u0kqrufgrF3lxwIubpsx1k9 */
 .anchor, body {
     padding-top: 50px;
 }
@@ -98,7 +100,7 @@ header {
 
 .flicket-post-attachments {
     padding: 10px;
-    border-top: solid #9acfea 1px;
+    border-top: solid #ff9c7c 1px;
 }
 
 .flicket-post-author {
@@ -146,8 +148,12 @@ header {
     border: solid 1px #cbcbcb;
 }
 
-.flicket-row-notification {
-    background-color: #d1fafa;
+.flicket-row-action {
+    background-color: #fff;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 20px;
+    border-radius: 0;
 }
 
 .flicket-ticket-title-1 {

@@ -5,30 +5,59 @@
 
 import datetime
 
-from flask import flash
+from flask import flash, g
 
-from application import db, app
-from application.flicket.models.flicket_models import FlicketPost
-from application.flicket.models.flicket_user import FlicketUser
+from application import db
+from application.flicket.models.flicket_models import FlicketPost, FlicketAction
 
 
-def notification_post(ticket_id, user, content):
+def add_action(action=None, ticket=None, recipient=None):
+    """
+    :param action: string 'assign', 'unassign', 'close', 'claim', 'release'
+    :param ticket: ticket object 
+    :param post: post object
+    :param user: user object
+    :return: 
+    """
+    ticket_id = None
+    post_id = None
+    assigned = None
+    claimed = None
+    released = None
+    closed = None
+    opened = None
 
-    user = FlicketUser.query.filter_by(username=app.config['NOTIFICATION']['username']).first()
-    if not user:
-        flash('There is no user allocated to close tickets.')
-        return False
+
+    if len(ticket.posts) == 0:
+        ticket_id = ticket.id
     else:
-        # add post to say who closed ticket.
-        new_reply = FlicketPost(
-            ticket_id=ticket_id,
-            user=user,
-            date_added=datetime.datetime.now(),
-            content='{}'.format(content)
-        )
-        db.session.add(new_reply)
-        db.session.commit()
-        return True
+        post_id = ticket.posts[len(ticket.posts)-1].id
+
+    if action == 'assign':
+        assigned = True
+
+    if action == 'claim':
+        claimed = True
+
+    if action == 'release':
+        released = True
+
+    if action == 'close':
+        closed = True
+
+    new_action = FlicketAction(
+        ticket_id=ticket_id,
+        post_id=post_id,
+        assigned=assigned,
+        claimed=claimed,
+        released=released,
+        closed=closed,
+        opened=opened,
+        user=g.user,
+        recipient=recipient
+    )
+    db.session.add(new_action)
+    db.session.commit()
 
 
 def is_ticket_closed(status):

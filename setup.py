@@ -96,7 +96,7 @@ class RunSetUP(Command):
                 return _username, password1, email
 
     @staticmethod
-    def create_admin(username, password, email, silent=False):
+    def create_admin(username, password, email, job_title, silent=False):
         """ creates flicket_admin user. """
 
         query = FlicketUser.query.filter_by(username=username)
@@ -105,6 +105,7 @@ class RunSetUP(Command):
                                    name=username,
                                    password=hash_password(password),
                                    email=email,
+                                   job_title=job_title,
                                    date_added=datetime.datetime.now())
             db.session.add(add_user)
 

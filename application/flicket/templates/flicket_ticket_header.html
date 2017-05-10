@@ -7,7 +7,7 @@
                       {%- if ticket.user.is_admin -%}
                       style="color:red"
                       {%- endif %}>
-                </span> {{ ticket.user.name }}
+                </span> <a href="{{ url_for('flicket_bp.flicket_user', user_id=ticket.user.id) }}">{{ ticket.user.name }}</a>
             </li>
             <li>
                 {% if ticket.user.avatar %}

@@ -106,6 +106,10 @@ class FlicketTicket(Base):
     # finds all the users who are subscribed to the ticket.
     subscribers = db.relationship('FlicketSubscription', order_by='FlicketSubscription.user_def')
 
+    # finds all the actions associated with the post
+    actions = db.relationship('FlicketAction',
+                              primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id)")
+
     @property
     def num_replies(self):
         n_replies = FlicketPost.query.filter_by(ticket_id=self.id).count()
@@ -157,6 +161,10 @@ class FlicketPost(Base):
     uploads = db.relationship('FlicketUploads',
                               primaryjoin="and_(FlicketPost.id == FlicketUploads.posts_id)")
 
+    # finds all the actions associated with the post
+    actions = db.relationship('FlicketAction',
+                              primaryjoin="and_(FlicketPost.id == FlicketAction.post_id)")
+
 
 class FlicketUploads(Base):
     __tablename__ = 'flicket_uploads'
@@ -205,13 +213,62 @@ class FlicketSubscription(Base):
 
     user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
 
+    def __repr__(self):
+
+        return '<Class FlicketSubscription: ticket_id={}, user_id={}>'
+
 
 class FlicketAction(Base):
+    """
+    SQL table that stores the action history of a ticket. 
+    For example, if a user claims a ticket that action is stored here.
+    The action is associated with either the ticket_id (if no posts) or post_id (of
+    lastest post). The reason for this is displaying within the ticket view.
+    """
     __tablename__  = 'flicket_ticket_action'
 
     id = db.Column(db.Integer, primary_key=True)
 
-    ticket_id = db.Column(db.Interger, db.ForeignKey(FlicketTicket.id))
-    ticket = db.relationshhip(FlicketTicket)
+    ticket_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
+    ticket = db.relationship(FlicketTicket)
 
-    action = db.Column(db.String(field_size=512))
+    post_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
+    post = db.relationship(FlicketPost)
+
+    assigned = db.Column(db.Boolean) #
+    claimed = db.Column(db.Boolean) #
+    released = db.Column(db.Boolean) #
+    closed = db.Column(db.Boolean) #
+    opened = db.Column(db.Boolean)
+
+    user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    user = db.relationship(FlicketUser, foreign_keys=[user_id])
+
+    recipient_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
+    recipient = db.relationship(FlicketUser, foreign_keys=[recipient_id])
+
+    def output_action(self):
+        """
+        Method used in ticket view to show what action has taken place in ticket.
+        :return: 
+        """
+        if self.assigned:
+            return 'Ticket assigned to <a href="mailto:{1}">{0}</a> by <a href="mailto:{3}">{2}</a>'.format(self.recipient.name, self.recipient.email, self.user.name, self.user.email)
+
+        if self.claimed:
+            return 'Ticked claimed by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+
+        if self.released:
+            return 'Ticket released by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+
+        if self.closed:
+            return 'Ticked closed by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+
+    def __repr__(self):
+
+        return ('<Class FlicketAction: ticket_id={}, post_id={}, assigned={}, unassigned={}, claimed={},' 
+                'released={}, closed={}, opened={}, user_id={}, recipient_id={}>').format(self.ticket_id, self.post_id,
+                                                                                         self.assigned, self.unassigned,
+                                                                                         self.claimed, self.released,
+                                                                                         self.closed, self.opened,
+                                                                                         self.user_id, self.recipient_id)

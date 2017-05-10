@@ -10,7 +10,7 @@ from application import app, db
 from application.flicket.forms.flicket_forms import SearchEmailForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketSubscription
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.flicket_functions import notification_post
+from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.email import FlicketMail
 from . import flicket_bp
 
@@ -20,7 +20,7 @@ from . import flicket_bp
 @login_required
 def ticket_assign(ticket_id=False):
     form = SearchEmailForm()
-    ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
+    ticket = FlicketTicket.query.filter_by(id=ticket_id).one()
 
     if ticket.current_status.status == 'Closed':
         flash("Can't assign a closed ticket.")
@@ -40,9 +40,8 @@ def ticket_assign(ticket_id=False):
         ticket.assigned = user
         ticket.current_status = status
 
-
-        # add post to say user claimed ticket.
-        notification_post(ticket_id, g.user, 'Ticket assigned to {} by {}.'.format(user.name, g.user.name))
+        # add action record
+        add_action(action='assign', ticket=ticket, recipient=user)
 
         # subscribe to the ticket
         if not ticket.is_subscribed(user):
