@@ -3,7 +3,8 @@
 
 /* offset body content for fixed navbar */
 
-/* color pallete http://paletton.com/#uid=20c0u0kqrufgrF3lxwIubpsx1k9 */
+/* color pallete http://paletton.com/#uid=20c0u0kqruf27Fv8XMB-SnVlsbX */
+/* color pallete http://paletton.com/#uid=20b0u0k2NvK02Yk0WJ55yre9mn7 */
 .anchor, body {
     padding-top: 50px;
 }
@@ -73,14 +74,16 @@ header {
     margin-top: 5px;
 }
 
+.flicket-btn-delete {
+
+}
+
 .flicket-btn-subscribe {
-    background-color: rgb(241, 86, 39);
-    color: white;
+
 }
 
 .flicket-btn-unsubscribe {
-    background-color: rgb(237, 187, 173);
-    color: black;
+
 }
 
 .flicket-form {
@@ -105,16 +108,22 @@ header {
 
 .flicket-post-author {
     margin-bottom: 10px;
+    border: solid 1px Silver;
+    border-radius: 5px;
+
 }
 
 .flicket-post-author-author {
     font-weight: bold;
-    border-bottom: solid 1pt;
-    margin-bottom: 5pt;
 }
 
-.flicket-post-author-job-title {
+.flicket-post-author-jobtitle {
     color: #7a7a7a;
+    text-align: center;
+}
+
+.flicket-post-author-author {
+    text-align: center;
 }
 
 .flicket-post-attachments {
@@ -142,10 +151,8 @@ header {
 
 .flicket-row {
     margin-top: 20px;
-    background-color: #fadfcf;
     padding: 5px;
-    border-radius: 3pt;
-    border: solid 1px #cbcbcb;
+
 }
 
 .flicket-row-action {
@@ -153,28 +160,50 @@ header {
     margin-left: 20px;
     margin-right: 20px;
     padding: 5px 20px;
-    border-radius: 0;
+    border: solid 1px silver;
+    background-color: rgba(254, 203, 190, 0.3);
+    border-radius: 3px;
 }
 
-.flicket-ticket-title-1 {
-    background-color: Whitesmoke;
-    padding: 10px;
+.flicket-row-reply {
+    border: solid 1px silver;
+    border-radius: 3px;
 }
 
-.flicket-ticket-title-2 {
-    font-size: 2em;
+.flicket-row-title-main {
+    margin-top: 20px;
+    padding: 5px;
+    border: solid 1px #ddd;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.flicket-row-title-details {
+    padding: 5px;
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+}
+
+.flicket-row-title-sub {
+    padding: 5px;
+    border: solid 1px #ddd;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.flicket-ticket-cell {
+    margin: 2px;
+    padding: 5px 10px;
+}
+
+.flicket-ticket-cell-title {
+    font-size: 1.5em;
     font-weight: bold;
 }
 
-.flicket-ticket-details-wrapper {
-    padding: 0;
-}
-
-.flicket-ticket-details {
-    background-color: whitesmoke;
-    font-size: 1.5em;
-    margin: 0.1em;
-    padding: 0 15px;
+.flicket-ticket-title-title {
+    font-size: 2em;
+    font-weight: bold;
+    padding: 5px 10px;
 }
 
 .flicket-ticket-details-btn-ul {
@@ -191,6 +220,6 @@ header {
 }
 
 .flicket-ticket-details-btn-li:hover {
-  background-color: #eee;
+    background-color: #eee;
     text-decoration: None;
 }

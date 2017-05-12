@@ -3,6 +3,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from application import db
 from application.flicket.models import Base
 from application.flicket.models.flicket_user import FlicketUser
@@ -137,7 +139,6 @@ class FlicketTicket(Base):
         return emails
 
 
-
 class FlicketPost(Base):
     __tablename__ = 'flicket_post'
 
@@ -214,7 +215,6 @@ class FlicketSubscription(Base):
     user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
 
     def __repr__(self):
-
         return '<Class FlicketSubscription: ticket_id={}, user_id={}>'
 
 
@@ -225,7 +225,7 @@ class FlicketAction(Base):
     The action is associated with either the ticket_id (if no posts) or post_id (of
     lastest post). The reason for this is displaying within the ticket view.
     """
-    __tablename__  = 'flicket_ticket_action'
+    __tablename__ = 'flicket_ticket_action'
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -235,10 +235,10 @@ class FlicketAction(Base):
     post_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
     post = db.relationship(FlicketPost)
 
-    assigned = db.Column(db.Boolean) #
-    claimed = db.Column(db.Boolean) #
-    released = db.Column(db.Boolean) #
-    closed = db.Column(db.Boolean) #
+    assigned = db.Column(db.Boolean)
+    claimed = db.Column(db.Boolean)
+    released = db.Column(db.Boolean)
+    closed = db.Column(db.Boolean)
     opened = db.Column(db.Boolean)
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
@@ -247,28 +247,40 @@ class FlicketAction(Base):
     recipient_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     recipient = db.relationship(FlicketUser, foreign_keys=[recipient_id])
 
+    date = db.Column(db.DateTime)
+
     def output_action(self):
         """
         Method used in ticket view to show what action has taken place in ticket.
         :return: 
         """
+
+        _date = self.date.strftime('%d-%m-%Y %H:%M')
+
         if self.assigned:
-            return 'Ticket assigned to <a href="mailto:{1}">{0}</a> by <a href="mailto:{3}">{2}</a>'.format(self.recipient.name, self.recipient.email, self.user.name, self.user.email)
+            return 'Ticket assigned to <a href="mailto:{1}">{0}</a> by <a href="mailto:{3}">{2}</a> | {4}'.format(
+                self.recipient.name, self.recipient.email, self.user.name, self.user.email, _date)
 
         if self.claimed:
-            return 'Ticked claimed by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+            return 'Ticked claimed by <a href="mailto:{}">{}</a>  | {}'.format(self.user.email, self.user.name, _date)
 
         if self.released:
-            return 'Ticket released by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+            return 'Ticket released by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
 
         if self.closed:
-            return 'Ticked closed by <a href="mailto:{}">{}</a>'.format(self.user.email, self.user.name)
+            return 'Ticked closed by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
 
     def __repr__(self):
 
-        return ('<Class FlicketAction: ticket_id={}, post_id={}, assigned={}, unassigned={}, claimed={},' 
-                'released={}, closed={}, opened={}, user_id={}, recipient_id={}>').format(self.ticket_id, self.post_id,
-                                                                                         self.assigned, self.unassigned,
-                                                                                         self.claimed, self.released,
-                                                                                         self.closed, self.opened,
-                                                                                         self.user_id, self.recipient_id)
+        return ('<Class FlicketAction: ticket_id={}, post_id={}, assigned={}, unassigned={}, claimed={},'
+                'released={}, closed={}, opened={}, user_id={}, recipient_id={}, date={}>').format(self.ticket_id,
+                                                                                                   self.post_id,
+                                                                                                   self.assigned,
+                                                                                                   self.unassigned,
+                                                                                                   self.claimed,
+                                                                                                   self.released,
+                                                                                                   self.closed,
+                                                                                                   self.opened,
+                                                                                                   self.user_id,
+                                                                                                   self.recipient_id,
+                                                                                                   self.date)

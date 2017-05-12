@@ -16,7 +16,7 @@ manager.add_command('db', MigrateCommand)
 manager.add_command('run_set_up', RunSetUP)
 manager.add_command('export_users', ExportUsersToJson)
 manager.add_command('import_users', ImportUsersFromJson)
-manager.add_command('runserver', Server(host="localhost", port=5000, use_reloader=True, use_debugger=True))
+manager.add_command('runserver', Server(host="0.0.0.0", port=5000, use_reloader=True, use_debugger=True))
 
 if __name__ == '__main__':
     manager.run()

@@ -10,6 +10,7 @@ from flask_mail import Mail
 from flask_rest_jsonapi import Api
 from flask_sqlalchemy import SQLAlchemy
 
+from application.flicket.scripts.jinja2_functions import display_post_box
 from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
 from application.flicket_api.views import flicket_api_bp
@@ -19,6 +20,9 @@ __version__ = '0.1.3a'
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
+# import jinja function
+app.jinja_env.globals.update(display_post_box=display_post_box)
+
 
 # Initialise Misaka for markdown
 Misaka(app)

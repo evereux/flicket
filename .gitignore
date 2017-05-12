@@ -10,6 +10,7 @@ screenshots*
 config.json
 users.json
 migrations
+migrations_laptop
 test.db
 test.py
 

@@ -54,7 +54,8 @@ def add_action(action=None, ticket=None, recipient=None):
         closed=closed,
         opened=opened,
         user=g.user,
-        recipient=recipient
+        recipient=recipient,
+        date=datetime.datetime.now()
     )
     db.session.add(new_action)
     db.session.commit()
