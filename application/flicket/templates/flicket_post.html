@@ -3,12 +3,9 @@
     <div class="col-sm-2">
         <div class="flicket-post-author">
             <div class="flicket-post-author-author">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"
-                  {%- if flicket_post.user.is_admin -%}
+                <a {% if flicket_post.user.is_admin -%}
                   style="color:red"
-                  {%- endif %}>
-            </span>
-                <a href="{{ url_for('flicket_bp.flicket_user', user_id=flicket_post.user.id) }}">{{flicket_post.user.name}}</a>
+                  {%- endif %} href="{{ url_for('flicket_bp.flicket_user', user_id=flicket_post.user.id) }}">{{flicket_post.user.name}}</a>
             </div>
             <div class="flicket-post-author-avatar">
                 {% if flicket_post.user.avatar %}
