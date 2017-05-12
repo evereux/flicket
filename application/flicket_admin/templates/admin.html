@@ -6,16 +6,7 @@
     {% include 'admin_menu.html' %}
     <h2>{{ title }}</h2>
     <p>
-        Body text
+        Administration home page.
     </p>
-    {% if g.user.is_admin %}
-    <p>
-        You are admin
-    </p>
-    {% else %}
-    <p>
-        You are not admin
-    </p>
-    {% endif %}
 </div>
 {% endblock %}

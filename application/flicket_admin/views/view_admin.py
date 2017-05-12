@@ -75,6 +75,7 @@ def add_user():
                                email=form.email.data,
                                name=form.name.data,
                                password=password,
+                               job_title=form.job_title.data,
                                date_added=datetime.datetime.now())
         db.session.add(register)
         db.session.commit()
