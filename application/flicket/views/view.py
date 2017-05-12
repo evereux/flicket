@@ -22,7 +22,7 @@ from application.flicket.scripts.email import FlicketMail
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_view/<ticket_id>/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def ticket_view(ticket_id, page=1):
-    # todo: make sure underscores aren't allowed in usernames as it breaks markdown.
+    # todo: make sure underscores aren't allowed in usernames as it breaks markdown?
 
     # is ticket number legitimate
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -34,7 +34,8 @@ def ticket_view(ticket_id, page=1):
     # find all replies to ticket.
     replies = FlicketPost.query.filter_by(ticket_id=ticket_id).order_by(FlicketPost.date_added.asc())
 
-    post_id = request.args.get('post_id')
+    # get reply id's
+    post_rid = request.args.get('post_rid')
     ticket_rid = request.args.get('ticket_rid')
 
     form = ReplyForm()
@@ -88,8 +89,8 @@ def ticket_view(ticket_id, page=1):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # get post id and populate contents for auto quoting
-    if post_id:
-        query = FlicketPost.query.filter_by(id=post_id).first()
+    if post_rid:
+        query = FlicketPost.query.filter_by(id=post_rid).first()
         reply_contents = "{} wrote on {}\r\n\r\n{}".format(query.user.name, query.date_added, query.content)
         form.content.data = block_quoter(reply_contents)
     if ticket_rid:
@@ -103,5 +104,4 @@ def ticket_view(ticket_id, page=1):
                            ticket=ticket,
                            form=form,
                            replies=replies,
-                           post_id=post_id,
                            page=page)

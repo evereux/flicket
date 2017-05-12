@@ -70,7 +70,14 @@ header {
     border: none;
 }
 
-.flicket-btn, flicket-btn-subscribe, flicket-btn-unsubscribe {
+.flask-pagedown-preview {
+    margin-top: 10px;
+    border: solid 1px silver;
+    border-radius: 3px;
+    background-color: whitesmoke;
+}
+
+.flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {
     margin-top: 5px;
 }
 
