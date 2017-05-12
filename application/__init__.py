@@ -7,6 +7,7 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_misaka import Misaka
 from flask_mail import Mail
+from flask_pagedown import PageDown
 from flask_rest_jsonapi import Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -29,6 +30,7 @@ Misaka(app)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
+pagedown = PageDown(app)
 rest_api = Api(app)
 
 # import models so alembic can see them

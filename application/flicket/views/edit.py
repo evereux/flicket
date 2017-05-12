@@ -100,7 +100,7 @@ def edit_ticket(ticket_id):
         upload_attachments.populate_db(ticket)
 
         db.session.commit()
-        flash('Ticket topic edited.', category='success')
+        flash('Ticket successfully edited.', category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     form.content.data = ticket.content
@@ -182,7 +182,7 @@ def edit_post(post_id):
         upload_attachments.populate_db(post)
 
         db.session.commit()
-        flash('Flicket edited.', category='success')
+        flash('Post successfully edited.', category='success')
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 

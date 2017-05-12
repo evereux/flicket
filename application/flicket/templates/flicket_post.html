@@ -3,14 +3,14 @@
     <div class="col-sm-2">
         <div class="flicket-post-author">
             <div class="flicket-post-author-author">
-                <a {% if flicket_post.user.is_admin -%}
+                <a {% if content.user.is_admin -%}
                   style="color:red"
-                  {%- endif %} href="{{ url_for('flicket_bp.flicket_user', user_id=flicket_post.user.id) }}">{{flicket_post.user.name}}</a>
+                  {%- endif %} href="{{ url_for('flicket_bp.flicket_user', user_id=content.user.id) }}">{{content.user.name}}</a>
             </div>
             <div class="flicket-post-author-avatar">
-                {% if flicket_post.user.avatar %}
+                {% if content.user.avatar %}
                 <img class="center-block"
-                     src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ flicket_post.user.avatar }}"
+                     src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ content.user.avatar }}"
                      style="width: 30%">
                 {% else %}
                 <img class="center-block"
@@ -19,8 +19,8 @@
                 {% endif %}
             </div>
             <div class="flicket-post-author-jobtitle">
-                {% if flicket_post.user.job_title %}
-                {{ flicket_post.user.job_title }}
+                {% if content.user.job_title %}
+                {{ content.user.job_title }}
                 {% endif %}
             </div>
         </div>
@@ -31,31 +31,37 @@
         <div class="row flicket-post-header">
             <div class="col-sm-6 ">
                 {% if replies %}
-                <a class="anchor" id="{{ flicket_post.id }}" href="#{{ flicket_post.id }}">Reply #{{ (replies.page - 1)
+                <a class="anchor" id="{{ content.id }}" href="#{{ content.id }}">Reply #{{ (replies.page - 1)
                     *
                     replies.per_page
                     + loop.index }}</a>
                 |
                 {% endif %}
-                {{ flicket_post.date_added.strftime('%d-%m-%Y %H:%M') }}
+                {{ content.date_added.strftime('%d-%m-%Y %H:%M') }}
             </div>
             <div class="col-sm-6 text-right">
-                {% if ( g.user.id == flicket_post.user_id ) or (g.user.is_admin) %}
-                <a href="{{ url_for('flicket_bp.edit_post', post_id = flicket_post.id) }}">
+                {% if ( g.user.id == content.user_id ) or (g.user.is_admin) %}
+                {% if post %}
+                <a href="{{ url_for('flicket_bp.edit_post', post_id = content.id) }}">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </a>
+                {% else %}
+                <a href="{{ url_for('flicket_bp.edit_ticket', ticket_id = content.id) }}">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+                {% endif %}
                 {% endif %}
             </div>
         </div>
 
 
         <div class="flicket-post-content">
-            {{- flicket_post.content|markdown -}}
-            {%- if flicket_post.modified_id -%}
+            {{- content.content|markdown -}}
+            {%- if content.modified_id -%}
             <div class="flicket-post-modified">
-                This post was modified by {{ flicket_post.modified.name }}
-                on {{ flicket_post.date_modified }} | <a
-                    href="{{ url_for('flicket_bp.flicket_history_post', post_id=flicket_post.id) }}">edit
+                This post was modified by {{ content.modified.name }}
+                on {{ content.date_modified }} | <a
+                    href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">edit
                 history</a>
             </div>
             {%- endif -%}
@@ -63,8 +69,8 @@
 
         <div class="flicket-post-attachments">
             <div class="col-sm-8">
-                {%- if flicket_post.uploads -%}
-                {%- for upload in flicket_post.uploads %}
+                {%- if content.uploads -%}
+                {%- for upload in content.uploads %}
                 <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
                    title="{{ upload.original_filename }}"
                    target="_blank">{{ upload.original_filename }}<span
@@ -73,9 +79,8 @@
                 {% endif %}
             </div>
             <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
-
                 <a class="btn btn-default"
-                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=flicket_post.ticket_id, page=page, post_id=flicket_post.id) }}#reply">reply</a>
+                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, post_id=post.id, ticket_rid=ticket.id) }}#reply">reply</a>
             </div>
         </div>
 
