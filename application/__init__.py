@@ -15,7 +15,7 @@ from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
 from application.flicket_api.views import flicket_api_bp
 
-__version__ = '0.1.3a'
+__version__ = '0.1.3b'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
