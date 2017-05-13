@@ -80,7 +80,7 @@ def add_user():
         db.session.add(register)
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
-        return redirect(url_for('admin_bp.users'))
+        return redirect(url_for('admin_bp.admin_users'))
     return render_template('admin_user.html', title='Add User', form=form)
 
 
@@ -121,7 +121,7 @@ def admin_edit_user():
                 group_id.users.append(user)
             db.session.commit()
             flash("User {} edited.".format(user.username))
-            return redirect(url_for('admin_bp.users'))
+            return redirect(url_for('admin_bp.admin_users'))
 
         # populate form with form data retrieved from database.
         form.user_id.data = user.id
