@@ -56,7 +56,7 @@ def index():
 @admin_bp.route(app.config['ADMINHOME'] + 'users/<int:page>', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_users(page=1):
+def users(page=1):
     users = FlicketUser.query.order_by(FlicketUser.username)
     users = users.paginate(page, app.config['posts_per_page'])
 
@@ -80,7 +80,7 @@ def add_user():
         db.session.add(register)
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
-        return redirect(url_for('admin_bp.admin_users'))
+        return redirect(url_for('admin_bp.users'))
     return render_template('admin_user.html', title='Add User', form=form)
 
 
@@ -88,7 +88,7 @@ def add_user():
 @admin_bp.route(app.config['ADMINHOME'] + 'edit_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_edit_user():
+def edit_user():
     _id = request.args.get('id')
     user = FlicketUser.query.filter_by(id=_id).first()
     if user:
@@ -121,7 +121,7 @@ def admin_edit_user():
                 group_id.users.append(user)
             db.session.commit()
             flash("User {} edited.".format(user.username))
-            return redirect(url_for('admin_bp.admin_users'))
+            return redirect(url_for('admin_bp.users'))
 
         # populate form with form data retrieved from database.
         form.user_id.data = user.id
@@ -145,7 +145,7 @@ def admin_edit_user():
 @admin_bp.route(app.config['ADMINHOME'] + 'delete_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_delete_user():
+def delete_user():
     form = EnterPasswordForm()
     id = request.args.get('id')
     user_details = FlicketUser.query.filter_by(id=id).first()
@@ -160,7 +160,7 @@ def admin_delete_user():
         flash('Deleted user {}'.format(user_details.username))
         db.session.delete(user_details)
         db.session.commit()
-        return redirect(url_for('admin_bp.admin_users'))
+        return redirect(url_for('admin_bp.users'))
     # populate form with logged in user details
     form.id.data = g.user.id
     return render_template('admin_delete_user.html', title='Delete user',
@@ -171,7 +171,7 @@ def admin_delete_user():
 @admin_bp.route(app.config['ADMINHOME'] + 'groups/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_groups():
+def groups():
     form = AddGroupForm()
     groups = FlicketGroup.query.all()
     if form.validate_on_submit():
@@ -181,7 +181,7 @@ def admin_groups():
         db.session.add(add_group)
         db.session.commit()
         flash('New group "{}" added.'.format(form.group_name.data))
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
 
     return render_template('admin_groups.html', title='Groups', form=form, groups=groups)
 
@@ -208,7 +208,7 @@ def admin_edit_group():
     if form.validate_on_submit():
         group.group_name = form.group_name.data
         db.session.commit()
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
     form.group_name.data = group.group_name
 
     return render_template('admin_edit_group.html', title='Edit Group', form=form)
@@ -233,7 +233,7 @@ def admin_delete_group():
         flash('Deleted group {}'.format(group_details.group_name))
         db.session.delete(group_details)
         db.session.commit()
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
     # populate form with logged in user details
     form.id.data = g.user.id
     return render_template('admin_delete_group.html', title='Delete Group',

@@ -8,7 +8,8 @@ import os
 import unittest
 
 from application import app, db, lm
-from application.flicket.models.flicket_user import FlicketUser, FlicketGroup, flicket_groups
+from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
+from application.flicket.models.flicket_models import FlicketCategory, FlicketDepartment, FlicketPriority
 from application.flicket.scripts.hash_password import hash_password
 from tests.base_dir import base_dir
 from setup import TestingSetUp
@@ -63,6 +64,20 @@ class CreateAdmin:
         group.users.append(self.user)
         db.session.commit()
 
+class CreateDepartmentCategory:
+    def __init__(self, department='IT', category='Morons'):
+
+        self.department = department
+        self.category = category
+
+        self.department_db = FlicketDepartment(department=self.department)
+        db.session.add(self.department_db)
+        self.category_db = FlicketCategory(category=self.category, department=self.department_db)
+        db.session.add(self.category_db)
+        db.session.commit()
+
+
+
 
 class TestCase(unittest.TestCase):
     def setUp(self):
@@ -87,106 +102,5 @@ class TestCase(unittest.TestCase):
         return self.client.get('/logout', follow_redirects=True)
 
 
-class TestCase_Pages(TestCase):
-    def test_login_logout(self):
-        # create the test user
-        test_user = CreateUser()
-        # login
-        result = self.login(username=test_user.username, password=test_user.password)
-        assert b'You were logged in successfully.' in result.data
-        # logout
-        result = self.logout()
-        assert b'You were logged out successfully.' in result.data
 
-    def test_index(self):
-        # make sure user is redirected if not logged in
-        result = self.client.get('/')
-        self.assertEqual(result.status_code, 302)
 
-        # create test user
-        test_user = CreateUser()
-        self.login(username=test_user.username, password=test_user.password)
-
-        # retry page
-        result = self.client.get('/')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Stats', result.data)
-        self.logout()
-
-    def test_tickets(self):
-        result = self.client.get('/tickets/')
-        self.assertEqual(result.status_code, 302)
-
-        test_user = CreateUser()
-        self.login(username=test_user.username, password=test_user.password)
-
-        result = self.client.get('/tickets/')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Tickets', result.data)
-        self.logout()
-
-    def test_create_ticket(self):
-        result = self.client.get('/ticket_create/')
-        self.assertEqual(result.status_code, 302)
-
-        test_user = CreateUser()
-        self.login(username=test_user.username, password=test_user.password)
-
-        result = self.client.get('/ticket_create/')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Create Ticket', result.data)
-        self.logout()
-
-    def test_departments(self):
-        result = self.client.get('/departments/')
-        self.assertEqual(result.status_code, 302)
-
-        test_user = CreateUser()
-        self.login(username=test_user.username, password=test_user.password)
-
-        result = self.client.get('/departments/')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Departments', result.data)
-        self.logout()
-
-    def test_users(self):
-        result = self.client.get('/users/')
-        self.assertEqual(result.status_code, 302)
-
-        test_user = CreateUser()
-        self.login(username=test_user.username, password=test_user.password)
-
-        result = self.client.get('/users/')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'Users', result.data)
-        self.logout()
-
-    def admin_page_tests(self, url, user=None, admin=None):
-        """
-        Admin pages should return 302 for non logged in user, 403 for logged in non admin 
-        add 200 for logged in user.
-        :return:
-        """
-
-        result = self.client.get(url)
-        self.assertEqual(result.status_code, 302)
-
-        self.login(username=user.username, password=user.password)
-        result = self.client.get(url)
-        self.assertEqual(result.status_code, 403)
-        self.logout()
-
-        self.login(username=admin.username, password=admin.password)
-        result = self.client.get(url)
-        self.assertEqual(result.status_code, 200)
-        self.logout()
-
-    def test_admin(self):
-        user = CreateUser()
-        admin = CreateAdmin()
-        self.admin_page_tests('/flicket_admin/', user=user, admin=admin)
-        self.admin_page_tests('/flicket_admin/config/', user=user, admin=admin)
-        self.admin_page_tests('/flicket_admin/users/', user=user, admin=admin)
-        self.admin_page_tests('/flicket_admin/add_user/', user=user, admin=admin)
-        self.admin_page_tests('/flicket_admin/edit_user/?id=1', user=user, admin=admin)
-        self.admin_page_tests('/flicket_admin/groups/', user=user, admin=admin)

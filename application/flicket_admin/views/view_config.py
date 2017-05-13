@@ -21,7 +21,7 @@ from .view_admin import admin_permission
 @admin_bp.route(app.config['ADMINHOME'] + 'config/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def flicket_config():
+def config():
     form = ConfigForm()
 
     config_details = FlicketConfig.query.first()
@@ -51,7 +51,7 @@ def flicket_config():
 
         db.session.commit()
         flash('Config details updated.')
-        return redirect(url_for('admin_bp.flicket_config'))
+        return redirect(url_for('admin_bp.config'))
 
     # populate form with details from database.
     form.mail_server.data = config_details.mail_server

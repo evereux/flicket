@@ -66,5 +66,6 @@ class TestConfiguration(BaseConfiguration):
     TESTING = True
     SESSION_PROTECTION = None
     LOGIN_DISABLED = False
+    SERVER_NAME = 'localhost:5001'
     config_data = {"db_username": "", "db_port": "", "db_password": "",
      "db_name": "", "db_url": ""}
