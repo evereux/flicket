@@ -136,7 +136,7 @@ def admin_edit_user():
         form.groups.data = groups
     else:
         flash("Could not find user.")
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True, form=form, user=user)
 
@@ -153,14 +153,14 @@ def admin_delete_user():
     # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':
         flash('Can\'t delete default flicket_admin user.')
-        return redirect(url_for('admin_bp.flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the user.
         flash('Deleted user {}'.format(user_details.username))
         db.session.delete(user_details)
         db.session.commit()
-        return redirect(url_for('admin_users'))
+        return redirect(url_for('admin_bp.admin_users'))
     # populate form with logged in user details
     form.id.data = g.user.id
     return render_template('admin_delete_user.html', title='Delete user',
@@ -203,7 +203,7 @@ def admin_edit_group():
     # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
     if group.group_name == app.config['ADMIN_GROUP_NAME']:
         flash('Can\'t edit group {}'.format(app.config['ADMIN_GROUP_NAME']))
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         group.group_name = form.group_name.data
@@ -226,7 +226,7 @@ def admin_delete_group():
     # we won't ever delete the flicket_admin group (id = 1)
     if id == '1':
         flash('Can\'t delete default flicket_admin group.')
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the group.
