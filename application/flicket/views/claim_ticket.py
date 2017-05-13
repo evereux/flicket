@@ -37,4 +37,4 @@ def ticket_claim(ticket_id=False):
         flash('You claimed ticket:{}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-    return redirect(url_for('flicket_bp.tickets_main'))
+    return redirect(url_for('flicket_bp.tickets'))

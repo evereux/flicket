@@ -18,10 +18,10 @@ from . import flicket_bp
 
 
 # tickets main
-@flicket_bp.route(app.config['FLICKET'] + 'tickets_main/', methods=['GET', 'POST'])
-@flicket_bp.route(app.config['FLICKET'] + 'tickets_main/<int:page>/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'tickets/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'tickets/<int:page>/', methods=['GET', 'POST'])
 @login_required
-def tickets_main(page=1):
+def tickets(page=1):
 
     form = SearchTicketForm()
 
@@ -50,7 +50,7 @@ def tickets_main(page=1):
         if form.status.data:
             status = FlicketStatus.query.filter_by(id=form.status.data).first().status
 
-        return redirect(url_for('flicket_bp.tickets_main',
+        return redirect(url_for('flicket_bp.tickets',
                                 content=form.content.data,
                                 page=page,
                                 department=department,

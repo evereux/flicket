@@ -29,7 +29,7 @@ def ticket_view(ticket_id, page=1):
 
     if not ticket:
         flash('Cannot find ticket: "{}"'.format(ticket_id), category='warning')
-        return redirect(url_for('flicket_bp.tickets_main'))
+        return redirect(url_for('flicket_bp.tickets'))
 
     # find all replies to ticket.
     replies = FlicketPost.query.filter_by(ticket_id=ticket_id).order_by(FlicketPost.date_added.asc())

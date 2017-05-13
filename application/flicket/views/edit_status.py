@@ -53,4 +53,4 @@ def change_status(ticket_id, status):
 
     flash('Ticket {} closed.'.format(str(ticket_id).zfill(5)), category='success')
 
-    return redirect(url_for('flicket_bp.tickets_main'))
+    return redirect(url_for('flicket_bp.tickets'))
