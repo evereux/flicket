@@ -142,7 +142,7 @@ def admin_edit_user():
 
 
 # Delete user
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_delete_user/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'delete_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_delete_user():
@@ -168,7 +168,7 @@ def admin_delete_user():
 
 
 # Add new groups
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_groups/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'groups/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_groups():
@@ -187,7 +187,7 @@ def admin_groups():
 
 
 # Edit groups
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_edit_group/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'edit_group/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_edit_group():
@@ -215,7 +215,7 @@ def admin_edit_group():
 
 
 # Delete group
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_delete_group/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'delete_group/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_delete_group():
