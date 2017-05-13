@@ -65,6 +65,6 @@ class TestConfiguration(BaseConfiguration):
     WTF_CSRF_ENABLED = False
     TESTING = True
     SESSION_PROTECTION = None
-    LOGIN_DISABLED = True
+    LOGIN_DISABLED = False
     config_data = {"db_username": "", "db_port": "", "db_password": "",
      "db_name": "", "db_url": ""}
