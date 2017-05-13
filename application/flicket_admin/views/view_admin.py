@@ -85,7 +85,7 @@ def add_user():
 
 
 # edit user
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_edit_user/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'edit_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_edit_user():
