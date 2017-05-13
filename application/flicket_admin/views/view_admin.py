@@ -52,8 +52,8 @@ def index():
 
 
 # shows all users
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/', methods=['GET', 'POST'])
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/<int:page>', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'users/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'users/<int:page>', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_users(page=1):
@@ -80,7 +80,7 @@ def add_user():
         db.session.add(register)
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
-        return redirect(url_for('admin_bp.admin_users'))
+        return redirect(url_for('admin_bp.users'))
     return render_template('admin_user.html', title='Add User', form=form)
 
 
@@ -121,7 +121,7 @@ def admin_edit_user():
                 group_id.users.append(user)
             db.session.commit()
             flash("User {} edited.".format(user.username))
-            return redirect(url_for('admin_bp.admin_users'))
+            return redirect(url_for('admin_bp.users'))
 
         # populate form with form data retrieved from database.
         form.user_id.data = user.id

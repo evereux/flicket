@@ -11,11 +11,11 @@
         <ul class="pagination pagination-sm">{% for page in users.iter_pages() %}
             {% if page %}
                 {% if page != users.page %}
-                    <li><a href="{{ url_for('admin_bp.admin_users', page=page, **request.args) }}"> {{ page }}</a>
+                    <li><a href="{{ url_for('admin_bp.users', page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% else %}
                     <li class="active"><a
-                            href="{{ url_for('admin_bp.admin_users', page=page, **request.args) }}"> {{ page }}</a>
+                            href="{{ url_for('admin_bp.users', page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% endif %}
             {% else %}
