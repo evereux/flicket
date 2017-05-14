@@ -9,7 +9,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
-from application.flicket.scripts.flicket_functions import notification_post
+from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.email import FlicketMail
 
 
@@ -43,13 +43,14 @@ def change_status(ticket_id, status):
     f_mail = FlicketMail()
     f_mail.close_ticket(ticket)
 
-    notification_post(ticket_id, g.user, 'Ticket closed by {}'.format(g.user.name))
+    # add action record
+    add_action(action='close', ticket=ticket)
+
     ticket.current_status = closed
     ticket.assigned_id = None
     db.session.commit()
 
 
-
     flash('Ticket {} closed.'.format(str(ticket_id).zfill(5)), category='success')
 
-    return redirect(url_for('flicket_bp.tickets_main'))
+    return redirect(url_for('flicket_bp.tickets'))

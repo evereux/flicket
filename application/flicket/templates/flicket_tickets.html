@@ -62,13 +62,9 @@
             <!-- / flicket search form -->
         </div>
 
-
-
-
-
-        <table class="table table-bordered">
+        <table class="table table-responsive table-striped table-hover">
             <tr>
-                <th>
+                <th class="text-nowrap">
                     Ticket ID
                 </th>
                 <th>
@@ -132,11 +128,11 @@
         <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
             {% if page %}
                 {% if page != tickets.page %}
-                    <li><a href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a>
+                    <li><a href="{{ url_for('flicket_bp.tickets', page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% else %}
                     <li class="active"><a
-                            href="{{ url_for('flicket_bp.tickets_main', page=page, **request.args) }}"> {{ page }}</a>
+                            href="{{ url_for('flicket_bp.tickets', page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% endif %}
             {% else %}

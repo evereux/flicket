@@ -45,7 +45,7 @@ def delete_ticket(ticket_id):
         # commit changes
         db.session.commit()
         flash('ticket deleted', category='success')
-        return redirect(url_for('flicket_bp.tickets_main'))
+        return redirect(url_for('flicket_bp.tickets'))
 
     return render_template('flicket_deletetopic.html',
                            form=form,
@@ -79,7 +79,7 @@ def delete_post(post_id):
         # commit changes
         db.session.commit()
         flash('ticket deleted', category='success')
-        return redirect(url_for('flicket_bp.tickets_main'))
+        return redirect(url_for('flicket_bp.tickets'))
 
     return render_template('flicket_deletepost.html',
                            form=form,

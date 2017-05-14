@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import url_for
+from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, HiddenField, SubmitField, FileField
 from wtforms.fields import SelectMultipleField
@@ -83,7 +84,7 @@ class CreateTicketForm(FlaskForm):
     """ Log in form. """
     title = StringField('username', validators=[DataRequired(), Length(min=field_size['title_min_length'],
                                                                        max=field_size['title_max_length'])])
-    content = TextAreaField('content', validators=[DataRequired(), Length(min=field_size['content_min_length'],
+    content = PageDownField('content', validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                           max=field_size['content_max_length'])])
     priority = SelectField('priority', validators=[DataRequired()], coerce=int)
     category = SelectField('category', validators=[DataRequired()], coerce=int)
@@ -118,7 +119,7 @@ class EditTicketForm(CreateTicketForm):
 
 class ReplyForm(FlaskForm):
     """ Content form. Displayed when replying too end editing tickets """
-    content = TextAreaField('Reply', validators=[DataRequired(), Length(min=field_size['content_min_length'],
+    content = PageDownField('Reply', validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                         max=field_size['content_max_length'])])
     file = FileField('Upload Documents', render_kw={'multiple': True})
     submit = SubmitField('submit reply', render_kw=form_class_button)

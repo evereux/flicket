@@ -52,11 +52,11 @@ def index():
 
 
 # shows all users
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/', methods=['GET', 'POST'])
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_users/<int:page>', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'users/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'users/<int:page>', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_users(page=1):
+def users(page=1):
     users = FlicketUser.query.order_by(FlicketUser.username)
     users = users.paginate(page, app.config['posts_per_page'])
 
@@ -75,19 +75,20 @@ def add_user():
                                email=form.email.data,
                                name=form.name.data,
                                password=password,
+                               job_title=form.job_title.data,
                                date_added=datetime.datetime.now())
         db.session.add(register)
         db.session.commit()
         flash('You have successfully registered new user {}.'.format(form.username.data))
-        return redirect(url_for('admin_bp.admin_users'))
+        return redirect(url_for('admin_bp.users'))
     return render_template('admin_user.html', title='Add User', form=form)
 
 
 # edit user
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_edit_user/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'edit_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_edit_user():
+def edit_user():
     _id = request.args.get('id')
     user = FlicketUser.query.filter_by(id=_id).first()
     if user:
@@ -120,7 +121,7 @@ def admin_edit_user():
                 group_id.users.append(user)
             db.session.commit()
             flash("User {} edited.".format(user.username))
-            return redirect(url_for('admin_bp.admin_users'))
+            return redirect(url_for('admin_bp.users'))
 
         # populate form with form data retrieved from database.
         form.user_id.data = user.id
@@ -135,16 +136,16 @@ def admin_edit_user():
         form.groups.data = groups
     else:
         flash("Could not find user.")
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True, form=form, user=user)
 
 
 # Delete user
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_delete_user/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'delete_user/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_delete_user():
+def delete_user():
     form = EnterPasswordForm()
     id = request.args.get('id')
     user_details = FlicketUser.query.filter_by(id=id).first()
@@ -152,14 +153,14 @@ def admin_delete_user():
     # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':
         flash('Can\'t delete default flicket_admin user.')
-        return redirect(url_for('admin_bp.flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the user.
         flash('Deleted user {}'.format(user_details.username))
         db.session.delete(user_details)
         db.session.commit()
-        return redirect(url_for('admin_users'))
+        return redirect(url_for('admin_bp.users'))
     # populate form with logged in user details
     form.id.data = g.user.id
     return render_template('admin_delete_user.html', title='Delete user',
@@ -167,10 +168,10 @@ def admin_delete_user():
 
 
 # Add new groups
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_groups/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'groups/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
-def admin_groups():
+def groups():
     form = AddGroupForm()
     groups = FlicketGroup.query.all()
     if form.validate_on_submit():
@@ -180,13 +181,13 @@ def admin_groups():
         db.session.add(add_group)
         db.session.commit()
         flash('New group "{}" added.'.format(form.group_name.data))
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
 
     return render_template('admin_groups.html', title='Groups', form=form, groups=groups)
 
 
 # Edit groups
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_edit_group/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'edit_group/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_edit_group():
@@ -202,19 +203,19 @@ def admin_edit_group():
     # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
     if group.group_name == app.config['ADMIN_GROUP_NAME']:
         flash('Can\'t edit group {}'.format(app.config['ADMIN_GROUP_NAME']))
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         group.group_name = form.group_name.data
         db.session.commit()
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
     form.group_name.data = group.group_name
 
     return render_template('admin_edit_group.html', title='Edit Group', form=form)
 
 
 # Delete group
-@admin_bp.route(app.config['ADMINHOME'] + 'admin_delete_group/', methods=['GET', 'POST'])
+@admin_bp.route(app.config['ADMINHOME'] + 'delete_group/', methods=['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def admin_delete_group():
@@ -225,14 +226,14 @@ def admin_delete_group():
     # we won't ever delete the flicket_admin group (id = 1)
     if id == '1':
         flash('Can\'t delete default flicket_admin group.')
-        return redirect(url_for('flicket_admin'))
+        return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the group.
         flash('Deleted group {}'.format(group_details.group_name))
         db.session.delete(group_details)
         db.session.commit()
-        return redirect(url_for('admin_bp.admin_groups'))
+        return redirect(url_for('admin_bp.groups'))
     # populate form with logged in user details
     form.id.data = g.user.id
     return render_template('admin_delete_group.html', title='Delete Group',

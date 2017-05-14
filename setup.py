@@ -41,7 +41,7 @@ class RunSetUP(Command):
         username, password, email = self.get_admin_details()
         self.set_db_config_defaults()
         self.set_email_config()
-        self.create_admin(username=username, password=password, email=email)
+        self.create_admin(username=username, password=password, email=email, job_title='admin')
         self.create_notifier()
         self.create_admin_group()
         self.create_default_ticket_status()
@@ -53,7 +53,7 @@ class RunSetUP(Command):
     @staticmethod
     def set_db_config_defaults(silent=False):
 
-        print('Please site base url including port. For example this would be "http://192.168.1.1:8000".')
+        print('Please enter site base url including port. For example this would be "http://192.168.1.1:8000".')
         base_url = input('Base url> ')
 
         count = FlicketConfig.query.count()
@@ -96,7 +96,7 @@ class RunSetUP(Command):
                 return _username, password1, email
 
     @staticmethod
-    def create_admin(username, password, email, silent=False):
+    def create_admin(username, password, email, job_title, silent=False):
         """ creates flicket_admin user. """
 
         query = FlicketUser.query.filter_by(username=username)
@@ -105,6 +105,7 @@ class RunSetUP(Command):
                                    name=username,
                                    password=hash_password(password),
                                    email=email,
+                                   job_title=job_title,
                                    date_added=datetime.datetime.now())
             db.session.add(add_user)
 
@@ -154,7 +155,7 @@ class RunSetUP(Command):
                 print("Added flicket_admin user to flicket_admin group.")
 
     @staticmethod
-    def create_default_ticket_status():
+    def create_default_ticket_status(silent=False):
         """ set up default status levels """
 
         sl = ['Open', 'Closed', 'In Work', 'Awaiting Information']
@@ -164,7 +165,8 @@ class RunSetUP(Command):
             if not status:
                 add_status = FlicketStatus(status=s)
                 db.session.add(add_status)
-                print('Added status level {}'.format(s))
+                if not silent:
+                    print('Added status level {}'.format(s))
 
     @staticmethod
     def create_default_priority_levels(silent=False):

@@ -1,0 +1,89 @@
+<div class="row flicket-row">
+
+    <div class="col-sm-2">
+        <div class="flicket-post-author">
+            <div class="flicket-post-author-author">
+                <a {% if content.user.is_admin -%}
+                  style="color:red"
+                  {%- endif %} href="{{ url_for('flicket_bp.flicket_user', user_id=content.user.id) }}">{{content.user.name}}</a>
+            </div>
+            <div class="flicket-post-author-avatar">
+                {% if content.user.avatar %}
+                <img class="center-block"
+                     src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ content.user.avatar }}"
+                     style="width: 30%">
+                {% else %}
+                <img class="center-block"
+                     src="{{ url_for('flicket_bp.static', filename='flicket_avatars/__default_profile.png') }}"
+                     style="width: 30%">
+                {% endif %}
+            </div>
+            <div class="flicket-post-author-jobtitle">
+                {% if content.user.job_title %}
+                {{ content.user.job_title }}
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-sm-10 flicket-main">
+        <div class="row flicket-post-header">
+            <div class="col-sm-6 ">
+                {% if replies %}
+                <a class="anchor" id="{{ content.id }}" href="#{{ content.id }}">Reply #{{ (replies.page - 1)
+                    *
+                    replies.per_page
+                    + loop.index }}</a>
+                |
+                {% endif %}
+                {{ content.date_added.strftime('%d-%m-%Y %H:%M') }}
+            </div>
+            <div class="col-sm-6 text-right">
+                {% if ( g.user.id == content.user_id ) or (g.user.is_admin) %}
+                {% if post %}
+                <a href="{{ url_for('flicket_bp.edit_post', post_id = content.id) }}">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+                {% else %}
+                <a href="{{ url_for('flicket_bp.edit_ticket', ticket_id = content.id) }}">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="flicket-post-content">
+            {{- content.content|markdown -}}
+            {%- if content.modified_id -%}
+            <div class="flicket-post-modified">
+                This post was modified by {{ content.modified.name }}
+                on {{ content.date_modified }} | <a
+                    href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">edit
+                history</a>
+            </div>
+            {%- endif -%}
+        </div>
+
+        <div class="flicket-post-attachments">
+            <div class="col-sm-8">
+                {%- if content.uploads -%}
+                {%- for upload in content.uploads %}
+                <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
+                   title="{{ upload.original_filename }}"
+                   target="_blank">{{ upload.original_filename }}<span
+                        class="glyphicon glyphicon-file" aria-hidden="true"></span></a>
+                {%- endfor -%}
+                {% endif %}
+            </div>
+            <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
+                <a class="btn btn-default"
+                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, post_id=post.id, ticket_rid=ticket.id) }}#reply">reply</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

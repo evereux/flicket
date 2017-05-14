@@ -9,9 +9,4 @@
         Ticket has been closed: <a href="{{ ticket_url }}">{{ ticket.id_zfill }}</a>
     </p>
     {% include('email_include_details.html') %}
-    <h2>Content</h2>
-    <p>
-        {{ ticket.content }}
-    </p>
-
 {% endblock %}

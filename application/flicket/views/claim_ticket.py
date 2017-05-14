@@ -9,7 +9,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus
-from application.flicket.scripts.flicket_functions import notification_post
+from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.email import FlicketMail
 
 
@@ -27,8 +27,8 @@ def ticket_claim(ticket_id=False):
         ticket.current_status = status
         db.session.commit()
 
-        # add post to say user claimed ticket.
-        notification_post(ticket_id, g.user, 'Ticket assigned to')
+        # add action record
+        add_action(action='claim', ticket=ticket)
 
         # send email notifications
         f_mail = FlicketMail()
@@ -37,4 +37,4 @@ def ticket_claim(ticket_id=False):
         flash('You claimed ticket:{}'.format(ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-    return redirect(url_for('flicket_bp.tickets_main'))
+    return redirect(url_for('flicket_bp.tickets'))

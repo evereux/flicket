@@ -32,12 +32,12 @@ rn = RandomNicknames()
 # Check to see if set-up has been run.
 query = FlicketUser.query.filter_by(username=admin)
 if query.count() != 1:
-    print('Setup has not get been run!')
+    print('Setup has not yet been run! You should do `python manage.py run_set_up`.')
     exit()
 
 mismatch = True
 while mismatch is True:
-    print('When population with junk users will be added with <username>+<youremail> email addresses.')
+    print('When population with junk users will be added with <your_email_usersname>+<random_username>@<email_domain>.')
     base_email = input('Please enter your email for testing > ')
     base_email_confirm = input('Please confirm your email > ')
     if base_email == base_email_confirm:
@@ -100,15 +100,13 @@ def create_ticket_reply(new_ticket):
 
 
 def create_random_user():
+
     nicknames = rn.random_nicks(gender='u', count=2)
     password = rn.random_nick(gender='u')
-
     username = '{}{}'.format(nicknames[0], nicknames[1]).lower()
     name = '{} {}'.format(nicknames[0], nicknames[1])
-    email = '{}@contoso.com'.format(username)
 
-    return username, name, password, email
-
+    return username, name, password
 
 def user_creation():
     # count how many users are in database. if it is already populated don't add any more.
@@ -119,17 +117,19 @@ def user_creation():
 
     for i in range(user_count, num_users):
 
-        username, name, password, email = create_random_user()
+        username, name, password= create_random_user()
 
         # check username doesn't already exist
         query = FlicketUser.query.filter_by(username=username).first()
+
+        first, last = base_email.split('@')
 
         if not query:
             new_user = FlicketUser(
                 username=username,
                 name=name,
                 password=hash_password(password),
-                email='{}+{}'.format(username, base_email),
+                email='{}+{}@{}'.format(first, username, last),
                 date_added=datetime.datetime.now()
             )
             db.session.add(new_user)

@@ -20,7 +20,8 @@ from application.flicket.scripts.email import FlicketMail
 from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketStatus,
                                                        FlicketPriority,
-                                                       FlicketCategory)
+                                                       FlicketCategory,
+                                                       FlicketSubscription)
 from application.flicket.scripts.flicket_upload import UploadAttachment
 
 
@@ -56,15 +57,15 @@ def ticket_create():
 
         # add attachments to the dataabase.
         upload_attachments.populate_db(new_ticket)
+        # subscribe user to ticket
+        subscribe = FlicketSubscription(user=g.user, ticket=new_ticket)
+        db.session.add(subscribe)
 
         # commit changes to the database
         db.session.commit()
 
-        # send email notification
-        f_mail = FlicketMail()
-        f_mail.create_ticket(ticket=new_ticket)
-
         flash('New Ticket created.', category='success')
+
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
     return render_template('flicket_create.html',

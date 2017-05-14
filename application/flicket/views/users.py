@@ -43,6 +43,7 @@ def flicket_users(page=1):
                            form=form,
                            details=FlicketUserDetails)
 
+# view user details
 @flicket_bp.route(app.config['FLICKET'] + 'user/<int:user_id>/', methods=['GET', 'POST'])
 @login_required
 def flicket_user(user_id):

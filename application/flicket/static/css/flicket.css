@@ -1,17 +1,22 @@
-
 /* flicket specific css */
 /* everything else should be inhetied from bootstrap */
 
 /* offset body content for fixed navbar */
+
+/* color pallete http://paletton.com/#uid=20c0u0kqruf27Fv8XMB-SnVlsbX */
+/* color pallete http://paletton.com/#uid=20b0u0k2NvK02Yk0WJ55yre9mn7 */
 .anchor, body {
     padding-top: 50px;
 }
 
-hr { border-top: 1px solid #F1592A; }
+hr {
+    border-top: 1px solid #F1592A;
+}
 
 blockquote {
     background-color: #faf7d7;
-    font-size: inherit}
+    font-size: inherit
+}
 
 .navbar-flicket {
     border-bottom: 1px solid #F1592A;
@@ -25,14 +30,14 @@ footer {
 }
 
 header {
-    background: rgba(241,86,39,1);
-    background: -moz-linear-gradient(left, rgba(241,86,39,1) 0%, rgba(237,187,173,1) 61%, rgba(237,187,173,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241,86,39,1)), color-stop(61%, rgba(237,187,173,1)), color-stop(100%, rgba(237,187,173,1)));
-    background: -webkit-linear-gradient(left, rgba(241,86,39,1) 0%, rgba(237,187,173,1) 61%, rgba(237,187,173,1) 100%);
-    background: -o-linear-gradient(left, rgba(241,86,39,1) 0%, rgba(237,187,173,1) 61%, rgba(237,187,173,1) 100%);
-    background: -ms-linear-gradient(left, rgba(241,86,39,1) 0%, rgba(237,187,173,1) 61%, rgba(237,187,173,1) 100%);
-    background: linear-gradient(to right, rgba(241,86,39,1) 0%, rgba(237,187,173,1) 61%, rgba(237,187,173,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f15627', endColorstr='#edbbad', GradientType=1 );
+    background: rgba(241, 86, 39, 1);
+    background: -moz-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241, 86, 39, 1)), color-stop(61%, rgba(237, 187, 173, 1)), color-stop(100%, rgba(237, 187, 173, 1)));
+    background: -webkit-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -o-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: linear-gradient(to right, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f15627', endColorstr='#edbbad', GradientType=1);
     color: white;
     padding: 10pt;
 }
@@ -65,14 +70,33 @@ header {
     border: none;
 }
 
-.flicket-btn {
+.flask-pagedown-preview {
+    margin-top: 10px;
+    border: solid 1px silver;
+    border-radius: 3px;
+    background-color: #e8f5f3;
+    padding: 10px;
+}
+
+.flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {
     margin-top: 5px;
+}
+
+.flicket-btn-delete {
+
+}
+
+.flicket-btn-subscribe {
+
+}
+
+.flicket-btn-unsubscribe {
+
 }
 
 .flicket-form {
     margin-top: 10px;
 }
-
 
 .flicket-form-control {
     margin: 0;
@@ -87,25 +111,28 @@ header {
 
 .flicket-post-attachments {
     padding: 10px;
-    border-top: solid #9acfea 1px;
+    border-top: solid #ff9c7c 1px;
 }
-
 
 .flicket-post-author {
     margin-bottom: 10px;
-}
+    border: solid 1px Silver;
+    border-radius: 5px;
 
+}
 
 .flicket-post-author-author {
     font-weight: bold;
-    border-bottom: solid 1pt;
-    margin-bottom: 5pt;
 }
 
-.flicket-post-author-job-title {
+.flicket-post-author-jobtitle {
     color: #7a7a7a;
+    text-align: center;
 }
 
+.flicket-post-author-author {
+    text-align: center;
+}
 
 .flicket-post-attachments {
     padding: 10px;
@@ -132,18 +159,75 @@ header {
 
 .flicket-row {
     margin-top: 20px;
-    background-color: #fadfcf;
     padding: 5px;
-    border-radius: 5pt;
-    border: solid 1px #cbcbcb;
+
 }
 
-.flicket-row-notification {
-    background-color: #d1fafa;
+.flicket-row-action {
+    background-color: #fff;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 20px;
+    border: solid 1px silver;
+    background-color: rgba(254, 203, 190, 0.3);
+    border-radius: 3px;
 }
 
-.flicket-title {
-    border-bottom: silver solid 1px;
-    background-color: Whitesmoke;
-    padding: 10px;
+.flicket-row-reply {
+    border: solid 1px silver;
+    border-radius: 3px;
+}
+
+.flicket-row-title-main {
+    margin-top: 20px;
+    padding: 5px;
+    border: solid 1px #ddd;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.flicket-row-title-details {
+    padding: 5px;
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+}
+
+.flicket-row-title-sub {
+    padding: 5px;
+    border: solid 1px #ddd;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.flicket-ticket-cell {
+    margin: 2px;
+    padding: 5px 10px;
+}
+
+.flicket-ticket-cell-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.flicket-ticket-title-title {
+    font-size: 2em;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.flicket-ticket-details-btn-ul {
+    margin: 20px 0;
+    font-size: 12px;
+}
+
+.flicket-ticket-details-btn-li {
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    margin: 0 12px;
+    display: block;
+    text-decoration: None;
+}
+
+.flicket-ticket-details-btn-li:hover {
+    background-color: #eee;
+    text-decoration: None;
 }

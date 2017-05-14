@@ -45,11 +45,12 @@ class FlicketUser(Base):
     job_title = db.Column(db.String(user_field_size['job_title']))
     avatar = db.Column(db.String(user_field_size['avatar']))
 
-    def __init__(self, username, name, email, password, date_added):
+    def __init__(self, username, name, email, password, date_added, job_title=None):
         self.username = username
         self.name = name
         self.password = password
         self.email = email
+        self.job_title = job_title
         self.date_added = date_added
 
     def __repr__(self):

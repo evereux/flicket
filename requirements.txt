@@ -10,6 +10,7 @@ Flask-Login==0.4.0
 Flask-Mail==0.9.1
 Flask-Migrate==2.0.3
 Flask-Misaka==0.4.1
+Flask-PageDown==0.2.2
 Flask-Principal==0.4.0
 Flask-REST-JSONAPI==0.12.3
 Flask-Script==2.0.5
@@ -27,6 +28,7 @@ pycparser==2.17
 PyMySQL==0.7.10
 pyparsing==2.1.10
 python-editor==1.0.3
+RandomWords==0.2.1
 six==1.10.0
 SQLAlchemy==1.1.7
 Werkzeug==0.12.1

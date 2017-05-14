@@ -12,25 +12,6 @@ from application.flicket.scripts.decorators import async
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
 
-def get_recipients(ticket):
-    """
-    Returns a list of emails of all users who have responded to ticket.
-    :param ticket: ticket object
-    :param replies: replies object
-    :return: list of emails
-    """
-
-    replies = FlicketPost.query.filter_by(ticket_id=ticket.id).order_by(FlicketPost.date_added.asc())
-    recipients = [ticket.user.email]
-    if replies:
-        for reply in replies:
-            recipients.append(reply.user.email)
-
-    recipients = list(set(recipients))
-
-    return recipients
-
-
 class FlicketMail:
     """
     FlicketMail class to send emails.
@@ -65,34 +46,20 @@ class FlicketMail:
         self.sender = config.mail_default_sender
 
     def create_ticket(self, ticket):
-        """
+        """"""
+        # todo: send email to department heads
+        pass
 
-        Send emails for newly created tickets.
-
-        :param ticket: ticket object
-        :return:
-        """
-        recipients = get_recipients(ticket)
-
-        title = 'Ticket: #{} - {} created.'.format(ticket.id_zfill, ticket.title)
-        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_create.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
-
-        self.send_email(title, self.sender, recipients, html_body)
-
-    def reply_ticket(self, ticket):
+    def reply_ticket(self, ticket=None, reply=None):
         """
         :param ticket: ticket object
+        :param reply: reply object
         :return:
         """
-        recipients = get_recipients(ticket)
-        # add the user to whom the ticket has been assigned.
-        if ticket.assigned:
-            if ticket.assigned.email not in recipients:
-                recipients.append(ticket.assigned.email)
+        recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has new replies.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket)
+        html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket, reply=reply)
 
         self.send_email(title, self.sender, recipients, html_body)
 
@@ -102,11 +69,7 @@ class FlicketMail:
         :return:
         """
 
-        recipients = get_recipients(ticket)
-        # add the user to whom the ticket has been assigned.
-        if ticket.assigned.email not in recipients:
-            recipients.append(ticket.assigned.email)
-
+        recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been assigned.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
@@ -120,12 +83,7 @@ class FlicketMail:
         :return:
         """
 
-        recipients = get_recipients(ticket)
-        # add the user to whom the ticket was been assigned.
-        if ticket.assigned is not None:
-            if ticket.assigned.email not in recipients:
-                recipients.append(ticket.assigned.email)
-
+        recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been released.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_release.html', ticket=ticket, number=ticket.id_zfill,
@@ -139,12 +97,7 @@ class FlicketMail:
         :return:
         """
 
-        recipients = get_recipients(ticket)
-        # add the user to whom the ticket was been assigned.
-        if ticket.assigned is not None:
-            if ticket.assigned.email not in recipients:
-                recipients.append(ticket.assigned.email)
-
+        recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been closed.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_close.html', ticket=ticket, ticket_url=ticket_url)
@@ -163,10 +116,6 @@ class FlicketMail:
         :param html_body: string
         :return: nowt
         """
-        # remove notification user from the recipients list.
-        if app.config['NOTIFICATION']['email'] in recipients:
-            i = recipients.index(app.config['NOTIFICATION']['email'])
-            recipients.pop(i)
 
         if not app.config['MAIL_SUPPRESS_SEND']:
             with app.app_context():
