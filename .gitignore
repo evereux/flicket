@@ -11,8 +11,10 @@ config.json
 users.json
 migrations
 migrations_laptop
+migrations_desktop
 test.db
 test.py
 
 env*/
 .directory
+.cache/v/cache/lastfailed

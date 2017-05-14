@@ -9,10 +9,10 @@ import unittest
 
 from application import app, db, lm
 from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
-from application.flicket.models.flicket_models import FlicketCategory, FlicketDepartment, FlicketPriority
+from application.flicket.models.flicket_models import FlicketCategory, FlicketDepartment, FlicketPriority, FlicketTicket, FlicketStatus
 from application.flicket.scripts.hash_password import hash_password
 from tests.base_dir import base_dir
-from setup import TestingSetUp
+from setup import TestingSetUp, RunSetUP
 
 
 def dump_to_tmp(contents, filename):
@@ -39,13 +39,13 @@ class CreateUser:
         self.password_hash = hash_password(password=self.password)
         self.date_added = datetime.datetime.now()
 
-        user = FlicketUser(username=self.username, name=self.name, email=self.email, password=self.password_hash,
+        self.user = FlicketUser(username=self.username, name=self.name, email=self.email, password=self.password_hash,
                            date_added=self.date_added)
-        db.session.add(user)
+        db.session.add(self.user)
         db.session.commit()
 
 
-class CreateAdmin:
+class CreateAdmin(object):
     def __init__(self, username='admin', name='admin', password='12345', email='admin@testing.com'):
         self.username = username
         self.name = name
@@ -64,22 +64,33 @@ class CreateAdmin:
         group.users.append(self.user)
         db.session.commit()
 
-class CreateDepartmentCategory:
-    def __init__(self, department='IT', category='Morons'):
 
-        self.department = department
-        self.category = category
+class CreateTicket(object):
 
-        self.department_db = FlicketDepartment(department=self.department)
-        db.session.add(self.department_db)
-        self.category_db = FlicketCategory(category=self.category, department=self.department_db)
-        db.session.add(self.category_db)
+    def __init__(self, user):
+
+        title = 'I have a problem with my mouse'
+        content = 'It squeeks! most troublesome.'
+
+        status = FlicketStatus.query.first()
+        priority = FlicketPriority.query.first()
+        category = FlicketCategory.query.first()
+
+        self.ticket = FlicketTicket(title=title,
+                                   date_added=datetime.datetime.now(),
+                                   user=user,
+                                   current_status=status,
+                                   content=content,
+                                   ticket_priority=priority,
+                                   category=category
+                                   )
+        db.session.add(self.ticket)
         db.session.commit()
 
 
 
-
 class TestCase(unittest.TestCase):
+
     def setUp(self):
         app.config.from_object('config.TestConfiguration')
         lm.init_app(app)
@@ -87,6 +98,10 @@ class TestCase(unittest.TestCase):
         db.create_all()
 
         TestingSetUp.set_db_config_defaults_testing(silent=True)
+
+        RunSetUP.create_default_priority_levels(silent=True)
+        RunSetUP.create_default_depts(silent=True)
+        RunSetUP.create_default_ticket_status(silent=True)
 
     def tearDown(self):
         db.session.remove()
