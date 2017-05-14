@@ -155,7 +155,7 @@ class RunSetUP(Command):
                 print("Added flicket_admin user to flicket_admin group.")
 
     @staticmethod
-    def create_default_ticket_status():
+    def create_default_ticket_status(silent=False):
         """ set up default status levels """
 
         sl = ['Open', 'Closed', 'In Work', 'Awaiting Information']
@@ -165,7 +165,8 @@ class RunSetUP(Command):
             if not status:
                 add_status = FlicketStatus(status=s)
                 db.session.add(add_status)
-                print('Added status level {}'.format(s))
+                if not silent:
+                    print('Added status level {}'.format(s))
 
     @staticmethod
     def create_default_priority_levels(silent=False):
