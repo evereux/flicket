@@ -147,7 +147,7 @@ def delete_department(department_id=False):
             flash(
                 'Department has categories linked to it. Department can not be deleted unless the categories are removed.',
                 category="danger")
-            return redirect(url_for('departments'))
+            return redirect(url_for('flicket_bp.departments'))
 
         if form.validate_on_submit():
             # delete category from database
@@ -157,7 +157,7 @@ def delete_department(department_id=False):
             # commit changes
             db.session.commit()
             flash('Department {} deleted.'.format(department.department), category='success')
-            return redirect(url_for('departments'))
+            return redirect(url_for('flicket_bp.departments'))
 
         notification = "You are trying to delete department <span class=\"label label-default\">{}</span>.".format(
             department.department)
