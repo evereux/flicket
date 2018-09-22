@@ -79,7 +79,7 @@ def add_user():
                                date_added=datetime.datetime.now())
         db.session.add(register)
         db.session.commit()
-        flash('You have successfully registered new user {}.'.format(form.username.data))
+        flash('You have successfully registered new user "{}".'.format(form.username.data), category='success')
         return redirect(url_for('admin_bp.users'))
     return render_template('admin_user.html', title='Add User', form=form)
 

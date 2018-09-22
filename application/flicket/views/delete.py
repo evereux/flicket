@@ -44,7 +44,7 @@ def delete_ticket(ticket_id):
         db.session.delete(ticket)
         # commit changes
         db.session.commit()
-        flash('ticket deleted', category='success')
+        flash('Ticket deleted.', category='success')
         return redirect(url_for('flicket_bp.tickets'))
 
     return render_template('flicket_deletetopic.html',
@@ -78,7 +78,7 @@ def delete_post(post_id):
         db.session.delete(post)
         # commit changes
         db.session.commit()
-        flash('ticket deleted', category='success')
+        flash('Ticket deleted.', category='success')
         return redirect(url_for('flicket_bp.tickets'))
 
     return render_template('flicket_deletepost.html',
@@ -104,7 +104,7 @@ def delete_category(category_id=False):
 
         # stop the deletion of categories assigned to tickets.
         if categories.count() > 0:
-            flash('Category is linked to posts. Category can not be deleted unless link is removed.', category="danger")
+            flash('Category is linked to posts. Category can not be deleted unless all posts / topics are removed / relinked.', category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
         if form.validate_on_submit():
@@ -145,7 +145,7 @@ def delete_department(department_id=False):
         # we can't delete any departments associated with categories.
         if departments.count() > 0:
             flash(
-                'Department has categories linked to it. Department can not be deleted unless the categories are removed.',
+                'Department has categories linked to it. Department can not be deleted unless all categories are first removed.',
                 category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
@@ -156,7 +156,7 @@ def delete_department(department_id=False):
             db.session.delete(department)
             # commit changes
             db.session.commit()
-            flash('Department {} deleted.'.format(department.department), category='success')
+            flash('Department "{}" deleted.'.format(department.department), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
         notification = "You are trying to delete department <span class=\"label label-default\">{}</span>.".format(

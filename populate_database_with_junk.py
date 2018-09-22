@@ -23,8 +23,8 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import admin
 
-num_topics = 1000
-num_replies = 25
+num_topics = 10000
+num_replies = 100
 num_users = 50
 
 rn = RandomNicknames()
