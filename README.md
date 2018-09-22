@@ -17,21 +17,17 @@ Prior to installing and running Flicket please read these requirements.
      just as well. See initial set-up for further information.
   
 
-* This will run on either Linux or Windows.
+* This will run on either Linux or Windows. Mac is untested but there should be no issues.
 
-    Flask-Misaka will not pip install on Linux without `libffi-dev` and `python3-dev` .To solve this
-    n Ubuntu you would type `sudo apt-get install libffi-dev` and `sudo apt-get instal python3-dev`.
-    
-    Flask-Misaka will not pip install on windows without Microsoft Studio C++ 
-    installed (an ~4GB download).
 * See requirements.txt for python package requirements. Run `pip install requirements.txt` to install.
 
 
 # Initial Set Up
 1. Create your database and a database user that will access the flicket
 database.
-2. If you are using a database server other than MySQL you can easily 
-switch to that by editing the db_type value. See [SQLAlchemy documentation](http://docs.sqlalchemy.org/en/latest/core/engines.html) 
+2. If you are using a database server other than MySQL you should change the  
+db_type value within `config.py`. 
+See [SQLAlchemy documentation](http://docs.sqlalchemy.org/en/latest/core/engines.html) 
 for options.
 3. Install the python module requirements as defined in requirements.txt. 
 Best practise is to set-up a virtual environment. Once done run `pip install -r requirements.txt`
@@ -39,13 +35,18 @@ Best practise is to set-up a virtual environment. Once done run `pip install -r 
     ```
     (my-env) $ python scripts/create_json.py
     ```
+    or on windows
+    ```
+    (my-env) C:\path_to_project> prython scripts\create_json.py
+    ```
 4. Initialise the database using manage.py from the command line:
     ```
     (my-env) $ python manage.py db init
     (my-env) $ python manage.py db migrate
     (my-env) $ python manage.py db upgrade
     ```
-5. Run the set-up script:
+5. Run the set-up script:. This is required to create the Admin user and site url defaults.
+   These can be changed again via the admin panel once you log in.
     ```
     (my-env) $ python manage.py run_set_up
     ```

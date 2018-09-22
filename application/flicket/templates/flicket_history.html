@@ -12,7 +12,7 @@
             {% if history %}
             {% for h in history %}
             <dt>{{ h.user.name }} orignally wrote on {{ h.date_modified }}</dt>
-            <dd>{{ h.original_content|markdown }}</dd>
+            <dd>{{ show_markdown(h.original_content)|safe }}</dd>
             {% endfor %}
             {% else %}
             <dd>No changes have been made to the post content.</dd>

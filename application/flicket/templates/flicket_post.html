@@ -56,7 +56,7 @@
 
 
         <div class="flicket-post-content">
-            {{- content.content|markdown -}}
+            {{- show_markdown(content.content)|safe -}}
             {%- if content.modified_id -%}
             <div class="flicket-post-modified">
                 This post was modified by {{ content.modified.name }}

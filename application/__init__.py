@@ -5,28 +5,24 @@
 
 from flask import Flask
 from flask_login import LoginManager
-from flask_misaka import Misaka
 from flask_mail import Mail
 from flask_pagedown import PageDown
 from flask_rest_jsonapi import Api
 from flask_sqlalchemy import SQLAlchemy
 
-from application.flicket.scripts.jinja2_functions import display_post_box
+from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
 from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
 from application.flicket_api.views import flicket_api_bp
 
-__version__ = '0.1.3a'
+__version__ = '0.1.5a'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
 # import jinja function
-app.jinja_env.globals.update(display_post_box=display_post_box)
+app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown)
 
-
-# Initialise Misaka for markdown
-Misaka(app)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
