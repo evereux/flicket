@@ -44,6 +44,7 @@ class FlicketUser(Base):
     date_modified = db.Column(db.DateTime, onupdate=datetime.datetime.now)
     job_title = db.Column(db.String(user_field_size['job_title']))
     avatar = db.Column(db.String(user_field_size['avatar']))
+    total_posts = db.Column(db.Integer, default=0)
 
     def __init__(self, username, name, email, password, date_added, job_title=None):
         self.username = username

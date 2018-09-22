@@ -96,6 +96,8 @@ def create_ticket_reply(new_ticket):
         date_added=datetime.datetime.now()
     )
 
+    new_reply.user.total_posts +=1
+
     db.session.add(new_reply)
 
 
@@ -158,6 +160,8 @@ def topic_creation():
             category=get_random_category(),
             assigned=get_random_user()
         )
+
+        new_ticket.user.total_posts += 1
 
         db.session.add(new_ticket)
         mess_1 = "#{}: ticket ....".format(i)

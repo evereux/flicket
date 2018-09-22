@@ -14,7 +14,8 @@ from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketUploads,
                                                        FlicketPost,
                                                        FlicketCategory,
-                                                       FlicketDepartment)
+                                                       FlicketDepartment,
+                                                       FlicketHistory)
 from . import flicket_bp
 
 
@@ -41,7 +42,19 @@ def delete_ticket(ticket_id):
             # remove from database
             db.session.delete(i)
 
+        # remove posts for ticket.
+        for post in ticket.posts:
+            # remove history
+            history = FlicketHistory.query.filter_by(post=post).all()
+            for h in history:
+                db.session.delete(h)
+            post.user.total_posts -= 1
+            db.session.delete(post)
+
+        user = ticket.user
+        user.total_posts -= 1
         db.session.delete(ticket)
+
         # commit changes
         db.session.commit()
         flash('Ticket deleted.', category='success')

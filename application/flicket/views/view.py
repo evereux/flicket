@@ -73,6 +73,9 @@ def ticket_view(ticket_id, page=1):
             )
             db.session.add(subscribe)
 
+        # add count of 1 to users total posts.
+        g.user.total_posts += 1
+
         db.session.commit()
 
         # send email notification

@@ -61,6 +61,9 @@ def ticket_create():
         subscribe = FlicketSubscription(user=g.user, ticket=new_ticket)
         db.session.add(subscribe)
 
+        # add count of 1 to users total posts.
+        g.user.total_posts += 1
+
         # commit changes to the database
         db.session.commit()
 
