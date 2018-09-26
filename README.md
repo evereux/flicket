@@ -9,7 +9,7 @@ Also, I wanted a project to further my python / flask knowledge and development.
 
 ## Requirements
 Prior to installing and running Flicket please read these requirements.
-* Python 3.5.2 - I have not tested earlier versions of Python 3.
+* Python =>3.5 - I have not tested earlier versions of Python 3.
 * SQL Database server
 
      Out of the box Flicket is configured to work with MySQL. But there 

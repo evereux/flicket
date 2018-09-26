@@ -23,8 +23,14 @@ def user_details():
 
     if form.validate_on_submit():
 
-        avatar = request.files['avatar']
-        if avatar.filename != '':
+        if 'avatar' in request.files:
+            avatar = request.files['avatar']
+            filename = avatar.filename
+        else:
+            avatar = False
+            filename = ''
+
+        if filename != '':
             # upload the avatar
             upload_avatar = UploadAvatar(avatar, g.user)
             if upload_avatar.upload_file() is False:
@@ -40,7 +46,9 @@ def user_details():
         user.name = form.name.data
         user.email = form.email.data
         user.job_title = form.job_title.data
-        user.avatar = avatar_filename
+
+        if avatar_filename:
+            user.avatar = avatar_filename
 
         # change the password if the user has entered a new password.
         password = form.new_password.data
