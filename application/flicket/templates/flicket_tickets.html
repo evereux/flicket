@@ -93,7 +93,7 @@
                 </th>
             </tr>
             {% for t in tickets.items %}
-                <tr {%- if t.current_status.status == 'Closed' %} class="success"{% endif %}>
+                <tr {%- if t.current_status.status == 'Closed' %} class="strikeout"{% endif %}>
                     <td>
                         <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
                     </td>
