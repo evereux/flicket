@@ -93,7 +93,9 @@
                 </th>
             </tr>
             {% for t in tickets.items %}
-                <tr {%- if t.current_status.status == 'Closed' %} class="strikeout"{% endif %}>
+                <tr {%- if t.current_status.status == 'Closed' %} class="strikeout"{% endif %}
+                {%- if t.ticket_priority.priority == 'high' %} class="danger"{% endif %}
+                {%- if t.ticket_priority.priority == 'medium' %} class="warning"{% endif %}>
                     <td>
                         <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
                     </td>
