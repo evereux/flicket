@@ -79,7 +79,7 @@ def edit_ticket(ticket_id):
 
                 db.session.delete(query)
 
-        ticket_status = FlicketStatus.query.filter_by(status='open').first()
+        ticket_status = FlicketStatus.query.filter_by(status="Open").first()
         ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
         ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
 

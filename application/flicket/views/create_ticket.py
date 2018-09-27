@@ -33,8 +33,8 @@ def ticket_create():
 
     if form.validate_on_submit():
 
-        # this is a new post so ticket status is 'open'
-        ticket_status = FlicketStatus.query.filter_by(status='open').first()
+        # this is a new post so ticket status is "Open"
+        ticket_status = FlicketStatus.query.filter_by(status="Open").first()
         ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
         ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
 
