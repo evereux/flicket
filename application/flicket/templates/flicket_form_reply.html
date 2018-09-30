@@ -35,7 +35,10 @@
             <div class="col-sm-3">
                 {{ form.file }}
             </div>
-            <div class="col-sm-7 text-right">
+        <div class="col-sm-3">
+            {{ form.status(class="form-control") }}
+        </div>
+            <div class="col-sm-4 text-right">
                 {% if ticket %}
                 {% if g.user.is_admin or (ticket.user == g.user) %}
                     {% if ticket.current_status.status != 'Closed' %}

@@ -79,7 +79,6 @@ def edit_ticket(ticket_id):
 
                 db.session.delete(query)
 
-        ticket_status = FlicketStatus.query.filter_by(status="Open").first()
         ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
         ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
 
@@ -87,7 +86,7 @@ def edit_ticket(ticket_id):
         ticket.title = form.title.data
         ticket.modified = g.user
         ticket.date_modified = datetime.datetime.now()
-        ticket.current_status = ticket_status
+        ticket.status_id = form.status.data
         ticket.ticket_priority = ticket_priority
         ticket.category = ticket_category
 
@@ -140,6 +139,10 @@ def edit_post(post_id):
 
     if form.validate_on_submit():
 
+        # stop closing of ticket via edit.
+        if form.status.data == 2:
+            flash('You can not edit and close ticket.')
+
         # before we make any changes store the original post content in the history table if it has changed.
         if post.modified_id:
             history_id = post.modified_id
@@ -168,10 +171,11 @@ def edit_post(post_id):
 
                 db.session.delete(query)
 
-
         post.content = form.content.data
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
+
+        post.ticket.status_id = form.status.data
 
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)

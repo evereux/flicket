@@ -53,8 +53,9 @@ def ticket_view(ticket_id, page=1):
             ticket=ticket,
             user=g.user,
             date_added=datetime.datetime.now(),
-            content=form.content.data
+            content=form.content.data,
         )
+        ticket.status_id = form.status.data
         db.session.add(new_reply)
 
         # add files to database.
@@ -86,7 +87,6 @@ def ticket_view(ticket_id, page=1):
 
         # if the reply has been submitted for closure.
         if form.submit_close.data:
-
             return redirect(url_for('flicket_bp.change_status', ticket_id=ticket.id, status='Closed'))
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
@@ -101,6 +101,8 @@ def ticket_view(ticket_id, page=1):
         form.content.data = block_quoter(reply_contents)
 
     replies = replies.paginate(page, app.config['posts_per_page'])
+
+    form.status.data = ticket.status_id
 
     return render_template('flicket_view.html',
                            title='View Ticket',

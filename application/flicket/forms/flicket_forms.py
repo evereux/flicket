@@ -14,6 +14,7 @@ from wtforms.widgets import ListWidget, CheckboxInput
 from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketDepartment,
                                                        FlicketPriority,
+                                                       FlicketStatus,
                                                        FlicketTicket,
                                                        field_size)
 from application.flicket.models.flicket_user import FlicketUser, user_field_size
@@ -137,9 +138,13 @@ class EditTicketForm(CreateTicketForm):
 
 class ReplyForm(FlaskForm):
     """ Content form. Displayed when replying too end editing tickets """
+    def __init__(self, *args, **kwargs):
+        form = super(ReplyForm, self).__init__(*args, **kwargs)
+        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]
     content = PageDownField('Reply', validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                         max=field_size['content_max_length'])])
     file = FileField('Upload Documents', render_kw={'multiple': True})
+    status = SelectField('Status', validators=[DataRequired()], coerce=int)
     submit = SubmitField('submit reply', render_kw=form_class_button)
     submit_close = SubmitField('reply and close', render_kw=form_danger_button)
 
