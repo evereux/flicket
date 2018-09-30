@@ -41,6 +41,24 @@ def does_email_exist(form, field):
     return True
 
 
+def does_user_exist(form, field):
+    """
+    Username must be unique so we check against the database to ensure it doesn't
+    :param form:
+    :param field:
+    :return True / False:
+    """
+    if form.username.data:
+        result = FlicketUser.query.filter_by(username=form.username.data).count()
+        if result == 0:
+            field.errors.append('Can\'t find user.')
+            return False
+    else:
+        return False
+
+    return True
+
+
 def does_department_exist(form, field):
     """
     Username must be unique so we check against the database to ensure it doesn't

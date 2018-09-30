@@ -4,11 +4,10 @@
             var id = $(this).val();
             if (id != 0) {
                 $.ajax({
-                    url: '/flicket-rest-api/departments/' + id + '/categories',
-                    datatype: 'jsonp',
+                    url: '/flicket-api-v2/categories/?department_id=' + id,
+                    datatype: 'json',
                     headers: {
-                        'Content-Type': 'application/vnd.api+json',
-                        'Accept': 'application/vnd.api+json'
+                        'Authorization' : 'Bearer {{ g.user.token }}'
                     },
                     success: function (data) {
 
@@ -23,19 +22,19 @@
                         var category = document.getElementById('category');
                         $(category).empty();
                         $(category).append($('<option></option>').text('--select--').val('0'));
-                        for (var i = 0; i < data.meta.count; i++) {
-                            var cat_id = data.data[i].id;
-                            var cat_name = data.data[i].attributes.category;
+                        for (var i = 0; i < data._meta.total_items; i++) {
+                            var cat_id = data.items[i].id;
+                            var cat_name = data.items[i].category;
                             $(category).append($('<option></option>').text(cat_name).val(cat_id));
                         }
 
                         // set the preselected value
                         if (result) {
                             // find id of category
-                            for (var item in data.data) {
-                                var c = data.data[item].attributes.category;
+                            for (var item in data.items) {
+                                var c = data.items[item].category;
                                 if (c === result) {
-                                    var category_id = data.data[item].id
+                                    var category_id = data.items[item].id
                                 }
                             }
                             $(category).val(category_id)

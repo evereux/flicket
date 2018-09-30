@@ -3,7 +3,12 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-import datetime
+import base64
+from datetime import datetime, timedelta
+import os
+
+import bcrypt
+from flask import url_for
 
 from application import db, app
 from application.flicket.models import Base
@@ -28,8 +33,29 @@ flicket_groups = db.Table('flicket_groups',
                           db.Column('group_id', db.Integer, db.ForeignKey('flicket_group.id'))
                           )
 
+class PaginatedAPIMixin(object):
+    @staticmethod
+    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
+        resources = query.paginate(page, per_page, False)
+        data = {
+            'items': [item.to_dict() for item in resources.items],
+            '_meta': {
+                'page': page,
+                'per_page': per_page,
+                'total_pages': resources.pages,
+                'total_items': resources.total,
+            },
+            '_links': {
+                'self': url_for(endpoint, page=page, per_page=per_page, **kwargs),
+                'next': url_for(endpoint, page=page+1, per_page=per_page, **kwargs) if resources.has_next else None,
+                'prev': url_for(endpoint, page=page-1, per_page=per_page, **kwargs) if resources.has_prev else None
+            }
+        }
 
-class FlicketUser(Base):
+        return data
+
+
+class FlicketUser(PaginatedAPIMixin, Base):
     """
     User model class
     """
@@ -41,10 +67,12 @@ class FlicketUser(Base):
     password = db.Column(db.LargeBinary(user_field_size['password_max']))
     email = db.Column(db.String(user_field_size['email_max']), unique=True)
     date_added = db.Column(db.DateTime)
-    date_modified = db.Column(db.DateTime, onupdate=datetime.datetime.now)
+    date_modified = db.Column(db.DateTime, onupdate=datetime.now)
     job_title = db.Column(db.String(user_field_size['job_title']))
     avatar = db.Column(db.String(user_field_size['avatar']))
     total_posts = db.Column(db.Integer, default=0)
+    token = db.Column(db.String(32), index=True, unique=True)
+    token_expiration = db.Column(db.DateTime)
 
     def __init__(self, username, name, email, password, date_added, job_title=None):
         self.username = username
@@ -79,6 +107,54 @@ class FlicketUser(Base):
 
     def get_id(self):
         return str(self.id)
+
+    def check_password(self, password):
+        result = FlicketUser.query.filter_by(username=self.username)
+        if result.count() == 0:
+            return False
+        result = result.first()
+        if bcrypt.hashpw(password.encode('utf-8'), result.password) != result.password:
+            return False
+        return True
+
+    def to_dict(self):
+        '''
+        Returns a dictionary object about the user.
+        :return:
+        '''
+
+        data = {
+            'id': self.id,
+            'username': self.username,
+            'name': self.name,
+            'email': self.email,
+            'job_title': self.job_title if self.job_title else 'unknown',
+            'total_posts': self.total_posts,
+            'links': {
+                'self': url_for('bp_api_v2.get_user', id=self.id)
+            }
+        }
+
+        return data
+
+    def get_token(self, expires_in=36000):
+        now = datetime.utcnow()
+        if self.token and self.token_expiration > now + timedelta(seconds=60):
+            return self.token
+        self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
+        self.token_expiration = now + timedelta(seconds=expires_in)
+        db.session.add(self)
+        return self.token
+
+    def revoke_token(self):
+        self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
+
+    @staticmethod
+    def check_token(token):
+        user = FlicketUser.query.filter_by(token=token).first()
+        if user is None or user.token_expiration < datetime.utcnow():
+            return None
+        return user
 
 
 class FlicketGroup(Base):

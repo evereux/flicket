@@ -3,11 +3,11 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-import datetime
+from flask import url_for
 
 from application import db
 from application.flicket.models import Base
-from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.models.flicket_user import FlicketUser, PaginatedAPIMixin
 
 # define field sizes. max are used for forms and database. min just for forms.
 field_size = {
@@ -28,14 +28,29 @@ field_size = {
 }
 
 
-class FlicketStatus(Base):
+class FlicketStatus(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_status'
 
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(field_size['status_max_length']))
 
+    def to_dict(self):
+        '''
+        Returns a dictionary object about the department
+        :return:
+        '''
+        data = {
+            'id': self.id,
+            'status': self.status,
+            'links': {
+                'self': url_for('bp_api_v2.get_status', id=self.id)
+            }
+        }
 
-class FlicketDepartment(Base):
+        return data
+
+
+class FlicketDepartment(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_department'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -48,8 +63,23 @@ class FlicketDepartment(Base):
         "order_by": department.asc()
     }
 
+    def to_dict(self):
+        '''
+        Returns a dictionary object about the department
+        :return:
+        '''
+        data = {
+            'id': self.id,
+            'department': self.department,
+            'links': {
+                'self': url_for('bp_api_v2.get_department', id=self.id)
+            }
+        }
 
-class FlicketCategory(Base):
+        return data
+
+
+class FlicketCategory(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_category'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +92,22 @@ class FlicketCategory(Base):
     __mapper_args__ = {
         "order_by": category.asc()
     }
+
+    def to_dict(self):
+        '''
+        Returns a dictionary object about the department
+        :return:
+        '''
+        data = {
+            'id': self.id,
+            'category': self.category,
+            'department': self.department.department,
+            'links': {
+                'self': url_for('bp_api_v2.get_category', id=self.id)
+            }
+        }
+
+        return data
 
 
 class FlicketPriority(Base):

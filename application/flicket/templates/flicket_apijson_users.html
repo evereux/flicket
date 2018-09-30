@@ -1,0 +1,30 @@
+
+<script type="text/javascript">
+    $(function () {
+        $('#autocomplete-username').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/flicket-api-v2/users/',
+                    datatype: 'json',
+                    headers: {
+                        'Authorization' : 'Bearer {{ g.user.token }}'
+                    },
+                    data: {
+                        name: request.term
+                    },
+                    success: function (data) {
+                        console.log(data.items);
+                        response($.map(data.items, function (item) {
+                            return {
+                                label: item.name,
+                                value: item.username
+                            }
+                        }));
+                    }
+                })
+            },
+            minLength: 3
+        });
+    });
+</script>
+

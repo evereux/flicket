@@ -31,7 +31,7 @@ def ticket_assign(ticket_id=False):
         user = FlicketUser.query.filter_by(email=form.email.data).first()
 
         if ticket.assigned == user:
-            flash('User is already assigned to ticket silly')
+            flash('User is already assigned to ticket.')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id ))
 
         # set status to in work

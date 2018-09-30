@@ -6,9 +6,8 @@
 from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField
 
-from .flicket_forms import does_email_exist
+from .flicket_forms import does_user_exist
 from application.flicket.models.flicket_models import FlicketDepartment, FlicketCategory, FlicketStatus
-from application.flicket_api.scripts.api_class import FlicketApi
 
 
 class SearchTicketForm(FlaskForm):
@@ -31,5 +30,5 @@ class SearchTicketForm(FlaskForm):
     department = SelectField('department', coerce=int, validators=[])
     category = SelectField('category', coerce=int)
     status = SelectField('status', coerce=int)
-    email = StringField('email', validators=[does_email_exist])
+    username = StringField('username', validators=[does_user_exist])
     content = StringField('content', validators=[])

@@ -11,7 +11,6 @@ Flask-Mail==0.9.1
 Flask-Migrate==2.2.1
 Flask-PageDown==0.2.2
 Flask-Principal==0.4.0
-Flask-REST-JSONAPI==0.22.0
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2

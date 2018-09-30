@@ -1,12 +1,12 @@
+
 <script type="text/javascript">
 
     $(document).ready(function () {
         $.ajax({
-            url: '/flicket-rest-api/statuses',
-            datatype: 'jsonp',
+            url: '/flicket-api-v2/statuses/',
+            datatype: 'json',
             headers: {
-                'Content-Type': 'application/vnd.api+json',
-                'Accept': 'application/vnd.api+json'
+                'Authorization' : 'Bearer {{ g.user.token }}'
             },
             success: function (data) {
                 // use uri.js to pass the page uri
@@ -19,19 +19,19 @@
                 $(status).empty();
                 $(status).append($('<option></option>').text('--select--').val('0'));
                 // Load the new options
-                for (var i = 0; i < data.meta.count; i++) {
-                    var status_id = data.data[i].id;
-                    var status_name = data.data[i].attributes.status;
+                for (var i = 0; i < data._meta.total_items; i++) {
+                    var status_id = data.items[i].id;
+                    var status_name = data.items[i].status;
                     $(status).append($('<option></option>').text(status_name).val(status_id));
                 }
 
                 // set the preselected value
                 if (result) {
                     // find id of status
-                    for (var item in data.data) {
-                        var s = data.data[item].attributes.status;
+                    for (var item in data.items) {
+                        var s = data.items[item].status;
                         if (s === result) {
-                            var status_id = data.data[item].id
+                            var status_id = data.items[item].id
                         }
                     }
                     $(status).val(status_id)

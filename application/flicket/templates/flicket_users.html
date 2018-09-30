@@ -5,7 +5,7 @@
     <div class="container">
         <h1>{{ title }}</h1>
 
-        {% include 'flicket_restjson_users.html' %}
+        {% include 'flicket_apijson_users.html' %}
 
         <form action=""
               class="form-horizontal"
@@ -16,9 +16,9 @@
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="autocomplete-email">Name</label>
+                <label class="col-sm-2 control-label" for="autocomplete-username">Name</label>
                 <div class="col-sm-5">
-                    {{ form.name(class="form-control", id="autocomplete-email") }}
+                    {{ form.name(class="form-control", id="autocomplete-username") }}
                 </div>
                 <div class="col-sm-2">
                     {{ form.submit }}

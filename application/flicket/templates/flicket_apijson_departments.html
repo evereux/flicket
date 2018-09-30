@@ -2,11 +2,10 @@
 
     $(document).ready(function () {
         $.ajax({
-            url: '/flicket-rest-api/departments',
-            datatype: 'jsonp',
+            url: '/flicket-api-v2/departments/',
+            datatype: 'json',
             headers: {
-                'Content-Type': 'application/vnd.api+json',
-                'Accept': 'application/vnd.api+json'
+                'Authorization': 'Bearer {{ g.user.token }}'
             },
             success: function (data) {
 
@@ -20,19 +19,19 @@
                 var department = document.getElementById('department');
                 $(department).empty();
                 $(department).append($('<option></option>').text('--select--').val('0'));
-                for (var i = 0; i < data.meta.count; i++) {
-                    var dep_id = data.data[i].id;
-                    var dep_name = data.data[i].attributes.department;
+                for (var i = 0; i < data._meta.total_items; i++) {
+                    var dep_id = data.items[i].id;
+                    var dep_name = data.items[i].department;
                     $(department).append($('<option></option>').text(dep_name).val(dep_id));
                 }
 
                 // set the preselected value
                 if (result) {
                     // find id of department
-                    for (var item in data.data) {
-                        var d = data.data[item].attributes.department;
+                    for (var item in data.items) {
+                        var d = data.items[item].department;
                         if (d === result) {
-                            var department_id = data.data[item].id
+                            var department_id = data.items[item].id
                         }
                     }
                     $(department).val(department_id)

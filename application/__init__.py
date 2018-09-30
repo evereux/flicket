@@ -13,7 +13,9 @@ from flask_sqlalchemy import SQLAlchemy
 from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
 from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
-from application.flicket_api.views import flicket_api_bp
+from __archive__.flicket_api.views import flicket_api_bp
+from application.flicket_api_v2.views import bp_api_v2
+from application.flicket_errors import bp_errors
 
 __version__ = '0.1.6a'
 
@@ -57,9 +59,15 @@ from .flicket.views import (assign,
                             user_edit,
                             users,
                             view)
-from .flicket_api.views import api
-from .flicket_api.views import rest_api
+from .flicket_api_v2.views import categories, departments, status, tokens, users
+from .flicket_errors import handlers
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(flicket_bp)
 app.register_blueprint(flicket_api_bp)
+app.register_blueprint(bp_api_v2)
+app.register_blueprint(bp_errors)
+
+# prints url routes for debugging
+# for rule in app.url_map.iter_rules():
+#    print(rule)

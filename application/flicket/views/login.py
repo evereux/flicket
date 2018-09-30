@@ -88,6 +88,9 @@ def login():
         session['remember_me'] = form.remember_me.data
         identity_changed.send(app, identity=Identity(user.id))
         login_user(user)
+        # set the user token, authentication token is required for api use.
+        user.get_token()
+        db.session.commit()
         flash('You were logged in successfully.', category='success')
         return redirect(url_for('flicket_bp.index'))
 
@@ -97,6 +100,8 @@ def login():
 # logout page
 @flicket_bp.route(app.config['WEBHOME'] + 'logout')
 def logout():
+    g.user.revoke_token()
+    db.session.commit()
     logout_user()
     flash('You were logged out successfully.', category='success')
     return redirect(url_for('flicket_bp.index'))

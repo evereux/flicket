@@ -3,10 +3,10 @@
 {% block content %}
     <script src="{{ url_for('flicket_bp.static', filename='js/uri.js') }}"></script>
 
-    {% include('flicket_restjson_users.html') %}
-    {% include('flicket_restjson_categories.html') %}
-    {% include('flicket_restjson_departments.html') %}
-    {% include('flicket_restjson_statuses.html') %}
+    {% include('flicket_apijson_users.html') %}
+    {% include('flicket_apijson_categories.html') %}
+    {% include('flicket_apijson_departments.html') %}
+    {% include('flicket_apijson_statuses.html') %}
 
 
     <div class="container">
@@ -35,7 +35,7 @@
                         {{ form.status(class="form-control", id="status")}}
                     </div>
                     <div class="col-sm-2 flicket-form-control">
-                        {{ form.email(class="form-control", placeholder="email", id="autocomplete-email") }}
+                        {{ form.username(class="form-control", placeholder="username", id="autocomplete-username") }}
                     </div>
                     <div class="col-sm-3 flicket-form-control">
                         {{ form.content(class="form-control", placeholder="contents") }}
@@ -44,9 +44,9 @@
                         <input class="btn btn-primary" type="submit" value="search"/>
                     </div>
                 </div>
-                {% if form.email.errors %}
+                {% if form.username.errors %}
                     <div class="alert alert-warning small">
-                        {% for error in form.email.errors %}
+                        {% for error in form.username.errors %}
                             {{ error }}
                         {% endfor %}
                     </div>

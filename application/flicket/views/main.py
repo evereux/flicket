@@ -38,7 +38,7 @@ def tickets(page=1):
         category = ''
         status = ''
 
-        user = FlicketUser.query.filter_by(email=form.email.data).first()
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
         if user:
             user_id = user.id
 
