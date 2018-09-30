@@ -4,7 +4,6 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import jsonify, request
-from sqlalchemy import literal
 
 from . import bp_api_v2
 
