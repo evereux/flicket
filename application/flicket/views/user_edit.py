@@ -3,7 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import flash, g, redirect,  render_template, request, url_for
+from flask import flash, g, redirect, render_template, request, url_for
 from flask_login import login_required
 
 from application import app, db
@@ -34,7 +34,8 @@ def user_details():
             # upload the avatar
             upload_avatar = UploadAvatar(avatar, g.user)
             if upload_avatar.upload_file() is False:
-                flash('There was a problem uploading files. Please ensure you are using a valid image file name.', category='danger')
+                flash('There was a problem uploading files. Please ensure you are using a valid image file name.',
+                      category='danger')
                 return redirect(url_for('flicket_bp.user_details'))
             avatar_filename = upload_avatar.file_name
         else:

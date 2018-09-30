@@ -57,13 +57,12 @@ def edit_ticket(ticket_id):
             history_id = ticket.started_id
         if ticket.content != form.content.data:
             history = FlicketHistory(
-                original_content = ticket.content,
+                original_content=ticket.content,
                 topic=ticket,
-                date_modified = datetime.datetime.now(),
-                user_id = history_id
+                date_modified=datetime.datetime.now(),
+                user_id=history_id
             )
             db.session.add(history)
-
 
         # loop through the selected uploads for deletion.
         if len(form.uploads.data) > 0:
@@ -116,7 +115,6 @@ def edit_ticket(ticket_id):
 @flicket_bp.route(app.config['FLICKET'] + 'edit_post/<int:post_id>/', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-
     form = EditReplyForm(post_id=post_id)
 
     post = FlicketPost.query.filter_by(id=post_id).first()
@@ -150,10 +148,10 @@ def edit_post(post_id):
             history_id = post.user_id
         if post.content != form.content.data:
             history = FlicketHistory(
-                original_content = post.content,
+                original_content=post.content,
                 post=post,
-                date_modified = datetime.datetime.now(),
-                user_id = history_id
+                date_modified=datetime.datetime.now(),
+                user_id=history_id
             )
             db.session.add(history)
 

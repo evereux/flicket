@@ -8,7 +8,7 @@ from flask import jsonify, request
 from . import bp_api_v2
 
 from application import app
-from application.flicket.models.flicket_models import  FlicketDepartment
+from application.flicket.models.flicket_models import FlicketDepartment
 from application.flicket_api_v2.views.auth import token_auth
 
 

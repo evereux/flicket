@@ -9,6 +9,7 @@ from application import db
 from application.flicket_errors import bp_errors
 from application.flicket_api_v2.views.errors import error_response as api_error_response
 
+
 def wants_json_repsonse():
     return request.accept_mimetypes['application/json'] >= request.accept_mimetypes['text/html']
 

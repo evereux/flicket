@@ -37,6 +37,7 @@ def does_username_exist(form, field):
 def check_password_formatting(form, field):
     """
     Check formatting of password.
+    :param form:
     :param field:
     :return True / False:
     """
@@ -98,6 +99,7 @@ class CheckPasswordCorrect:
     """
     Check that the entered password matches that in the database.
     """
+
     def __call__(self, form, field):
         self.username = form.username.data
         self.password = form.password.data
@@ -115,12 +117,14 @@ class CheckPasswordCorrect:
 class EditUserForm(FlaskForm):
     username = StringField('username')
     name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
-    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']), change_email])
+    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
+                                             change_email])
     avatar = FileField('avatar')
     password = PasswordField('password',
                              validators=[DataRequired(),
                                          CheckPasswordCorrect(),
-                                         Length(min=user_field_size['password_min'], max=user_field_size['password_max'])])
+                                         Length(min=user_field_size['password_min'],
+                                                max=user_field_size['password_max'])])
     new_password = PasswordField('new_password',
                                  validators=[EqualTo('confirm',
                                                      message='Passwords must match'),

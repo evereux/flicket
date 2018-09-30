@@ -228,7 +228,9 @@ class RunSetUP(Command):
             query.mail_suppress_send = True
             db.session.commit()
             if not silent:
-                print( 'Setting email settings to suppress sending. Change values via administration panel with in Flicket.')
+                print(
+                    'Setting email settings to suppress sending. Change values via administration panel with in '
+                    'Flicket.')
 
 
 class TestingSetUp:
@@ -246,8 +248,8 @@ class TestingSetUp:
             allowed_extensions='txt,  jpg',
             ticket_upload_folder='tmp/uploads',
             base_url='',
-            mail_debug = True,
-            mail_suppress_send = True,
+            mail_debug=True,
+            mail_suppress_send=True,
         )
 
         if not silent:

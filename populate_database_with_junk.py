@@ -6,7 +6,6 @@ This script populates the flicket database with randomly generated text.
 Run calling python script_name.py.
 """
 
-
 import sys
 import datetime
 from random import randint
@@ -96,19 +95,19 @@ def create_ticket_reply(new_ticket):
         date_added=datetime.datetime.now()
     )
 
-    new_reply.user.total_posts +=1
+    new_reply.user.total_posts += 1
 
     db.session.add(new_reply)
 
 
 def create_random_user():
-
     nicknames = rn.random_nicks(gender='u', count=2)
     password = rn.random_nick(gender='u')
     username = '{}{}'.format(nicknames[0], nicknames[1]).lower()
     name = '{} {}'.format(nicknames[0], nicknames[1])
 
     return username, name, password
+
 
 def user_creation():
     # count how many users are in database. if it is already populated don't add any more.
@@ -119,7 +118,7 @@ def user_creation():
 
     for i in range(user_count, num_users):
 
-        username, name, password= create_random_user()
+        username, name, password = create_random_user()
 
         # check username doesn't already exist
         query = FlicketUser.query.filter_by(username=username).first()

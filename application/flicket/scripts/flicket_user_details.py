@@ -6,7 +6,7 @@
 from application.flicket.models.flicket_models import FlicketTicket, FlicketPost
 
 
-class FlicketUserDetails():
+class FlicketUserDetails:
     """
     class returns various details about user from user object input.
     """

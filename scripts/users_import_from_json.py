@@ -16,7 +16,6 @@ from application.flicket.models.flicket_user import FlicketUser
 class JsonUser:
 
     def __init__(self, username, name, email, password):
-
         self.username = username
         self.name = name
         self.email = email
@@ -68,7 +67,7 @@ class ImportUsersFromJson(Command):
 
             # add the user
             print('Adding the user {} {} to the database.'.format(json_user.name, json_user.email))
-            new_user = FlicketUser(username=json_user.username, name=json_user.name, email=json_user.email, password=json_user.password, date_added=datetime.datetime.now())
+            new_user = FlicketUser(username=json_user.username, name=json_user.name, email=json_user.email,
+                                   password=json_user.password, date_added=datetime.datetime.now())
             db.session.add(new_user)
             db.session.commit()
-

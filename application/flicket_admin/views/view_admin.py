@@ -20,7 +20,6 @@ from application.flicket.scripts.hash_password import hash_password
 from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm, AddUserForm
 from . import admin_bp
 
-
 principals = Principal(app)
 # define flicket_admin role need
 admin_only = RoleNeed('flicket_admin')
@@ -138,7 +137,8 @@ def edit_user():
         flash("Could not find user.")
         return redirect(url_for('admin_bp.index'))
 
-    return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True, form=form, user=user)
+    return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True,
+                           form=form, user=user)
 
 
 # Delete user

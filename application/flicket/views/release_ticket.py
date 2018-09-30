@@ -40,7 +40,6 @@ def release(ticket_id=False):
         # add action record
         add_action(action='release', ticket=ticket)
 
-
         # send email to state ticket has been released.
         f_mail = FlicketMail()
         f_mail.release_ticket(ticket)

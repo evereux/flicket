@@ -22,8 +22,6 @@ class WriteConfigJson(object):
             print('Config json file "{}" does not exist. Exiting application.'.format(config_file))
             exit()
 
-
-
     @staticmethod
     def create_file():
         """
@@ -88,6 +86,6 @@ class WriteConfigJson(object):
             print('Writing config file to {}'.format(config_file))
             json.dump(config_values, f)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     WriteConfigJson.create_file()

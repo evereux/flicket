@@ -9,9 +9,9 @@ from application.flicket.scripts.flicket_user_details import FlicketUserDetails
 
 
 class TotalUserPosts(Command):
-    '''
+    """
     Command used by manage.py to update the users total post count. Useful when upgrading to 0.1.5a.
-    '''
+    """
 
     def run(self):
 

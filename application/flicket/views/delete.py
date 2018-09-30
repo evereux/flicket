@@ -117,7 +117,10 @@ def delete_category(category_id=False):
 
         # stop the deletion of categories assigned to tickets.
         if categories.count() > 0:
-            flash('Category is linked to posts. Category can not be deleted unless all posts / topics are removed / relinked.', category="danger")
+            flash(
+                'Category is linked to posts. Category can not be deleted unless all posts / topics are removed / '
+                'relinked.',
+                category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
         if form.validate_on_submit():
@@ -130,8 +133,10 @@ def delete_category(category_id=False):
             flash('Category deleted', category='success')
             return redirect(url_for('flicket_bp.departments'))
 
-        notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs to department <span class=\"label label-default\">{}</span>.".format(
-            category.category, category.department.department)
+        notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
+                       "to department <span class=\"label label-default\">{}</span>.".format(
+                                                                        category.category,
+                                                                        category.department.department)
 
         return render_template('flicket_delete.html',
                                form=form,
@@ -158,7 +163,8 @@ def delete_department(department_id=False):
         # we can't delete any departments associated with categories.
         if departments.count() > 0:
             flash(
-                'Department has categories linked to it. Department can not be deleted unless all categories are first removed.',
+                'Department has categories linked to it. Department can not be deleted unless all categories are '
+                'first removed.',
                 category="danger")
             return redirect(url_for('flicket_bp.departments'))
 

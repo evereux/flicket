@@ -32,7 +32,7 @@ def ticket_assign(ticket_id=False):
 
         if ticket.assigned == user:
             flash('User is already assigned to ticket.')
-            return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id ))
+            return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
         # set status to in work
         status = FlicketStatus.query.filter_by(status='In Work').first()

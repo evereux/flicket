@@ -17,7 +17,6 @@ from application.flicket.scripts.email import FlicketMail
 @flicket_bp.route(app.config['FLICKET'] + 'change_status/<ticket_id>/<status>/', methods=['GET', 'POST'])
 @login_required
 def change_status(ticket_id, status):
-
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
     closed = FlicketStatus.query.filter_by(status=status).first()
 
@@ -49,7 +48,6 @@ def change_status(ticket_id, status):
     ticket.current_status = closed
     ticket.assigned_id = None
     db.session.commit()
-
 
     flash('Ticket {} closed.'.format(str(ticket_id).zfill(5)), category='success')
 

@@ -11,7 +11,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfiguration(object):
-
     WriteConfigJson().json_exists()
 
     # get data from config file
@@ -55,9 +54,9 @@ class BaseConfiguration(object):
 
     # flicket user used to post replies to tickets for status changes.
     NOTIFICATION = {'name': 'notification',
-                 'username': 'notification',
-                 'password': config_data['NOTIFICATION_USER_PASSWORD'],
-                 'email': 'admin@localhost'}
+                    'username': 'notification',
+                    'password': config_data['NOTIFICATION_USER_PASSWORD'],
+                    'email': 'admin@localhost'}
 
 
 class TestConfiguration(BaseConfiguration):
@@ -69,4 +68,4 @@ class TestConfiguration(BaseConfiguration):
     LOGIN_DISABLED = False
     SERVER_NAME = 'localhost:5001'
     config_data = {"db_username": "", "db_port": "", "db_password": "",
-     "db_name": "", "db_url": ""}
+                   "db_name": "", "db_url": ""}

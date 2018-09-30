@@ -59,7 +59,8 @@ class FlicketMail:
         recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has new replies.'.format(ticket.id_zfill, ticket.title)
         ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
-        html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill, ticket_url=ticket_url, ticket=ticket, reply=reply)
+        html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill,
+                                    ticket_url=ticket_url, ticket=ticket, reply=reply)
 
         self.send_email(title, self.sender, recipients, html_body)
 
@@ -103,7 +104,6 @@ class FlicketMail:
         html_body = render_template('email_ticket_close.html', ticket=ticket, ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)
-
 
     @async
     def send_email(self, subject, sender, recipients, html_body):

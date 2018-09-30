@@ -3,7 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-'''
+"""
 
     To get a token with httpie
     http --auth <username>:<password> POST http://localhost:5000/flicket-api-v2/tokens
@@ -50,7 +50,7 @@
     Date: Sat, 29 Sep 2018 14:13:19 GMT
     Server: Werkzeug/0.14.1 Python/3.6.5
 
-'''
+"""
 
 from flask import g
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth

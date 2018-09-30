@@ -36,18 +36,17 @@ def flicket_users(page=1):
     users = users.order_by(FlicketUser.username.asc())
     users = users.paginate(page, app.config['posts_per_page'])
 
-
     return render_template('flicket_users.html',
                            title='Users',
                            users=users,
                            form=form,
                            details=FlicketUserDetails)
 
+
 # view user details
 @flicket_bp.route(app.config['FLICKET'] + 'user/<int:user_id>/', methods=['GET', 'POST'])
 @login_required
 def flicket_user(user_id):
-
     user = FlicketUser.query.filter_by(id=user_id).one()
 
     return render_template('flicket_user_details.html',

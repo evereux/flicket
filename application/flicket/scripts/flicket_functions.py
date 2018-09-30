@@ -12,15 +12,13 @@ from application.flicket.models.flicket_models import FlicketPost, FlicketAction
 
 
 def add_action(action=None, ticket=None, recipient=None):
-
     # todo: add action to state if user has changed ticket status.
 
     """
+    :param recipient:
     :param action: string 'assign', 'unassign', 'close', 'claim', 'release'
     :param ticket: ticket object 
-    :param post: post object
-    :param user: user object
-    :return: 
+    :return:
     """
     ticket_id = None
     post_id = None
@@ -30,11 +28,10 @@ def add_action(action=None, ticket=None, recipient=None):
     closed = None
     opened = None
 
-
     if len(ticket.posts) == 0:
         ticket_id = ticket.id
     else:
-        post_id = ticket.posts[len(ticket.posts)-1].id
+        post_id = ticket.posts[len(ticket.posts) - 1].id
 
     if action == 'assign':
         assigned = True

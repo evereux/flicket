@@ -35,10 +35,10 @@ class FlicketStatus(PaginatedAPIMixin, Base):
     status = db.Column(db.String(field_size['status_max_length']))
 
     def to_dict(self):
-        '''
+        """
         Returns a dictionary object about the department
         :return:
-        '''
+        """
         data = {
             'id': self.id,
             'status': self.status,
@@ -64,10 +64,10 @@ class FlicketDepartment(PaginatedAPIMixin, Base):
     }
 
     def to_dict(self):
-        '''
+        """
         Returns a dictionary object about the department
         :return:
-        '''
+        """
         data = {
             'id': self.id,
             'department': self.department,
@@ -94,10 +94,10 @@ class FlicketCategory(PaginatedAPIMixin, Base):
     }
 
     def to_dict(self):
-        '''
+        """
         Returns a dictionary object about the department
         :return:
-        '''
+        """
         data = {
             'id': self.id,
             'category': self.category,

@@ -16,11 +16,11 @@ from application.flicket.models.flicket_models import (FlicketTicket,
                                                        FlicketDepartment,
                                                        FlicketCategory)
 
+
 # view users
 @flicket_bp.route(app.config['FLICKET'], methods=['GET', 'POST'])
 @login_required
 def index():
-
     """ View showing flicket main page. We use this to display some statistics."""
     s_closed = 'Closed'
     s_open = 'Open'
@@ -36,7 +36,8 @@ def index():
     total_days = query.filter(FlicketTicket.date_added > days_obj).count()
 
     # get list of statuses
-    statuses = [({'id': s.id, 'status': s.status}, {}) for s in FlicketStatus.query.order_by(FlicketStatus.status).all()]
+    statuses = [({'id': s.id, 'status': s.status}, {}) for s in
+                FlicketStatus.query.order_by(FlicketStatus.status).all()]
     # find number of tickets for each status
     for s in statuses:
         ticket_num = query.filter(FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
@@ -52,7 +53,8 @@ def index():
     for d in departments:
         for s in statuses:
             department_filter = query.filter(FlicketTicket.category.has(FlicketCategory.department_id == d[0]['id']))
-            ticket_num = department_filter.filter(FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
+            ticket_num = department_filter.filter(
+                FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
             d[1].append(({'status': s[0]['status']}, {'total_num': ticket_num}))
 
     return render_template('flicket_index.html',

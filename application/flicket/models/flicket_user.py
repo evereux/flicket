@@ -33,6 +33,7 @@ flicket_groups = db.Table('flicket_groups',
                           db.Column('group_id', db.Integer, db.ForeignKey('flicket_group.id'))
                           )
 
+
 class PaginatedAPIMixin(object):
     @staticmethod
     def to_collection_dict(query, page, per_page, endpoint, **kwargs):
@@ -47,8 +48,8 @@ class PaginatedAPIMixin(object):
             },
             '_links': {
                 'self': url_for(endpoint, page=page, per_page=per_page, **kwargs),
-                'next': url_for(endpoint, page=page+1, per_page=per_page, **kwargs) if resources.has_next else None,
-                'prev': url_for(endpoint, page=page-1, per_page=per_page, **kwargs) if resources.has_prev else None
+                'next': url_for(endpoint, page=page + 1, per_page=per_page, **kwargs) if resources.has_next else None,
+                'prev': url_for(endpoint, page=page - 1, per_page=per_page, **kwargs) if resources.has_prev else None
             }
         }
 
@@ -118,11 +119,10 @@ class FlicketUser(PaginatedAPIMixin, Base):
         return True
 
     def to_dict(self):
-        '''
+        """
         Returns a dictionary object about the user.
         :return:
-        '''
-
+        """
         data = {
             'id': self.id,
             'username': self.username,

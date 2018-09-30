@@ -6,6 +6,7 @@
 from application import app
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
+
 def set_flicket_config():
     """
     Updates the flicket application settings based on the values stored in the database.

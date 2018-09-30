@@ -54,7 +54,6 @@ def before_request():
     g.__version__ = __version__
 
 
-
 # add 403 error handler
 @app.errorhandler(403)
 def not_found_error(error):

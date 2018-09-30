@@ -15,7 +15,6 @@ from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket.models.flicket_user import FlicketUser
 
 
-
 class UploadFile:
 
     def __init__(self, file):
@@ -33,7 +32,6 @@ class UploadFile:
             self.file_name = None
         self.upload_folder = None
         self.allowed_extensions = []
-
 
     def get_extension(self):
         try:
@@ -65,7 +63,6 @@ class UploadFile:
         :return: Boolean
         """
         return '.' in self.file_name and self.file_extension in self.allowed_extensions
-
 
     def upload_file(self):
         """
@@ -110,7 +107,7 @@ class UploadAvatar(UploadFile):
         _user = FlicketUser.query.filter_by(id=self.user.id).one()
         # remove the file if it exists
         if _user.avatar:
-            os.remove(os.path.join(self.upload_folder,  _user.avatar))
+            os.remove(os.path.join(self.upload_folder, _user.avatar))
             # null the database entry.
             _user.avatar = None
             db.session.commit()
@@ -131,7 +128,6 @@ class UploadAttachment(object):
         self.upload_folder = app.config['ticket_upload_folder']
         self.new_files = None
 
-
     def are_attachements(self):
         """
         Check self.files to see if any files were added to the upload form. Return True if there were.
@@ -145,7 +141,6 @@ class UploadAttachment(object):
             return False
 
         return True
-
 
     def upload_files(self):
         """
@@ -190,4 +185,3 @@ class UploadAttachment(object):
                         original_filename=new_file[0]
                     )
                     db.session.add(new_image)
-

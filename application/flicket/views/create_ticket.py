@@ -43,7 +43,6 @@ def ticket_create():
         if upload_attachments.are_attachements():
             upload_attachments.upload_files()
 
-
         # submit ticket data to database
         new_ticket = FlicketTicket(title=form.title.data,
                                    date_added=datetime.datetime.now(),
