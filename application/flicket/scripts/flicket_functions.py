@@ -12,6 +12,9 @@ from application.flicket.models.flicket_models import FlicketPost, FlicketAction
 
 
 def add_action(action=None, ticket=None, recipient=None):
+
+    # todo: add action to state if user has changed ticket status.
+
     """
     :param action: string 'assign', 'unassign', 'close', 'claim', 'release'
     :param ticket: ticket object 
