@@ -13,7 +13,6 @@ from flask_sqlalchemy import SQLAlchemy
 from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
 from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
-from __archive__.flicket_api.views import flicket_api_bp
 from application.flicket_api_v2.views import bp_api_v2
 from application.flicket_errors import bp_errors
 
@@ -64,7 +63,6 @@ from .flicket_errors import handlers
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(flicket_bp)
-app.register_blueprint(flicket_api_bp)
 app.register_blueprint(bp_api_v2)
 app.register_blueprint(bp_errors)
 
