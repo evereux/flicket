@@ -63,7 +63,7 @@ class WriteConfigJson(object):
             else:
                 match = True
 
-        db_url = input('Enter database url (don\'t include port). If running locally this would be local host: ')
+        db_url = input('Enter database url (don\'t include port). If running locally this would be localhost: ')
         db_port = input('Enter database port: ')
         db_name = input('Enter database name: ')
 

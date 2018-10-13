@@ -7,7 +7,6 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_pagedown import PageDown
-from flask_rest_jsonapi import Api
 from flask_sqlalchemy import SQLAlchemy
 
 from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
@@ -28,7 +27,6 @@ app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=sh
 db = SQLAlchemy(app)
 mail = Mail(app)
 pagedown = PageDown(app)
-rest_api = Api(app)
 
 # import models so alembic can see them
 from application.flicket.models import flicket_user, flicket_models

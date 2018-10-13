@@ -7,6 +7,7 @@ click==6.7
 coverage==4.3.4
 Flask==1.0.2
 Flask-Login==0.4.1
+Flask-HTTPAuth==3.2.4
 Flask-Mail==0.9.1
 Flask-Migrate==2.2.1
 Flask-PageDown==0.2.2
