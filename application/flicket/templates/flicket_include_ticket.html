@@ -28,6 +28,8 @@
         <label class="col-sm-3 control-label">Content</label>
         <div class="col-sm-9">
             {{ form.content(class="form-control") }}
+            <div class="text-right" style="padding-top: 5pt"><button type="button" class="btn btn btn-info btn-sm"  onclick="hide_element()">Show / Hide Markdown</button></div>
+
         </div>
     </div>
     {% if form.content.errors %}

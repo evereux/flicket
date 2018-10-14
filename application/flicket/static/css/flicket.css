@@ -76,6 +76,7 @@ header {
     border-radius: 3px;
     background-color: #e8f5f3;
     padding: 10px;
+    display:none;
 }
 
 .flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {
