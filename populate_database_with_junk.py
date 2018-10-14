@@ -22,7 +22,7 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import admin
 
-num_topics = 100500
+num_topics = 20000
 num_replies = 100
 num_users = 120
 
