@@ -130,11 +130,11 @@
         <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
             {% if page %}
                 {% if page != tickets.page %}
-                    <li><a href="{{ url_for('flicket_bp.tickets', page=page, **request.args) }}"> {{ page }}</a>
+                    <li><a href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% else %}
                     <li class="active"><a
-                            href="{{ url_for('flicket_bp.tickets', page=page, **request.args) }}"> {{ page }}</a>
+                            href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
                     </li>
                 {% endif %}
             {% else %}

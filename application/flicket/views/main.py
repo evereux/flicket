@@ -22,7 +22,6 @@ from . import flicket_bp
 @flicket_bp.route(app.config['FLICKET'] + 'tickets/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def tickets(page=1):
-
     form = SearchTicketForm()
 
     # get request arguments from the url
@@ -33,70 +32,65 @@ def tickets(page=1):
     user_id = request.args.get('user_id')
 
     if form.validate_on_submit():
+        redirect_url = FlicketTicket.form_redirect(form, page, url='flicket_bp.tickets')
 
-        department = ''
-        category = ''
-        status = ''
+        return redirect(redirect_url)
 
-        user = FlicketUser.query.filter_by(username=form.username.data).first()
-        if user:
-            user_id = user.id
+    ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
+                                                     user_id=user_id, content=content)
+    number_results = ticket_query.count()
 
-        # convert form inputs to it's table title
-        if form.department.data:
-            department = FlicketDepartment.query.filter_by(id=form.department.data).first().department
-        if form.category.data:
-            category = FlicketCategory.query.filter_by(id=form.category.data).first().category
-        if form.status.data:
-            status = FlicketStatus.query.filter_by(id=form.status.data).first().status
-
-        return redirect(url_for('flicket_bp.tickets',
-                                content=form.content.data,
-                                page=page,
-                                department=department,
-                                category=category,
-                                status=status,
-                                user_id=user_id,
-                                ))
-
-    # todo: get data from api
-
-    tickets = FlicketTicket.query
-    if status:
-        tickets = tickets.filter(FlicketTicket.current_status.has(FlicketStatus.status == status))
-        form.status.data = FlicketStatus.query.filter_by(status=status).first().id
-    if category:
-        tickets = tickets.filter(FlicketTicket.category.has(FlicketCategory.category == category))
-        form.category.data = FlicketCategory.query.filter_by(category=category).first().id
-    if department:
-        department_filter = FlicketDepartment.query.filter_by(department=department).first()
-        tickets = tickets.filter(FlicketTicket.category.has(FlicketCategory.department == department_filter))
-        form.department.data = department_filter.id
-    if user_id:
-        tickets = tickets.filter_by(assigned_id=int(user_id))
-
-    if content:
-        # search the titles
-        form.content.data = content
-
-        f1 = FlicketTicket.title.ilike('%' + content + '%')
-        f2 = FlicketTicket.content.ilike('%' + content + '%')
-        f3 = FlicketTicket.posts.any(FlicketPost.content.ilike('%' + content + '%'))
-        tickets = tickets.filter(f1 | f2 | f3)
-
-    tickets = tickets.order_by(FlicketTicket.id.desc())
-    number_results = tickets.count()
-
-    tickets = tickets.paginate(page, app.config['posts_per_page'])
+    ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
 
     return render_template('flicket_tickets.html',
                            title='Tickets',
                            form=form,
-                           tickets=tickets,
+                           tickets=ticket_query,
                            page=page,
                            number_results=number_results,
                            status=status,
                            department=department,
                            category=category,
-                           user_id=user_id
+                           user_id=user_id,
+                           base_url='flicket_bp.tickets'
+                           )
+
+
+@flicket_bp.route(app.config['FLICKET'] + 'my_tickets/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'my_tickets/<int:page>/', methods=['GET', 'POST'])
+@login_required
+def my_tickets(page=1):
+    form = SearchTicketForm()
+
+    # get request arguments from the url
+    status = request.args.get('status')
+    department = request.args.get('department')
+    category = request.args.get('category')
+    content = request.args.get('content')
+    user_id = request.args.get('user_id')
+
+    if form.validate_on_submit():
+        redirect_url = FlicketTicket.form_redirect(form, page, url='flicket_bp.my_tickets')
+
+        return redirect(redirect_url)
+
+    ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
+                                                     user_id=user_id, content=content)
+
+    ticket_query = FlicketTicket.my_tickets(ticket_query)
+    number_results = ticket_query.count()
+
+    ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
+
+    return render_template('flicket_tickets.html',
+                           title='My Tickets',
+                           form=form,
+                           tickets=ticket_query,
+                           page=page,
+                           number_results=number_results,
+                           status=status,
+                           department=department,
+                           category=category,
+                           user_id=user_id,
+                           base_url='flicket_bp.my_tickets'
                            )

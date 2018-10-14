@@ -1,5 +1,14 @@
 # Changelog
 
+# 0.1.7
+*   Added view 'my_tickets'.
+*   Added links to ticket views filtered by department on main page.
+*   Refactored ticket views methods and placed in FlicketTicket model.
+
+## 0.1.6a
+*   various bug fixes.
+*   user can now change status when replying to ticket.
+
 ## 0.1.5a
 *   Changed dependancy from Flask-Misaka to the python library Markdown.
     This is because installing Flask-Misaka on Windows is too many hoops

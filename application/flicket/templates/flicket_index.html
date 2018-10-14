@@ -19,7 +19,7 @@
     <div class="row">
         {% for d in departments %}
         <div class="col-sm-3">
-            <h4>{{ d[0]['department'] }}</h4>
+            <h4>{{ d[0]['department'] }} <a href="{{ url_for('flicket_bp.tickets', department=d[0]['department']) }}"><span class="glyphicon glyphicon-list"></span></a></h4>
             {% for s in d[1] %}
             <div><mark>{{ s[1]['total_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark></div>
             {% endfor %}

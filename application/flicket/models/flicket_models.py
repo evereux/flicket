@@ -3,9 +3,9 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import url_for
+from flask import url_for, g, redirect
 
-from application import db
+from application import db, flicket_bp
 from application.flicket.models import Base
 from application.flicket.models.flicket_user import FlicketUser, PaginatedAPIMixin
 
@@ -183,6 +183,94 @@ class FlicketTicket(Base):
             emails.append(user.user.email)
 
         return emails
+
+    @staticmethod
+    def query_tickets(form, **kwargs):
+        """
+        Returns a filtered query and modified form based on form submission
+        :param form:
+        :param kwargs:
+        :return:
+        """
+        ticket_query = FlicketTicket.query
+
+        for key, value in kwargs.items():
+
+            if key == 'status' and value:
+                ticket_query = ticket_query.filter(FlicketTicket.current_status.has(FlicketStatus.status == value))
+                form.status.data = FlicketStatus.query.filter_by(status=value).first().id
+            if key == 'category' and value:
+                ticket_query = ticket_query.filter(FlicketTicket.category.has(FlicketCategory.category == value))
+                form.category.data = FlicketCategory.query.filter_by(category=value).first().id
+            if key == 'department' and value:
+                department_filter = FlicketDepartment.query.filter_by(department=value).first()
+                ticket_query = ticket_query.filter(
+                    FlicketTicket.category.has(FlicketCategory.department == department_filter))
+                form.department.data = department_filter.id
+            if key == 'user_id' and value:
+                ticket_query = ticket_query.filter_by(assigned_id=int(value))
+                user = FlicketUser.query.filter_by(id=value).first()
+                form.username.data = user.username
+            if key == 'content' and value:
+                # search the titles
+                form.content.data = key
+
+                f1 = FlicketTicket.title.ilike('%' + value + '%')
+                f2 = FlicketTicket.content.ilike('%' + value + '%')
+                f3 = FlicketTicket.posts.any(FlicketPost.content.ilike('%' + value + '%'))
+                ticket_query = ticket_query.filter(f1 | f2 | f3)
+
+        ticket_query = ticket_query.order_by(FlicketTicket.id.desc())
+
+        return ticket_query, form
+
+    @staticmethod
+    def my_tickets(ticket_query):
+        """
+        Function to return all tickets created by or assigned to user.
+        :return:
+        """
+        ticket_query = ticket_query.filter((FlicketTicket.started_id == g.user.id) \
+                                           | (FlicketTicket.assigned_id == g.user.id)).order_by(
+            FlicketTicket.id.desc())
+
+        return ticket_query
+
+    @staticmethod
+    def form_redirect(form, page, url='flicket_bp.tickets'):
+        """
+
+        :param form:
+        :param page:
+        :param url:
+        :return:
+        """
+
+        department = ''
+        category = ''
+        status = ''
+        user_id = ''
+
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
+        if user:
+            user_id = user.id
+
+        # convert form inputs to it's table title
+        if form.department.data:
+            department = FlicketDepartment.query.filter_by(id=form.department.data).first().department
+        if form.category.data:
+            category = FlicketCategory.query.filter_by(id=form.category.data).first().category
+        if form.status.data:
+            status = FlicketStatus.query.filter_by(id=form.status.data).first().status
+
+        redirect_url = url_for(url, content=form.content.data,
+                               page=page,
+                               department=department,
+                               category=category,
+                               status=status,
+                               user_id=user_id)
+
+        return redirect_url
 
 
 class FlicketPost(Base):
