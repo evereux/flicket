@@ -4,6 +4,18 @@
 *   Added view 'my_tickets'.
 *   Added links to ticket views filtered by department on main page.
 *   Refactored ticket views methods and placed in FlicketTicket model.
+*   Moved ticket creation and editing from views to own class.
+*   Total assigned now stored in users details and not calculated on the fly.
+
+    If you are migrating from any earlier version you should ensure you upgrade
+    the database. 
+    ~~~
+    python manage.py db migrate
+    python manage.py db upgrade
+    ~~~    
+    
+    Also, manually update your users total_posts count whilst site
+    is offline. This can be done by running `python manage.py update_user_assigned`
 
 ## 0.1.6a
 *   various bug fixes.

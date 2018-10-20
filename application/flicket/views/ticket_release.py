@@ -17,6 +17,7 @@ from application.flicket.scripts.flicket_functions import add_action
 @flicket_bp.route(app.config['FLICKET'] + 'release/<int:ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def release(ticket_id=False):
+
     if ticket_id:
 
         ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
@@ -34,7 +35,10 @@ def release(ticket_id=False):
         # set status to open
         status = FlicketStatus.query.filter_by(status='Open').first()
         ticket.current_status = status
+        user = ticket.assigned
         ticket.assigned = None
+        user.total_assigned -= 1
+
         db.session.commit()
 
         # add action record

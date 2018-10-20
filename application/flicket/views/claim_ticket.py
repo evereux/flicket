@@ -28,6 +28,7 @@ def ticket_claim(ticket_id=False):
         # set status to in work
         status = FlicketStatus.query.filter_by(status='In Work').first()
         ticket.assigned = g.user
+        g.user.total_assigned += 1
         ticket.current_status = status
         db.session.commit()
 

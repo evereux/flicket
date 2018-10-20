@@ -37,7 +37,7 @@ lm.init_app(app)
 lm.login_view = 'flicket_bp.login'
 
 from .flicket_admin.views import view_admin, view_config
-from .flicket.views import (assign,
+from .flicket.views import (ticket_assign,
                             categories,
                             edit_status,
                             claim_ticket,
@@ -50,7 +50,7 @@ from .flicket.views import (assign,
                             login,
                             main,
                             faq,
-                            release_ticket,
+                            ticket_release,
                             render_uploads,
                             subscribe,
                             user_edit,

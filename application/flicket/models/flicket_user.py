@@ -72,6 +72,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
     job_title = db.Column(db.String(user_field_size['job_title']))
     avatar = db.Column(db.String(user_field_size['avatar']))
     total_posts = db.Column(db.Integer, default=0)
+    total_assigned = db.Column(db.Integer, default=0)
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
 
@@ -82,9 +83,6 @@ class FlicketUser(PaginatedAPIMixin, Base):
         self.email = email
         self.job_title = job_title
         self.date_added = date_added
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
 
     @property
     def is_authenticated(self):
@@ -155,6 +153,9 @@ class FlicketUser(PaginatedAPIMixin, Base):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
+
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
 
 
 class FlicketGroup(Base):

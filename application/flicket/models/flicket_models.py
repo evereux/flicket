@@ -270,6 +270,9 @@ class FlicketTicket(Base):
 
         return redirect_url
 
+    def __repr__(self):
+        return 'Class FlicketTicket: id={}, title={}, status={}, assigned={},'.format(self.id, self.title, self.current_status, self.assigned)
+
 
 class FlicketPost(Base):
     __tablename__ = 'flicket_post'

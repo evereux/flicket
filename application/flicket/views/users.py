@@ -39,8 +39,7 @@ def flicket_users(page=1):
     return render_template('flicket_users.html',
                            title='Users',
                            users=users,
-                           form=form,
-                           details=FlicketUserDetails)
+                           form=form)
 
 
 # view user details
@@ -51,5 +50,4 @@ def flicket_user(user_id):
 
     return render_template('flicket_user_details.html',
                            title='User Details',
-                           user=user,
-                           details=FlicketUserDetails)
+                           user=user)

@@ -40,6 +40,8 @@ def ticket_assign(ticket_id=False):
         ticket.assigned = user
         ticket.current_status = status
 
+        user.total_assigned += 1
+
         # add action record
         add_action(action='assign', ticket=ticket, recipient=user)
 
