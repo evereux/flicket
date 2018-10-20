@@ -3,8 +3,6 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-import datetime
-
 from flask import (flash,
                    redirect,
                    url_for,
@@ -14,15 +12,9 @@ from flask import (flash,
 from flask_login import login_required
 
 from . import flicket_bp
-from application import app, db
+from application import app
 from application.flicket.forms.flicket_forms import CreateTicketForm
-from application.flicket.scripts.email import FlicketMail
-from application.flicket.models.flicket_models import (FlicketTicket,
-                                                       FlicketStatus,
-                                                       FlicketPriority,
-                                                       FlicketCategory,
-                                                       FlicketSubscription)
-from application.flicket.scripts.flicket_upload import UploadAttachment
+from application.flicket.models.flicket_models_ext import FlicketTicketExt
 
 
 # create ticket
@@ -33,43 +25,15 @@ def ticket_create():
 
     if form.validate_on_submit():
 
-        # this is a new post so ticket status is "Open"
-        ticket_status = FlicketStatus.query.filter_by(status="Open").first()
-        ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
-        ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
-
-        files = request.files.getlist("file")
-        upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
-            upload_attachments.upload_files()
-
-        # submit ticket data to database
-        new_ticket = FlicketTicket(title=form.title.data,
-                                   date_added=datetime.datetime.now(),
-                                   user=g.user,
-                                   current_status=ticket_status,
-                                   content=form.content.data,
-                                   ticket_priority=ticket_priority,
-                                   category=ticket_category
-                                   )
-        db.session.add(new_ticket)
-
-        # add attachments to the dataabase.
-        upload_attachments.populate_db(new_ticket)
-        # subscribe user to ticket
-        subscribe = FlicketSubscription(user=g.user, ticket=new_ticket)
-        db.session.add(subscribe)
-
-        # add count of 1 to users total posts.
-        g.user.total_posts += 1
-
-        # commit changes to the database
-        db.session.commit()
+        new_ticket = FlicketTicketExt.create_ticket(title=form.title.data,
+                                                    user=g.user,
+                                                    content=form.content.data,
+                                                    category=form.category.data,
+                                                    priority=form.priority.data,
+                                                    files=request.files.getlist("file"))
 
         flash('New Ticket created.', category='success')
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
-    return render_template('flicket_create.html',
-                           title='Flicket - Create Ticket',
-                           form=form)
+    return render_template('flicket_create.html', title='Flicket - Create Ticket', form=form)

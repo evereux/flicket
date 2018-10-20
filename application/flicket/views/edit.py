@@ -12,13 +12,11 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import EditTicketForm, EditReplyForm
-from application.flicket.models.flicket_models import (FlicketCategory,
-                                                       FlicketHistory,
+from application.flicket.models.flicket_models import (FlicketHistory,
                                                        FlicketTicket,
                                                        FlicketPost,
-                                                       FlicketPriority,
-                                                       FlicketStatus,
                                                        FlicketUploads)
+from application.flicket.models.flicket_models_ext import FlicketTicketExt
 from application.flicket.scripts.flicket_functions import is_ticket_closed
 from application.flicket.scripts.flicket_upload import UploadAttachment
 
@@ -50,55 +48,19 @@ def edit_ticket(ticket_id):
 
     if form.validate_on_submit():
 
-        # before we make any changes store the original post content in the history table if it has changed.
-        if ticket.modified_id:
-            history_id = ticket.modified_id
-        else:
-            history_id = ticket.started_id
-        if ticket.content != form.content.data:
-            history = FlicketHistory(
-                original_content=ticket.content,
-                topic=ticket,
-                date_modified=datetime.datetime.now(),
-                user_id=history_id
-            )
-            db.session.add(history)
+        ticket_id = FlicketTicketExt.edit_ticket(
+            ticket=ticket,
+            title=form.title.data,
+            user=g.user,
+            content=form.content.data,
+            priority=form.priority.data,
+            category=form.category.data,
+            files=request.files.getlist("file"),
+            form_uploads=form.uploads.data,
+        )
 
-        # loop through the selected uploads for deletion.
-        if len(form.uploads.data) > 0:
-            for i in form.uploads.data:
-                # get the upload document information from the database.
-                query = FlicketUploads.query.filter_by(id=i).first()
-                # define the full uploaded filename
-                the_file = os.path.join(app.config['ticket_upload_folder'], query.filename)
-
-                if os.path.isfile(the_file):
-                    # delete the file from the folder
-                    os.remove(the_file)
-
-                db.session.delete(query)
-
-        ticket_priority = FlicketPriority.query.filter_by(id=int(form.priority.data)).first()
-        ticket_category = FlicketCategory.query.filter_by(id=int(form.category.data)).first()
-
-        ticket.content = form.content.data
-        ticket.title = form.title.data
-        ticket.modified = g.user
-        ticket.date_modified = datetime.datetime.now()
-        ticket.status_id = form.status.data
-        ticket.ticket_priority = ticket_priority
-        ticket.category = ticket_category
-
-        files = request.files.getlist("file")
-        upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
-            upload_attachments.upload_files()
-
-        # add files to database.
-        upload_attachments.populate_db(ticket)
-
-        db.session.commit()
         flash('Ticket successfully edited.', category='success')
+
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     form.content.data = ticket.content

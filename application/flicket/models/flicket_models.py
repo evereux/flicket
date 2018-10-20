@@ -3,9 +3,9 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import url_for, g, redirect
+from flask import url_for, g
 
-from application import db, flicket_bp
+from application import db
 from application.flicket.models import Base
 from application.flicket.models.flicket_user import FlicketUser, PaginatedAPIMixin
 
@@ -176,7 +176,7 @@ class FlicketTicket(Base):
     def get_subscriber_emails(self):
         """
         Function to return a list of email addresses of subscribed users.
-        :return: 
+        :return:
         """
         emails = list()
         for user in self.subscribers:
@@ -230,9 +230,7 @@ class FlicketTicket(Base):
         Function to return all tickets created by or assigned to user.
         :return:
         """
-        ticket_query = ticket_query.filter((FlicketTicket.started_id == g.user.id) \
-                                           | (FlicketTicket.assigned_id == g.user.id)).order_by(
-            FlicketTicket.id.desc())
+        ticket_query = ticket_query.filter((FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id)).order_by(FlicketTicket.id.desc())
 
         return ticket_query
 
@@ -354,7 +352,7 @@ class FlicketSubscription(Base):
 
 class FlicketAction(Base):
     """
-    SQL table that stores the action history of a ticket. 
+    SQL table that stores the action history of a ticket.
     For example, if a user claims a ticket that action is stored here.
     The action is associated with either the ticket_id (if no posts) or post_id (of
     lastest post). The reason for this is displaying within the ticket view.
@@ -386,7 +384,7 @@ class FlicketAction(Base):
     def output_action(self):
         """
         Method used in ticket view to show what action has taken place in ticket.
-        :return: 
+        :return:
         """
 
         _date = self.date.strftime('%d-%m-%Y %H:%M')
