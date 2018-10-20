@@ -138,6 +138,7 @@ class EditTicketForm(CreateTicketForm):
 
 class ReplyForm(FlaskForm):
     """ Content form. Displayed when replying too end editing tickets """
+
     def __init__(self, *args, **kwargs):
         form = super(ReplyForm, self).__init__(*args, **kwargs)
         self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]
@@ -160,17 +161,8 @@ class EditReplyForm(ReplyForm):
 
 class SearchUserForm(FlaskForm):
     """ Search user. """
-    name = StringField('name', validators=[DataRequired(), Length(min=user_field_size['username_min'],
-                                                                  max=user_field_size['username_max'])])
+    username = StringField('username', validators=[DataRequired(), Length(min=user_field_size['username_min'], max=user_field_size['username_max'])])
     submit = SubmitField('search user', render_kw=form_class_button)
-
-
-class SearchEmailForm(FlaskForm):
-    """ Search email form. """
-    email = StringField('email', validators=[DataRequired(), does_email_exist, Length(min=user_field_size['email_min'],
-                                                                                      max=user_field_size[
-                                                                                          'email_max'])])
-    submit = SubmitField('assign', render_kw=form_class_button)
 
 
 class DepartmentForm(FlaskForm):

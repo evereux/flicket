@@ -60,9 +60,12 @@
             {%- if content.modified_id -%}
             <div class="flicket-post-modified">
                 This post was modified by {{ content.modified.name }}
-                on {{ content.date_modified }} | <a
-                    href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">edit
-                history</a>
+                on {{ content.date_modified }} |
+                {%- if post -%}
+                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">edit history</a>
+                {%- else -%}
+                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">edit history</a>
+                {%- endif -%}
             </div>
             {%- endif -%}
         </div>

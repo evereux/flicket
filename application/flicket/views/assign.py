@@ -7,7 +7,7 @@ from flask import redirect, url_for, flash, g, render_template
 from flask_login import login_required
 
 from application import app, db
-from application.flicket.forms.flicket_forms import SearchEmailForm
+from application.flicket.forms.flicket_forms import SearchUserForm
 from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketSubscription
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_functions import add_action
@@ -19,7 +19,7 @@ from . import flicket_bp
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_assign/<int:ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def ticket_assign(ticket_id=False):
-    form = SearchEmailForm()
+    form = SearchUserForm()
     ticket = FlicketTicket.query.filter_by(id=ticket_id).one()
 
     if ticket.current_status.status == 'Closed':
@@ -28,7 +28,7 @@ def ticket_assign(ticket_id=False):
 
     if form.validate_on_submit():
 
-        user = FlicketUser.query.filter_by(email=form.email.data).first()
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
 
         if ticket.assigned == user:
             flash('User is already assigned to ticket.')

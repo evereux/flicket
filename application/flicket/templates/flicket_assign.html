@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% include('flicket_apijson_users.html') %}
+    {% include('flicket_apijson_users.html') %}
 
     <div class="container">
         <h1>{{ title }}</h1>
@@ -20,14 +20,14 @@
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="autocomplete-email">{{ form.email.label }}</label>
+                <label class="col-sm-2 control-label" for="autocomplete-username">{{ form.username.label }}</label>
                 <div class="col-sm-3">
-                    {{ form.email(class="form-control", id="autocomplete-email") }}
+                    {{ form.username(class="form-control", id="autocomplete-username") }}
                 </div>
             </div>
-            {% if form.email.errors %}
+            {% if form.username.errors %}
                 <div class="alert alert-warning small">
-                    {% for error in form.email.errors %}
+                    {% for error in form.username.errors %}
                         {{ error }}
                     {% endfor %}
                 </div>
