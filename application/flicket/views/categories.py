@@ -17,7 +17,7 @@ from application.flicket.models.flicket_models import FlicketCategory, FlicketDe
 @login_required
 def categories(department_id=False):
     form = CategoryForm()
-    categories = FlicketCategory.query.filter_by(department_id=department_id)
+    categories = FlicketCategory.query.order_by(FlicketCategory.category.asc()).filter_by(department_id=department_id)
     department = FlicketDepartment.query.filter_by(id=department_id).first()
 
     form.department_id.data = department_id

@@ -14,8 +14,8 @@ from application.flicket_api_v2.views.auth import token_auth
 
 @bp_api_v2.route(app.config['FLICKET_API_V2'] + 'category/<int:id>', methods=['GET'])
 @token_auth.login_required
-def get_category(id):
-    return jsonify(FlicketCategory.query.get_or_404(id).to_dict())
+def get_category(id_):
+    return jsonify(FlicketCategory.query.get_or_404(id_).to_dict())
 
 
 @bp_api_v2.route(app.config['FLICKET_API_V2'] + 'categories/', methods=['GET'])
@@ -23,7 +23,7 @@ def get_category(id):
 def get_categories():
     department_id = request.args.get('department_id')
     department = request.args.get('department')
-    categories = FlicketCategory.query
+    categories = FlicketCategory.query.order_by(FlicketCategory.category.asc())
     if department_id:
         categories = categories.filter_by(department_id=department_id)
     if department:

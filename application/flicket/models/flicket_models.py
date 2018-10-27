@@ -55,13 +55,20 @@ class FlicketDepartment(PaginatedAPIMixin, Base):
 
     id = db.Column(db.Integer, primary_key=True)
     department = db.Column(db.String(field_size['department_max_length']))
-
     categories = db.relationship('FlicketCategory', back_populates='department')
 
+    def __init__(self, department):
+        """
+
+        :param department:
+        """
+        self.department = department
+
+    # todo: remove if form ordering etc OK
     # make the default sort order the department name
-    __mapper_args__ = {
-        "order_by": department.asc()
-    }
+    # __mapper_args__ = {
+    #     "order_by": department.asc()
+    # }
 
     def to_dict(self):
         """
@@ -88,10 +95,18 @@ class FlicketCategory(PaginatedAPIMixin, Base):
     department_id = db.Column(db.Integer, db.ForeignKey(FlicketDepartment.id))
     department = db.relationship(FlicketDepartment, back_populates='categories')
 
-    # make the default sort order the category name
-    __mapper_args__ = {
-        "order_by": category.asc()
-    }
+    def __init__(self, category, department):
+        """
+
+        :param category:
+        """
+        self.category = category
+        self.department = department
+
+    # # make the default sort order the category name
+    # __mapper_args__ = {
+    #     "order_by": category.asc()
+    # }
 
     def to_dict(self):
         """
@@ -230,7 +245,9 @@ class FlicketTicket(Base):
         Function to return all tickets created by or assigned to user.
         :return:
         """
-        ticket_query = ticket_query.filter((FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id)).order_by(FlicketTicket.id.desc())
+        ticket_query = ticket_query.filter(
+            (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id)).order_by(
+            FlicketTicket.id.desc())
 
         return ticket_query
 
@@ -271,7 +288,9 @@ class FlicketTicket(Base):
         return redirect_url
 
     def __repr__(self):
-        return 'Class FlicketTicket: id={}, title={}, status={}, assigned={},'.format(self.id, self.title, self.current_status, self.assigned)
+        return 'Class FlicketTicket: id={}, title={}, status={}, assigned={},'.format(self.id, self.title,
+                                                                                      self.current_status,
+                                                                                      self.assigned)
 
 
 class FlicketPost(Base):

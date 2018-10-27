@@ -17,10 +17,12 @@ class SearchTicketForm(FlaskForm):
 
         # choices are populated via ajax query on page load. This are simply empty lists so
         # form can be loaded on page view
-        self.department.choices = [(d.id, d.department) for d in FlicketDepartment.query.all()]
+        self.department.choices = [(d.id, d.department) for d in
+                                   FlicketDepartment.query.order_by(FlicketDepartment.department.asc()).all()]
         self.department.choices.insert(0, (0, 'department'))
 
-        self.category.choices = [(c.id, c.category) for c in FlicketCategory.query.all()]
+        self.category.choices = [(c.id, c.category) for c in
+                                 FlicketCategory.query.order_by(FlicketCategory.category.asc()).all()]
         self.category.choices.insert(0, (0, 'category'))
 
         self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]

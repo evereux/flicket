@@ -12,7 +12,7 @@ from application.flicket.models.flicket_models import FlicketTicket, FlicketStat
     FlicketSubscription, FlicketHistory, FlicketUploads
 
 
-class FlicketTicketExt():
+class FlicketTicketExt:
 
     @staticmethod
     def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None):

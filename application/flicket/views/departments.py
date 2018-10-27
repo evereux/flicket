@@ -20,7 +20,7 @@ def departments(page=1):
 
     form = DepartmentForm()
 
-    query = FlicketDepartment.query
+    query = FlicketDepartment.query.order_by(FlicketDepartment.department.asc())
 
     if form.validate_on_submit():
         add_department = FlicketDepartment(department=form.department.data)
