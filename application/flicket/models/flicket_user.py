@@ -57,9 +57,7 @@ class PaginatedAPIMixin(object):
 
 
 class FlicketUser(PaginatedAPIMixin, Base):
-    """
-    User model class
-    """
+
     __tablename__ = 'flicket_users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -77,6 +75,14 @@ class FlicketUser(PaginatedAPIMixin, Base):
     token_expiration = db.Column(db.DateTime)
 
     def __init__(self, username, name, email, password, date_added, job_title=None):
+        """
+        :param username: username, must be unique.
+        :param name: Full name.
+        :param email: email address, must be unique.
+        :param password: password.
+        :param date_added: date added.
+        :param job_title: job title / description.
+        """
         self.username = username
         self.name = name
         self.password = password
@@ -86,28 +92,54 @@ class FlicketUser(PaginatedAPIMixin, Base):
 
     @property
     def is_authenticated(self):
+        """
+
+        :return: True if authenticated.
+        """
         return True
 
     @property
     def is_active(self):
+        """
+
+        :return: True if active.
+        """
         return True
 
     @property
     def is_anonymous(self):
+        """
+
+        :return: False if anonymous.
+        """
         return False
 
     @property
     def is_admin(self):
-        """ returns true if the user is a member of the 'flicket_admin' group"""
+        """
+        Returns true if the user is a member of the 'flicket_admin' group.
+        :return True if condition met.
+        """
         user = FlicketUser.query.filter_by(id=self.id).first()
         for g in user.flicket_groups:
             if g.group_name == app.config['ADMIN_GROUP_NAME']:
                 return True
+        else:
+            return False
 
     def get_id(self):
+        """
+
+        :return: self.id
+        """
         return str(self.id)
 
     def check_password(self, password):
+        """
+
+        :param password:
+        :return: True if password matches.
+        """
         result = FlicketUser.query.filter_by(username=self.username)
         if result.count() == 0:
             return False
@@ -119,7 +151,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
     def to_dict(self):
         """
         Returns a dictionary object about the user.
-        :return:
+        :return: dict()
         """
         data = {
             'id': self.id,
@@ -136,6 +168,11 @@ class FlicketUser(PaginatedAPIMixin, Base):
         return data
 
     def get_token(self, expires_in=36000):
+        """
+
+        :param expires_in:
+        :return: self.token
+        """
         now = datetime.utcnow()
         if self.token and self.token_expiration > now + timedelta(seconds=60):
             return self.token
@@ -145,16 +182,29 @@ class FlicketUser(PaginatedAPIMixin, Base):
         return self.token
 
     def revoke_token(self):
+        """
+        Method to expire the token. Typically used on logging out.
+        :return:
+        """
         self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
 
     @staticmethod
     def check_token(token):
+        """
+
+        :param token:
+        :return: None if token is expired otherwise returns self.
+        """
         user = FlicketUser.query.filter_by(token=token).first()
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
 
     def __repr__(self):
+        """
+
+        :return: str() with user details.
+        """
         return '<User {}>'.format(self.username)
 
 
@@ -183,8 +233,16 @@ class FlicketGroup(Base):
     #                           remote_side=[group_to_group.c.parent_id])
 
     def __init__(self, group_name):
+        """
+
+        :param group_name:
+        """
         self.group_name = group_name
 
     @property
     def __repr__(self):
+        """
+
+        :return: str() with group details.
+        """
         return self.group_name
