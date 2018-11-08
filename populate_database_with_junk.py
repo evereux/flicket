@@ -22,27 +22,10 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import admin
 
-num_topics = 20000
-num_replies = 100
-num_users = 120
 
-# rn = RandomNicknames()
-
-# Check to see if set-up has been run.
-query = FlicketUser.query.filter_by(username=admin)
-if query.count() != 1:
-    print('Setup has not yet been run! You should do `python manage.py run_set_up`.')
-    exit()
-
-mismatch = True
-while mismatch is True:
-    print('When population with junk users will be added with <your_email_usersname>+<random_username>@<email_domain>.')
-    base_email = input('Please enter your email for testing > ')
-    base_email_confirm = input('Please confirm your email > ')
-    if base_email == base_email_confirm:
-        mismatch = False
-    else:
-        print('Your email address did not match. Please try again.')
+def how_many():
+    # todo: prompt user for number of topics, replies and users to add.
+    pass
 
 
 # get a list of users and return a random one
@@ -98,14 +81,16 @@ def create_random_user():
     return username, name, password
 
 
-def user_creation():
+def user_creation(num_users_):
     # count how many users are in database. if it is already populated don't add any more.
     user_count = FlicketUser.query.count()
-    if user_count == num_users:
+    if user_count >= num_users_:
         print('Number of users already satisfied.')
         return
+    else:
+        num_users_ = num_users_ - user_count
 
-    for i in range(user_count, num_users):
+    for i in range(user_count, num_users_):
 
         username, name, password = create_random_user()
 
@@ -129,14 +114,16 @@ def user_creation():
     print("")
 
 
-def topic_creation():
+def topic_creation(num_topics_):
     # if the number of topics is already satisfied don't add any more.
     topic_count = FlicketTicket.query.count()
-    if topic_count == num_topics:
+    if topic_count >= num_topics_:
         print('Topic number already satisfied')
         return
+    else:
+        num_topics_ = num_topics_ - topic_count
 
-    for i in range(topic_count, num_topics):
+    for i in range(topic_count, num_topics_):
 
         t = Text()
 
@@ -168,5 +155,30 @@ def topic_creation():
 
 
 if __name__ == '__main__':
-    user_creation()
-    topic_creation()
+
+    # Check to see if set-up has been run.
+    query = FlicketUser.query.filter_by(username=admin)
+    if query.count() != 1:
+        print('Setup has not yet been run! You should do `python manage.py run_set_up`.')
+        exit()
+
+    mismatch = True
+    while mismatch is True:
+        print('When population with junk users will be added with '
+              '<your_email_username>+<random_username>@<email_domain>.')
+        base_email = input('Please enter your email for testing > ')
+        base_email_confirm = input('Please confirm your email > ')
+        if base_email == base_email_confirm:
+            mismatch = False
+        else:
+            print('Your email address did not match. Please try again.')
+
+    print('Please enter number of topics you would like to add.')
+    num_topics = int(input('Topics: '))
+    print('Please enter number of max. number of random replies to each topic.')
+    num_replies = int(input('Replies: '))
+    print('Please enter number of users you would like to add.')
+    num_users = int(input('Users: '))
+
+    user_creation(num_users)
+    topic_creation(num_topics)
