@@ -1,12 +1,12 @@
-<!-- extend from base layout -->
 {% extends "flicket_base.html" %}
+<!-- extend from base layout -->
 {% block content %}
 <div class="container">
 
     <!-- flicket ticket details -->
     <div class="row flicket-row-title-main">
         <div class="col-sm-9">
-            <div class="flicket-ticket-cell flicket-ticket-title-title">
+            <div class="flicket-ticket-cell flicket-ticket-title-title" id="ticket-number-title">
                 #{{ ticket.id_zfill }} - {{ ticket.title }}
             </div>
         </div>
