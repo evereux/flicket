@@ -36,7 +36,7 @@ class FlicketStatus(PaginatedAPIMixin, Base):
 
     def to_dict(self):
         """
-        Returns a dictionary object about the department
+        Returns a dictionary object about the status
         :return:
         """
         data = {
@@ -95,7 +95,7 @@ class FlicketCategory(PaginatedAPIMixin, Base):
 
     def to_dict(self):
         """
-        Returns a dictionary object about the department
+        Returns a dictionary object about the category
         :return:
         """
         data = {
