@@ -36,7 +36,7 @@ class FlicketStatus(PaginatedAPIMixin, Base):
 
     def to_dict(self):
         """
-        Returns a dictionary object about the department
+        Returns a dictionary object about the status
         :return:
         """
         data = {
@@ -110,7 +110,7 @@ class FlicketCategory(PaginatedAPIMixin, Base):
 
     def to_dict(self):
         """
-        Returns a dictionary object about the department
+        Returns a dictionary object about the category and its department
         :return:
         """
         data = {
@@ -369,7 +369,7 @@ class FlicketSubscription(Base):
     user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
 
     def __repr__(self):
-        return '<Class FlicketSubscription: ticket_id={}, user_id={}>'
+        return '<Class FlicketSubscription: ticket_id={}, user_id={}>'.format(self.ticket_id, self.user_id)
 
 
 class FlicketAction(Base):
