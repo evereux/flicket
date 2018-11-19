@@ -37,7 +37,7 @@ Best practise is to set-up a virtual environment. Once done run `pip install -r 
     ```
     or on windows
     ```
-    (my-env) C:\path_to_project> prython scripts\create_json.py
+    (my-env) C:\path_to_project> python scripts\create_json.py
     ```
 4. Initialise the database using manage.py from the command line:
     ```
