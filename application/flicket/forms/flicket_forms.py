@@ -165,6 +165,11 @@ class SearchUserForm(FlaskForm):
     submit = SubmitField('search user', render_kw=form_class_button)
 
 
+class AssignUserForm(SearchUserForm):
+    """ Search user. """
+    submit = SubmitField('assign user', render_kw=form_class_button)
+
+
 class DepartmentForm(FlaskForm):
     """ Department form. """
     department = StringField('Department', validators=[DataRequired(), Length(min=field_size['department_min_length'],
