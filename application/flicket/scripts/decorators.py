@@ -6,7 +6,7 @@
 from threading import Thread
 
 
-def async(f):
+def send_async_email(f):
     """
     Threading function blatantly copied from https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xi
     -email-support

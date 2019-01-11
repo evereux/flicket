@@ -8,7 +8,7 @@ from flask_mail import Mail, Message
 
 from application import app
 from application.flicket.models.flicket_models import FlicketPost
-from application.flicket.scripts.decorators import async
+from application.flicket.scripts.decorators import send_async_email
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
 
@@ -105,7 +105,7 @@ class FlicketMail:
 
         self.send_email(title, self.sender, recipients, html_body)
 
-    @async
+    @send_async_email
     def send_email(self, subject, sender, recipients, html_body):
         """
         Sends email via async thread.
