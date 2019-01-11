@@ -54,12 +54,13 @@ Best practise is to set-up a virtual environment. Once done run `pip install -r 
     ```
     (my-env) $ python manage.py runserver
     ```
+    Log into the server using the username `admin` and the password
+    defined during the setup process.
     
 # Production Environment
-The following changes should be made for a production environment:
 
-* `manage.py` set the debugger and reloader variables to False and change the host IP (if required). Example: `
-manager.add_command('runserver', Server(host="0.0.0.0", port=5000, use_reloader=False, use_debugger=False))`
+To serve Flicket within a production environment webservers such as Apache
+or nginx are typically used.
 
 # Exporting / Importing Flicket Users
 ## Exporting
