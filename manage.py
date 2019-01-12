@@ -19,7 +19,7 @@ manager.add_command('export_users', ExportUsersToJson)
 manager.add_command('import_users', ImportUsersFromJson)
 manager.add_command('update_user_posts', TotalUserPosts)
 manager.add_command('update_user_assigned', TotalUserAssigned)
-manager.add_command('runserver', Server(host="0.0.0.0", port=5000, use_reloader=True, use_debugger=True))
+manager.add_command('runserver', Server(host="127.0.0.1", port=5000, use_reloader=True, use_debugger=True))
 
 if __name__ == '__main__':
     manager.run()
