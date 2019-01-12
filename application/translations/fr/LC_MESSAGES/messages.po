@@ -65,7 +65,7 @@ msgstr ""
 #: application/flicket/templates/flicket_tickets.html:89
 #: application/flicket/templates/flicket_view.html:30
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: application/flicket/templates/email_include_details.html:7
 #: application/flicket/templates/flicket_tickets.html:71
@@ -193,7 +193,7 @@ msgstr ""
 
 #: application/flicket/templates/flicket_index.html:5
 msgid "Stats"
-msgstr ""
+msgstr "Statistiques"
 
 #: application/flicket/templates/flicket_index.html:6
 msgid "Overall"

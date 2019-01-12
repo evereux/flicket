@@ -86,7 +86,7 @@ Flicket now supports additional languages through the use of Flask Babel.
 To add an additional local:
 
 * Edit `SUPPORTED_LANGUAGES` in `config.py` and add an additional entry
-to the dictionary. For example `{'en': 'English', 'fr': 'Francais', 'de': 'German'}
+to the dictionary. For example: `{'en': 'English', 'fr': 'Francais', 'de': 'German'}
 
 *  Whilst in the project root directory you now need to initialise
 the new language to generate a template file for it. `pybabel init -i messages.pot -d application\translations -l de`
