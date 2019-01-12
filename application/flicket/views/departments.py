@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import flash, redirect, url_for, render_template
+from flask_babel import gettext
 from flask_login import login_required
 
 from . import flicket_bp
@@ -26,13 +27,15 @@ def departments(page=1):
         add_department = FlicketDepartment(department=form.department.data)
         db.session.add(add_department)
         db.session.commit()
-        flash('New department "{}" added.'.format(form.department.data))
+        flash(gettext('New department "%(value)s" added.', value=form.department.data))
         return redirect(url_for('flicket_bp.departments'))
 
     _departments = query.paginate(page, app.config['posts_per_page'])
 
+    title = gettext('Flicket - Departments')
+
     return render_template('flicket_departments.html',
-                           title='Flicket - Departments',
+                           title=title,
                            form=form,
                            page=page,
                            departments=_departments)
@@ -49,7 +52,7 @@ def department_edit(department_id=False):
         if form.validate_on_submit():
             query.department = form.department.data
             db.session.commit()
-            flash('Department "{}" edited.'.format(form.department.data))
+            flash(gettext('Department "%(value)s" edited.', value=form.department.data))
             return redirect(url_for('flicket_bp.departments'))
 
         form.department.data = query.department

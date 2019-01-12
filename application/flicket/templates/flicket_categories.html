@@ -33,18 +33,18 @@
 
         </form>
 
-        <h2>Existing Categories</h2>
+        <h2>{{ _('Existing Categories') }}</h2>
 
         <table class="table table-bordered">
             <tr>
                 <th>
-                    Category
+                    {{ _('Category') }}
                 </th>
             </tr>
             {% for c in categories %}
                 <tr>
                     <td>
-                        {{ c.category }}&nbsp;&nbsp;<span class="small"><a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}">edit</a></span>
+                        {{ c.category }}&nbsp;&nbsp;<span class="small"><a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}">{{ _('edit') }}</a></span>
                     </td>
                 </tr>
             {% endfor %}

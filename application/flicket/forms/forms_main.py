@@ -8,11 +8,13 @@ from flask import g
 from flask_wtf import FlaskForm
 from wtforms import (PasswordField,
                      StringField,
-                     FileField)
+                     FileField,
+                     SelectField)
 from wtforms.validators import (DataRequired,
                                 Length,
                                 EqualTo)
 
+from application import app
 from application.flicket.models.flicket_user import (FlicketUser,
                                                      user_field_size)
 
@@ -115,6 +117,11 @@ class CheckPasswordCorrect:
 
 
 class EditUserForm(FlaskForm):
+
+    def __init__(self, *args, **kwargs):
+        form = super(EditUserForm, self).__init__(*args, **kwargs)
+        self.locale.choices = [(_id, lang) for _id, lang in app.config['SUPPORTED_LANGUAGES'].items()]
+
     username = StringField('username')
     name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
     email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
@@ -131,6 +138,7 @@ class EditUserForm(FlaskForm):
                                              ])
     confirm = PasswordField('Repeat Password')
     job_title = StringField('job_title', validators=[Length(max=user_field_size['job_title'])])
+    locale = SelectField('Locale', validators=[DataRequired()],)
 
 
 class ConfirmPassword(FlaskForm):

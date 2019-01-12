@@ -8,7 +8,7 @@
         <h1>{{ title }}</h1>
         <h2 class="flicket-title">#{{ ticket.id_zfill }} - {{ ticket.title }}</h2>
         <p>
-            Type name and pick from drop down list to. For a complete list of <a href="{{ url_for('flicket_bp.flicket_users') }}" target="_blank">users</a>.
+            {{ _('Type name and pick from drop down list to. For a complete list of') }} <a href="{{ url_for('flicket_bp.flicket_users') }}" target="_blank">users</a>.
         </p>
         <form action=""
               class="form-horizontal"

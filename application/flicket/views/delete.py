@@ -6,6 +6,7 @@
 import os
 
 from flask import flash, g, redirect, url_for, render_template
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, db
@@ -25,7 +26,7 @@ from . import flicket_bp
 def delete_ticket(ticket_id):
     # check is user is authorised to delete tickets. Currently, only admins can delete tickets.
     if not g.user.is_admin:
-        flash('You are not authorised to delete tickets.', category='warning')
+        flash(gettext('You are not authorised to delete tickets.'), category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     form = ConfirmPassword()
@@ -57,7 +58,7 @@ def delete_ticket(ticket_id):
 
         # commit changes
         db.session.commit()
-        flash('Ticket deleted.', category='success')
+        flash(gettext('Ticket deleted.'), category='success')
         return redirect(url_for('flicket_bp.tickets'))
 
     return render_template('flicket_deletetopic.html',
@@ -72,7 +73,7 @@ def delete_ticket(ticket_id):
 def delete_post(post_id):
     # check user is authorised to delete posts. Only admin can do this.
     if not g.user.is_admin:
-        flash('You are not authorised to delete posts', category='warning')
+        flash(gettext('You are not authorised to delete posts'), category='warning')
 
     form = ConfirmPassword()
 
@@ -91,13 +92,15 @@ def delete_post(post_id):
         db.session.delete(post)
         # commit changes
         db.session.commit()
-        flash('Ticket deleted.', category='success')
+        flash(gettext('Ticket deleted.'), category='success')
         return redirect(url_for('flicket_bp.tickets'))
+
+    title = gettext('Flicket - Delete Post')
 
     return render_template('flicket_deletepost.html',
                            form=form,
                            post=post,
-                           title='Flicket - Delete post')
+                           title=title)
 
 
 # delete category
@@ -108,7 +111,7 @@ def delete_category(category_id=False):
 
         # check user is authorised to delete categories. Only admin can do this.
         if not g.user.is_admin:
-            flash('You are not authorised to delete categories.', category='warning')
+            flash(gettext('You are not authorised to delete categories.'), category='warning')
 
         form = ConfirmPassword()
 
@@ -118,8 +121,8 @@ def delete_category(category_id=False):
         # stop the deletion of categories assigned to tickets.
         if categories.count() > 0:
             flash(
-                'Category is linked to posts. Category can not be deleted unless all posts / topics are removed / '
-                'relinked.',
+                gettext(
+                    'Category is linked to posts. Category can not be deleted unless all posts / topics are removed / relinked.'),
                 category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
@@ -135,13 +138,15 @@ def delete_category(category_id=False):
 
         notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
                        "to department <span class=\"label label-default\">{}</span>.".format(
-                                                                        category.category,
-                                                                        category.department.department)
+            category.category,
+            category.department.department)
+
+        title = gettext('Flicket - Delete Category')
 
         return render_template('flicket_delete.html',
                                form=form,
                                notification=notification,
-                               title='Flicket - Delete')
+                               title=title)
 
 
 # delete department
@@ -152,7 +157,7 @@ def delete_department(department_id=False):
 
         # check user is authorised to delete departments. Only admin can do this.
         if not g.user.is_admin:
-            flash('You are not authorised to delete departments.', category='warning')
+            flash(gettext('You are not authorised to delete departments.'), category='warning')
 
         form = ConfirmPassword()
 
@@ -162,10 +167,9 @@ def delete_department(department_id=False):
 
         # we can't delete any departments associated with categories.
         if departments.count() > 0:
-            flash(
-                'Department has categories linked to it. Department can not be deleted unless all categories are '
-                'first removed.',
-                category="danger")
+            flash(gettext(
+                'Department has categories linked to it. Department can not be deleted unless all categories are first removed.'),
+                  category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
         if form.validate_on_submit():
@@ -178,10 +182,12 @@ def delete_department(department_id=False):
             flash('Department "{}" deleted.'.format(department.department), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
-        notification = "You are trying to delete department <span class=\"label label-default\">{}</span>.".format(
-            department.department)
+        notification = gettext("You are trying to delete department <span class=\"label label-default\">%(value)s</span>.",
+                               value=department.department)
+
+        title = gettext('Flicket - Delete Department')
 
         return render_template('flicket_delete.html',
                                form=form,
                                notification=notification,
-                               title='Flicket - Delete')
+                               title=title)

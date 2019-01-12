@@ -3,17 +3,17 @@
 {% block content %}
 
 <div class="container">
-    <h1>Administration</h1>
+    <h1>{{ _('Administration') }}</h1>
     {% include 'admin_menu.html' %}
     <h2>{{ title }}</h2>
 
     <p>
-        Click on group name to edit.
+        {{ _('Click on group name to edit.') }}
     </p>
     <table class="table table-striped table-width-400">
         <tr>
-            <th>Group Name</th>
-            <th>Delete</th>
+            <th>{{ _('Group Name') }}</th>
+            <th>{{ _('Delete') }}</th>
         </tr>
         {% for g in groups %}
         <tr>
@@ -21,21 +21,21 @@
                 <a href="{{ url_for('admin_bp.admin_edit_group', id=g.id) }}">{{ g.group_name }}</a>
             </td>
             <td>
-                <a href="{{ url_for('admin_bp.admin_delete_group', id=g.id) }}">delete</a>
+                <a href="{{ url_for('admin_bp.admin_delete_group', id=g.id) }}">{{ _('delete') }}</a>
             </td>
         </tr>
         {% endfor %}
     </table>
     <hr/>
-    <h2>Add Group</h2>
+    <h2>{{ _('Add Group') }}</h2>
     <form action="" method="post" name="add_group">
         {{ form.hidden_tag() }}
         <p>
-            Please enter group name.
+            {{ _('Please enter group name.') }}
         </p>
         <table class="table table-width-400">
             <tr>
-                <th>Group Name</th>
+                <th>{{ _('Group Name') }}</th>
                 <td>{{ form.group_name(size=(24)) }}</td>
                 <td>
                     {% if form.group_name.errors %}

@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import redirect, url_for, flash, g
+from flask_babel import gettext
 from flask_login import login_required
 
 from . import flicket_bp
@@ -24,12 +25,12 @@ def release(ticket_id=False):
 
         # is ticket assigned.
         if not ticket.assigned:
-            flash('Ticket has not been assigned')
+            flash(gettext('Ticket has not been assigned'))
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
         # check ticket is owned by user or user is admin
         if (ticket.assigned.id != g.user.id) and (not g.user.is_admin):
-            flash('You can not release a ticket you are not working on.')
+            flash(gettext('You can not release a ticket you are not working on.'))
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
         # set status to open
@@ -48,7 +49,7 @@ def release(ticket_id=False):
         f_mail = FlicketMail()
         f_mail.release_ticket(ticket)
 
-        flash('You released ticket: {}'.format(ticket.id))
+        flash(gettext('You released ticket: %(value)s', value=ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     return redirect(url_for('flicket_bp.tickets'))

@@ -5,6 +5,7 @@
 
 from flask import flash, redirect, url_for, render_template
 from flask_login import login_required
+from flask_babel import gettext
 
 from . import flicket_bp
 from application import app, db
@@ -26,11 +27,13 @@ def categories(department_id=False):
         add_category = FlicketCategory(category=form.category.data, department=department)
         db.session.add(add_category)
         db.session.commit()
-        flash('New category {} added.'.format(form.category.data))
+        flash(gettext('New category %(value)s added.', value=form.category.data))
         return redirect(url_for('flicket_bp.categories', department_id=department_id))
 
+    title = gettext('Categories')
+
     return render_template('flicket_categories.html',
-                           title='Categories',
+                           title=title,
                            form=form,
                            categories=categories,
                            department=department)
@@ -53,8 +56,10 @@ def category_edit(category_id=False):
 
         form.category.data = category.category
 
+        title = gettext('Edit Category')
+
         return render_template('flicket_category_edit.html',
-                               title='Edit Category',
+                               title=title,
                                form=form,
                                category=category,
                                department=category.department.department

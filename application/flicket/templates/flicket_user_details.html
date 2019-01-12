@@ -13,22 +13,22 @@
                 {% endif %}
             </dd>
 
-            <dt class="col-sm-2">Username</dt>
+            <dt class="col-sm-2">{{ _('Username') }}</dt>
             <dd>{{ user.username }}</dd>
 
-            <dt class="col-sm-2">Email</dt>
+            <dt class="col-sm-2">{{ _('Email') }}</dt>
             <dd><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
 
-            <dt class="col-sm-2">Date Joined</dt>
+            <dt class="col-sm-2">{{ _('Date Joined') }}</dt>
             <dd>{{ user.date_added }}</dd>
 
-            <dt class="col-sm-2">Job Title</dt>
+            <dt class="col-sm-2">{{ _('Job Title') }}</dt>
             <dd>{{ user.job_title }}</dd>
 
-            <dt class="col-sm-2">Number Of Posts</dt>
+            <dt class="col-sm-2">{{ _('Number Of Posts') }}</dt>
             <dd>{{ user.total_posts }}</dd>
 
-            <dt class="col-sm-2">Number Assigned</dt>
+            <dt class="col-sm-2">{{ _('Number Assigned') }}</dt>
             <dd>{{ user.total_assigned }}</dd>
 
         </dl>

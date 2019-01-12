@@ -14,14 +14,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('flicket_bp.my_tickets') }}">My Tickets</a></li>
-                <li><a href="{{ url_for('flicket_bp.tickets') }}">Tickets</a></li>
-                <li><a href="{{ url_for('flicket_bp.ticket_create') }}">Create Ticket</a></li>
-                <li><a href="{{ url_for('flicket_bp.departments') }}">Departments</a></li>
-                <li><a href="{{ url_for('flicket_bp.flicket_users') }}">Users</a></li>
-                <li><a href="{{ url_for('flicket_bp.faq') }}">FAQ</a></li>
+                <li><a href="{{ url_for('flicket_bp.my_tickets') }}">{{ _('My Tickets') }}</a></li>
+                <li><a href="{{ url_for('flicket_bp.tickets') }}">{{ _('Tickets') }}</a></li>
+                <li><a href="{{ url_for('flicket_bp.ticket_create') }}">{{ _('Create Ticket') }}</a></li>
+                <li><a href="{{ url_for('flicket_bp.departments') }}">{{ _('Departments') }}</a></li>
+                <li><a href="{{ url_for('flicket_bp.flicket_users') }}">{{ _('Users') }}</a></li>
+                <li><a href="{{ url_for('flicket_bp.faq') }}">{{ _('FAQ') }}</a></li>
                 {% if g.user.is_admin %}
-                <li><a href="{{ url_for('admin_bp.index') }}">Admin View</a></li>
+                <li><a href="{{ url_for('admin_bp.index') }}">{{ _('Admin View') }}</a></li>
                 {% endif %}
             </ul>
 
@@ -33,9 +33,9 @@
                             class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href=" {{ url_for('flicket_bp.user_details') }} "><span
-                                class="glyphicon glyphicon-user" aria-hidden="true"></span> User Details</a></li>
+                                class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ _('User Details') }}</a></li>
                         <li><a href="{{ url_for('flicket_bp.logout') }}"><span
-                                class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log Out</a></li>
+                                class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;{{ _('Log Out') }}</a></li>
                     </ul>
                 </li>
 
@@ -43,7 +43,7 @@
 
                 <li>
                     <a href="{{ url_for('flicket_bp.login') }}"><span class="glyphicon glyphicon-log-in"
-                                                                      aria-hidden="true"></span> Log In</a>
+                                                                      aria-hidden="true"></span> {{ _('Log In') }}</a>
                 </li>
                 {%- endif -%}
 

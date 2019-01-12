@@ -5,9 +5,17 @@
 
 import bcrypt
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectMultipleField, PasswordField, HiddenField, SubmitField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms import (StringField,
+                     SelectMultipleField,
+                     PasswordField,
+                     HiddenField,
+                     SelectField,
+                     SubmitField)
+from wtforms.validators import (DataRequired,
+                                Length,
+                                EqualTo)
 
+from application import app
 from application.flicket.scripts.functions_login import check_email_format
 from application.flicket.models.flicket_user import (FlicketGroup,
                                                      FlicketUser,
@@ -124,6 +132,11 @@ def check_email(form, field):
 
 class AddUserForm(FlaskForm):
     """ Register user form. """
+
+    def __init__(self, *args, **kwargs):
+        form = super(AddUserForm, self).__init__(*args, **kwargs)
+        self.locale.choices = [(_id, lang) for _id, lang in app.config['SUPPORTED_LANGUAGES'].items()]
+
     username = StringField('username',
                            validators=[Length(min=user_field_size['username_min'], max=user_field_size['username_max']),
                                        does_username_exist])
@@ -137,6 +150,7 @@ class AddUserForm(FlaskForm):
         check_password_formatting, Length(min=user_field_size['password_min'], max=user_field_size['password_max'])
     ])
     confirm = PasswordField('Repeat Password')
+    locale = SelectField('Locale', validators=[DataRequired()], )
     submit = SubmitField('add_user')
 
 

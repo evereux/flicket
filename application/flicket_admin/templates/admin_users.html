@@ -2,11 +2,11 @@
 {% extends "flicket_base.html" %}
 {% block content %}
     <div class="container">
-        <h1>Administration</h1>
+        <h1>{{ _('Administration') }}</h1>
         {% include 'admin_menu.html' %}
         <h2>{{ title }}</h2>
         <p>
-            Click on username to edit.
+            {{ _('Click on username to edit.') }}
         </p>
         <ul class="pagination pagination-sm">{% for page in users.iter_pages() %}
             {% if page %}
@@ -25,11 +25,11 @@
         </ul>
         <table class="table table-striped">
             <tr>
-                <th>Username</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Job Title</th>
-                <th>Delete User</th>
+                <th>{{ _('Username') }}</th>
+                <th>{{ _('Name') }}</th>
+                <th>{{ _('Email') }}</th>
+                <th>{{ _('Job Title') }}</th>
+                <th>{{ _('Delete User') }}</th>
             </tr>
             {% for u in users.items %}
                 <tr>
@@ -37,7 +37,7 @@
                     <td>{{ u.name }}</td>
                     <td>{{ u.email }}</td>
                     <td>{{ u.job_title }}</td>
-                    <td><a href="{{ url_for('admin_bp.delete_user', id=u.id) }}">delete
+                    <td><a href="{{ url_for('admin_bp.delete_user', id=u.id) }}">{{ _('delete') }}
                         {{ u.username }}</a></td>
                 </tr>
             {% endfor %}

@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import redirect, url_for, g, flash
+from flask_babel import gettext
 from flask_login import login_required
 
 from . import flicket_bp
@@ -30,13 +31,13 @@ def change_status(ticket_id, status):
         edit = True
 
     if not edit:
-        flash('Only the person to which the ticket has been assigned, creator or Admin can close this ticket.',
+        flash(gettext('Only the person to which the ticket has been assigned, creator or Admin can close this ticket.'),
               category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # Check to see if the ticket is already closed.
     if ticket.current_status.status == 'Closed':
-        flash('Ticket is already closed.', category='warning')
+        flash(gettext('Ticket is already closed.'), category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     f_mail = FlicketMail()
@@ -49,6 +50,6 @@ def change_status(ticket_id, status):
     ticket.assigned_id = None
     db.session.commit()
 
-    flash('Ticket {} closed.'.format(str(ticket_id).zfill(5)), category='success')
+    flash(gettext('Ticket %(value)s closed.', value=str(ticket_id).zfill(5)), category='success')
 
     return redirect(url_for('flicket_bp.tickets'))

@@ -47,6 +47,7 @@ def user_details():
         user.name = form.name.data
         user.email = form.email.data
         user.job_title = form.job_title.data
+        user.locale = form.locale.data
 
         if avatar_filename:
             user.avatar = avatar_filename
@@ -67,5 +68,6 @@ def user_details():
     form.email.data = g.user.email
     form.username.data = g.user.username
     form.job_title.data = g.user.job_title
+    form.locale.data = g.user.locale
 
     return render_template('flicket_edituser.html', form=form, title='Edit User Details')

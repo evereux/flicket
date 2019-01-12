@@ -11,6 +11,7 @@ from flask import (flash,
                    render_template,
                    request,
                    url_for)
+from flask_babel import gettext
 from flask_login import current_user, login_required
 from flask_principal import Permission, Principal, RoleNeed, identity_loaded, UserNeed
 
@@ -75,10 +76,13 @@ def add_user():
                                name=form.name.data,
                                password=password,
                                job_title=form.job_title.data,
-                               date_added=datetime.datetime.now())
+                               date_added=datetime.datetime.now(),
+                               locale=form.locale.data)
+        print(form.locale.data)
         db.session.add(register)
         db.session.commit()
-        flash('You have successfully registered new user "{}".'.format(form.username.data), category='success')
+        flash(gettext('You have successfully registered new user "%(value)s".', value=form.username.data),
+              category='success')
         return redirect(url_for('admin_bp.users'))
     return render_template('admin_user.html', title='Add User', form=form)
 
@@ -97,7 +101,7 @@ def edit_user():
             if user.username != form.username.data:
                 query = FlicketUser.query.filter_by(username=form.username.data)
                 if query.count() > 0:
-                    flash('Username already exists')
+                    flash(gettext('Username already exists'))
                 else:
                     # change the username.
                     user.username = form.username.data
@@ -119,7 +123,7 @@ def edit_user():
                 group_id = FlicketGroup.query.filter_by(id=g).first()
                 group_id.users.append(user)
             db.session.commit()
-            flash("User {} edited.".format(user.username))
+            flash(gettext("User %(value)s edited.", value=user.username))
             return redirect(url_for('admin_bp.users'))
 
         # populate form with form data retrieved from database.
@@ -134,7 +138,7 @@ def edit_user():
             groups.append(g.id)
         form.groups.data = groups
     else:
-        flash("Could not find user.")
+        flash(gettext("Could not find user."))
         return redirect(url_for('admin_bp.index'))
 
     return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True,
@@ -152,12 +156,12 @@ def delete_user():
 
     # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':
-        flash('Can\'t delete default flicket_admin user.')
+        flash(gettext('Can\'t delete default flicket_admin user.'))
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the user.
-        flash('Deleted user {}'.format(user_details.username))
+        flash(gettext('Deleted user %(value)s', value=user_details.username))
         db.session.delete(user_details)
         db.session.commit()
         return redirect(url_for('admin_bp.users'))
@@ -180,7 +184,7 @@ def groups():
         )
         db.session.add(add_group)
         db.session.commit()
-        flash('New group "{}" added.'.format(form.group_name.data))
+        flash(gettext('New group "%(value)s" added.', value=form.group_name.data))
         return redirect(url_for('admin_bp.groups'))
 
     return render_template('admin_groups.html', title='Groups', form=form, groups=groups)
@@ -197,12 +201,12 @@ def admin_edit_group():
 
     # if group can't be found in database.
     if not group:
-        flash('Could not find group {}'.format(group.group_name))
+        flash(gettext('Could not find group %(value)s', value=group.group_name))
         return redirect(url_for('admin_bp.index'))
 
     # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
     if group.group_name == app.config['ADMIN_GROUP_NAME']:
-        flash('Can\'t edit group {}'.format(app.config['ADMIN_GROUP_NAME']))
+        flash(gettext('Can\'t edit group %(value)s', value=app.config['ADMIN_GROUP_NAME']), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
@@ -225,16 +229,17 @@ def admin_delete_group():
 
     # we won't ever delete the flicket_admin group (id = 1)
     if id == '1':
-        flash('Can\'t delete default flicket_admin group.')
+        flash(gettext('Can\'t delete default flicket_admin group.'))
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the group.
-        flash('Deleted group {}'.format(group_details.group_name))
+        flash(gettext('Deleted group %(value)s', value=group_details.group_name))
         db.session.delete(group_details)
         db.session.commit()
         return redirect(url_for('admin_bp.groups'))
     # populate form with logged in user details
     form.id.data = g.user.id
-    return render_template('admin_delete_group.html', title='Delete Group',
+    title = gettext('Delete Group')
+    return render_template('admin_delete_group.html', title=title,
                            group_details=group_details, form=form)

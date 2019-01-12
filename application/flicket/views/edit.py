@@ -7,6 +7,7 @@ import datetime
 import os
 
 from flask import redirect, url_for, flash, render_template, g, request
+from flask_babel import gettext
 from flask_login import login_required
 
 from . import flicket_bp
@@ -30,7 +31,7 @@ def edit_ticket(ticket_id):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
     if not ticket:
-        flash('Could not find ticket.', category='warning')
+        flash(gettext('Could not find ticket.'), category='warning')
         return redirect(url_for('flicket_bp.flicket_main'))
 
     # check to see if topic is closed. ticket can't be edited once it's closed.
@@ -43,7 +44,7 @@ def edit_ticket(ticket_id):
         not_authorised = False
 
     if not_authorised:
-        flash('You are not authorised to edit this ticket.', category='warning')
+        flash(gettext('You are not authorised to edit this ticket.'), category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
@@ -68,8 +69,10 @@ def edit_ticket(ticket_id):
     form.title.data = ticket.title
     form.category.data = ticket.category_id
 
+    title = gettext('Flicket - Edit Ticket')
+
     return render_template('flicket_edittopic.html',
-                           title='Flicket - Edit Ticket',
+                           title=title,
                            form=form)
 
 

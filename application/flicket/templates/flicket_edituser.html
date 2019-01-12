@@ -58,6 +58,7 @@
                 {% endfor %}
             </div>
             {% endif %}
+
             <div class="form-group form-group-sm">
                 <label class="col-sm-3 control-label">{{ form.job_title.label }}</label>
                 <div class="col-sm-9">
@@ -72,7 +73,21 @@
             </div>
             {% endif %}
 
-            <div class="form-group">
+            <div class="form-group form-group-sm">
+                <label class="col-sm-3 control-label">{{ form.locale.label }}</label>
+                <div class="col-sm-9">
+                    {{ form.locale(class="form-control") }}
+                </div>
+            </div>
+            {% if form.locale.errors %}̉̉̉̉̉̉̉
+            <div class="alert alert-warning small">
+                {% for error in form.locale.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group form-group-sm">
                 <label class="col-sm-3 control-label">{{ form.avatar.label }}</label>
                 <div class="col-sm-3">
                     {{ form.avatar }}

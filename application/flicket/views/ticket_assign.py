@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import redirect, url_for, flash, g, render_template
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, db
@@ -23,7 +24,7 @@ def ticket_assign(ticket_id=False):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).one()
 
     if ticket.current_status.status == 'Closed':
-        flash("Can't assign a closed ticket.")
+        flash(gettext("Can't assign a closed ticket."))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
@@ -31,7 +32,7 @@ def ticket_assign(ticket_id=False):
         user = FlicketUser.query.filter_by(username=form.username.data).first()
 
         if ticket.assigned == user:
-            flash('User is already assigned to ticket.')
+            flash(gettext('User is already assigned to ticket.'))
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
         # set status to in work
@@ -59,7 +60,9 @@ def ticket_assign(ticket_id=False):
         f_mail = FlicketMail()
         f_mail.assign_ticket(ticket)
 
-        flash('You reassigned ticket:{}'.format(ticket.id))
+        flash(gettext('You reassigned ticket: %(value)s', value=ticket.id))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-    return render_template("flicket_assign.html", title="Assign Ticket", form=form, ticket=ticket)
+    title = gettext('Assign Ticket')
+
+    return render_template("flicket_assign.html", title=title, form=form, ticket=ticket)

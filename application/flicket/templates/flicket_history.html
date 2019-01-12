@@ -4,17 +4,17 @@
     <div class="container">
         <h1>{{ title }}</h1>
         <p>
-            This page shows history of edits for a given post.
+            {{ _('This page shows history of edits for a given post.') }}
         </p>
         <h2><a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">#{{ ticket.id_zfill }} | {{ ticket.title }}</a></h2>
         <dl>
             {% if history %}
             {% for h in history %}
-            <dt>{{ h.user.name }} orignally wrote on {{ h.date_modified }}</dt>
+            <dt>{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</dt>
             <dd>{{ show_markdown(h.original_content)|safe }}</dd>
             {% endfor %}
             {% else %}
-            <dd>No changes have been made to the post content.</dd>
+            <dd>{{ _('No changes have been made to the post content.') }}</dd>
             {% endif %}
         </dl>
     </div>

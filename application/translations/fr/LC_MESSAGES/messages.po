@@ -1,0 +1,475 @@
+# French translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-01-12 17:37+0000\n"
+"PO-Revision-Date: 2019-01-12 17:34+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: application/flicket/templates/403.html:5
+msgid "403 Error - Forbidden"
+msgstr ""
+
+#: application/flicket/templates/403.html:6
+msgid "Sorry, you don't have permission to access this resource."
+msgstr ""
+
+#: application/flicket/templates/404.html:5
+msgid "404 Error - File Not Found"
+msgstr ""
+
+#: application/flicket/templates/404.html:6
+#: application/flicket/templates/500.html:14
+msgid "Back"
+msgstr ""
+
+#: application/flicket/templates/500.html:5
+msgid "An unexpected error has occurred"
+msgstr ""
+
+#: application/flicket/templates/500.html:7
+msgid ""
+"Please report this error to your administrator. Please provide the "
+"following details:"
+msgstr ""
+
+#: application/flicket/templates/500.html:10
+msgid "Page you were navigating."
+msgstr ""
+
+#: application/flicket/templates/500.html:11
+msgid "Time you saw this error."
+msgstr ""
+
+#: application/flicket/templates/500.html:12
+msgid "Any other information that may help reproduce the error."
+msgstr ""
+
+#: application/flicket/templates/__empty__.html:1
+msgid "It appears your view request url was incomplete."
+msgstr ""
+
+#: application/flicket/templates/email_include_details.html:3
+#: application/flicket/templates/flicket_tickets.html:89
+#: application/flicket/templates/flicket_view.html:30
+msgid "Status"
+msgstr ""
+
+#: application/flicket/templates/email_include_details.html:7
+#: application/flicket/templates/flicket_tickets.html:71
+#: application/flicket/templates/flicket_view.html:34
+msgid "Priority"
+msgstr ""
+
+#: application/flicket/templates/email_include_details.html:11
+#: application/flicket/templates/flicket_tickets.html:92
+#: application/flicket/templates/flicket_users.html:74
+#: application/flicket/templates/flicket_view.html:38
+msgid "Assigned"
+msgstr ""
+
+#: application/flicket/templates/email_include_details.html:15
+#: application/flicket/templates/email_ticket_create.html:11
+#: application/flicket/templates/flicket_include_ticket.html:28
+msgid "Content"
+msgstr ""
+
+#: application/flicket/templates/email_ticket_assign.html:8
+msgid "has been assigned to ticket:"
+msgstr ""
+
+#: application/flicket/templates/email_ticket_close.html:8
+msgid "Ticket has been closed:"
+msgstr ""
+
+#: application/flicket/templates/email_ticket_create.html:8
+msgid "You have successfully created a new ticket:"
+msgstr ""
+
+#: application/flicket/templates/email_ticket_release.html:8
+msgid ""
+"Ticket has been released. Ticket is now no longer assigned to anyone. "
+"Ticket:"
+msgstr ""
+
+#: application/flicket/templates/email_ticket_replies.html:9
+msgid "There are new replies to ticket:"
+msgstr ""
+
+#: application/flicket/templates/flicket_assign.html:11
+msgid "Type name and pick from drop down list to. For a complete list of"
+msgstr ""
+
+#: application/flicket/templates/flicket_base.html:35
+msgid "a simple ticket system"
+msgstr ""
+
+#: application/flicket/templates/flicket_categories.html:36
+msgid "Existing Categories"
+msgstr ""
+
+#: application/flicket/templates/flicket_categories.html:41
+#: application/flicket/templates/flicket_category_edit.html:17
+#: application/flicket/templates/flicket_include_ticket.html:48
+#: application/flicket/templates/flicket_tickets.html:86
+#: application/flicket/templates/flicket_view.html:26
+msgid "Category"
+msgstr ""
+
+#: application/flicket/templates/flicket_categories.html:47
+msgid "edit"
+msgstr ""
+
+#: application/flicket/templates/flicket_delete.html:14
+#: application/flicket/templates/flicket_deletepost.html:15
+#: application/flicket/templates/flicket_deletetopic.html:14
+#: application/flicket/templates/login.html:30
+msgid "Password"
+msgstr ""
+
+#: application/flicket/templates/flicket_department_edit.html:16
+#: application/flicket/templates/flicket_view.html:22
+msgid "Department"
+msgstr ""
+
+#: application/flicket/templates/flicket_departments.html:6
+msgid ""
+"If you require new departments and / or categories added / deleted, "
+"please raise a ticket."
+msgstr ""
+
+#: application/flicket/templates/flicket_footer.html:3
+msgid "Source code available at:"
+msgstr ""
+
+#: application/flicket/templates/flicket_form_reply.html:18
+#: application/flicket/templates/flicket_include_ticket.html:31
+msgid "Show / Hide Markdown"
+msgstr ""
+
+#: application/flicket/templates/flicket_form_reply.html:19
+msgid "MarkDown reference"
+msgstr ""
+
+#: application/flicket/templates/flicket_history.html:7
+msgid "This page shows history of edits for a given post."
+msgstr ""
+
+#: application/flicket/templates/flicket_history.html:13
+msgid "originally wrote on"
+msgstr ""
+
+#: application/flicket/templates/flicket_history.html:17
+msgid "No changes have been made to the post content."
+msgstr ""
+
+#: application/flicket/templates/flicket_include_ticket.html:2
+msgid "Ticket contents supports markdown syntax. Please refer to"
+msgstr ""
+
+#: application/flicket/templates/flicket_include_ticket.html:2
+msgid "md help"
+msgstr ""
+
+#: application/flicket/templates/flicket_include_ticket.html:14
+msgid "Ticket Title"
+msgstr ""
+
+#: application/flicket/templates/flicket_include_ticket.html:44
+msgid "Priority Level"
+msgstr ""
+
+#: application/flicket/templates/flicket_index.html:5
+msgid "Stats"
+msgstr ""
+
+#: application/flicket/templates/flicket_index.html:6
+msgid "Overall"
+msgstr ""
+
+#: application/flicket/templates/flicket_index.html:9
+msgid "tickets have been raised"
+msgstr ""
+
+#: application/flicket/templates/flicket_index.html:18
+#: application/flicket/templates/flicket_menu.html:20
+msgid "Departments"
+msgstr ""
+
+#: application/flicket/templates/flicket_index.html:24
+msgid "tickets"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:17
+msgid "My Tickets"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:18
+msgid "Tickets"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:19
+msgid "Create Ticket"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:21
+#: application/flicket_admin/templates/admin_menu.html:6
+msgid "Users"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:22
+msgid "FAQ"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:24
+msgid "Admin View"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:36
+msgid "User Details"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:38
+msgid "Log Out"
+msgstr ""
+
+#: application/flicket/templates/flicket_menu.html:46
+msgid "Log In"
+msgstr ""
+
+#: application/flicket/templates/flicket_post.html:62
+msgid "This post was modified by"
+msgstr ""
+
+#: application/flicket/templates/flicket_post.html:63
+msgid "on"
+msgstr ""
+
+#: application/flicket/templates/flicket_post.html:65
+#: application/flicket/templates/flicket_post.html:67
+msgid "edit history"
+msgstr ""
+
+#: application/flicket/templates/flicket_post.html:86
+msgid "reply"
+msgstr ""
+
+#: application/flicket/templates/flicket_tickets.html:68
+msgid "Ticket ID"
+msgstr ""
+
+#: application/flicket/templates/flicket_tickets.html:74
+msgid "Title"
+msgstr ""
+
+#: application/flicket/templates/flicket_tickets.html:77
+msgid "Submitted By"
+msgstr ""
+
+#: application/flicket/templates/flicket_tickets.html:80
+msgid "Date"
+msgstr ""
+
+#: application/flicket/templates/flicket_tickets.html:83
+msgid "Replies"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:16
+#: application/flicket/templates/flicket_users.html:59
+#: application/flicket/templates/login.html:16
+#: application/flicket_admin/templates/admin_delete_user.html:25
+#: application/flicket_admin/templates/admin_users.html:28
+msgid "Username"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:19
+#: application/flicket/templates/flicket_users.html:65
+#: application/flicket_admin/templates/admin_delete_user.html:33
+#: application/flicket_admin/templates/admin_users.html:30
+msgid "Email"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:22
+msgid "Date Joined"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:25
+#: application/flicket/templates/flicket_users.html:68
+#: application/flicket_admin/templates/admin_users.html:31
+msgid "Job Title"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:28
+msgid "Number Of Posts"
+msgstr ""
+
+#: application/flicket/templates/flicket_user_details.html:31
+msgid "Number Assigned"
+msgstr ""
+
+#: application/flicket/templates/flicket_users.html:62
+#: application/flicket_admin/templates/admin_delete_user.html:29
+#: application/flicket_admin/templates/admin_users.html:29
+msgid "Name"
+msgstr ""
+
+#: application/flicket/templates/flicket_users.html:71
+msgid "Posts"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:16
+#: application/flicket_admin/templates/admin_groups.html:24
+#: application/flicket_admin/templates/admin_users.html:40
+msgid "delete"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:57
+msgid "unsubscribe"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:60
+msgid "subscribe"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:90
+msgid "claim"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:93
+msgid "release"
+msgstr ""
+
+#: application/flicket/templates/flicket_view.html:96
+msgid "assign"
+msgstr ""
+
+#: application/flicket/templates/login.html:13
+msgid "Please enter your credentials to login."
+msgstr ""
+
+#: application/flicket/templates/login.html:45
+msgid "Remember Me"
+msgstr ""
+
+#: application/flicket/views/categories.py:33
+msgid "Categories"
+msgstr ""
+
+#: application/flicket/views/login.py:94
+msgid "You were logged in successfully."
+msgstr ""
+
+#: application/flicket/views/view.py:108
+msgid "View Ticket"
+msgstr ""
+
+#: application/flicket_admin/templates/admin.html:5
+#: application/flicket_admin/templates/admin_delete_group.html:5
+#: application/flicket_admin/templates/admin_delete_user.html:5
+#: application/flicket_admin/templates/admin_edit_group.html:5
+#: application/flicket_admin/templates/admin_groups.html:6
+#: application/flicket_admin/templates/admin_users.html:5
+msgid "Administration"
+msgstr ""
+
+#: application/flicket_admin/templates/admin.html:9
+msgid "Administration home page."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_config.html:5
+msgid "Administration - Configuration"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_config.html:13
+msgid "Field"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_config.html:16
+msgid "Value"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_config.html:27
+msgid "This must be a comma delimited list."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_delete_group.html:12
+msgid "Are you sure you want to delete the following group?"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_delete_group.html:14
+msgid "Please enter your password to delete group."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_delete_group.html:25
+#: application/flicket_admin/templates/admin_edit_group.html:15
+#: application/flicket_admin/templates/admin_groups.html:15
+#: application/flicket_admin/templates/admin_groups.html:38
+msgid "Group Name"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_delete_user.html:12
+msgid ""
+"Are you sure you want to delete the following user? This may impact "
+"relational query look ups."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_delete_user.html:14
+msgid "Please enter your password to delete user."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_edit_group.html:11
+msgid "Please add new users credentials."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_groups.html:11
+msgid "Click on group name to edit."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_groups.html:16
+msgid "Delete"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_groups.html:30
+msgid "Add Group"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_groups.html:34
+msgid "Please enter group name."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_menu.html:4
+msgid "Admin Home"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_menu.html:5
+msgid "Flicket Config"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_menu.html:7
+msgid "Add User"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_menu.html:8
+msgid "Groups"
+msgstr ""
+
+#: application/flicket_admin/templates/admin_users.html:9
+msgid "Click on username to edit."
+msgstr ""
+
+#: application/flicket_admin/templates/admin_users.html:32
+msgid "Delete User"
+msgstr ""
+

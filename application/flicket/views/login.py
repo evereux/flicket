@@ -18,6 +18,7 @@ from flask_login import (current_user,
 from flask_mail import Mail
 from flask_principal import (Identity,
                              identity_changed)
+from flask_babel import gettext
 
 from application import app, lm, db, flicket_bp
 from application import __version__
@@ -90,7 +91,7 @@ def login():
         # set the user token, authentication token is required for api use.
         user.get_token()
         db.session.commit()
-        flash('You were logged in successfully.', category='success')
+        flash(gettext('You were logged in successfully.'), category='success')
         return redirect(url_for('flicket_bp.index'))
 
     return render_template('login.html', title='Log In', form=form)
@@ -102,5 +103,5 @@ def logout():
     g.user.revoke_token()
     db.session.commit()
     logout_user()
-    flash('You were logged out successfully.', category='success')
+    flash(gettext('You were logged out successfully.'), category='success')
     return redirect(url_for('flicket_bp.index'))

@@ -10,10 +10,10 @@
         <form class="form-horizontal" action="" method="post" name="login">
             {{ form.hidden_tag() }}
             <p>
-                Please enter your credentials to login.
+                {{ _('Please enter your credentials to login.') }}
             </p>
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Username</label>
+                <label class="col-sm-3 control-label">{{ _('Username') }}</label>
                 <div class="col-sm-9">
                     {{ form.username(class="form-control") }}
                 </div>
@@ -27,7 +27,7 @@
             {% endif %}
 
             <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Password</label>
+                <label class="col-sm-3 control-label">{{ _('Password') }}</label>
                 <div class="col-sm-9">
                     {{ form.password(class="form-control") }}
                 </div>
@@ -42,7 +42,7 @@
 
 
             <div class="form-group  form-group-sm text-center">
-                {{ form.remember_me }} Remember Me
+                {{ form.remember_me }} {{ _('Remember Me') }}
             </div>
             <div class="form-group  form-group-sm text-center">
                 <input class="btn btn-default" type="submit" value="log in"/>

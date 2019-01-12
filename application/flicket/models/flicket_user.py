@@ -73,8 +73,9 @@ class FlicketUser(PaginatedAPIMixin, Base):
     total_assigned = db.Column(db.Integer, default=0)
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
+    locale = db.Column(db.String(10))
 
-    def __init__(self, username, name, email, password, date_added, job_title=None):
+    def __init__(self, username, name, email, password, date_added, job_title=None, locale='en'):
         """
         :param username: username, must be unique.
         :param name: Full name.
@@ -82,6 +83,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
         :param password: password.
         :param date_added: date added.
         :param job_title: job title / description.
+        :param locale: locale 'en' = english. See app config for options.
         """
         self.username = username
         self.name = name
@@ -89,6 +91,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
         self.email = email
         self.job_title = job_title
         self.date_added = date_added
+        self.locale = locale
 
     @property
     def is_authenticated(self):

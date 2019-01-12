@@ -2,11 +2,11 @@
 <!-- extend from base layout -->
 {% block content %}
 <div class="container">
-        <h1>Stats</h1>
-        <h2>Overall</h2>
+        <h1>{{ _('Stats') }}</h1>
+        <h2>{{ _('Overall') }}</h2>
         <p>
             <mark>{{ total }}</mark>
-            tickets have been raised.
+            {{ _('tickets have been raised') }}.
         </p>
         <p>
             <mark>{{ total_days }}</mark>
@@ -15,13 +15,13 @@
         {% for s in statuses %}
             <p>There are currently <mark>{{ s[1]['ticket_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark>.</p>
         {% endfor  %}
-        <h3>Departments</h3>
+        <h3>{{ _('Departments') }}</h3>
     <div class="row">
         {% for d in departments %}
         <div class="col-sm-3">
             <h4>{{ d[0]['department'] }} <a href="{{ url_for('flicket_bp.tickets', department=d[0]['department']) }}"><span class="glyphicon glyphicon-list"></span></a></h4>
             {% for s in d[1] %}
-            <div><mark>{{ s[1]['total_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark></div>
+            <div><mark>{{ s[1]['total_num'] }}</mark> {{ _('tickets') }} <mark>{{ s[0]['status'] }}</mark></div>
             {% endfor %}
         </div>
         {% endfor %}

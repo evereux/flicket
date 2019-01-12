@@ -9,6 +9,7 @@ from flask import (flash,
                    request,
                    render_template,
                    g)
+from flask_babel import gettext
 from flask_login import login_required
 
 from . import flicket_bp
@@ -32,8 +33,9 @@ def ticket_create():
                                                     priority=form.priority.data,
                                                     files=request.files.getlist("file"))
 
-        flash('New Ticket created.', category='success')
+        flash(gettext('New Ticket created.'), category='success')
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
-    return render_template('flicket_create.html', title='Flicket - Create Ticket', form=form)
+    title = gettext('Flicket - Create Ticket')
+    return render_template('flicket_create.html', title=title, form=form)

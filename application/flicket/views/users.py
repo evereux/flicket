@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import render_template, redirect, request, url_for
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, flicket_bp
@@ -36,8 +37,10 @@ def flicket_users(page=1):
     users = users.order_by(FlicketUser.username.asc())
     users = users.paginate(page, app.config['posts_per_page'])
 
+    title = gettext('Users')
+
     return render_template('flicket_users.html',
-                           title='Users',
+                           title=title,
                            users=users,
                            form=form)
 
@@ -48,6 +51,8 @@ def flicket_users(page=1):
 def flicket_user(user_id):
     user = FlicketUser.query.filter_by(id=user_id).one()
 
+    title = gettext('User Details')
+
     return render_template('flicket_user_details.html',
-                           title='User Details',
+                           title=title,
                            user=user)

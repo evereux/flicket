@@ -2,16 +2,16 @@
 {% extends "flicket_base.html" %}
 {% block content %}
 <div class="container">
-    <h1>Administration</h1>
+    <h1>{{ _('Administration') }}</h1>
     {% include 'admin_menu.html' %}
     <h2>{{ title }}</h2>
     <form action="" method="post" name="delete_group">
         {{ form.hidden_tag() }}
         {{ form.id() }}
         <p>
-            Are you sure you want to delete the following group?
+            {{ _('Are you sure you want to delete the following group?') }}
         </p>
-        <p>Please enter your password to delete group. {{ form.password() }}
+        <p>{{ _('Please enter your password to delete group.') }} {{ form.password() }}
             {% if form.password.errors %}
             <span style="color: red;">
             {% for error in form.password.errors %}
@@ -22,7 +22,7 @@
         </p>
         <table class="table table-width-400">
             <tr>
-                <th>Group Name</th>
+                <th>{{ _('Group Name') }}</th>
                 <td>{{ group_details.group_name}}</td>
             </tr>
             <tr>

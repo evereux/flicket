@@ -5,10 +5,10 @@
         {{ title }}
     </h1>
     <p>
-        You have successfully created a new ticket: <a href="{{ ticket_url }}">{{ number }}</a>
+        {{ _('You have successfully created a new ticket:') }} <a href="{{ ticket_url }}">{{ number }}</a>
     </p>
     {% include('email_include_details.html') %}
-    <h2>Content</h2>
+    <h2>{{ _('Content') }}</h2>
     <p>
         {{ ticket.content }}
     </p>

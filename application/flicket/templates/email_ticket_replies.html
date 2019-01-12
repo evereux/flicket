@@ -6,7 +6,7 @@
     </h1>
     {% include('email_include_details.html') %}
     <p>
-        There are new replies to ticket: <a href="{{ ticket_url }}">{{ number }}</a>.
+        {{ _('There are new replies to ticket:') }} <a href="{{ ticket_url }}">{{ number }}</a>.
     </p>
     <p>
         {{ reply.user.name }} replied:<br><i>{{ reply.content }}</i>

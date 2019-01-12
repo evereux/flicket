@@ -7,6 +7,7 @@ from flask import (flash,
                    redirect,
                    render_template,
                    url_for)
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, db
@@ -50,7 +51,7 @@ def config():
             config_details.mail_password = form.mail_password.data
 
         db.session.commit()
-        flash('Config details updated.')
+        flash(gettext('Config details updated.'))
         return redirect(url_for('admin_bp.config'))
 
     # populate form with details from database.

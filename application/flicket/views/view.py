@@ -7,6 +7,7 @@ import datetime
 
 from flask import render_template, redirect, url_for, g, request, flash
 from flask_login import login_required
+from flask_babel import gettext
 
 from . import flicket_bp
 from application import app, db
@@ -28,7 +29,7 @@ def ticket_view(ticket_id, page=1):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
     if not ticket:
-        flash('Cannot find ticket: "{}"'.format(ticket_id), category='warning')
+        flash(gettext('Cannot find ticket: "%(value)s"', value=ticket_id), category='warning')
         return redirect(url_for('flicket_bp.tickets'))
 
     # find all replies to ticket.
@@ -83,7 +84,8 @@ def ticket_view(ticket_id, page=1):
         mail = FlicketMail()
         mail.reply_ticket(ticket=ticket, reply=new_reply)
 
-        flash('You have replied to ticket {}: {}.'.format(ticket.id_zfill, ticket.title), category="success")
+        flash(gettext('You have replied to ticket %(value_1)s: %(value_2)s.', value_1=ticket.id_zfill,
+                      value_2=ticket.title), category="success")
 
         # if the reply has been submitted for closure.
         if form.submit_close.data:
@@ -94,18 +96,26 @@ def ticket_view(ticket_id, page=1):
     # get post id and populate contents for auto quoting
     if post_rid:
         query = FlicketPost.query.filter_by(id=post_rid).first()
-        reply_contents = "{} wrote on {}\r\n\r\n{}".format(query.user.name, query.date_added, query.content)
+        reply_contents = gettext("%(value_1)s wrote on %(value_2)s\r\n\r\n%(value_3)s",
+                                 value_1=query.user.name,
+                                 value_2=query.date_added,
+                                 value_3=query.content)
         form.content.data = block_quoter(reply_contents)
     if ticket_rid:
-        reply_contents = "{} wrote on {}\r\n\r\n{}".format(ticket.user.name, ticket.date_added, ticket.content)
+        reply_contents = gettext("%(value_1)s wrote on %(value_2)s\r\n\r\n%(value_3)s",
+                                 value_1=ticket.user.name,
+                                 value_2=ticket.date_added,
+                                 value_3=ticket.content)
         form.content.data = block_quoter(reply_contents)
 
     replies = replies.paginate(page, app.config['posts_per_page'])
 
     form.status.data = ticket.status_id
 
+    title = gettext('View Ticket')
+
     return render_template('flicket_view.html',
-                           title='View Ticket',
+                           title=title,
                            ticket=ticket,
                            form=form,
                            replies=replies,

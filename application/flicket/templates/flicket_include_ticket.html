@@ -1,5 +1,5 @@
 <p>
-    Ticket contents supports markdown syntax. Please refer to <a href="http://commonmark.org/help/">md help</a>.
+    {{ _('Ticket contents supports markdown syntax. Please refer to') }} <a href="http://commonmark.org/help/">{{ _('md help') }}</a>.
 </p>
 {{ pagedown.html_head() }}
 <form action=""
@@ -11,7 +11,7 @@
 
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">Ticket Title</label>
+        <label class="col-sm-3 control-label">{{ _('Ticket Title') }}</label>
         <div class="col-sm-9">
             {{ form.title(class="form-control") }}
         </div>
@@ -25,10 +25,10 @@
     {% endif %}
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">Content</label>
+        <label class="col-sm-3 control-label">{{ _('Content') }}</label>
         <div class="col-sm-9">
             {{ form.content(class="form-control") }}
-            <div class="text-right" style="padding-top: 5pt"><button type="button" class="btn btn btn-info btn-sm"  onclick="hide_element()">Show / Hide Markdown</button></div>
+            <div class="text-right" style="padding-top: 5pt"><button type="button" class="btn btn btn-info btn-sm"  onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button></div>
 
         </div>
     </div>
@@ -41,11 +41,11 @@
     {% endif %}
 
     <div class="form-group">
-        <label class="col-sm-3 control-label">Priority Level</label>
+        <label class="col-sm-3 control-label">{{ _('Priority Level') }}</label>
         <div class="col-sm-3">
             {{ form.priority(class="form-control") }}
         </div>
-        <label class="col-sm-3 control-label">Category</label>
+        <label class="col-sm-3 control-label">{{ _('Category') }}</label>
         <div class="col-sm-3">
             {{ form.category(class="form-control") }}
         </div>

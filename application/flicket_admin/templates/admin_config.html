@@ -2,7 +2,7 @@
 {% extends "flicket_base.html" %}
 {% block content %}
     <div class="container">
-        <h1>Administration - Configuration</h1>
+        <h1>{{ _('Administration - Configuration') }}</h1>
         {% include 'admin_menu.html' %}
 
         <form class="form-horizontal" action="" method="post" name="register">
@@ -10,10 +10,10 @@
             <table class="table table-bordered">
                 <tr>
                     <th>
-                        Field
+                        {{ _('Field') }}
                     </th>
                     <th>
-                        Value
+                        {{ _('Value') }}
                     </th>
                 </tr>
                 {% for field in form if field.widget.input_type != 'hidden' and field.widget.input_type != 'submit' %}
@@ -24,7 +24,7 @@
                             <td>
                                 {{ field }}
                                 {% if field.name == 'allowed_extensions' %}
-                                This must be a comma delimited list.
+                                {{ _('This must be a comma delimited list.') }}
                                 {% endif %}
 
                                 {% if field.errors %}<span class="alert alert-warning">

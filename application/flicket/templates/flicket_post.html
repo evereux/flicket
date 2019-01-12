@@ -59,12 +59,12 @@
             {{- show_markdown(content.content)|safe -}}
             {%- if content.modified_id -%}
             <div class="flicket-post-modified">
-                This post was modified by {{ content.modified.name }}
-                on {{ content.date_modified }} |
+                {{ _('This post was modified by') }} {{ content.modified.name }}
+                {{ _('on') }} {{ content.date_modified }} |
                 {%- if post -%}
-                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">edit history</a>
+                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">{{ _('edit history') }}</a>
                 {%- else -%}
-                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">edit history</a>
+                &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">{{ _('edit history') }}</a>
                 {%- endif -%}
             </div>
             {%- endif -%}
@@ -83,7 +83,7 @@
             </div>
             <div class="btn btn-group-sm pull-right" style="padding-right: 0px;">
                 <a class="btn btn-default"
-                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, post_id=post.id, ticket_rid=ticket.id) }}#reply">reply</a>
+                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, post_id=post.id, ticket_rid=ticket.id) }}#reply">{{ _('reply') }}</a>
             </div>
         </div>
 

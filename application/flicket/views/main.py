@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import redirect, url_for, request, render_template
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app
@@ -42,8 +43,10 @@ def tickets(page=1):
 
     ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
 
+    title = gettext('Tickets')
+
     return render_template('flicket_tickets.html',
-                           title='Tickets',
+                           title=title,
                            form=form,
                            tickets=ticket_query,
                            page=page,
@@ -82,8 +85,10 @@ def my_tickets(page=1):
 
     ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
 
+    title = gettext('My Tickets')
+
     return render_template('flicket_tickets.html',
-                           title='My Tickets',
+                           title=title,
                            form=form,
                            tickets=ticket_query,
                            page=page,
