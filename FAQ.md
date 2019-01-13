@@ -3,21 +3,24 @@
 
 ## What is Flicket?
 
-Flicket is a simple open source ticketing system driven by the python flask 
-web micro framework. 
+Flicket is a simple open source ticketing system driven by the python
+flask web micro framework.
 
 Flicket also uses the following python packages:
 
-    alembic, bcrypt, flask-admin, flask-login, flask-migrate, flask-principal, flask-sqlalchemy, flask-script, flask-wtf, jinja2, Markdown, WTForms
+    alembic, bcrypt, flask-admin, flask-babel, flask-login, flask-migrate,
+    flask-principal, flask-sqlalchemy, flask-script, flask-wtf, jinja2,
+    Markdown, WTForms
     
-See `README.md` for full requirements.
+See `README.rst` for full requirements.
 
 ## Licensing
+
 For licensing see `LICENSE.md`
 
 ## SetUp
 
-For set-up instructions see `README.md`.
+For set-up instructions see `README.rst`.
 
 ## Tickets
 
@@ -29,16 +32,16 @@ For set-up instructions see `README.md`.
    
 2. How do I assign a ticket?
 
-   Scenario: You have raised a ticket and you know to whom the ticket should be 
-   assigned.
+   Scenario: You have raised a ticket and you know to whom the ticket
+   should be assigned.
 
    Navigate to [flicket home page](/flicket/) and select the ticket you 
    wish to assign. Within the ticket page is a button to `assign` ticket.
    
 3. How do I release a ticket?
 
-   Scenario: You have been assigned a ticket but the ticket isn't your repsonsibility
-   to complete or you are unable to for another reason.
+   Scenario: You have been assigned a ticket but the ticket isn't your
+   repsonsibility to complete or you are unable to for another reason.
    
    Navgiate to [flicket home page](/flicket/) and select the ticket to
    which you have been assigned. Within the ticket page is a button
@@ -62,8 +65,8 @@ For set-up instructions see `README.md`.
 
 1. What are quick filters?
 
-   Quick filters are simply buttons that enable you to quick filter tickets
-   by department, category and status etc.
+   Quick filters are simply buttons that enable you to quick filter
+   tickets by department, category and status etc.
 
 2. What does the search box search?
 
@@ -72,7 +75,7 @@ For set-up instructions see `README.md`.
 
 ## <a name="permissions"></a>Permissions
 
-1. Some actions within Flicket require elevated permission levels. If you 
+1. Some actions within Flicket require elevated permission levels. If you
    require an action that requires elevated permissions you should raise
    a ticket and assign the ticket to the persons who have the appropriate
    access.
