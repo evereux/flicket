@@ -17,8 +17,9 @@
     Also, manually update your users total_posts count whilst site
     is offline. This can be done by running `python manage.py update_user_assigned`
 *   Added missing showmarkdown toggle to reply form.
-*   populate_database_with_junk.py now users mimesis for random data generation.
-*   Tests now written using pytest. More tests need writing ...
+*   populate_database_with_junk.py now uses mimesis for random data generation.
+*   Change README to rst format and various wording changes.
+*   Added flask-babel support.
 
 
 ## 0.1.6a
