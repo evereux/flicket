@@ -147,7 +147,7 @@ To add an additional local:
 
 .. code-block::
 
-    `pybabel init -i messages.pot -d application\translations -l de`
+    pybabel init -i messages.pot -d application\translations -l de
 
 
 * In the folder `application\translations` there should now be a new folder
@@ -166,7 +166,7 @@ To add an additional local:
 
 .. code-block::
 
-    `pybabel compile -d application\translations`.
+    pybabel compile -d application\translations
 
 
 * If any python or html text strings have been newly tagged for translation
@@ -174,11 +174,11 @@ To add an additional local:
 
 .. code-block::
 
-    `pybabel extract -F babel.cfg -o messages.pot.`
+    pybabel extract -F babel.cfg -o messages.pot .
 
 
 * To get the new translations added to the .po files:
 
 .. code-block::
 
-    `pybabel update -i messages.pot -d application\`.
+    pybabel update -i messages.pot -d application\translations
