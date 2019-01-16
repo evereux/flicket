@@ -2,7 +2,9 @@ Flicket
 =======
 
 Flicket is a simple web based ticketing system written in Python using
-the flask web framework.
+the flask web framework which supports English and French locales. Additional
+locales can be added by following the section `Adding Additional Languages`
+within this README.
 
 
 Why Flicket?
