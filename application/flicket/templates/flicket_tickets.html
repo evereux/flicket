@@ -41,7 +41,7 @@
                         {{ form.content(class="form-control", placeholder="contents") }}
                     </div>
                     <div class="col-sm-1 flicket-form-control text-right">
-                        <input class="btn btn-primary" type="submit" value="search"/>
+                        <input class="btn btn-primary" type="submit" value={{ _('search') }}>
                     </div>
                 </div>
                 {% if form.username.errors %}
@@ -73,7 +73,7 @@
                 <th>
                     {{ _('Title') }}
                 </th>
-                <th>
+                <th nowrap="nowrap">
                     {{ _('Submitted By') }}
                 </th>
                 <th>

@@ -10,10 +10,10 @@
         </p>
         <p>
             <mark>{{ total_days }}</mark>
-            ticket{% if total_days > 1 %}s have{% else %} has{% endif %} been raised over the last {{ days }} days.
+            {{ _('tickets') }}{% if total_days > 1 %}s {{ _('have') }}{% else %} {{ _('has') }}{% endif %} {{ _('been raised over the last') }} {{ days }} {{ _('days') }}.
         </p>
         {% for s in statuses %}
-            <p>There are currently <mark>{{ s[1]['ticket_num'] }}</mark> tickets <mark>{{ s[0]['status'] }}</mark>.</p>
+            <p>{{ _('There are currently') }} <mark>{{ s[1]['ticket_num'] }}</mark> {{ _('tickets') }} <mark>{{ s[0]['status'] }}</mark>.</p>
         {% endfor  %}
         <h3>{{ _('Departments') }}</h3>
     <div class="row">

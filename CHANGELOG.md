@@ -20,6 +20,7 @@
 *   populate_database_with_junk.py now uses mimesis for random data generation.
 *   Change README to rst format and various wording changes.
 *   Added flask-babel support.
+*   Added French locale option. Thanks to SolvingCurves.
 
 
 ## 0.1.6a
