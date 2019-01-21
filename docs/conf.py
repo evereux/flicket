@@ -43,7 +43,6 @@ MOCK_MODULES = [
     'flask-script',
     'flask-sqlalchemy',
     'flask-wtf',
-    'jinja2',
     'mimesis',
     'pymysql',
     'sqlalchemy',
