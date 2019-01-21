@@ -18,7 +18,40 @@
 
 import os, sys
 
+from unittest.mock import MagicMock
+
 import sphinx_rtd_theme
+
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+        return MagicMock()
+
+
+MOCK_MODULES = [
+    'alembic',
+    'bcrypt',
+    'flask',
+    'flask-babel',
+    'flask-login',
+    'flask-httpauth',
+    'flask-mail',
+    'flask-migrate',
+    'flask-pagedown',
+    'flask-principal',
+    'flask-script',
+    'flask-sqlalchemy',
+    'flask-wtf',
+    'jinja2',
+    'mimesis',
+    'pymysql',
+    'sqlalchemy',
+    'werkzeug',
+    'wtforms',
+]
+
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- Project information -----------------------------------------------------
 
