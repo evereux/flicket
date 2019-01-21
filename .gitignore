@@ -20,3 +20,5 @@ env*/
 .cache/v/cache/lastfailed
 
 *sublime*
+
+docs/_build/*
