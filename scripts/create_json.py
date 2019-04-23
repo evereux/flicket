@@ -7,6 +7,7 @@ import json
 import os
 import random
 import string
+from base64 import b64encode
 
 config_file = 'config.json'
 config_file = os.path.join(os.getcwd(), config_file)
@@ -29,12 +30,9 @@ class WriteConfigJson(object):
         :return:
         """
 
-        def random_string(characters=24):
-
-            chars = string.ascii_lowercase + string.digits
-            output = ''.join(random.choice(chars) for _ in range(characters))
-
-            return output
+        def random_string(bytes=24):
+            b = os.urandom(bytes)
+            return b64encode(b).decode('utf-8')
 
         # Check to see if the json file already exists.
         create_file = False
@@ -78,7 +76,6 @@ class WriteConfigJson(object):
             'db_name': db_name,
             'SECRET_KEY': secret_key,
             'NOTIFICATION_USER_PASSWORD': notification_user_password
-
         }
 
         # write json file
