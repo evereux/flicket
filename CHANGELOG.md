@@ -4,7 +4,13 @@
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.
 *   Updated wording of prompts in 'populate_database_with_junk.py'.
 *   Added admin setting so the page banner title can be changed from 'Flicket'.
-*   
+
+    If you are migrating from any earlier version you should ensure you upgrade
+    the database. 
+    ~~~
+    python manage.py db migrate
+    python manage.py db upgrade
+    ~~~   
 
 # 0.1.7
 *   Added view 'my_tickets'.
