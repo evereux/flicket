@@ -19,5 +19,6 @@ def set_flicket_config():
         allowed_extensions=config.allowed_extensions.split(', '),
         ticket_upload_folder=config.ticket_upload_folder,
         avatar_upload_folder=config.avatar_upload_folder,
-        base_url=config.base_url
+        base_url=config.base_url,
+        application_title=config.application_title,
     )

@@ -41,6 +41,7 @@ def config():
         config_details.mail_suppress_send = form.mail_suppress_send.data
         config_details.mail_ascii_attachments = form.mail_ascii_attachments.data
 
+        config_details.application_title = form.application_title.data,
         config_details.posts_per_page = form.posts_per_page.data,
         config_details.allowed_extensions = form.allowed_extensions.data,
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
@@ -67,6 +68,7 @@ def config():
     form.mail_suppress_send.data = config_details.mail_suppress_send
     form.mail_ascii_attachments.data = config_details.mail_ascii_attachments
 
+    form.application_title.data = config_details.application_title
     form.posts_per_page.data = config_details.posts_per_page
     form.allowed_extensions.data = config_details.allowed_extensions
     form.ticket_upload_folder.data = config_details.ticket_upload_folder

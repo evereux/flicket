@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.1.8
+*   Upgraded SQLAlchemy and Jinja2 due to security warnings.
+*   Updated wording of prompts in 'populate_database_with_junk.py'.
+*   Added admin setting so the page banner title can be changed from 'Flicket'.
+*   
+
 # 0.1.7
 *   Added view 'my_tickets'.
 *   Added links to ticket views filtered by department on main page.

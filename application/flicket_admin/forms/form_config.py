@@ -24,6 +24,7 @@ class ConfigForm(FlaskForm):
     mail_suppress_send = BooleanField('mail_suppress_send', validators=[])
     mail_ascii_attachments = BooleanField('mail_ascii_attachments', validators=[])
 
+    application_title = StringField('application_title', validators=[DataRequired(), Length(min=3, max=32)])
     posts_per_page = IntegerField('posts_per_page', validators=[DataRequired(), NumberRange(min=10, max=200)])
     allowed_extensions = StringField('allowed_extensions', validators=[DataRequired()])
     ticket_upload_folder = StringField('ticket_upload_folder', validators=[DataRequired()])

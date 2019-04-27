@@ -8,10 +8,6 @@ import unittest
 
 from coverage import coverage
 
-from tests.base_dir import base_dir
-from tests.pages import TestCasePages
-from tests.tickets import TestCaseTickets
-
 if __name__ == '__main__':
 
     # cov = coverage(branch=True, omit=['*python-env*', 'migrate', 'env*', 'tests*'])

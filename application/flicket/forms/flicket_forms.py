@@ -6,7 +6,7 @@
 from flask import url_for
 from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SelectField, HiddenField, SubmitField, FileField
+from wtforms import StringField, SelectField, HiddenField, SubmitField, FileField
 from wtforms.fields import SelectMultipleField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -143,8 +143,9 @@ class ReplyForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         form = super(ReplyForm, self).__init__(*args, **kwargs)
         self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]
+
     content = PageDownField(gettext('Reply'), validators=[DataRequired(), Length(min=field_size['content_min_length'],
-                                                                        max=field_size['content_max_length'])])
+                                                                                 max=field_size['content_max_length'])])
     file = FileField(gettext('Upload Documents'), render_kw={'multiple': True})
     status = SelectField(gettext('Status'), validators=[DataRequired()], coerce=int)
     submit = SubmitField(gettext('submit reply'), render_kw=form_class_button)
@@ -162,7 +163,8 @@ class EditReplyForm(ReplyForm):
 
 class SearchUserForm(FlaskForm):
     """ Search user. """
-    username = StringField('username', validators=[DataRequired(), Length(min=user_field_size['username_min'], max=user_field_size['username_max'])])
+    username = StringField('username', validators=[DataRequired(), Length(min=user_field_size['username_min'],
+                                                                          max=user_field_size['username_max'])])
     submit = SubmitField(gettext('search user'), render_kw=form_class_button)
 
 
