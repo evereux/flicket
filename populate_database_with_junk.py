@@ -164,7 +164,7 @@ if __name__ == '__main__':
 
     mismatch = True
     while mismatch is True:
-        print('When population with junk users will be added with '
+        print('When populating with junk users will be added with '
               '<your_email_username>+<random_username>@<email_domain>.')
         base_email = input('Please enter your email for testing > ')
         base_email_confirm = input('Please confirm your email > ')
@@ -175,7 +175,7 @@ if __name__ == '__main__':
 
     print('Please enter number of topics you would like to add.')
     num_topics = int(input('Topics: '))
-    print('Please enter number of max. number of random replies to each topic.')
+    print('Please enter max .number of random replies to each topic.')
     num_replies = int(input('Replies: '))
     print('Please enter number of users you would like to add.')
     num_users = int(input('Users: '))
