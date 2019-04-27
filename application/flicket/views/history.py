@@ -3,13 +3,12 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import render_template, url_for
+from flask import render_template
 from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, flicket_bp
 from application.flicket.models.flicket_models import FlicketHistory, FlicketPost, FlicketTicket
-from application.flicket.scripts.flicket_user_details import FlicketUserDetails
 
 
 @flicket_bp.route(app.config['FLICKET'] + 'history/topic/<int:topic_id>/', methods=['GET', 'POST'])

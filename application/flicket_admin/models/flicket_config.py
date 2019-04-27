@@ -48,6 +48,8 @@ class FlicketConfig(Base):
     ticket_upload_folder = db.Column(db.String(256))
     avatar_upload_folder = db.Column(db.String(256))
 
+    application_title = db.Column(db.String(32))
+
     base_url = db.Column(db.String(128))
 
 

@@ -48,6 +48,7 @@ def on_identity_loaded(sender, identity):
 @login_required
 @admin_permission.require(http_exception=403)
 def index():
+    # noinspection PyUnresolvedReferences
     return render_template('admin.html', title='Admin')
 
 
@@ -60,6 +61,7 @@ def users(page=1):
     users = FlicketUser.query.order_by(FlicketUser.username)
     users = users.paginate(page, app.config['posts_per_page'])
 
+    # noinspection PyUnresolvedReferences
     return render_template('admin_users.html', title='Users', users=users)
 
 
@@ -84,6 +86,7 @@ def add_user():
         flash(gettext('You have successfully registered new user "%(value)s".', value=form.username.data),
               category='success')
         return redirect(url_for('admin_bp.users'))
+    # noinspection PyUnresolvedReferences
     return render_template('admin_user.html', title='Add User', form=form)
 
 
@@ -141,6 +144,7 @@ def edit_user():
         flash(gettext("Could not find user."))
         return redirect(url_for('admin_bp.index'))
 
+    # noinspection PyUnresolvedReferences
     return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True,
                            form=form, user=user)
 
@@ -167,6 +171,7 @@ def delete_user():
         return redirect(url_for('admin_bp.users'))
     # populate form with logged in user details
     form.id.data = g.user.id
+    # noinspection PyUnresolvedReferences
     return render_template('admin_delete_user.html', title='Delete user',
                            user_details=user_details, form=form)
 
@@ -187,6 +192,7 @@ def groups():
         flash(gettext('New group "%(value)s" added.', value=form.group_name.data))
         return redirect(url_for('admin_bp.groups'))
 
+    # noinspection PyUnresolvedReferences
     return render_template('admin_groups.html', title='Groups', form=form, groups=groups)
 
 
@@ -215,6 +221,7 @@ def admin_edit_group():
         return redirect(url_for('admin_bp.groups'))
     form.group_name.data = group.group_name
 
+    # noinspection PyUnresolvedReferences
     return render_template('admin_edit_group.html', title='Edit Group', form=form)
 
 
@@ -241,5 +248,6 @@ def admin_delete_group():
     # populate form with logged in user details
     form.id.data = g.user.id
     title = gettext('Delete Group')
+    # noinspection PyUnresolvedReferences
     return render_template('admin_delete_group.html', title=title,
                            group_details=group_details, form=form)

@@ -3,11 +3,10 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import render_template, url_for, flash
+from flask import render_template, url_for
 from flask_mail import Mail, Message
 
 from application import app
-from application.flicket.models.flicket_models import FlicketPost
 from application.flicket.scripts.decorators import send_async_email
 from application.flicket_admin.models.flicket_config import FlicketConfig
 

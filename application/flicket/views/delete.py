@@ -122,7 +122,8 @@ def delete_category(category_id=False):
         if categories.count() > 0:
             flash(
                 gettext(
-                    'Category is linked to posts. Category can not be deleted unless all posts / topics are removed / relinked.'),
+                    ('Category is linked to posts. Category can not be deleted unless all posts / topics are removed'
+                     ' / relinked.')),
                 category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
@@ -138,8 +139,8 @@ def delete_category(category_id=False):
 
         notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
                        "to department <span class=\"label label-default\">{}</span>.".format(
-            category.category,
-            category.department.department)
+                        category.category,
+                        category.department.department)
 
         title = gettext('Flicket - Delete Category')
 
@@ -168,8 +169,9 @@ def delete_department(department_id=False):
         # we can't delete any departments associated with categories.
         if departments.count() > 0:
             flash(gettext(
-                'Department has categories linked to it. Department can not be deleted unless all categories are first removed.'),
-                  category="danger")
+                ('Department has categories linked to it. Department can not be deleted unless all categories are '
+                 'first removed.')),
+                category="danger")
             return redirect(url_for('flicket_bp.departments'))
 
         if form.validate_on_submit():
@@ -182,8 +184,9 @@ def delete_department(department_id=False):
             flash('Department "{}" deleted.'.format(department.department), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
-        notification = gettext("You are trying to delete department <span class=\"label label-default\">%(value)s</span>.",
-                               value=department.department)
+        notification = gettext(
+            "You are trying to delete department <span class=\"label label-default\">%(value)s</span>.",
+            value=department.department)
 
         title = gettext('Flicket - Delete Department')
 

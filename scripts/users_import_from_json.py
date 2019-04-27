@@ -4,7 +4,6 @@
 import datetime
 import json
 import os
-import sys
 
 from flask_script import Command
 

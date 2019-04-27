@@ -136,8 +136,7 @@ header {
 }
 
 .flicket-post-attachments {
-    padding: 10px;
-    padding-right: 0px;
+    padding: 10px 0px 10px 10px;
     border-top: solid Silver 1px;
 }
 

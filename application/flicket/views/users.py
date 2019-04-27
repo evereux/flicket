@@ -10,7 +10,6 @@ from flask_login import login_required
 from application import app, flicket_bp
 from application.flicket.forms.flicket_forms import SearchUserForm
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.flicket_user_details import FlicketUserDetails
 
 
 # view users

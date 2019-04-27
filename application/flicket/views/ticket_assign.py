@@ -3,7 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import redirect, url_for, flash, g, render_template
+from flask import redirect, url_for, flash, render_template
 from flask_babel import gettext
 from flask_login import login_required
 

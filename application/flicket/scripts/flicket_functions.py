@@ -8,7 +8,7 @@ import datetime
 from flask import flash, g
 
 from application import db
-from application.flicket.models.flicket_models import FlicketPost, FlicketAction
+from application.flicket.models.flicket_models import FlicketAction
 
 
 def add_action(action=None, ticket=None, recipient=None):

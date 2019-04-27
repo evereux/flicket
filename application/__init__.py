@@ -58,7 +58,7 @@ from .flicket.views import (ticket_assign,
                             subscribe,
                             user_edit,
                             users,
-                            view)
+                            tickets)
 from .flicket_api_v2.views import categories, departments, status, tokens, users
 from .flicket_errors import handlers
 

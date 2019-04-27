@@ -10,7 +10,7 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import DepartmentForm
-from application.flicket.models.flicket_models import FlicketDepartment, FlicketCategory
+from application.flicket.models.flicket_models import FlicketDepartment
 
 
 # create ticket

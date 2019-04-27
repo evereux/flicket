@@ -3,18 +3,13 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import redirect, url_for, request, render_template
+from flask import redirect, request, render_template
 from flask_babel import gettext
 from flask_login import login_required
 
 from application import app
 from application.flicket.forms.search import SearchTicketForm
-from application.flicket.models.flicket_models import (FlicketStatus,
-                                                       FlicketDepartment,
-                                                       FlicketTicket,
-                                                       FlicketPost,
-                                                       FlicketCategory)
-from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.models.flicket_models import FlicketTicket
 from . import flicket_bp
 
 
