@@ -5,8 +5,6 @@
 from getpass import getpass
 import json
 import os
-import random
-import string
 from base64 import b64encode
 
 config_file = 'config.json'

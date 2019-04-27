@@ -4,6 +4,7 @@
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.
 *   Updated wording of prompts in 'populate_database_with_junk.py'.
 *   Added admin setting so the page banner title can be changed from 'Flicket'.
+*   Merged pull request: https://github.com/evereux/flicket/pull/20
 
     If you are migrating from any earlier version you should ensure you upgrade
     the database. 
