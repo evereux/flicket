@@ -51,14 +51,14 @@ from .flicket.views import (ticket_assign,
                             history,
                             index,
                             login,
-                            main,
+                            tickets,
                             faq,
                             ticket_release,
                             render_uploads,
                             subscribe,
                             user_edit,
                             users,
-                            tickets)
+                            ticket_view)
 from .flicket_api_v2.views import categories, departments, status, tokens, users
 from .flicket_errors import handlers
 
