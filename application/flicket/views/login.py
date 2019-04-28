@@ -98,7 +98,12 @@ def login():
         # set the user token, authentication token is required for api use.
         user.get_token()
         db.session.commit()
-        flash(gettext('You were logged in successfully.'), category='success')
+
+        if user.email is None or user.email == '':
+            flash(gettext('Please set your email and job title.'), category='danger')
+            return redirect(url_for('flicket_bp.user_details'))
+        else:
+            flash(gettext('You were logged in successfully.'), category='success')
         return redirect(url_for('flicket_bp.index'))
 
     return render_template('login.html', title='Log In', form=form)

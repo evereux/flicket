@@ -5,6 +5,11 @@
 *   Updated wording of prompts in 'populate_database_with_junk.py'.
 *   Added admin setting so the page banner title can be changed from 'Flicket'.
 *   Merged pull request: https://github.com/evereux/flicket/pull/20
+*   Added ability to export tickets view as an excel file. Very project manager friendly, I believe.
+*   Added authentication method for nt machines. Requires pywin32 to be installed.
+    If Flicket is running on an NT (windows) machine and pywin32 is installed it will try to authenticate the user
+    on that machine if they aren't already registered.
+    I will add LDAP authentication at some point soon when I can find a means to test (OpenLDAP hasn't worked for me.)
 
     If you are migrating from any earlier version you should ensure you upgrade
     the database. 

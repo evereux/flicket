@@ -200,10 +200,11 @@ class FlicketTicket(Base):
         return emails
 
     @staticmethod
-    def query_tickets(form, **kwargs):
+    def query_tickets(form=None, limit=None, **kwargs):
         """
         Returns a filtered query and modified form based on form submission
         :param form:
+        :param limit:
         :param kwargs:
         :return:
         """
@@ -213,22 +214,27 @@ class FlicketTicket(Base):
 
             if key == 'status' and value:
                 ticket_query = ticket_query.filter(FlicketTicket.current_status.has(FlicketStatus.status == value))
-                form.status.data = FlicketStatus.query.filter_by(status=value).first().id
+                if form:
+                    form.status.data = FlicketStatus.query.filter_by(status=value).first().id
             if key == 'category' and value:
                 ticket_query = ticket_query.filter(FlicketTicket.category.has(FlicketCategory.category == value))
-                form.category.data = FlicketCategory.query.filter_by(category=value).first().id
+                if form:
+                    form.category.data = FlicketCategory.query.filter_by(category=value).first().id
             if key == 'department' and value:
                 department_filter = FlicketDepartment.query.filter_by(department=value).first()
                 ticket_query = ticket_query.filter(
                     FlicketTicket.category.has(FlicketCategory.department == department_filter))
-                form.department.data = department_filter.id
+                if form:
+                    form.department.data = department_filter.id
             if key == 'user_id' and value:
                 ticket_query = ticket_query.filter_by(assigned_id=int(value))
                 user = FlicketUser.query.filter_by(id=value).first()
-                form.username.data = user.username
+                if form:
+                    form.username.data = user.username
             if key == 'content' and value:
                 # search the titles
-                form.content.data = key
+                if form:
+                    form.content.data = key
 
                 f1 = FlicketTicket.title.ilike('%' + value + '%')
                 f2 = FlicketTicket.content.ilike('%' + value + '%')
@@ -236,6 +242,9 @@ class FlicketTicket(Base):
                 ticket_query = ticket_query.filter(f1 | f2 | f3)
 
         ticket_query = ticket_query.order_by(FlicketTicket.id.desc())
+
+        if limit:
+            ticket_query = ticket_query.limit(limit)
 
         return ticket_query, form
 

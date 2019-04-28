@@ -47,6 +47,8 @@ def config():
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
         config_details.base_url = form.base_url.data
 
+        config_details.auth_domain = form.auth_domain.data
+
         # Don't change the password if nothing was entered.
         if form.mail_password.data != '':
             config_details.mail_password = form.mail_password.data
@@ -69,10 +71,13 @@ def config():
     form.mail_ascii_attachments.data = config_details.mail_ascii_attachments
 
     form.application_title.data = config_details.application_title
+
     form.posts_per_page.data = config_details.posts_per_page
     form.allowed_extensions.data = config_details.allowed_extensions
     form.ticket_upload_folder.data = config_details.ticket_upload_folder
     form.base_url.data = config_details.base_url
+
+    form.auth_domain.data = config_details.auth_domain
 
     return render_template('admin_config.html',
                            title='Flicket Configuration',

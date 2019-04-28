@@ -11,7 +11,17 @@
 
     <div class="container">
 
-                <h1>{{ title }}</h1>
+
+        <div style="display: inline-block">
+            <h1>{{ title }}</h1>
+            <p>
+                <img src="{{ url_for('flicket_bp.static', filename='icons/icon_excel_small.png') }}"
+                     height="25" width="25">
+                Download results as an <a
+                    href="{{ url_for('flicket_bp.tickets_csv', status=status, department=departnent, category=category, content=content, user_id=user_id) }}">excel
+                file</a>.
+            </p>
+        </div>
 
 
         <div class="row">
@@ -32,7 +42,7 @@
                         {{ form.category(class="form-control", id="category") }}
                     </div>
                     <div class="col-sm-2 flicket-form-control">
-                        {{ form.status(class="form-control", id="status")}}
+                        {{ form.status(class="form-control", id="status") }}
                     </div>
                     <div class="col-sm-2 flicket-form-control">
                         {{ form.username(class="form-control", placeholder="username", id="autocomplete-username") }}
@@ -94,8 +104,8 @@
             </tr>
             {% for t in tickets.items %}
                 <tr {%- if t.current_status.status == 'Closed' %} class="strikeout"{% endif %}
-                {%- if t.ticket_priority.priority == 'high' %} class="danger"{% endif %}
-                {%- if t.ticket_priority.priority == 'medium' %} class="warning"{% endif %}>
+                        {%- if t.ticket_priority.priority == 'high' %} class="danger"{% endif %}
+                        {%- if t.ticket_priority.priority == 'medium' %} class="warning"{% endif %}>
                     <td>
                         <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
                     </td>

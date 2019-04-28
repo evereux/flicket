@@ -52,4 +52,4 @@ class FlicketConfig(Base):
 
     base_url = db.Column(db.String(128))
 
-
+    auth_domain = db.Column(db.String(64))

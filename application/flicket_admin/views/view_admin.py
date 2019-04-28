@@ -27,6 +27,19 @@ admin_only = RoleNeed('flicket_admin')
 admin_permission = Permission(admin_only)
 
 
+def create_user(username, password, email=None, name=None, job_title=None, locale=None):
+    password = hash_password(password)
+    register = FlicketUser(username=username,
+                           email=email,
+                           name=name,
+                           password=password,
+                           job_title=job_title,
+                           date_added=datetime.datetime.now(),
+                           locale=locale)
+    db.session.add(register)
+    db.session.commit()
+
+
 # add permissions
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
@@ -72,17 +85,12 @@ def users(page=1):
 def add_user():
     form = AddUserForm()
     if form.validate_on_submit():
-        password = hash_password(form.password.data)
-        register = FlicketUser(username=form.username.data,
-                               email=form.email.data,
-                               name=form.name.data,
-                               password=password,
-                               job_title=form.job_title.data,
-                               date_added=datetime.datetime.now(),
-                               locale=form.locale.data)
-        print(form.locale.data)
-        db.session.add(register)
-        db.session.commit()
+        create_user(form.username.data,
+                    form.password.data,
+                    email=form.email.data,
+                    name=form.name.data,
+                    job_title=form.job_title.data,
+                    locale=form.locale.data)
         flash(gettext('You have successfully registered new user "%(value)s".', value=form.username.data),
               category='success')
         return redirect(url_for('admin_bp.users'))
