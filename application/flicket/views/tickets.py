@@ -87,14 +87,20 @@ def tickets_csv():
         else:
             _name = 'Not assigned'
 
-        csv_contents += (f'{ticket.id_zfill},{ticket.ticket_priority.priority},'
-                         f'"{clean_csv_data(ticket.title)}",'
-                         f'{ticket.user.name},'
-                         f'{ticket.date_added.strftime("%Y-%m-%d")},{ticket.num_replies},'
-                         f'{clean_csv_data(ticket.category.department.department)} - '
-                         f'{clean_csv_data(ticket.category.category)},'
-                         f'{ticket.current_status.status},{_name},'
-                         f'{app.config["base_url"]}{url_for("flicket_bp.ticket_view", ticket_id=ticket.id)}\n')
+        csv_contents += '{},{},"{}",{},{},{},{} - {},{},{},{}{}\n'.format(ticket.id_zfill,
+                                                                          ticket.ticket_priority.priority,
+                                                                          clean_csv_data(ticket.title),
+                                                                          ticket.user.name,
+                                                                          ticket.date_added.strftime("%Y-%m-%d"),
+                                                                          ticket.num_replies,
+                                                                          clean_csv_data(
+                                                                              ticket.category.department.department),
+                                                                          clean_csv_data(ticket.category.category),
+                                                                          ticket.current_status.status,
+                                                                          ticket.assigned.name,
+                                                                          app.config["base_url"],
+                                                                          url_for("flicket_bp.ticket_view",
+                                                                                  ticket_id=ticket.id))
 
     return Response(
         csv_contents,
