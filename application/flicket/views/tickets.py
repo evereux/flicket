@@ -81,13 +81,19 @@ def tickets_csv():
 
     csv_contents = 'Ticket_ID,Priority,Title,Submitted By,Date,Replies,Category,Status,Assigned,URL\n'
     for ticket in ticket_query:
+
+        if hasattr(ticket.assigned, 'name'):
+            _name = ticket.assigned.name
+        else:
+            _name = 'Not assigned'
+
         csv_contents += (f'{ticket.id_zfill},{ticket.ticket_priority.priority},'
                          f'"{clean_csv_data(ticket.title)}",'
                          f'{ticket.user.name},'
                          f'{ticket.date_added.strftime("%Y-%m-%d")},{ticket.num_replies},'
                          f'{clean_csv_data(ticket.category.department.department)} - '
                          f'{clean_csv_data(ticket.category.category)},'
-                         f'{ticket.current_status.status},{ticket.assigned.name},'
+                         f'{ticket.current_status.status},{_name},'
                          f'{app.config["base_url"]}{url_for("flicket_bp.ticket_view", ticket_id=ticket.id)}\n')
 
     return Response(
