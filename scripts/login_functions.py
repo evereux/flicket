@@ -37,7 +37,6 @@ def nt_log_on(domain, username, password):
                 password,
                 win32security.LOGON32_LOGON_NETWORK,
                 win32security.LOGON32_PROVIDER_DEFAULT)
-            print(token)
             authenticated = bool(token)
         except pywintypes.error:
             pass
