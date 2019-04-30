@@ -227,7 +227,9 @@ class FlicketTicket(Base):
                 if form:
                     form.department.data = department_filter.id
             if key == 'user_id' and value:
-                ticket_query = ticket_query.filter_by(assigned_id=int(value))
+                # ticket_query = ticket_query.filter_by(assigned_id=int(value))
+                ticket_query = ticket_query.filter(
+                    (FlicketTicket.assigned_id == int(value)) | (FlicketTicket.started_id == int(value)))
                 user = FlicketUser.query.filter_by(id=value).first()
                 if form:
                     form.username.data = user.username
