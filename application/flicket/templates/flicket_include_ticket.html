@@ -1,5 +1,6 @@
 <p>
-    {{ _('Ticket contents supports markdown syntax. Please refer to') }} <a href="http://commonmark.org/help/">{{ _('md help') }}</a>.
+    {{ _('Ticket contents supports markdown syntax. Please refer to') }} <a
+        href="http://commonmark.org/help/">{{ _('md help') }}</a>.
 </p>
 {{ pagedown.html_head() }}
 <form action=""
@@ -28,8 +29,17 @@
         <label class="col-sm-3 control-label">{{ _('Content') }}</label>
         <div class="col-sm-9">
             {{ form.content(class="form-control") }}
-            <div class="text-right" style="padding-top: 5pt"><button type="button" class="btn btn btn-info btn-sm"  onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button></div>
-
+            <div class="row">
+                <div class="col-sm-6">
+                    <a class="small" href="http://commonmark.org/help/">{{ _('MarkDown reference') }}</a>
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-right" style="padding-top: 5pt">
+                        <button type="button" class="btn btn btn-info btn-sm"
+                                onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {% if form.content.errors %}

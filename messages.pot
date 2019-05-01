@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-01-15 01:21+0100\n"
+"POT-Creation-Date: 2019-04-30 19:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,12 +31,11 @@ msgid "Category already exists."
 msgstr ""
 
 #: application/flicket/forms/flicket_forms.py:111
-#: application/flicket/forms/flicket_forms.py:148
+#: application/flicket/forms/flicket_forms.py:149
 msgid "Upload Documents"
 msgstr ""
 
 #: application/flicket/forms/flicket_forms.py:112
-#: application/flicket_admin/forms/form_config.py:33
 msgid "Submit"
 msgstr ""
 
@@ -44,42 +43,42 @@ msgstr ""
 msgid "Edit Ticket"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:146
+#: application/flicket/forms/flicket_forms.py:147
 msgid "Reply"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:149
+#: application/flicket/forms/flicket_forms.py:150
 #: application/flicket/templates/email_include_details.html:3
-#: application/flicket/templates/flicket_tickets.html:89
+#: application/flicket/templates/flicket_tickets.html:99
 #: application/flicket/templates/flicket_view.html:30
 msgid "Status"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:150
+#: application/flicket/forms/flicket_forms.py:151
 msgid "submit reply"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:151
+#: application/flicket/forms/flicket_forms.py:152
 msgid "reply and close"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:160
+#: application/flicket/forms/flicket_forms.py:161
 msgid "Edit Reply"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:166
+#: application/flicket/forms/flicket_forms.py:168
 msgid "search user"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:171
+#: application/flicket/forms/flicket_forms.py:173
 msgid "assign user"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:179
+#: application/flicket/forms/flicket_forms.py:181
 msgid "add department"
 msgstr ""
 
-#: application/flicket/forms/flicket_forms.py:188
+#: application/flicket/forms/flicket_forms.py:190
 msgid "add category"
 msgstr ""
 
@@ -127,13 +126,13 @@ msgid "It appears your view request url was incomplete."
 msgstr ""
 
 #: application/flicket/templates/email_include_details.html:7
-#: application/flicket/templates/flicket_tickets.html:71
+#: application/flicket/templates/flicket_tickets.html:81
 #: application/flicket/templates/flicket_view.html:34
 msgid "Priority"
 msgstr ""
 
 #: application/flicket/templates/email_include_details.html:11
-#: application/flicket/templates/flicket_tickets.html:92
+#: application/flicket/templates/flicket_tickets.html:102
 #: application/flicket/templates/flicket_users.html:74
 #: application/flicket/templates/flicket_view.html:38
 msgid "Assigned"
@@ -182,7 +181,7 @@ msgstr ""
 #: application/flicket/templates/flicket_categories.html:41
 #: application/flicket/templates/flicket_category_edit.html:17
 #: application/flicket/templates/flicket_include_ticket.html:48
-#: application/flicket/templates/flicket_tickets.html:86
+#: application/flicket/templates/flicket_tickets.html:96
 #: application/flicket/templates/flicket_view.html:26
 msgid "Category"
 msgstr ""
@@ -298,12 +297,12 @@ msgid "Departments"
 msgstr ""
 
 #: application/flicket/templates/flicket_menu.html:17
-#: application/flicket/views/main.py:88
+#: application/flicket/views/tickets.py:139
 msgid "My Tickets"
 msgstr ""
 
 #: application/flicket/templates/flicket_menu.html:18
-#: application/flicket/views/main.py:46
+#: application/flicket/views/tickets.py:49
 msgid "Tickets"
 msgstr ""
 
@@ -312,7 +311,7 @@ msgid "Create Ticket"
 msgstr ""
 
 #: application/flicket/templates/flicket_menu.html:21
-#: application/flicket/views/users.py:40
+#: application/flicket/views/users.py:39
 #: application/flicket_admin/templates/admin_menu.html:6
 msgid "Users"
 msgstr ""
@@ -326,7 +325,7 @@ msgid "Admin View"
 msgstr ""
 
 #: application/flicket/templates/flicket_menu.html:36
-#: application/flicket/views/users.py:54
+#: application/flicket/views/users.py:53
 msgid "User Details"
 msgstr ""
 
@@ -355,27 +354,27 @@ msgstr ""
 msgid "reply"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:44
+#: application/flicket/templates/flicket_tickets.html:54
 msgid "search"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:68
+#: application/flicket/templates/flicket_tickets.html:78
 msgid "Ticket ID"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:74
+#: application/flicket/templates/flicket_tickets.html:84
 msgid "Title"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:77
+#: application/flicket/templates/flicket_tickets.html:87
 msgid "Submitted By"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:80
+#: application/flicket/templates/flicket_tickets.html:90
 msgid "Date"
 msgstr ""
 
-#: application/flicket/templates/flicket_tickets.html:83
+#: application/flicket/templates/flicket_tickets.html:93
 msgid "Replies"
 msgstr ""
 
@@ -507,34 +506,22 @@ msgstr ""
 msgid "You are not authorised to delete categories."
 msgstr ""
 
-#: application/flicket/views/delete.py:124
-msgid ""
-"Category is linked to posts. Category can not be deleted unless all posts"
-" / topics are removed / relinked."
-msgstr ""
-
-#: application/flicket/views/delete.py:144
+#: application/flicket/views/delete.py:145
 msgid "Flicket - Delete Category"
 msgstr ""
 
-#: application/flicket/views/delete.py:160
+#: application/flicket/views/delete.py:161
 msgid "You are not authorised to delete departments."
 msgstr ""
 
-#: application/flicket/views/delete.py:170
-msgid ""
-"Department has categories linked to it. Department can not be deleted "
-"unless all categories are first removed."
-msgstr ""
-
-#: application/flicket/views/delete.py:185
+#: application/flicket/views/delete.py:187
 #, python-format
 msgid ""
 "You are trying to delete department <span class=\"label label-"
 "default\">%(value)s</span>."
 msgstr ""
 
-#: application/flicket/views/delete.py:188
+#: application/flicket/views/delete.py:191
 msgid "Flicket - Delete Department"
 msgstr ""
 
@@ -579,19 +566,23 @@ msgstr ""
 msgid "Ticket %(value)s closed."
 msgstr ""
 
-#: application/flicket/views/history.py:22
+#: application/flicket/views/history.py:21
 msgid "Flicket - History"
 msgstr ""
 
-#: application/flicket/views/history.py:41
+#: application/flicket/views/history.py:40
 msgid "History"
 msgstr ""
 
-#: application/flicket/views/login.py:94
-msgid "You were logged in successfully."
+#: application/flicket/views/login.py:103
+msgid "Please set your email and job title."
 msgstr ""
 
 #: application/flicket/views/login.py:106
+msgid "You were logged in successfully."
+msgstr ""
+
+#: application/flicket/views/login.py:118
 msgid "You were logged out successfully."
 msgstr ""
 
@@ -619,12 +610,12 @@ msgstr ""
 msgid "User is already assigned to ticket."
 msgstr ""
 
-#: application/flicket/views/ticket_assign.py:63
+#: application/flicket/views/ticket_assign.py:66
 #, python-format
 msgid "You reassigned ticket: %(value)s"
 msgstr ""
 
-#: application/flicket/views/ticket_assign.py:66
+#: application/flicket/views/ticket_assign.py:69
 msgid "Assign Ticket"
 msgstr ""
 
@@ -641,17 +632,18 @@ msgstr ""
 msgid "You released ticket: %(value)s"
 msgstr ""
 
-#: application/flicket/views/view.py:32
+#: application/flicket/views/ticket_view.py:32
 #, python-format
 msgid "Cannot find ticket: \"%(value)s\""
 msgstr ""
 
-#: application/flicket/views/view.py:87
+#: application/flicket/views/ticket_view.py:87
 #, python-format
 msgid "You have replied to ticket %(value_1)s: %(value_2)s."
 msgstr ""
 
-#: application/flicket/views/view.py:99 application/flicket/views/view.py:105
+#: application/flicket/views/ticket_view.py:99
+#: application/flicket/views/ticket_view.py:105
 #, python-format
 msgid ""
 "%(value_1)s wrote on %(value_2)s\r\n"
@@ -659,7 +651,7 @@ msgid ""
 "%(value_3)s"
 msgstr ""
 
-#: application/flicket/views/view.py:115
+#: application/flicket/views/ticket_view.py:115
 msgid "View Ticket"
 msgstr ""
 
@@ -761,62 +753,62 @@ msgstr ""
 msgid "Delete User"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:84
+#: application/flicket_admin/views/view_admin.py:94
 #, python-format
 msgid "You have successfully registered new user \"%(value)s\"."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:104
+#: application/flicket_admin/views/view_admin.py:115
 msgid "Username already exists"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:126
+#: application/flicket_admin/views/view_admin.py:137
 #, python-format
 msgid "User %(value)s edited."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:141
+#: application/flicket_admin/views/view_admin.py:152
 msgid "Could not find user."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:159
+#: application/flicket_admin/views/view_admin.py:171
 msgid "Can't delete default flicket_admin user."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:164
+#: application/flicket_admin/views/view_admin.py:176
 #, python-format
 msgid "Deleted user %(value)s"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:187
+#: application/flicket_admin/views/view_admin.py:200
 #, python-format
 msgid "New group \"%(value)s\" added."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:204
+#: application/flicket_admin/views/view_admin.py:218
 #, python-format
 msgid "Could not find group %(value)s"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:209
+#: application/flicket_admin/views/view_admin.py:223
 #, python-format
 msgid "Can't edit group %(value)s"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:232
+#: application/flicket_admin/views/view_admin.py:247
 msgid "Can't delete default flicket_admin group."
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:237
+#: application/flicket_admin/views/view_admin.py:252
 #, python-format
 msgid "Deleted group %(value)s"
 msgstr ""
 
-#: application/flicket_admin/views/view_admin.py:243
+#: application/flicket_admin/views/view_admin.py:258
 msgid "Delete Group"
 msgstr ""
 
-#: application/flicket_admin/views/view_config.py:54
+#: application/flicket_admin/views/view_config.py:57
 msgid "Config details updated."
 msgstr ""
 

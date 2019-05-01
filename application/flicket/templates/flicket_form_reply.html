@@ -9,14 +9,23 @@
       name="add_reply">
     {{ form.hidden_tag() }}
 
-    <div class="row flicket-row flicket-row-reply" >
+    <div class="row flicket-row flicket-row-reply">
 
         <div class="form-group">
             <a name="reply"><label class="col-sm-2 control-label">{{ form.content.label }}</label></a>
             <div class="col-sm-10">
                 {{ form.content(class="form-control") }}
-                <div class="text-right" style="padding-top: 5pt"><button type="button" class="btn btn btn-info btn-sm"  onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button></div>
-                <a class="small" href="http://commonmark.org/help/">{{ _('MarkDown reference') }}</a>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a class="small" href="http://commonmark.org/help/">{{ _('MarkDown reference') }}</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="text-right" style="padding-top: 5pt">
+                            <button type="button" class="btn btn btn-info btn-sm"
+                                    onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         {% if form.content.errors %}
@@ -36,16 +45,16 @@
             <div class="col-sm-3">
                 {{ form.file }}
             </div>
-        <div class="col-sm-3">
-            {{ form.status(class="form-control") }}
-        </div>
+            <div class="col-sm-3">
+                {{ form.status(class="form-control") }}
+            </div>
             <div class="col-sm-4 text-right">
                 {% if ticket %}
-                {% if g.user.is_admin or (ticket.user == g.user) %}
-                    {% if ticket.current_status.status != 'Closed' %}
-                        {{ form.submit_close }}
+                    {% if g.user.is_admin or (ticket.user == g.user) %}
+                        {% if ticket.current_status.status != 'Closed' %}
+                            {{ form.submit_close }}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
                 {% endif %}
                 {{ form.submit }}
             </div>
