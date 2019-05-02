@@ -9,7 +9,7 @@
     {% include('flicket_apijson_statuses.html') %}
 
 
-    <div class="container">
+    <div class="container-fluid">
 
 
         <div style="display: inline-block">
@@ -34,7 +34,7 @@
                 {{ form.hidden_tag() }}
 
 
-                <div class="form-group">
+                <div class="form-horizontal">
                     <div class="col-sm-2 flicket-form-control">
                         {{ form.department(class="form-control", id="department") }}
                     </div>

@@ -241,7 +241,7 @@ header {
 }
 
 .flicket-status-low {
-    background-color: #FFFFF;
+    background-color: #FFFFFF;
 }
 
 .flicket-status-closed {
@@ -250,13 +250,4 @@ header {
 
 td {
     position: relative;
-}
-
-tr.strikeout td:before {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    border-bottom: 1px solid #111;
-    width: 100%;
 }
