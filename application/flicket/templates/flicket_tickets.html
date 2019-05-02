@@ -72,7 +72,7 @@
             <!-- / flicket search form -->
         </div>
 
-        <table class="table table-responsive table-striped table-hover">
+        <table class="table table-responsive">
             <tr>
                 <th class="text-nowrap">
                     {{ _('Ticket ID') }}
@@ -103,9 +103,15 @@
                 </th>
             </tr>
             {% for t in tickets.items %}
-                <tr {%- if t.current_status.status == 'Closed' %} class="strikeout"{% endif %}
-                        {%- if t.ticket_priority.priority == 'high' %} class="danger"{% endif %}
-                        {%- if t.ticket_priority.priority == 'medium' %} class="warning"{% endif %}>
+                <tr {%- if t.current_status.status == 'Closed' %}
+                            class="flicket-status-closed"{% endif %}
+                        {%- if t.ticket_priority.priority == 'high' %}
+                            class="flicket-status-high"
+                         {% elif t.ticket_priority.priority == 'medium' %}
+                            class="flicket-status-medium"
+                         {% elif t.ticket_priority.priority == 'low' %}
+                            class="flicket-status-low"
+                        {% endif %}>
                     <td>
                         <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
                     </td>
