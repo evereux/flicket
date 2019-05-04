@@ -36,7 +36,7 @@ def tickets(page=1):
     user_id = request.args.get('user_id')
 
     if form.validate_on_submit():
-        redirect_url = FlicketTicket.form_redirect(form, page, url='flicket_bp.tickets')
+        redirect_url = FlicketTicket.form_redirect(form, url='flicket_bp.tickets')
 
         return redirect(redirect_url)
 
@@ -124,7 +124,7 @@ def my_tickets(page=1):
     user_id = request.args.get('user_id')
 
     if form.validate_on_submit():
-        redirect_url = FlicketTicket.form_redirect(form, page, url='flicket_bp.my_tickets')
+        redirect_url = FlicketTicket.form_redirect(form, url='flicket_bp.my_tickets')
 
         return redirect(redirect_url)
 
