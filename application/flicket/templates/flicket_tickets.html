@@ -17,15 +17,13 @@
             <p>
                 <img src="{{ url_for('flicket_bp.static', filename='icons/icon_excel_small.png') }}"
                      height="25" width="25">
-                Download results as an <a
-                    href="{{ url_for('flicket_bp.tickets_csv', status=status, department=departnent, category=category, content=content, user_id=user_id) }}">excel
+                Download results as a <a
+                    href="{{ url_for('flicket_bp.tickets_csv', status=status, department=departnent, category=category, content=content, user_id=user_id) }}">csv
                 file</a>.
             </p>
         </div>
 
-
-        <div class="row">
-            <!-- Flicket search form -->
+        <nav aria-label="search form">
             <form action=""
                   class="form-horizontal flicket-form"
                   enctype="multipart/form-data"
@@ -33,131 +31,127 @@
                   name="search_ticket">
                 {{ form.hidden_tag() }}
 
+                <table class="table">
+                    <tr>
+                        <td>
+                            {{ form.department(class="form-control", id="department") }}
+                        </td>
+                        <td>
+                            {{ form.category(class="form-control", id="category") }}
+                        </td>
+                        <td>
+                            {{ form.status(class="form-control", id="status") }}
+                        </td>
+                        <td>
+                            {{ form.username(class="form-control", placeholder="username", id="autocomplete-username",
+                        **{'data-toggle': "tool-tip",
+                        'title':'Filter results by user. Results will include all tickets user has either submitted or replied to.'}) }}
+                        </td>
+                        <td>
+                            {{ form.content(class="form-control", placeholder="contents") }}
+                        </td>
+                        <td>
+                            <input class="btn btn-primary" type="submit" value={{ _('search') }}>
+                        </td>
+                    </tr>
 
-                <div class="form-horizontal">
-                    <div class="col-sm-2 flicket-form-control">
-                        {{ form.department(class="form-control", id="department") }}
-                    </div>
-                    <div class="col-sm-2 flicket-form-control">
-                        {{ form.category(class="form-control", id="category") }}
-                    </div>
-                    <div class="col-sm-2 flicket-form-control">
-                        {{ form.status(class="form-control", id="status") }}
-                    </div>
-                    <div class="col-sm-2 flicket-form-control">
-                        {{ form.username(class="form-control", placeholder="username", id="autocomplete-username") }}
-                    </div>
-                    <div class="col-sm-3 flicket-form-control">
-                        {{ form.content(class="form-control", placeholder="contents") }}
-                    </div>
-                    <div class="col-sm-1 flicket-form-control text-right">
-                        <input class="btn btn-primary" type="submit" value={{ _('search') }}>
-                    </div>
-                </div>
-                {% if form.username.errors %}
-                    <div class="alert alert-warning small">
-                        {% for error in form.username.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                {% if form.content.errors %}
-                    <div class="alert alert-warning small">
-                        {% for error in form.content.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                </table>
+
             </form>
-            <!-- / flicket search form -->
-        </div>
 
-        <table class="table table-responsive">
-            <tr>
-                <th class="text-nowrap">
-                    {{ _('Ticket ID') }}
-                </th>
-                <th>
-                    {{ _('Priority') }}
-                </th>
-                <th>
-                    {{ _('Title') }}
-                </th>
-                <th nowrap="nowrap">
-                    {{ _('Submitted By') }}
-                </th>
-                <th>
-                    {{ _('Date') }}
-                </th>
-                <th>
-                    {{ _('Replies') }}
-                </th>
-                <th>
-                    {{ _('Category') }}
-                </th>
-                <th>
-                    {{ _('Status') }}
-                </th>
-                <th>
-                    {{ _('Assigned') }}
-                </th>
-            </tr>
-            {% for t in tickets.items %}
-                <tr {%- if t.current_status.status == 'Closed' %}
-                            class="flicket-status-closed"{% endif %}
-                        {%- if t.ticket_priority.priority == 'high' %}
-                            class="flicket-status-high"
-                         {% elif t.ticket_priority.priority == 'medium' %}
-                            class="flicket-status-medium"
-                         {% elif t.ticket_priority.priority == 'low' %}
-                            class="flicket-status-low"
-                        {% endif %}>
-                    <td>
-                        <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
-                    </td>
-                    <td>
-                        {{ t.ticket_priority.priority }}
-                    </td>
-                    <td>
-                        {{ t.title }}
-                    </td>
-                    <td>
-                        {{ t.user.name }}
-                    </td>
-                    <td>
-                        {{ t.date_added.strftime('%Y-%m-%d') }}
-                    </td>
-                    <td>
-                        {{ t.num_replies }}
-                    </td>
-                    <td>
-                        {{ t.category.department.department }} - {{ t.category.category }}
-                    </td>
-                    <td>
-                        {{ t.current_status.status }}
-                    </td>
-                    <td>
-                        {{ t.assigned.name }}
-                    </td>
+        </nav>
+
+        <nav aria-label="search results">
+            <table class="table table-responsive">
+                <tr>
+                    <th class="text-nowrap">
+                        {{ _('Ticket ID') }}
+                    </th>
+                    <th>
+                        {{ _('Priority') }}
+                    </th>
+                    <th>
+                        {{ _('Title') }}
+                    </th>
+                    <th nowrap="nowrap">
+                        {{ _('Submitted By') }}
+                    </th>
+                    <th nowrap="nowrap">
+                        {{ _('Date') }}
+                    </th>
+                    <th>
+                        {{ _('Replies') }}
+                    </th>
+                    <th>
+                        {{ _('Category') }}
+                    </th>
+                    <th>
+                        {{ _('Status') }}
+                    </th>
+                    <th>
+                        {{ _('Assigned') }}
+                    </th>
                 </tr>
-            {% endfor %}
-        </table>
+                {% for t in tickets.items %}
+                    <tr {%- if t.current_status.status == 'Closed' %}
+                        class="flicket-status-closed"{% endif %}
+                            {%- if t.ticket_priority.priority == 'high' %}
+                        class="flicket-status-high"
+                            {% elif t.ticket_priority.priority == 'medium' %}
+                        class="flicket-status-medium"
+                            {% elif t.ticket_priority.priority == 'low' %}
+                        class="flicket-status-low"
+                            {% endif %}>
+                        <td>
+                            <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
+                        </td>
+                        <td>
+                            {{ t.ticket_priority.priority }}
+                        </td>
+                        <td>
+                            {{ t.title }}
+                        </td>
+                        <td>
+                            {{ t.user.name }}
+                        </td>
+                        <td nowrap="nowrap">
+                            {{ t.date_added.strftime('%Y-%m-%d') }}
+                        </td>
+                        <td>
+                            {{ t.num_replies }}
+                        </td>
+                        <td>
+                            {{ t.category.department.department }} - {{ t.category.category }}
+                        </td>
+                        <td>
+                            {{ t.current_status.status }}
+                        </td>
+                        <td>
+                            {{ t.assigned.name }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
 
-        <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
-            {% if page %}
-                {% if page != tickets.page %}
-                    <li><a href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
-                    </li>
+        </nav>
+
+        <nav aria-label="page navigation">
+            <ul class="pagination pagination-sm">{% for page in tickets.iter_pages() %}
+                {% if page %}
+                    {% if page != tickets.page %}
+                        <li><a href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
+                        </li>
+                    {% else %}
+                        <li class="active"><a
+                                href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
+                        </li>
+                    {% endif %}
                 {% else %}
-                    <li class="active"><a
-                            href="{{ url_for(base_url, page=page, **request.args) }}"> {{ page }}</a>
-                    </li>
+                    <li><a href="">...</a></li>
                 {% endif %}
-            {% else %}
-                <li><a href="">...</a></li>
-            {% endif %}
-        {% endfor %}
-        </ul>
+            {% endfor %}
+            </ul>
+        </nav>
 
     </div>
 {% endblock %}

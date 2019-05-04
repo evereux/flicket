@@ -21,7 +21,7 @@
 
                         var category = document.getElementById('category');
                         $(category).empty();
-                        $(category).append($('<option></option>').text('--select--').val('0'));
+                        $(category).append($('<option></option>').text('--categories--').val('0'));
                         for (var i = 0; i < data._meta.total_items; i++) {
                             var cat_id = data.items[i].id;
                             var cat_name = data.items[i].category;
@@ -44,7 +44,7 @@
             } else {
                 var category = document.getElementById('category');
                 $(category).empty();
-                $(category).append($('<option></option>').text('--select--').val('0'));
+                $(category).append($('<option></option>').text('--categories--').val('0'));
             }
 
         }).change();

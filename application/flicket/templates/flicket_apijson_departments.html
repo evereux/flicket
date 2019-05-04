@@ -18,7 +18,7 @@
                 // populate the department selection inputs
                 var department = document.getElementById('department');
                 $(department).empty();
-                $(department).append($('<option></option>').text('--select--').val('0'));
+                $(department).append($('<option></option>').text('--departments--').val('0'));
                 for (var i = 0; i < data._meta.total_items; i++) {
                     var dep_id = data.items[i].id;
                     var dep_name = data.items[i].department;
