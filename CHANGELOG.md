@@ -10,13 +10,19 @@
     If Flicket is running on an NT (windows) machine and pywin32 is installed it will try to authenticate the user
     on that machine if they aren't already registered.
     I will add LDAP authentication at some point soon when I can find a means to test (OpenLDAP hasn't worked for me.)
+*   Added a default group "super_user". super_users's can create departments and categories but can't access the 
+    administration settings or delete topics or posts.
 
-    If you are migrating from any earlier version you should ensure you upgrade
-    the database. 
+    If you are migrating from any earlier version you should ensure:
+       * you upgrade the database. 
     ~~~
     python manage.py db migrate
     python manage.py db upgrade
-    ~~~   
+    ~~~
+    
+        * add the user super_user to the groups in flicket_admin/groups/ groups page. You can use the admin 
+        configuration area to do this.
+    
 
 # 0.1.7
 *   Added view 'my_tickets'.

@@ -16,7 +16,7 @@ from application.flicket_admin.views import admin_bp
 from application.flicket_api_v2.views import bp_api_v2
 from application.flicket_errors import bp_errors
 
-__version__ = '0.1.8dev'
+__version__ = '0.1.8'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')

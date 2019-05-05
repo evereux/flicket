@@ -40,6 +40,7 @@ class BaseConfiguration(object):
 
     # default flicket_admin group name
     ADMIN_GROUP_NAME = 'flicket_admin'
+    SUPER_USER_GROUP_NAME = 'super_user'
 
     SECRET_KEY = config_data['SECRET_KEY']
 

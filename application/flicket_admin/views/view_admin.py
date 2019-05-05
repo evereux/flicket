@@ -135,7 +135,7 @@ def edit_user():
                 group_id.users.append(user)
             db.session.commit()
             flash(gettext("User %(value)s edited.", value=user.username))
-            return redirect(url_for('admin_bp.users'))
+            return redirect(url_for('admin_bp.edit_user', id=_id))
 
         # populate form with form data retrieved from database.
         form.user_id.data = user.id
@@ -153,7 +153,8 @@ def edit_user():
         return redirect(url_for('admin_bp.index'))
 
     # noinspection PyUnresolvedReferences
-    return render_template('admin_user.html', title='Edit User', comment='Edit user details.', admin_edit=True,
+    return render_template('admin_user.html', title='Edit User', comment='Edit user details. Use "CTRL" to deselect',
+                           admin_edit=True,
                            form=form, user=user)
 
 

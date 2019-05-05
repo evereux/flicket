@@ -130,6 +130,19 @@ class FlicketUser(PaginatedAPIMixin, Base):
         else:
             return False
 
+    @property
+    def is_super_user(self):
+        """
+        Returns true if the user is a member of the 'flicket_admin' group.
+        :return True if condition met.
+        """
+        user = FlicketUser.query.filter_by(id=self.id).first()
+        for g in user.flicket_groups:
+            if g.group_name == app.config['SUPER_USER_GROUP_NAME']:
+                return True
+        else:
+            return False
+
     def get_id(self):
         """
 

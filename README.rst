@@ -14,6 +14,12 @@ any other language that I really liked. Also, I wanted a project to
 further my python / flask knowledge and development.
 
 
+Upgrading From Earlier Versions
+-------------------------------
+
+See the changelog for changes and additional steps to take when upgrading.
+
+
 Requirements
 ------------
 Prior to installing and running Flicket please read these requirements.
@@ -28,7 +34,7 @@ Prior to installing and running Flicket please read these requirements.
     When I last tried SQLite I had problems configuring the email settings
     within the administration settings. You may have to change them manually
     within SQLite.
-  
+
 
 * This will run on either Linux or Windows. Mac is untested.
 
@@ -47,7 +53,7 @@ database.
 db_type value within `config.py`. See SQLAlchemy_documentation_
 for options.
 
-3. Install the python module requirements as defined in requirements.txt. 
+3. Install the python module requirements as defined in requirements.txt.
 Best practise is to set-up a virtual environment. Once done run `pip install -r requirements.txt`
 
 4. Create the configuration json file.
@@ -102,6 +108,10 @@ Windows NT Authentication
 If enabled in the administration config settings (use_auth_domain, auth_domain)
 Flicket can authenticate users on the domain upon which Flicket is running. This means
 that users don't have to be manually added.
+
+You will also need to install pywin32.
+
+
 
 
 Exporting / Importing Flicket Users

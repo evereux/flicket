@@ -109,9 +109,10 @@ def delete_post(post_id):
 def delete_category(category_id=False):
     if category_id:
 
-        # check user is authorised to delete categories. Only admin can do this.
-        if not g.user.is_admin:
+        # check user is authorised to delete categories. Only admin or super_user can do this.
+        if not any([g.user.is_admin, g.user.is_super_user]):
             flash(gettext('You are not authorised to delete categories.'), category='warning')
+            return redirect('flicket_bp.departments')
 
         form = ConfirmPassword()
 
@@ -139,8 +140,8 @@ def delete_category(category_id=False):
 
         notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
                        "to department <span class=\"label label-default\">{}</span>.".format(
-                        category.category,
-                        category.department.department)
+            category.category,
+            category.department.department)
 
         title = gettext('Flicket - Delete Category')
 
@@ -156,9 +157,10 @@ def delete_category(category_id=False):
 def delete_department(department_id=False):
     if department_id:
 
-        # check user is authorised to delete departments. Only admin can do this.
-        if not g.user.is_admin:
+        # check user is authorised to delete departments. Only admin or super_user can do this.
+        if not any([g.user.is_admin, g.user.is_super_user]):
             flash(gettext('You are not authorised to delete departments.'), category='warning')
+            return redirect('flicket_bp.departments')
 
         form = ConfirmPassword()
 
