@@ -16,7 +16,9 @@ exclude_dirs = [
     'env',
     'migrations',
     'tmp',
-    '__pycache__']
+    '__pycache__',
+    '__archive__',
+    'docs']
 
 exclude_files = [
     '.gitignore',
