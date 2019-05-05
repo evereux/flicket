@@ -21,5 +21,6 @@ def set_flicket_config():
         avatar_upload_folder=config.avatar_upload_folder,
         base_url=config.base_url,
         application_title=config.application_title,
+        use_auth_domain=config.use_auth_domain,
         auth_domain=config.auth_domain,
     )

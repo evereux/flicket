@@ -25,10 +25,14 @@ def login_user_exist(form, field):
     username = form.username.data
     password = form.password.data
 
+    if app.config['use_auth_domain']:
+        nt_authenticated = nt_log_on(app.config['auth_domain'], username, password)
+    else:
+        nt_authenticated = False
+
     result = FlicketUser.query.filter_by(username=username)
     if result.count() == 0:
         # couldn't find username in database so check if the user is authenticated on the domain.
-        nt_authenticated = nt_log_on(app.config['auth_domain'], username, password)
         if nt_authenticated:
             # user might have tried to login with full email?
             username = username.split('@')[0]
@@ -40,6 +44,8 @@ def login_user_exist(form, field):
         return False
     result = result.first()
     if bcrypt.hashpw(password.encode('utf-8'), result.password) != result.password:
+        if nt_authenticated:
+            return True
         field.errors.append('Invalid password. Please contact admin is this problem persists.')
         return False
 

@@ -42,6 +42,19 @@ header {
     padding: 10pt;
 }
 
+/* force white background as some browsers themes bugger up the admin config forms */
+input {
+    background-color: white;
+}
+
+input[type="checkbox"] {
+    background-color: white;
+}
+
+input[type="radio"] {
+    background-color: white;
+}
+
 .white_space {
     white-space: pre-wrap;
 }
@@ -76,7 +89,7 @@ header {
     border-radius: 3px;
     background-color: #e8f5f3;
     padding: 10px;
-    display:none;
+    display: none;
 }
 
 .flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {

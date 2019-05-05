@@ -47,6 +47,7 @@ def config():
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
         config_details.base_url = form.base_url.data
 
+        config_details.use_auth_domain = form.use_auth_domain.data
         config_details.auth_domain = form.auth_domain.data
 
         # Don't change the password if nothing was entered.
@@ -77,6 +78,7 @@ def config():
     form.ticket_upload_folder.data = config_details.ticket_upload_folder
     form.base_url.data = config_details.base_url
 
+    form.use_auth_domain.data = config_details.use_auth_domain
     form.auth_domain.data = config_details.auth_domain
 
     return render_template('admin_config.html',

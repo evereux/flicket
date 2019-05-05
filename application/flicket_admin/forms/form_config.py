@@ -29,6 +29,7 @@ class ConfigForm(FlaskForm):
     ticket_upload_folder = StringField('ticket_upload_folder', validators=[DataRequired()])
     base_url = StringField('base_url', validators=[Length(min=0, max=128)])
 
+    use_auth_domain = BooleanField('use_auth_domain', validators=[])
     auth_domain = StringField('auth_domain', validators=[])
 
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])

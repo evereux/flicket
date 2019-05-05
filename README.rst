@@ -95,6 +95,15 @@ Production Environment
 To serve Flicket within a production environment webservers such as Apache
 or nginx are typically used.
 
+
+Windows NT Authentication
+-------------------------
+
+If enabled in the administration config settings (use_auth_domain, auth_domain)
+Flicket can authenticate users on the domain upon which Flicket is running. This means
+that users don't have to be manually added.
+
+
 Exporting / Importing Flicket Users
 -------------------------------------
 Exporting

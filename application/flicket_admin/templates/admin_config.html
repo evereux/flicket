@@ -26,7 +26,6 @@
                                 {% if field.name == 'allowed_extensions' %}
                                 {{ _('This must be a comma delimited list.') }}
                                 {% endif %}
-
                                 {% if field.errors %}<span class="alert alert-warning">
                                     {% for error in field.errors %}
                                         {{ error }}.
