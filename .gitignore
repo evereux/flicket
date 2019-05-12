@@ -6,7 +6,6 @@ __pycache__/
 .idea/
 
 __archive__
-screenshots*
 config.json
 users.json
 migrations
