@@ -218,12 +218,31 @@ To add an additional local:
 Screenshots
 -----------
 
+Home page
+~~~~~~~~~
+
 .. image:: screenshots/01_home_page_2019-05-12_16-23-44.png
+
+
+Tickets page
+~~~~~~~~~~~~
 
 .. image:: screenshots/02_tickets_2019-05-12_16-23-34.png
 
+
+Ticket page
+~~~~~~~~~~~
+
 .. image:: screenshots/03_ticket_2019-05-12_16-27-49.png
 
-.. image:: screenshots/04_create_ticket_(markdown_preview)_2019-05-12_16-27-24.png
 
-.. image:: screenshots/05_users_ 2019-05-12_16-28-00.png
+Creating A Ticket - Also shows expanded markdown preview box
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. image:: screenshots/04_create_ticket_markdown_preview_2019-05-12_16-27-24.png
+
+
+List of users
+~~~~~~~~~~~~~
+
+.. image:: screenshots/05_users_2019-05-12_16-28-00.png
