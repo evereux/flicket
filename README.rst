@@ -23,12 +23,7 @@ like to use.
 Currently, all the views require login so I'll have to up account for you
 until I create a better hopefully spam proof version.
 
-
-Screenshots
------------
-
-.. image:: screenshots/01_home_page_2019-05-12_16-23-44.png
-    :width: 50pt
+Optionally, see the screenshots at the bottom of this page.
 
 
 Upgrading From Earlier Versions
@@ -129,8 +124,6 @@ that users don't have to be manually added.
 You will also need to install pywin32.
 
 
-
-
 Exporting / Importing Flicket Users
 -------------------------------------
 Exporting
@@ -220,3 +213,17 @@ To add an additional local:
 .. code-block::
 
     pybabel update -i messages.pot -d application\translations
+
+
+Screenshots
+-----------
+
+.. image:: screenshots/01_home_page_2019-05-12_16-23-44.png
+
+.. image:: screenshots/02_tickets_2019-05-12_16-23-34.png
+
+.. image:: screenshots/03_ticket_2019-05-12_16-27-49.png
+
+.. image:: screenshots/04_create_ticket_(markdown_preview)_2019-05-12_16-27-24.png
+
+.. image:: screenshots/05_users_ 2019-05-12_16-28-00.png
