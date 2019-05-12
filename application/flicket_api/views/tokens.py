@@ -6,11 +6,11 @@
 from flask import g, jsonify
 
 from application import app, db
-from application.flicket_api_v2.views import bp_api_v2
-from application.flicket_api_v2.views.auth import basic_auth, token_auth
+from application.flicket_api.views import bp_api
+from application.flicket_api.views.auth import basic_auth, token_auth
 
 
-@bp_api_v2.route(app.config['FLICKET_API_V2'] + 'tokens', methods=['POST'])
+@bp_api.route(app.config['FLICKET_API'] + 'tokens', methods=['POST'])
 @basic_auth.login_required
 def get_token():
     token = g.current_user.get_token()
@@ -18,7 +18,7 @@ def get_token():
     return jsonify({'token': token})
 
 
-@bp_api_v2.route(app.config['FLICKET_API_V2'] + 'tokens', methods=['DELETE'])
+@bp_api.route(app.config['FLICKET_API'] + 'tokens', methods=['DELETE'])
 @token_auth.login_required
 def revoke_token():
     g.current_user.revoke_token()

@@ -4,7 +4,7 @@
         $('#autocomplete-username').autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: '/flicket-api-v2/users/',
+                    url: '/flicket-api/users/',
                     datatype: 'json',
                     headers: {
                         'Authorization' : 'Bearer {{ g.user.token }}'

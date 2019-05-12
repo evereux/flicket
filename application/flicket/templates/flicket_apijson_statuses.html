@@ -3,7 +3,7 @@
 
     $(document).ready(function () {
         $.ajax({
-            url: '/flicket-api-v2/statuses/',
+            url: '/flicket-api/statuses/',
             datatype: 'json',
             headers: {
                 'Authorization' : 'Bearer {{ g.user.token }}'

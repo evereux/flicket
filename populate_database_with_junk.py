@@ -22,6 +22,8 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import admin
 
+# todo: add random subscriptions
+# todo: add random edits
 
 def how_many():
     # todo: prompt user for number of topics, replies and users to add.

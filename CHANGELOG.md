@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.1.9 - in developement.
+*   Expanded API functionality ... still work to be done during this release
+
 # 0.1.8
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.
 *   Updated wording of prompts in 'populate_database_with_junk.py'.

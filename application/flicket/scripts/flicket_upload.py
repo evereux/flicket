@@ -73,7 +73,7 @@ class UploadFile:
         if self.file_name and self.upload_folder:
             self.target_file = os.path.join(self.upload_folder, self.file_name)
         else:
-            print('Problem with file_name {} or upload_folder {}.'.format(self.file_name, self.upload_folder))
+            # print('Problem with file_name {} or upload_folder {}.'.format(self.file_name, self.upload_folder))
             return False
 
         # Is the file extension in the list of allowed extensions.
@@ -81,7 +81,7 @@ class UploadFile:
             self.file.save(self.target_file)
             return self.file
         else:
-            print('There was a problem with the files extension.')
+            # print('There was a problem with the files extension.')
             return False
 
 
