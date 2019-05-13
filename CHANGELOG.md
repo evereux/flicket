@@ -2,6 +2,7 @@
 
 # 0.1.9 - in developement.
 *   Expanded API functionality ... still work to be done during this release
+*   Fixed issue where field contents were not remembered after a search.
 
 # 0.1.8
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.
