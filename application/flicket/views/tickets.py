@@ -48,6 +48,10 @@ def tickets(page=1):
 
     title = gettext('Tickets')
 
+    # todo: pull from api on page load as other fields?
+    if content:
+        form.content.data = content
+
     return render_template('flicket_tickets.html',
                            title=title,
                            form=form,
