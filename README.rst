@@ -20,10 +20,9 @@ I have a working version at: https://flicket.evereux.uk/. If you'd like access
 drop an email to me at evereux@gmail.com. Tell me username / email you would
 like to use.
 
-Currently, all the views require login so I'll have to up account for you
-until I create a better hopefully spam proof version.
+Currently, all the views require login so I'll have to create and account.
 
-Optionally, see the screenshots at the bottom of this page.
+Alternatively, see the screenshots at the bottom of this page.
 
 
 Upgrading From Earlier Versions
@@ -178,10 +177,10 @@ To add an additional local:
 
 .. code-block::
 
-    pybabel init -i messages.pot -d application\translations -l de
+    pybabel init -i messages.pot -d application/translations -l de
 
 
-* In the folder `application\translations` there should now be a new folder
+* In the folder `application/translations` there should now be a new folder
   `de`.
 
 
@@ -197,7 +196,7 @@ To add an additional local:
 
 .. code-block::
 
-    pybabel compile -d application\translations
+    pybabel compile -d application/translations
 
 
 * If any python or html text strings have been newly tagged for translation
@@ -212,7 +211,7 @@ To add an additional local:
 
 .. code-block::
 
-    pybabel update -i messages.pot -d application\translations
+    pybabel update -i messages.pot -d application/translations
 
 
 Screenshots
