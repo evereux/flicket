@@ -18,7 +18,7 @@ def flicket_history_topic(topic_id):
     history = FlicketHistory.query.filter_by(topic_id=topic_id).all()
     ticket = FlicketTicket.query.filter_by(id=topic_id).one()
 
-    title = gettext('Flicket - History')
+    title = gettext('History')
 
     return render_template(
         'flicket_history.html',

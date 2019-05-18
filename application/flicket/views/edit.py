@@ -69,7 +69,7 @@ def edit_ticket(ticket_id):
     form.title.data = ticket.title
     form.category.data = ticket.category_id
 
-    title = gettext('Flicket - Edit Ticket')
+    title = gettext('Edit Ticket')
 
     return render_template('flicket_edittopic.html',
                            title=title,
@@ -156,5 +156,5 @@ def edit_post(post_id):
     form.content.data = post.content
 
     return render_template('flicket_editpost.html',
-                           title='Flicket - Edit Post',
+                           title='Edit Post',
                            form=form)

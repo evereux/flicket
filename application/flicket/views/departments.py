@@ -18,7 +18,6 @@ from application.flicket.models.flicket_models import FlicketDepartment
 @flicket_bp.route(app.config['FLICKET'] + 'departments/<int:page>/', methods=['GET', 'POST'])
 @login_required
 def departments(page=1):
-
     form = DepartmentForm()
 
     query = FlicketDepartment.query.order_by(FlicketDepartment.department.asc())
@@ -32,7 +31,7 @@ def departments(page=1):
 
     _departments = query.paginate(page, app.config['posts_per_page'])
 
-    title = gettext('Flicket - Departments')
+    title = gettext('Departments')
 
     return render_template('flicket_departments.html',
                            title=title,
@@ -58,7 +57,7 @@ def department_edit(department_id=False):
         form.department.data = query.department
 
         return render_template('flicket_department_edit.html',
-                               title='Flicket - Edit Department',
+                               title='Edit Department',
                                form=form,
                                department=query
                                )

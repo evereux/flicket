@@ -35,14 +35,15 @@ app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
 
-# import jinja function
-app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
 pagedown = PageDown(app)
 
 babel = Babel(app)
+
+# import jinja function
+app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown)
 
 # import models so alembic can see them
 from application.flicket.models import flicket_user, flicket_models
