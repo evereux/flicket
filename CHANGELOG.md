@@ -3,6 +3,9 @@
 # 0.1.9 - in developement.
 *   Expanded API functionality ... still work to be done during this release
 *   Fixed issue where field contents were not remembered after a search.
+*   Added command to send emails to users who have tickets not closed. This needs to be invoked from the command line
+    using `python manage.py email_outstanding_tickets` using a (weekly? don't spam your users too much!") cronjob or 
+    similar.
 
 # 0.1.8
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.

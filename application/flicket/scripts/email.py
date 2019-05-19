@@ -35,12 +35,11 @@ class FlicketMail:
             MAIL_MAX_EMAILS=config.mail_max_emails,
             MAIL_SUPPRESS_SEND=config.mail_suppress_send,
             MAIL_ASCII_ATTACHMENTS=config.mail_ascii_attachments,
+            base_url=config.base_url
         )
 
         self.mail = Mail(app)
         self.mail.init_app(app)
-
-        self.base_url = app.config['base_url']
 
         self.sender = config.mail_default_sender
 
@@ -104,6 +103,20 @@ class FlicketMail:
 
         self.send_email(title, self.sender, recipients, html_body)
 
+    def tickets_not_closed(self, user, tickets):
+        """
+        Sends email to user notifyiing them that tickets they have created or have been assigned
+        that are
+        :return:
+        """
+
+        recipient = [user.email]
+        title = 'Outstanding Ticket Notifications'
+        html_body = render_template('email_ticket_not_closed.html', tickets=tickets,
+                                    title="Tickets Still Awaiting Resolution")
+
+        self.send_email(title, self.sender, recipient, html_body)
+
     @send_async_email
     def send_email(self, subject, sender, recipients, html_body):
         """
@@ -117,6 +130,7 @@ class FlicketMail:
         """
 
         if not app.config['MAIL_SUPPRESS_SEND']:
+            print('sending_ticket')
             with app.app_context():
                 message = Message(subject, sender=sender, recipients=recipients, html=html_body)
                 self.mail.send(message)

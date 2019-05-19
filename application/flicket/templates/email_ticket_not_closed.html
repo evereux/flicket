@@ -1,0 +1,27 @@
+{% extends "email_base.html" %}
+<!-- extend from base layout -->
+{% block content %}
+    <h1>
+        {{ title }}
+    </h1>
+    <p>
+        The following tickets that you have created or been assigned have not yet been closed.
+    </p>
+    <table>
+        <tr>
+            <th>Ticket Number</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+        </tr>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id_zfill }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.ticket_priority.priority }}</td>
+                <td>{{ ticket.current_status.status }}</td>
+                <td>{{ ticket.assigned.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
