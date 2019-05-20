@@ -50,7 +50,7 @@
             </div>
             <div class="col-sm-4 text-right">
                 {% if ticket %}
-                    {% if g.user.is_admin or (ticket.user == g.user) %}
+                    {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned.user == g.user) %}
                         {% if ticket.current_status.status != 'Closed' %}
                             {{ form.submit_close }}
                         {% endif %}
