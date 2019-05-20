@@ -33,7 +33,7 @@ def login_user_exist(form, field):
         nt_authenticated = False
 
     result = FlicketUser.query.filter(
-        or_(func.lower(FlicketUser.username) == username.lower(), func.lower(FlicketUser.email) == username.lower))
+        or_(func.lower(FlicketUser.username) == username.lower(), func.lower(FlicketUser.email) == username.lower()))
     if result.count() == 0:
         # couldn't find username in database so check if the user is authenticated on the domain.
         if nt_authenticated:
