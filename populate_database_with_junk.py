@@ -25,11 +25,6 @@ from setup import admin
 # todo: add random subscriptions
 # todo: add random edits
 
-def how_many():
-    # todo: prompt user for number of topics, replies and users to add.
-    pass
-
-
 # get a list of users and return a random one
 def get_random_user():
     user = FlicketUser.query
