@@ -178,6 +178,7 @@ input[type="radio"] {
 
 .flicket-row-action {
     background-color: #fff;
+    margin-top: 2px;
     margin-left: 20px;
     margin-right: 20px;
     padding: 5px 20px;

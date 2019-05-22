@@ -142,12 +142,14 @@ class ReplyForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         form = super(ReplyForm, self).__init__(*args, **kwargs)
-        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all() if s.status != "Closed"]
+        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.filter(FlicketStatus.status != 'Closed')]
+        self.priority.choices = [(p.id, p.priority) for p in FlicketPriority.query.all()]
 
     content = PageDownField(gettext('Reply'), validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                                  max=field_size['content_max_length'])])
-    file = FileField(gettext('Upload Documents'), render_kw={'multiple': True})
+    file = FileField(gettext('Add Files'), render_kw={'multiple': True})
     status = SelectField(gettext('Status'), validators=[DataRequired()], coerce=int)
+    priority = SelectField(gettext('Priority'), validators=[DataRequired()], coerce=int)
     submit = SubmitField(gettext('submit reply'), render_kw=form_class_button)
     submit_close = SubmitField(gettext('reply and close'), render_kw=form_danger_button)
 

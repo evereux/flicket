@@ -1,5 +1,12 @@
 # Changelog
 
+If you are migrating from any earlier version you should ensure:
+       * you upgrade the database. 
+    ~~~
+    python manage.py db migrate
+    python manage.py db upgrade
+    ~~~
+
 # 0.1.9 - in developement.
 *   Expanded API functionality ... still work to be done during this release
 *   Fixed issue where field contents were not remembered after a search.
@@ -8,6 +15,8 @@
     similar.
 *   Fixed user not being able to edit own ticket (replies were OK).
 *   The assignee can now close the ticket.
+*   Ticket priority can now be changed.
+*   Status changes now logged.
 
 
 # 0.1.8

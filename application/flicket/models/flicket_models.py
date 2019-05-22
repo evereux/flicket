@@ -613,6 +613,8 @@ class FlicketAction(PaginatedAPIMixin, Base):
     released = db.Column(db.Boolean)
     closed = db.Column(db.Boolean)
     opened = db.Column(db.Boolean)
+    status = db.Column(db.String(field_size['status_max_length']))
+    priority = db.Column(db.String(field_size['priority_max_length']))
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser, foreign_keys=[user_id])
@@ -636,6 +638,12 @@ class FlicketAction(PaginatedAPIMixin, Base):
 
         if self.claimed:
             return 'Ticked claimed by <a href="mailto:{}">{}</a>  | {}'.format(self.user.email, self.user.name, _date)
+
+        if self.status:
+            return 'Ticket status has been changed to "{}" by {} | {}'.format(self.status, self.user.name, _date)
+
+        if self.priority:
+            return 'Ticket priority has been changed to "{}" by {} | {}'.format(self.priority, self.user.name, _date)
 
         if self.released:
             return 'Ticket released by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)

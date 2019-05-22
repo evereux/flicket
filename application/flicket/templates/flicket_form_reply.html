@@ -41,14 +41,19 @@
         {% endif %}
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">{{ form.file.label }}</label>
-            <div class="col-sm-3">
+            <label class="col-sm-1 control-label">{{ form.file.label }}</label>
+            <div class="col-sm-2">
                 {{ form.file }}
             </div>
-            <div class="col-sm-3">
+            <label class="col-sm-1 control-label">{{ form.status.label }}</label>
+            <div class="col-sm-2">
                 {{ form.status(class="form-control") }}
             </div>
-            <div class="col-sm-4 text-right">
+            <label class="col-sm-1 control-label">{{ form.priority.label }}</label>
+            <div class="col-sm-2">
+                {{ form.priority(class="form-control") }}
+            </div>
+            <div class="col-sm-3 text-right">
                 {% if ticket %}
                     {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
                         {% if ticket.current_status.status != 'Closed' %}

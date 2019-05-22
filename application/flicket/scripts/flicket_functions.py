@@ -27,6 +27,7 @@ def add_action(action=None, ticket=None, recipient=None):
     released = None
     closed = None
     opened = None
+    status = None
 
     if len(ticket.posts) == 0:
         ticket_id = ticket.id
@@ -45,6 +46,12 @@ def add_action(action=None, ticket=None, recipient=None):
     if action == 'close':
         closed = True
 
+    if action == 'Awaiting Information' or action == 'In Work' or action == 'Open':
+        status = action
+
+    if action == 'low' or action == 'medium' or action == 'high':
+        priority = action
+
     new_action = FlicketAction(
         ticket_id=ticket_id,
         post_id=post_id,
@@ -53,6 +60,8 @@ def add_action(action=None, ticket=None, recipient=None):
         released=released,
         closed=closed,
         opened=opened,
+        status=status,
+        priority=priority,
         user=g.user,
         recipient=recipient,
         date=datetime.datetime.now()
@@ -64,7 +73,7 @@ def add_action(action=None, ticket=None, recipient=None):
 def is_ticket_closed(status):
     # check to see if topic is closed. ticket can't be edited once it's closed.
     if status == 'Closed':
-        flash('Users can not edit closed tickets.')
+        flash('Users can not edit closed tickets.', category='danger')
         return True
 
 
