@@ -52,7 +52,7 @@ class FlicketStatus(PaginatedAPIMixin, Base):
         return data
 
     def __repr__(self):
-        return "<FlicketStatus: status_id={}, status={}>".format(self.id, self.status)
+        return "<FlicketStatus: id={}, status={}>".format(self.id, self.status)
 
 
 class FlicketDepartment(PaginatedAPIMixin, Base):
@@ -84,6 +84,9 @@ class FlicketDepartment(PaginatedAPIMixin, Base):
         }
 
         return data
+
+    def __repr__(self):
+        return "<FlicketDepartment: id={}, department={}>".format(self.id, self.department)
 
 
 class FlicketCategory(PaginatedAPIMixin, Base):
@@ -121,6 +124,9 @@ class FlicketCategory(PaginatedAPIMixin, Base):
 
         return data
 
+    def __repr__(self):
+        return "<FlicketCategory: id={}, category={}>".format(self.id, self.category)
+
 
 class FlicketPriority(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_priorities'
@@ -143,6 +149,9 @@ class FlicketPriority(PaginatedAPIMixin, Base):
         }
 
         return data
+
+    def __repr__(self):
+        return "<FlicketPriority: id={}, priority={}>".format(self.id, self.priority)
 
 
 class FlicketTicket(PaginatedAPIMixin, Base):
@@ -318,7 +327,6 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         """
 
         :param data:
-        :param new_department:
         :return:
         """
         for field in ['title', 'content', 'category_id', 'ticket_priority_id']:
@@ -370,11 +378,11 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         return data
 
     def __repr__(self):
-        return 'Class FlicketTicket: id={}, title="{}", create_by={}, status={}, assigned={},'.format(self.id,
-                                                                                                      self.title,
-                                                                                                      self.user,
-                                                                                                      self.current_status,
-                                                                                                      self.assigned)
+        return '<FlicketTicket: id={}, title="{}", create_by={}, status={}, assigned={}>'.format(self.id,
+                                                                                                 self.title,
+                                                                                                 self.user,
+                                                                                                 self.current_status,
+                                                                                                 self.assigned)
 
 
 class FlicketPost(PaginatedAPIMixin, Base):
@@ -427,6 +435,9 @@ class FlicketPost(PaginatedAPIMixin, Base):
 
         return data
 
+    def __repr__(self):
+        return "<FlicketPost: id={}, ticket_id={}, content={}>".format(self.id, self.ticket_id, self.content)
+
 
 class FlicketUploads(Base):
     __tablename__ = 'flicket_uploads'
@@ -473,6 +484,14 @@ class FlicketUploads(Base):
         }
 
         return data
+
+    def __repr__(self):
+        return ("<FlicketUploads: id={}, "
+                "post_id={}, topic_id={}, filename={}, original_filename={}>").format(self.id,
+                                                                                      self.posts_id,
+                                                                                      self.topic_id,
+                                                                                      self.filename,
+                                                                                      self.original_filename)
 
 
 class FlicketHistory(PaginatedAPIMixin, Base):
@@ -528,6 +547,9 @@ class FlicketHistory(PaginatedAPIMixin, Base):
         }
 
         return data
+
+    def __repr__(self):
+        return "<FlicketHistory: id={}, post_id={}, topic_id={}>".format(self.id, self.posts_id, self.topic_id)
 
 
 class FlicketSubscription(PaginatedAPIMixin, Base):

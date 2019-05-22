@@ -54,3 +54,7 @@ class FlicketConfig(Base):
 
     auth_domain = db.Column(db.String(64))
     use_auth_domain = db.Column(db.BOOLEAN, default=False)
+
+    def __repr__(self):
+        return "<FlicketConfig model class>"
+

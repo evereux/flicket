@@ -7,7 +7,3 @@
 
 ## Low
 * add ability to filter tickets by who started them as well as who they're assigned to.
-* <easy> create consistent __repr__ strings. 
-* <easy> move methods from FlicketUserDetails to FlicketUser and delete FlicketUserDetails.
-
-
