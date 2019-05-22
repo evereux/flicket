@@ -142,7 +142,7 @@ class ReplyForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         form = super(ReplyForm, self).__init__(*args, **kwargs)
-        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all()]
+        self.status.choices = [(s.id, s.status) for s in FlicketStatus.query.all() if s.status != "Closed"]
 
     content = PageDownField(gettext('Reply'), validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                                  max=field_size['content_max_length'])])
