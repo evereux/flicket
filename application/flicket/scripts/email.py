@@ -130,7 +130,6 @@ class FlicketMail:
         """
 
         if not app.config['MAIL_SUPPRESS_SEND']:
-            print('sending_ticket')
             with app.app_context():
                 message = Message(subject, sender=sender, recipients=recipients, html=html_body)
                 self.mail.send(message)
