@@ -79,7 +79,9 @@
                     <td>
 
                         <a href="{{ url_for('flicket_bp.flicket_user', user_id=u.id) }}">
-                        {%- if u.is_admin -%}
+                        {%- if u.is_super_user -%}
+                        <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:#7e18ff"></span>
+                        {%- elif u.is_admin -%}
                         <span class="glyphicon glyphicon-user" aria-hidden="true" style="color:red"></span>
                         {%- endif %}
                         {{ u.username }}</a>

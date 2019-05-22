@@ -3,7 +3,9 @@
     <div class="col-sm-2">
         <div class="flicket-post-author">
             <div class="flicket-post-author-author">
-                <a {% if content.user.is_admin -%}
+                <a {% if content.user.is_super_user -%}
+                   style="color:#7e18ff"
+                   {% elif content.user.is_admin -%}
                    style="color:red"
                    {%- endif %} href="{{ url_for('flicket_bp.flicket_user', user_id=content.user.id) }}">{{content.user.name}}</a>
             </div>
