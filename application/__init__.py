@@ -16,25 +16,29 @@
 
 """
 
-from flask import abort, Flask, g, request
+from flask import abort
+from flask import Flask
+from flask import g
+from flask import request
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 
-from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
-from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
 from application.flicket_api.views import bp_api
 from application.flicket_errors import bp_errors
+from application.flicket.views import flicket_bp
+from application.flicket.scripts.jinja2_functions import display_post_box
+from application.flicket.scripts.jinja2_functions import now_year
+from application.flicket.scripts.jinja2_functions import show_markdown
 
 __version__ = '0.1.9'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
-
 
 db = SQLAlchemy(app)
 mail = Mail(app)
@@ -43,7 +47,7 @@ pagedown = PageDown(app)
 babel = Babel(app)
 
 # import jinja function
-app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown)
+app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown, now_year=now_year)
 
 # import models so alembic can see them
 from application.flicket.models import flicket_user, flicket_models
