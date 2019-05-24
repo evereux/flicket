@@ -105,7 +105,7 @@ class FlicketMail:
 
     def tickets_not_closed(self, user, tickets):
         """
-        Sends email to user notifyiing them that tickets they have created or have been assigned
+        Sends email to user notifying them that tickets they have created or have been assigned
         that are
         :return:
         """

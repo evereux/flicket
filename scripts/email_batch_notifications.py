@@ -22,8 +22,9 @@ class EmailOutStandingTickets(Command):
             tickets = FlicketTicket.query.filter(
                 FlicketTicket.user == user).filter(
                 FlicketTicket.assigned == user).filter(
-                FlicketTicket.status_id != 2).all()
+                FlicketTicket.status_id != 2)
 
-            mail = FlicketMail()
-            mail.tickets_not_closed(user, tickets)
-            time.sleep(10)
+            if tickets.count() > 0:
+                mail = FlicketMail()
+                mail.tickets_not_closed(user, tickets)
+                time.sleep(10)
