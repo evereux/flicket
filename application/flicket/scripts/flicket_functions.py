@@ -28,6 +28,7 @@ def add_action(action=None, ticket=None, recipient=None):
     closed = None
     opened = None
     status = None
+    priority = None
 
     if len(ticket.posts) == 0:
         ticket_id = ticket.id
