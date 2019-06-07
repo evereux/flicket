@@ -55,6 +55,8 @@ class FlicketConfig(Base):
     auth_domain = db.Column(db.String(64))
     use_auth_domain = db.Column(db.BOOLEAN, default=False)
 
+    csv_dump_limit = db.Column(db.Integer, default=1000)
+
     def __repr__(self):
         return "<FlicketConfig model class>"
 
