@@ -19,7 +19,6 @@
                 <li><a href="{{ url_for('flicket_bp.ticket_create') }}">{{ _('Create Ticket') }}</a></li>
                 <li><a href="{{ url_for('flicket_bp.departments') }}">{{ _('Departments') }}</a></li>
                 <li><a href="{{ url_for('flicket_bp.flicket_users') }}">{{ _('Users') }}</a></li>
-                <li><a href="{{ url_for('flicket_bp.faq') }}">{{ _('FAQ') }}</a></li>
                 {% if g.user.is_admin %}
                 <li><a href="{{ url_for('admin_bp.index') }}">{{ _('Admin View') }}</a></li>
                 {% endif %}
