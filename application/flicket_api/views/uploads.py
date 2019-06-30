@@ -3,23 +3,30 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+"""
+    Uploads
+    =======
+
+    # todo: create documentation for API
+"""
+
 from flask import jsonify, request
 
+from .sphinx_helper import api_url
 from . import bp_api
-
 from application import app
 from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket_api.views.auth import token_auth
 
 
-@bp_api.route(app.config['FLICKET_API'] + 'upload/<int:id>', methods=['GET'])
+@bp_api.route(api_url + 'upload/<int:id>', methods=['GET'])
 @token_auth.login_required
 def get_upload(id):
     return jsonify(FlicketUploads.query.get_or_404(id).to_dict())
 
 
-@bp_api.route(app.config['FLICKET_API'] + 'uploads/', methods=['GET'])
-@bp_api.route(app.config['FLICKET_API'] + 'uploads/<int:page>/', methods=['GET'])
+@bp_api.route(api_url + 'uploads/', methods=['GET'])
+@bp_api.route(api_url + 'uploads/<int:page>/', methods=['GET'])
 @token_auth.login_required
 def uploads(page=1):
     # todo: add filtering

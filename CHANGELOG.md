@@ -11,12 +11,16 @@ If you are migrating from any earlier version you should ensure:
 *   Expanded API functionality ... still work to be done during this release
 *   Fixed issue where field contents were not remembered after a search.
 *   Added command to send emails to users who have tickets not closed. This needs to be invoked from the command line
-    using `python manage.py email_outstanding_tickets` using a (weekly? don't spam your users too much!") cronjob or 
+    using `python manage.py email_outstanding_tickets` using a (weekly? don't spam your users too much!") cron job or 
     similar.
 *   Fixed user not being able to edit own ticket (replies were OK).
 *   The assignee can now close the ticket.
-*   Ticket priority can now be changed.
+*   Ticket priority can now be changed during reply. Submitting reply and close will overwrite selection to closed.
 *   Status changes now logged.
+*   Started documentation.
+*   Removed FAQ link from Flicket. Now controlled by documentation.
+*   Added markdown help and removed link to external reference.
+*   Documentation. 
 
 
 # 0.1.8

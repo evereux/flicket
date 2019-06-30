@@ -3,23 +3,144 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+"""
+    Categories
+    ==========
+
+    Get Category By ID
+    ~~~~~~~~~~~~~~~~~~
+
+    .. http:get:: /flicket-api/category/(int:category_id)
+
+        **Request**
+
+        .. sourcecode:: http
+
+            GET /flicket-api/category/1 HTTP/1.1
+            HOST: localhost:5000
+            Accept: application/json
+            Authorization: Bearer <token>
+
+        **Response**
+
+        .. sourcecode:: http
+
+            HTTP/1.0 200 OK
+            Content-Length: 282
+            Content-Type: application/json
+            Date: Sun, 30 Jun 2019 12:55:57 GMT
+            Server: Werkzeug/0.14.1 Python/3.7.3
+
+            {
+                "category": "Dataset",
+                "department": "Design",
+                "id": 1,
+                "links": {
+                    "categories": "http://127.0.0.1:5000/flicket-api/categories/",
+                    "department": "http://127.0.0.1:5000/flicket-api/department/1",
+                    "self": "http://127.0.0.1:5000/flicket-api/category/1"
+                }
+            }
+
+    Get Categories
+    ~~~~~~~~~~~~~~
+
+    .. http:get:: /flicket-api/categories/
+
+        **Request**
+
+        .. sourcecode:: http
+
+            GET /flicket-api/categories/ HTTP/1.1
+            HOST: localhost:5000
+            Accept: application/json
+            Authorization: Bearer <token>
+
+        **Response**
+
+        .. sourcecode:: http
+
+            HTTP/1.0 200 OK
+            Content-Length: 5192
+            Content-Type: application/json
+            Date: Sun, 30 Jun 2019 12:51:02 GMT
+            Server: Werkzeug/0.14.1 Python/3.7.3
+
+            {
+                "_links": {
+                    "next": null,
+                    "prev": null,
+                    "self": "http://127.0.0.1:5000/flicket-api/categories/?page=1&per_page=50"
+                },
+                "_meta": {
+                    "page": 1,
+                    "per_page": 50,
+                    "total_items": 15,
+                    "total_pages": 1
+                },
+                "items": [
+                    {
+                        "category": "Approved Suppliers",
+                        "department": "Commercial",
+                        "id": 14,
+                        "links": {
+                            "categories": "http://127.0.0.1:5000/flicket-api/categories/",
+                            "department": "http://127.0.0.1:5000/flicket-api/department/6",
+                            "self": "http://127.0.0.1:5000/flicket-api/category/14"
+                        }
+                    },
+                    {
+                        "category": "Dataset",
+                        "department": "Design",
+                        "id": 1,
+                        "links": {
+                            "categories": "http://127.0.0.1:5000/flicket-api/categories/",
+                            "department": "http://127.0.0.1:5000/flicket-api/department/1",
+                            "self": "http://127.0.0.1:5000/flicket-api/category/1"
+                        }
+                    },
+                    {
+                        "category": "ECR",
+                        "department": "Design",
+                        "id": 3,
+                        "links": {
+                            "categories": "http://127.0.0.1:5000/flicket-api/categories/",
+                            "department": "http://127.0.0.1:5000/flicket-api/department/1",
+                            "self": "http://127.0.0.1:5000/flicket-api/category/3"
+                        }
+                    },
+                    {
+                        "category": "Holidays",
+                        "department": "Human Resources",
+                        "id": 12,
+                        "links": {
+                            "categories": "http://127.0.0.1:5000/flicket-api/categories/",
+                            "department": "http://127.0.0.1:5000/flicket-api/department/5",
+                            "self": "http://127.0.0.1:5000/flicket-api/category/12"
+                        }
+                    }
+                ]
+            }
+
+"""
+
 from flask import jsonify, request, url_for
 
+from .sphinx_helper import api_url
 from . import bp_api
-
 from application import app, db
 from application.flicket.models.flicket_models import FlicketCategory, FlicketDepartment
 from application.flicket_api.views.auth import token_auth
 from application.flicket_api.views.errors import bad_request
 
 
-@bp_api.route(app.config['FLICKET_API'] + 'category/<int:id>', methods=['GET'])
+@bp_api.route(api_url + 'category/<int:id>', methods=['GET'])
 @token_auth.login_required
 def get_category(id):
     return jsonify(FlicketCategory.query.get_or_404(id).to_dict())
 
 
-@bp_api.route(app.config['FLICKET_API'] + 'categories/', methods=['GET'])
+@bp_api.route(api_url + 'categories/', methods=['GET'])
 @token_auth.login_required
 def get_categories():
     department_id = request.args.get('department_id')
@@ -35,7 +156,7 @@ def get_categories():
     return jsonify(data)
 
 
-@bp_api.route(app.config['FLICKET_API'] + 'categories', methods=['POST'])
+@bp_api.route(api_url + 'categories', methods=['POST'])
 @token_auth.login_required
 def create_category():
     data = request.get_json() or {}

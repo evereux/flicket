@@ -1,3 +1,5 @@
+.. _installation:
+
 Installation
 ============
 
@@ -69,7 +71,7 @@ Set Up
 
     python manage.py run_set_up
 
-6. Running development server for testing::
+7. Running development server for testing::
 
     python manage.py runserver
 
