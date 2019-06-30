@@ -143,7 +143,7 @@ class FlicketPriority(PaginatedAPIMixin, Base):
             'id': self.id,
             'priority': self.priority,
             'links': {
-                'self': app.config['base_url'] + url_for('bp_api.get_category', id=self.id),
+                'self': app.config['base_url'] + url_for('bp_api.get_priority', id=self.id),
                 'priorities': app.config['base_url'] + url_for('bp_api.get_priorities')
             }
         }
@@ -427,7 +427,7 @@ class FlicketPost(PaginatedAPIMixin, Base):
             'user_id': self.user_id,
             'links': {
                 'self': app.config['base_url'] + url_for('bp_api.get_post', id=self.id),
-                'created_by': app.config['base_url'] + url_for('bp_api.get_user', ticket_id=self.user_id),
+                'created_by': app.config['base_url'] + url_for('bp_api.get_user', id=self.user_id),
                 'posts': app.config['base_url'] + url_for('bp_api.get_posts', ticket_id=self.ticket_id),
             }
 
