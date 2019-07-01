@@ -40,7 +40,7 @@ Installing Python Requirements
 
 Install the requirements using pip:::
 
-    (env) C:\<folder_path>\flicket> pip install requirements.txt
+    (env) C:\<folder_path>\flicket> pip install -r requirements.txt
 
 
 Set Up
@@ -51,14 +51,14 @@ Set Up
 
 
 .. _SQLAlchemy_documentation: http://docs.sqlalchemy.org/en/latest/core/engines.html
-
 2. If you are using a database server other than MySQL you should change the
    db_type value within `config.py`. See SQLAlchemy_documentation_ for options.
 
 
 3. Create the configuration json file::
 
-    python scripts/create_json.py
+    python -m scripts.create_json
+
 
 4. Initialise the database using manage.py from the command line::
 

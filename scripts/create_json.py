@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
+from base64 import b64encode
 from getpass import getpass
 import json
 import os
-from base64 import b64encode
 
 from scripts.password_valdation import PasswordStrength
 
