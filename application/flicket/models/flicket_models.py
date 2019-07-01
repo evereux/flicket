@@ -439,7 +439,7 @@ class FlicketPost(PaginatedAPIMixin, Base):
         return "<FlicketPost: id={}, ticket_id={}, content={}>".format(self.id, self.ticket_id, self.content)
 
 
-class FlicketUploads(Base):
+class FlicketUploads(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_uploads'
 
     id = db.Column(db.Integer, primary_key=True)
