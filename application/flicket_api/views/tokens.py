@@ -45,6 +45,7 @@
     **Responds**
 
     .. sourcecode:: http
+
         HTTP/1.0 204 NO CONTENT
         Content-Length: 0
         Content-Type: text/html; charset=utf-8
