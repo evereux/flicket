@@ -13,6 +13,11 @@ from application.flicket.scripts.email import FlicketMail
 
 
 class EmailOutStandingTickets(Command):
+    """
+    Script to be run independently of the webserver. Script emails users a list of outstanding tickets that they have
+    created or been assigned. To be run on a regular basis using a cron job or similar.
+    Email functionality has to be enabled.
+    """
 
     def run(self):
         # find all users
