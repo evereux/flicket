@@ -4,7 +4,7 @@
             var id = $(this).val();
             if (id != 0) {
                 $.ajax({
-                    url: '/flicket-api-v2/categories/?department_id=' + id,
+                    url: '/flicket-api/categories/?department_id=' + id,
                     datatype: 'json',
                     headers: {
                         'Authorization' : 'Bearer {{ g.user.token }}'

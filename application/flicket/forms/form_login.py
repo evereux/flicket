@@ -5,11 +5,13 @@
 
 import bcrypt
 from flask_wtf import FlaskForm
+from sqlalchemy import func, or_
 from wtforms import BooleanField, PasswordField, StringField
 from wtforms.validators import DataRequired
 
 from application import app
 from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.scripts.hash_password import hash_password
 from application.flicket_admin.views.view_admin import create_user
 from scripts.login_functions import nt_log_on
 
@@ -30,7 +32,8 @@ def login_user_exist(form, field):
     else:
         nt_authenticated = False
 
-    result = FlicketUser.query.filter_by(username=username)
+    result = FlicketUser.query.filter(
+        or_(func.lower(FlicketUser.username) == username.lower(), func.lower(FlicketUser.email) == username.lower()))
     if result.count() == 0:
         # couldn't find username in database so check if the user is authenticated on the domain.
         if nt_authenticated:
@@ -45,6 +48,8 @@ def login_user_exist(form, field):
     result = result.first()
     if bcrypt.hashpw(password.encode('utf-8'), result.password) != result.password:
         if nt_authenticated:
+            # update password in database.
+            result.password = hash_password(password)
             return True
         field.errors.append('Invalid password. Please contact admin is this problem persists.')
         return False

@@ -3,33 +3,51 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import abort, Flask, g, request
+"""
+
+    Flicket
+    =======
+
+    A simple ticket system using Python and the Flask microframework.
+
+    This probably wouldn't have been created without the excellent tutorials written by Miguel Grinberg:
+    https://blog.miguelgrinberg.com. Many thanks kind sir.
+
+
+"""
+
+from flask import abort
+from flask import Flask
+from flask import g
+from flask import request
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 
-from application.flicket.scripts.jinja2_functions import display_post_box, show_markdown
-from application.flicket.views import flicket_bp
 from application.flicket_admin.views import admin_bp
-from application.flicket_api_v2.views import bp_api_v2
+from application.flicket_api.views import bp_api
 from application.flicket_errors import bp_errors
+from application.flicket.views import flicket_bp
+from application.flicket.scripts.jinja2_functions import display_post_box
+from application.flicket.scripts.jinja2_functions import now_year
+from application.flicket.scripts.jinja2_functions import show_markdown
 
-__version__ = '0.1.8.1'
+__version__ = '0.1.9'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
-
-# import jinja function
-app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
 pagedown = PageDown(app)
 
 babel = Babel(app)
+
+# import jinja function
+app.jinja_env.globals.update(display_post_box=display_post_box, show_markdown=show_markdown, now_year=now_year)
 
 # import models so alembic can see them
 from application.flicket.models import flicket_user, flicket_models
@@ -43,28 +61,39 @@ from .flicket_admin.views import view_admin, view_config
 from .flicket.views import (ticket_assign,
                             categories,
                             edit_status,
-                            claim_ticket,
-                            create_ticket,
+                            ticket_claim,
+                            ticket_create,
                             delete,
                             departments,
                             edit,
                             history,
                             index,
                             login,
+                            help,
                             tickets,
-                            faq,
                             ticket_release,
                             render_uploads,
                             subscribe,
                             user_edit,
                             users,
                             ticket_view)
-from .flicket_api_v2.views import categories, departments, status, tokens, users
+from .flicket_api.views import (actions,
+                                categories,
+                                departments,
+                                histories,
+                                posts,
+                                priorities,
+                                status,
+                                subscriptions,
+                                tickets,
+                                tokens,
+                                uploads,
+                                users)
 from .flicket_errors import handlers
 
 app.register_blueprint(admin_bp)
 app.register_blueprint(flicket_bp)
-app.register_blueprint(bp_api_v2)
+app.register_blueprint(bp_api)
 app.register_blueprint(bp_errors)
 
 

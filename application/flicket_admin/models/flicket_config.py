@@ -9,14 +9,30 @@ from application.flicket.models import Base
 
 class FlicketConfig(Base):
     """
-    Server configuration table editable by administrators only.
+    Server configuration settings editable by administrators only via the adminstration page `/flicket_admin/config/`.
 
     For email configuration settings see https://flask-mail.readthedocs.io/en/latest/ for more information.
 
-    posts_per_page: dictates how many posts are displayed per page for flicket application.
-    allowed_extensions: a comma delimited list of file extensions users are allowed to attach to a post.
-    ticket_upload_folder: folder into which uploads are stored.
-    base_url: site base url eg http://yourwebsite.com:8000
+    :param str mail_server: example: `smtp.yourcompany.com`.
+    :param int mail_port: example: `567`
+    :param bool mail_use_tls: example: `true`
+    :param bool mail_use_ssl: example: `false`
+    :param bool mail_debug: example: `false`
+    :param str mail_username: example: `flicket.admin`
+    :param str mail_password:
+    :param str mail_default_sender: example: `flicket.admin@yourcompany.com`
+    :param int mail_max_emails:
+    :param bool mail_suppress_send:
+    :param bool mail_ascii_attachments:
+    :param str application_title: Changes the default banner text from `Flicket`. Can typically be your company name.
+    :param str posts_per_page: Maximum number of posts / topics displayed per page.
+    :param str allowed_extensions: A comma delimited list of file extensions users are allowed to upload. DO NOT include
+      the . before the extension letter.
+    :param str ticket_upload_folder: The folder used for file uploads.
+    :param str base_url: The sites base url. This is used to resolve urls for emails and links. Broken links are
+      probably a result of not setting this value.
+    :param str csv_dump_limit: The maximum number of rows exported to csv.
+
     """
     __tablename__ = 'flicket_config'
 
@@ -54,3 +70,8 @@ class FlicketConfig(Base):
 
     auth_domain = db.Column(db.String(64))
     use_auth_domain = db.Column(db.BOOLEAN, default=False)
+
+    csv_dump_limit = db.Column(db.Integer, default=1000)
+
+    def __repr__(self):
+        return "<FlicketConfig model class>"

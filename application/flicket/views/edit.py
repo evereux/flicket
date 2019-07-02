@@ -13,11 +13,12 @@ from flask_login import login_required
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import EditTicketForm, EditReplyForm
-from application.flicket.models.flicket_models import (FlicketHistory,
-                                                       FlicketTicket,
-                                                       FlicketPost,
-                                                       FlicketUploads)
+from application.flicket.models.flicket_models import FlicketHistory
+from application.flicket.models.flicket_models import FlicketPost
+from application.flicket.models.flicket_models import FlicketTicket
+from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket.models.flicket_models_ext import FlicketTicketExt
+from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.flicket_functions import is_ticket_closed
 from application.flicket.scripts.flicket_upload import UploadAttachment
 
@@ -48,7 +49,6 @@ def edit_ticket(ticket_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
-
         ticket_id = FlicketTicketExt.edit_ticket(
             ticket=ticket,
             title=form.title.data,
@@ -69,7 +69,7 @@ def edit_ticket(ticket_id):
     form.title.data = ticket.title
     form.category.data = ticket.category_id
 
-    title = gettext('Flicket - Edit Ticket')
+    title = gettext('Edit Ticket')
 
     return render_template('flicket_edittopic.html',
                            title=title,
@@ -138,7 +138,13 @@ def edit_post(post_id):
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
 
-        post.ticket.status_id = form.status.data
+        if post.ticket.status_id != form.status.data:
+            post.ticket.status_id = form.status.data
+            add_action(action=post.ticket.current_status.status, ticket=post.ticket)
+
+        if post.ticket.ticket_priority_id != form.priority.data:
+            post.ticket.ticket_priority_id = form.priority.data
+            add_action(action=post.ticket.ticket_priority.priority, ticket=post.ticket)
 
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
@@ -156,5 +162,5 @@ def edit_post(post_id):
     form.content.data = post.content
 
     return render_template('flicket_editpost.html',
-                           title='Flicket - Edit Post',
+                           title='Edit Post',
                            form=form)

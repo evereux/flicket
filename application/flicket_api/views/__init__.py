@@ -3,7 +3,9 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+
 from flask import Blueprint
 
-bp_api_v2 = Blueprint('bp_api_v2', __name__)
+bp_api = Blueprint('bp_api', __name__)
+
 

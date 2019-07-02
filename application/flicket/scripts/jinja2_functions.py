@@ -1,6 +1,8 @@
 #! usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from flask import render_template
 
 from markdown import markdown
@@ -34,3 +36,7 @@ def show_markdown(text):
     html = markdown(text, safemode="escape")
 
     return html
+
+
+def now_year():
+    return datetime.datetime.now().strftime('%Y')

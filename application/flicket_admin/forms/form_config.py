@@ -32,4 +32,6 @@ class ConfigForm(FlaskForm):
     use_auth_domain = BooleanField('use_auth_domain', validators=[])
     auth_domain = StringField('auth_domain', validators=[])
 
+    csv_dump_limit = IntegerField('csv_dump_limit', validators=[])
+
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])

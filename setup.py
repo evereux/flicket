@@ -17,7 +17,8 @@ admin = 'admin'
 
 # configuration defaults for flicket
 flicket_config = {'posts_per_page': 50,
-                  'allowed_extensions': ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'],
+                  'allowed_extensions': ['txt', 'log', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'msg', 'doc', 'docx', 'ppt',
+                                         'pptx', 'xls', 'xlsx'],
                   'ticket_upload_folder': 'application/flicket/static/flicket_uploads',
                   'avatar_upload_folder': 'application/flicket/static/flicket_avatars',
                   }

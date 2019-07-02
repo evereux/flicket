@@ -12,6 +12,7 @@ from flask import url_for
 
 from application import db, app
 from application.flicket.models import Base
+from application.flicket_api.scripts.paginated_api import PaginatedAPIMixin
 
 user_field_size = {
     'username_min': 4,
@@ -34,30 +35,7 @@ flicket_groups = db.Table('flicket_groups',
                           )
 
 
-class PaginatedAPIMixin(object):
-    @staticmethod
-    def to_collection_dict(query, page, per_page, endpoint, **kwargs):
-        resources = query.paginate(page, per_page, False)
-        data = {
-            'items': [item.to_dict() for item in resources.items],
-            '_meta': {
-                'page': page,
-                'per_page': per_page,
-                'total_pages': resources.pages,
-                'total_items': resources.total,
-            },
-            '_links': {
-                'self': url_for(endpoint, page=page, per_page=per_page, **kwargs),
-                'next': url_for(endpoint, page=page + 1, per_page=per_page, **kwargs) if resources.has_next else None,
-                'prev': url_for(endpoint, page=page - 1, per_page=per_page, **kwargs) if resources.has_prev else None
-            }
-        }
-
-        return data
-
-
 class FlicketUser(PaginatedAPIMixin, Base):
-
     __tablename__ = 'flicket_users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -169,15 +147,25 @@ class FlicketUser(PaginatedAPIMixin, Base):
         Returns a dictionary object about the user.
         :return: dict()
         """
+
+        avatar_url = app.config['base_url'] + url_for('flicket_bp.static',
+                                                      filename='flicket_avatars/{}'.format("__default_profile.png"))
+
+        if self.avatar:
+            avatar_url = app.config['base_url'] + url_for('flicket_bp.static',
+                                                          filename='flicket_avatars/{}'.format(self.avatar))
+
         data = {
             'id': self.id,
-            'username': self.username,
-            'name': self.name,
+            'avatar': avatar_url,
             'email': self.email,
             'job_title': self.job_title if self.job_title else 'unknown',
+            'name': self.name,
+            'username': self.username,
             'total_posts': self.total_posts,
             'links': {
-                'self': url_for('bp_api_v2.get_user', id=self.id)
+                'self': app.config['base_url'] + url_for('bp_api.get_user', id=self.id),
+                'users': app.config['base_url'] + url_for('bp_api.get_users')
             }
         }
 
@@ -221,7 +209,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
 
         :return: str() with user details.
         """
-        return '<User {}>'.format(self.username)
+        return '<User: id={}, usename={}, email={}>'.format(self.id, self.username, self.email)
 
 
 class FlicketGroup(Base):
@@ -261,4 +249,4 @@ class FlicketGroup(Base):
 
         :return: str() with group details.
         """
-        return self.group_name
+        return '<Group: id={}. group_name={}>'.format(self.id, self.group_name)

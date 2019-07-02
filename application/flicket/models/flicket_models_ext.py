@@ -13,6 +13,12 @@ from application.flicket.models.flicket_models import FlicketTicket, FlicketStat
 
 
 class FlicketTicketExt:
+    """
+    A class to extend the functionality of FlicketTicket.
+
+    Methods aren't included in the FlicketTicket class itself
+    due to potential circular import issues with flicket_upload.py
+    """
 
     @staticmethod
     def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None):

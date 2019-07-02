@@ -34,3 +34,7 @@ class SearchTicketForm(FlaskForm):
     status = SelectField('status', coerce=int)
     username = StringField('username', validators=[does_user_exist])
     content = StringField('content', validators=[])
+
+    def __repr__(self):
+        return "<SearchTicketForm>"
+

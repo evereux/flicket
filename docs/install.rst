@@ -1,3 +1,5 @@
+.. _installation:
+
 Installation
 ============
 
@@ -38,7 +40,7 @@ Installing Python Requirements
 
 Install the requirements using pip:::
 
-    (env) C:\<folder_path>\flicket> pip install requirements.txt
+    (env) C:\<folder_path>\flicket> pip install -r requirements.txt
 
 
 Set Up
@@ -56,7 +58,8 @@ Set Up
 
 3. Create the configuration json file::
 
-    python scripts/create_json.py
+    python -m scripts.create_json
+
 
 4. Initialise the database using manage.py from the command line::
 
@@ -69,7 +72,7 @@ Set Up
 
     python manage.py run_set_up
 
-6. Running development server for testing::
+7. Running development server for testing::
 
     python manage.py runserver
 

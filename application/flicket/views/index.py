@@ -21,11 +21,6 @@ from application.flicket.models.flicket_models import (FlicketTicket,
 @login_required
 def index():
     """ View showing flicket main page. We use this to display some statistics."""
-    # todo: delete if not required.
-    # s_closed = 'Closed'
-    # s_open = 'Open'
-    # s_wip = 'In Work'
-
     days = 7
     # converts days into datetime object
     days_obj = datetime.datetime.now() - datetime.timedelta(days=days)

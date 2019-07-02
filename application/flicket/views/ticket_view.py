@@ -12,7 +12,11 @@ from flask_babel import gettext
 from . import flicket_bp
 from application import app, db
 from application.flicket.forms.flicket_forms import ReplyForm
-from application.flicket.models.flicket_models import FlicketTicket, FlicketStatus, FlicketPost, FlicketSubscription
+from application.flicket.models.flicket_models import FlicketTicket
+from application.flicket.models.flicket_models import FlicketStatus
+from application.flicket.models.flicket_models import FlicketPost
+from application.flicket.models.flicket_models import FlicketSubscription
+from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import UploadAttachment
 from application.flicket.scripts.email import FlicketMail
@@ -56,7 +60,15 @@ def ticket_view(ticket_id, page=1):
             date_added=datetime.datetime.now(),
             content=form.content.data,
         )
-        ticket.status_id = form.status.data
+
+        if ticket.status_id != form.status.data:
+            ticket.status_id = form.status.data
+            add_action(action=ticket.current_status.status, ticket=ticket)
+
+        if ticket.ticket_priority_id != form.priority.data:
+            ticket.ticket_priority_id = form.priority.data
+            add_action(action=ticket.ticket_priority.priority, ticket=ticket)
+
         db.session.add(new_reply)
 
         # add files to database.

@@ -35,12 +35,11 @@ class FlicketMail:
             MAIL_MAX_EMAILS=config.mail_max_emails,
             MAIL_SUPPRESS_SEND=config.mail_suppress_send,
             MAIL_ASCII_ATTACHMENTS=config.mail_ascii_attachments,
+            base_url=config.base_url,
         )
 
         self.mail = Mail(app)
         self.mail.init_app(app)
-
-        self.base_url = app.config['base_url']
 
         self.sender = config.mail_default_sender
 
@@ -57,7 +56,7 @@ class FlicketMail:
         """
         recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has new replies.'.format(ticket.id_zfill, ticket.title)
-        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_replies.html', title=title, number=ticket.id_zfill,
                                     ticket_url=ticket_url, ticket=ticket, reply=reply)
 
@@ -71,7 +70,7 @@ class FlicketMail:
 
         recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been assigned.'.format(ticket.id_zfill, ticket.title)
-        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
 
@@ -85,7 +84,7 @@ class FlicketMail:
 
         recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been released.'.format(ticket.id_zfill, ticket.title)
-        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_release.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)
 
@@ -99,10 +98,24 @@ class FlicketMail:
 
         recipients = ticket.get_subscriber_emails()
         title = 'Ticket #{} - {} has been closed.'.format(ticket.id_zfill, ticket.title)
-        ticket_url = self.base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_close.html', ticket=ticket, ticket_url=ticket_url)
 
         self.send_email(title, self.sender, recipients, html_body)
+
+    def tickets_not_closed(self, user, tickets):
+        """
+        Sends email to user notifying them that tickets they have created or have been assigned
+        that are
+        :return:
+        """
+
+        recipient = [user.email]
+        title = 'Outstanding Ticket Notifications'
+        html_body = render_template('email_ticket_not_closed.html', tickets=tickets,
+                                    title="Tickets Still Awaiting Resolution")
+
+        self.send_email(title, self.sender, recipient, html_body)
 
     @send_async_email
     def send_email(self, subject, sender, recipients, html_body):

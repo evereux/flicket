@@ -5,9 +5,10 @@
 
 from flask import url_for, g
 
-from application import db
+from application import app, db
 from application.flicket.models import Base
-from application.flicket.models.flicket_user import FlicketUser, PaginatedAPIMixin
+from application.flicket.models.flicket_user import FlicketUser
+from application.flicket_api.scripts.paginated_api import PaginatedAPIMixin
 
 # define field sizes. max are used for forms and database. min just for forms.
 field_size = {
@@ -43,11 +44,15 @@ class FlicketStatus(PaginatedAPIMixin, Base):
             'id': self.id,
             'status': self.status,
             'links': {
-                'self': url_for('bp_api_v2.get_status', id=self.id)
+                'self': app.config['base_url'] + url_for('bp_api.get_status', id=self.id),
+                'statuses': app.config['base_url'] + url_for('bp_api.get_statuses'),
             }
         }
 
         return data
+
+    def __repr__(self):
+        return "<FlicketStatus: id={}, status={}>".format(self.id, self.status)
 
 
 class FlicketDepartment(PaginatedAPIMixin, Base):
@@ -64,12 +69,6 @@ class FlicketDepartment(PaginatedAPIMixin, Base):
         """
         self.department = department
 
-    # todo: remove if form ordering etc OK
-    # make the default sort order the department name
-    # __mapper_args__ = {
-    #     "order_by": department.asc()
-    # }
-
     def to_dict(self):
         """
         Returns a dictionary object about the department
@@ -79,11 +78,15 @@ class FlicketDepartment(PaginatedAPIMixin, Base):
             'id': self.id,
             'department': self.department,
             'links': {
-                'self': url_for('bp_api_v2.get_department', id=self.id)
+                'self': app.config['base_url'] + url_for('bp_api.get_department', id=self.id),
+                'departments': app.config['base_url'] + url_for('bp_api.get_departments'),
             }
         }
 
         return data
+
+    def __repr__(self):
+        return "<FlicketDepartment: id={}, department={}>".format(self.id, self.department)
 
 
 class FlicketCategory(PaginatedAPIMixin, Base):
@@ -103,11 +106,6 @@ class FlicketCategory(PaginatedAPIMixin, Base):
         self.category = category
         self.department = department
 
-    # # make the default sort order the category name
-    # __mapper_args__ = {
-    #     "order_by": category.asc()
-    # }
-
     def to_dict(self):
         """
         Returns a dictionary object about the category and its department
@@ -118,21 +116,45 @@ class FlicketCategory(PaginatedAPIMixin, Base):
             'category': self.category,
             'department': self.department.department,
             'links': {
-                'self': url_for('bp_api_v2.get_category', id=self.id)
+                'self': app.config['base_url'] + url_for('bp_api.get_category', id=self.id),
+                'categories': app.config['base_url'] + url_for('bp_api.get_categories'),
+                'department': app.config['base_url'] + url_for('bp_api.get_department', id=self.department_id),
             }
         }
 
         return data
 
+    def __repr__(self):
+        return "<FlicketCategory: id={}, category={}>".format(self.id, self.category)
 
-class FlicketPriority(Base):
+
+class FlicketPriority(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_priorities'
 
     id = db.Column(db.Integer, primary_key=True)
     priority = db.Column(db.String(field_size['priority_max_length']))
 
+    def to_dict(self):
+        """
+        Returns a dictionary object about the category and its department
+        :return:
+        """
+        data = {
+            'id': self.id,
+            'priority': self.priority,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_priority', id=self.id),
+                'priorities': app.config['base_url'] + url_for('bp_api.get_priorities')
+            }
+        }
 
-class FlicketTicket(Base):
+        return data
+
+    def __repr__(self):
+        return "<FlicketPriority: id={}, priority={}>".format(self.id, self.priority)
+
+
+class FlicketTicket(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_topic'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -272,7 +294,6 @@ class FlicketTicket(Base):
         """
 
         :param form:
-        :param page:
         :param url:
         :return:
         """
@@ -302,13 +323,69 @@ class FlicketTicket(Base):
 
         return redirect_url
 
+    def from_dict(self, data):
+        """
+
+        :param data:
+        :return:
+        """
+        for field in ['title', 'content', 'category_id', 'ticket_priority_id']:
+            if field in data:
+                setattr(self, field, data[field])
+
+    def to_dict(self):
+        """
+
+        :return: dict()
+        """
+
+        modified_by = None
+        assigned = None
+
+        if self.modified_id:
+            modified_by = app.config['base_url'] + url_for('bp_api.get_user', id=self.modified_id)
+
+        if self.assigned_id:
+            assigned = app.config['base_url'] + url_for('bp_api.get_user', id=self.assigned_id)
+
+        data = {
+            'id': self.id,
+            'assigned_id': self.assigned_id,
+            'category_id': self.category_id,
+            'content': self.content,
+            'date_added': self.date_added,
+            'date_modified': self.date_modified,
+            'modified_id': self.modified_id,
+            'started_id': self.started_id,
+            'status_id': self.status_id,
+            'title': self.title,
+            'ticket_priority_id': self.ticket_priority_id,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_ticket', id=self.id),
+                'assigned': assigned,
+                'priority': app.config['base_url'] + url_for('bp_api.get_priority', id=self.ticket_priority_id),
+                'started_ny': app.config['base_url'] + url_for('bp_api.get_user', id=self.started_id),
+                'modified_by': modified_by,
+                'category': app.config['base_url'] + url_for('bp_api.get_category', id=self.category_id),
+                'status': app.config['base_url'] + url_for('bp_api.get_status', id=self.status_id),
+                'subscribers': app.config['base_url'] + url_for('bp_api.get_subscriptions', ticket_id=self.id),
+                'tickets': app.config['base_url'] + url_for('bp_api.get_tickets'),
+                'histories': app.config['base_url'] + url_for('bp_api.get_histories', topic_id=self.id),
+            }
+
+        }
+
+        return data
+
     def __repr__(self):
-        return 'Class FlicketTicket: id={}, title={}, status={}, assigned={},'.format(self.id, self.title,
-                                                                                      self.current_status,
-                                                                                      self.assigned)
+        return '<FlicketTicket: id={}, title="{}", create_by={}, status={}, assigned={}>'.format(self.id,
+                                                                                                 self.title,
+                                                                                                 self.user,
+                                                                                                 self.current_status,
+                                                                                                 self.assigned)
 
 
-class FlicketPost(Base):
+class FlicketPost(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_post'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -335,8 +412,34 @@ class FlicketPost(Base):
     actions = db.relationship('FlicketAction',
                               primaryjoin="and_(FlicketPost.id == FlicketAction.post_id)")
 
+    def to_dict(self):
+        """
 
-class FlicketUploads(Base):
+        :return: dict()
+        """
+
+        data = {
+            'id': self.id,
+            'content': self.content,
+            'data_added': self.date_added,
+            'date_modified': self.date_modified,
+            'ticket_id': self.ticket_id,
+            'user_id': self.user_id,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_post', id=self.id),
+                'created_by': app.config['base_url'] + url_for('bp_api.get_user', id=self.user_id),
+                'posts': app.config['base_url'] + url_for('bp_api.get_posts', ticket_id=self.ticket_id),
+            }
+
+        }
+
+        return data
+
+    def __repr__(self):
+        return "<FlicketPost: id={}, ticket_id={}, content={}>".format(self.id, self.ticket_id, self.content)
+
+
+class FlicketUploads(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_uploads'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -350,8 +453,51 @@ class FlicketUploads(Base):
     filename = db.Column(db.String(field_size['filename_max_length']))
     original_filename = db.Column(db.String(field_size['filename_max_length']))
 
+    def to_dict(self):
+        """
 
-class FlicketHistory(Base):
+        :return: dict()
+        """
+
+        ticket_url, post_url = None, None
+
+        if self.topic_id:
+            ticket_url = app.config['base_url'] + url_for('bp_api.get_ticket', id=self.topic_id)
+
+        if self.posts_id:
+            post_url = app.config['base_url'] + url_for('bp_api.get_post', id=self.posts_id)
+
+        data = {
+            'id': self.id,
+            'filename': self.filename,
+            'image': app.config['base_url'] + '/flicket_uploads/' + self.filename,
+            'original_filename': self.original_filename,
+            'post_id': self.posts_id,
+            'topic_id': self.topic_id,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_upload', id=self.id),
+                'post': post_url,
+                'ticket': ticket_url,
+                'uploads': app.config['base_url'] + url_for('bp_api.get_uploads'),
+            }
+
+        }
+
+        return data
+
+    def __repr__(self):
+        return ("<FlicketUploads: id={}, "
+                "post_id={}, topic_id={}, filename={}, original_filename={}>").format(self.id,
+                                                                                      self.posts_id,
+                                                                                      self.topic_id,
+                                                                                      self.filename,
+                                                                                      self.original_filename)
+
+
+class FlicketHistory(PaginatedAPIMixin, Base):
+    """
+        A database to track the editing of tickets and posts.
+    """
     __tablename__ = 'flicket_history'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -369,8 +515,44 @@ class FlicketHistory(Base):
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser)
 
+    def to_dict(self):
+        """
 
-class FlicketSubscription(Base):
+        :return: dict()
+        """
+
+        ticket_url, post_url = None, None
+
+        if self.topic_id:
+            ticket_url = app.config['base_url'] + url_for('bp_api.get_ticket', id=self.topic_id)
+
+        if self.post_id:
+            post_url = app.config['base_url'] + url_for('bp_api.get_post', id=self.post_id)
+
+        data = {
+            'id': self.id,
+            'date_modified': self.date_modified,
+            'original_content': self.original_content,
+            'post_id': self.post_id,
+            'topic_id': self.topic_id,
+            'user_id': self.user_id,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_history', id=self.id),
+                'histories': app.config['base_url'] + url_for('bp_api.get_histories'),
+                'post': post_url,
+                'ticket': ticket_url,
+                'user': app.config['base_url'] + url_for('bp_api.get_user', id=self.user_id),
+            }
+
+        }
+
+        return data
+
+    def __repr__(self):
+        return "<FlicketHistory: id={}, post_id={}, topic_id={}>".format(self.id, self.posts_id, self.topic_id)
+
+
+class FlicketSubscription(PaginatedAPIMixin, Base):
     __tablename__ = 'flicket_ticket_subscription'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -383,11 +565,33 @@ class FlicketSubscription(Base):
 
     user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
 
+    def to_dict(self):
+        """
+
+        :return: dict()
+        """
+
+        data = {
+            'id': self.id,
+            'ticket_id': self.ticket_id,
+            'user_id': self.user_id,
+            'user_def': self.user_def,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_subscription', id=self.id),
+                'subscriptions': app.config['base_url'] + url_for('bp_api.get_subscriptions'),
+                'ticket': app.config['base_url'] + url_for('bp_api.get_ticket', id=self.ticket_id),
+                'user': app.config['base_url'] + url_for('bp_api.get_user', id=self.user_id),
+            }
+
+        }
+
+        return data
+
     def __repr__(self):
         return '<Class FlicketSubscription: ticket_id={}, user_id={}>'.format(self.ticket_id, self.user_id)
 
 
-class FlicketAction(Base):
+class FlicketAction(PaginatedAPIMixin, Base):
     """
     SQL table that stores the action history of a ticket.
     For example, if a user claims a ticket that action is stored here.
@@ -409,6 +613,8 @@ class FlicketAction(Base):
     released = db.Column(db.Boolean)
     closed = db.Column(db.Boolean)
     opened = db.Column(db.Boolean)
+    status = db.Column(db.String(field_size['status_max_length']))
+    priority = db.Column(db.String(field_size['priority_max_length']))
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser, foreign_keys=[user_id])
@@ -433,11 +639,44 @@ class FlicketAction(Base):
         if self.claimed:
             return 'Ticked claimed by <a href="mailto:{}">{}</a>  | {}'.format(self.user.email, self.user.name, _date)
 
+        if self.status:
+            return 'Ticket status has been changed to "{}" by {} | {}'.format(self.status, self.user.name, _date)
+
+        if self.priority:
+            return 'Ticket priority has been changed to "{}" by {} | {}'.format(self.priority, self.user.name, _date)
+
         if self.released:
             return 'Ticket released by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
 
         if self.closed:
             return 'Ticked closed by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
+
+    def to_dict(self):
+        """
+
+        :return: dict()
+        """
+
+        data = {
+            'id': self.id,
+            'assigned': self.assigned,
+            'claimed': self.claimed,
+            'closed': self.closed,
+            'date': self.date,
+            'opened': self.opened,
+            'post_id': self.post_id,
+            'released': self.released,
+            'ticket_id': self.ticket_id,
+            'recipient_id': self.recipient_id,
+            'user_id': self.user_id,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_action', id=self.id),
+                'actions': app.config['base_url'] + url_for('bp_api.get_actions'),
+            }
+
+        }
+
+        return data
 
     def __repr__(self):
 

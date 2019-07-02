@@ -37,5 +37,5 @@ def ticket_create():
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
-    title = gettext('Flicket - Create Ticket')
+    title = gettext('Create Ticket')
     return render_template('flicket_create.html', title=title, form=form)

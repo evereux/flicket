@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfiguration(object):
-    WriteConfigJson().json_exists()
+    WriteConfigJson.json_exists()
 
     # get data from config file
     with open(config_file, 'r') as f:
@@ -50,7 +50,6 @@ class BaseConfiguration(object):
     FLICKET = WEBHOME + ''
     FLICKET_API = WEBHOME + 'flicket-api/'
     FLICKET_REST_API = WEBHOME + 'flicket-rest-api'
-    FLICKET_API_V2 = '/flicket-api-v2/'
     ADMINHOME = '/flicket_admin/'
 
     # flicket user used to post replies to tickets for status changes.

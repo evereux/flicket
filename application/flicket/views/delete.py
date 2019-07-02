@@ -64,7 +64,7 @@ def delete_ticket(ticket_id):
     return render_template('flicket_deletetopic.html',
                            form=form,
                            ticket=ticket,
-                           title='Flicket - Delete Ticket')
+                           title='Delete Ticket')
 
 
 # delete post
@@ -95,7 +95,7 @@ def delete_post(post_id):
         flash(gettext('Ticket deleted.'), category='success')
         return redirect(url_for('flicket_bp.tickets'))
 
-    title = gettext('Flicket - Delete Post')
+    title = gettext('Delete Post')
 
     return render_template('flicket_deletepost.html',
                            form=form,
@@ -143,7 +143,7 @@ def delete_category(category_id=False):
             category.category,
             category.department.department)
 
-        title = gettext('Flicket - Delete Category')
+        title = gettext('Delete Category')
 
         return render_template('flicket_delete.html',
                                form=form,
@@ -190,7 +190,7 @@ def delete_department(department_id=False):
             "You are trying to delete department <span class=\"label label-default\">%(value)s</span>.",
             value=department.department)
 
-        title = gettext('Flicket - Delete Department')
+        title = gettext('Delete Department')
 
         return render_template('flicket_delete.html',
                                form=form,

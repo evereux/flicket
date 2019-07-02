@@ -23,4 +23,5 @@ def set_flicket_config():
         application_title=config.application_title,
         use_auth_domain=config.use_auth_domain,
         auth_domain=config.auth_domain,
+        csv_dump_limit=config.csv_dump_limit,
     )

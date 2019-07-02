@@ -76,9 +76,8 @@ def tickets_csv():
     content = request.args.get('content')
     user_id = request.args.get('user_id')
 
-    # todo: define the limit in the aadmin config menu. Easy.
     ticket_query, form = FlicketTicket.query_tickets(department=department, category=category, status=status,
-                                                     user_id=user_id, content=content, limit=1000)
+                                                     user_id=user_id, content=content, limit=app.config['csv_dump_limit'])
 
     date_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     file_name = date_stamp + 'ticketdump.csv'
@@ -101,7 +100,7 @@ def tickets_csv():
                                                                               ticket.category.department.department),
                                                                           clean_csv_data(ticket.category.category),
                                                                           ticket.current_status.status,
-                                                                          ticket.assigned.name,
+                                                                          _name,
                                                                           app.config["base_url"],
                                                                           url_for("flicket_bp.ticket_view",
                                                                                   ticket_id=ticket.id))
