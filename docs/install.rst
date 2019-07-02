@@ -51,6 +51,7 @@ Set Up
 
 
 .. _SQLAlchemy_documentation: http://docs.sqlalchemy.org/en/latest/core/engines.html
+
 2. If you are using a database server other than MySQL you should change the
    db_type value within `config.py`. See SQLAlchemy_documentation_ for options.
 

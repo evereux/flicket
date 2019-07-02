@@ -16,6 +16,7 @@ So, decided to have a crack at creating something written in Python.
 
    requirements
    install
+   admin
    export_import_users
    install_webserver_windows
    languages
