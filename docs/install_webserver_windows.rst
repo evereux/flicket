@@ -39,11 +39,10 @@ Whilst **active in your flicket virtual environment** install `mod_wsgi`::
 Installing Apache
 ~~~~~~~~~~~~~~~~~
 
-Download Apache compiled with VC14 from the
-`apache lounge <https://www.apachelounge.com/download/VC14/>`_.
+Download Apache compiled with VC14 from the `apache lounge <https://www.apachelounge.com/download/VC14/>`_.
 
-Unzip the apache folder to your `c:\` directory. You should end up with a
-folder structure like thus::
+Unzip the apache folder to your `c:\\` directory. You should end up with a
+folder structure like this::
 
     C:\Apache24
         C:\Apache24\bin
