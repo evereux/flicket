@@ -11,15 +11,17 @@ from flask_babel import gettext
 
 from . import flicket_bp
 from application import app, db
-from application.flicket.forms.flicket_forms import ReplyForm
+from application.flicket.forms.flicket_forms import ReplyForm, SubscribeUser
 from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_models import FlicketStatus
 from application.flicket.models.flicket_models import FlicketPost
 from application.flicket.models.flicket_models import FlicketSubscription
+from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_functions import add_action
 from application.flicket.scripts.flicket_functions import block_quoter
 from application.flicket.scripts.flicket_upload import UploadAttachment
 from application.flicket.scripts.email import FlicketMail
+from application.flicket.scripts.subscriptions import subscribe_user
 
 
 # view ticket details
@@ -44,10 +46,18 @@ def ticket_view(ticket_id, page=1):
     ticket_rid = request.args.get('ticket_rid')
 
     form = ReplyForm()
+    subscribers_form = SubscribeUser()
+
+    # add subscribed user
+    if subscribers_form.validate_on_submit():
+        user = FlicketUser.query.filter_by(username=subscribers_form.username.data).first()
+        if subscribe_user(ticket, user):
+            flash(gettext('User subscribed.'))
+        else:
+            flash(gettext('User already subsribed.'))
 
     # add reply post
-    if form.validate_on_submit():
-
+    if form.submit.data and form.validate_on_submit():
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
@@ -130,5 +140,6 @@ def ticket_view(ticket_id, page=1):
                            title=title,
                            ticket=ticket,
                            form=form,
+                           subscribers_form=subscribers_form,
                            replies=replies,
                            page=page)

@@ -22,6 +22,7 @@ from application.flicket.scripts.upload_choice_generator import generate_choices
 from flask_babel import gettext
 
 form_class_button = {'class': 'btn btn-primary'}
+form_class_button_sm = {'class': 'btn btn-primary btn-sm'}
 form_danger_button = {'class': 'btn btn-danger'}
 
 
@@ -173,6 +174,11 @@ class SearchUserForm(FlaskForm):
 class AssignUserForm(SearchUserForm):
     """ Search user. """
     submit = SubmitField(gettext('assign user'), render_kw=form_class_button)
+
+
+class SubscribeUser(SearchUserForm):
+    """ Search user. """
+    submit = SubmitField(gettext('subscribe user'), render_kw=form_class_button_sm)
 
 
 class DepartmentForm(FlaskForm):

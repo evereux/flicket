@@ -33,7 +33,7 @@ def subscribe_ticket(ticket_id=None):
 
         else:
 
-            flash(gettext('You are already subscribed to this ticket'))
+            flash(gettext('Already subscribed to this ticket'))
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
