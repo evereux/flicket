@@ -7,7 +7,11 @@ If you are migrating from any earlier version you should ensure:
     python manage.py db upgrade
     ~~~
 
-# 0.1.9 - in developement.
+# 0.2.0
+*   users can add subscriber other users to ticket so they receive notifications of tickets.
+*   user can reset password 
+
+# 0.1.9
 *   Expanded API functionality ... still work to be done during this release
 *   Fixed issue where field contents were not remembered after a search.
 *   Added command to send emails to users who have tickets not closed. This needs to be invoked from the command line
