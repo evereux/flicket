@@ -6,6 +6,8 @@
 import base64
 from datetime import datetime, timedelta
 import os
+import random
+import string
 
 import bcrypt
 from flask import url_for
@@ -203,6 +205,19 @@ class FlicketUser(PaginatedAPIMixin, Base):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
+
+    @staticmethod
+    def generate_password():
+        """
+        A pseudo randomly generated password used for registered users wanting to reset their password.
+
+        :return: str
+        """
+
+        characters = string.ascii_letters + string.digits
+        password = ''.join(random.sample(characters, 12))
+
+        return password
 
     def __repr__(self):
         """

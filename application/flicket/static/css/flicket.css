@@ -265,3 +265,5 @@ input[type="radio"] {
 td {
     position: relative;
 }
+
+.flciket-top-buffer { margin-top:20px; }

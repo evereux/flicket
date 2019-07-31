@@ -117,6 +117,20 @@ class FlicketMail:
 
         self.send_email(title, self.sender, recipient, html_body)
 
+    def password_reset(self, user, new_password):
+        """
+        Sends email to user notifying of password reset.
+        :param user:
+        :param new_password:
+        :return:
+        """
+
+        recipient = [user.email]
+        title = 'Password Reset'
+        html_body = render_template('email_password_reset.html', title=title, new_password=new_password)
+
+        self.send_email(title, self.sender, recipient, html_body)
+
     @send_async_email
     def send_email(self, subject, sender, recipients, html_body):
         """

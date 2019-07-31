@@ -6,13 +6,17 @@
 import bcrypt
 from flask_wtf import FlaskForm
 from sqlalchemy import func, or_
-from wtforms import BooleanField, PasswordField, StringField
+from wtforms import BooleanField
+from wtforms import PasswordField
+from wtforms import StringField
+from wtforms import SubmitField
 from wtforms.validators import DataRequired
 
 from application import app
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from application.flicket_admin.views.view_admin import create_user
+from application.flicket.forms.flicket_forms import form_class_button
 from scripts.login_functions import nt_log_on
 
 
@@ -62,3 +66,9 @@ class LogInForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), login_user_exist])
     password = PasswordField('password', validators=[DataRequired()])
     remember_me = BooleanField('remember_me', default=False)
+
+
+class PasswordResetForm(FlaskForm):
+    """ Log in form. """
+    email = StringField('email', validators=[DataRequired()])
+    submit = SubmitField('reset password', render_kw=form_class_button)

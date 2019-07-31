@@ -23,8 +23,11 @@ from application import app, lm, db, flicket_bp
 from application import __version__
 from application.flicket_admin.models.flicket_config import FlicketConfig
 from application.flicket.forms.form_login import LogInForm
+from application.flicket.forms.form_login import PasswordResetForm
 from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.scripts.email import FlicketMail
 from application.flicket.scripts.flicket_config import set_flicket_config
+from application.flicket.scripts.hash_password import hash_password
 
 
 # functions for redirecting user back from whence they came.
@@ -117,3 +120,25 @@ def logout():
     logout_user()
     flash(gettext('You were logged out successfully.'), category='success')
     return redirect(url_for('flicket_bp.index'))
+
+
+# reset users password
+@flicket_bp.route(app.config['WEBHOME'] + 'password_reset', methods=['GET', 'POST'])
+def password_reset():
+    form = PasswordResetForm()
+
+    if form.validate_on_submit():
+        new_password = FlicketUser.generate_password()
+        hashed_password = hash_password(new_password)
+        user = FlicketUser.query.filter_by(email=form.email.data).first()
+        user.password = hashed_password
+        db.session.commit()
+
+        email = FlicketMail()
+        email.password_reset(user, new_password)
+
+        flash(gettext('Password reset. Please check your email for your new password'))
+        return redirect(url_for('flicket_bp.login'))
+
+    title = 'Password Reset'
+    return render_template('password_reset.html', form=form, title=title)
