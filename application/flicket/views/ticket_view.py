@@ -54,7 +54,7 @@ def ticket_view(ticket_id, page=1):
         if subscribe_user(ticket, user):
             flash(gettext('User subscribed.'))
         else:
-            flash(gettext('User already subsribed.'))
+            flash(gettext('User already subscribed.'))
 
     # add reply post
     if form.submit.data and form.validate_on_submit():
