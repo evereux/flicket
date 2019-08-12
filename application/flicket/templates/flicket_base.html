@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ g.application_title }} - {{ title }}</title>
+    <title>{{ g.application_title }}{% if title %} - {{ title }} {% endif %}</title>
 
 
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/bootstrap.min.css') }}">
@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- body -->
-{% include 'flicket_menu.html' %}
+{% include 'flicket_navbar.html' %}
 <header>
     <div class="container-fluid">
         <div style="font-size: 24pt">{{ g.application_title }} <span style="font-size: 10pt; color: #d5d2cf">{{ _('a simple ticket system') }}</span></div>
