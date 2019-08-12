@@ -79,6 +79,10 @@ class FlicketUser(PaginatedAPIMixin, Base):
 
         :return: True if authenticated.
         """
+
+        if self.check_token(self.token) is None:
+            return False
+
         return True
 
     @property
