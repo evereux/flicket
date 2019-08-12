@@ -5,6 +5,8 @@
 
 /* color pallete http://paletton.com/#uid=20c0u0kqruf27Fv8XMB-SnVlsbX */
 /* color pallete http://paletton.com/#uid=20b0u0k2NvK02Yk0WJ55yre9mn7 */
+
+
 .anchor, body {
     padding-top: 50px;
 }
@@ -92,12 +94,20 @@ input[type="radio"] {
     display: none;
 }
 
+.flicket-btn-borderless {
+    padding: 0;
+    border: none;
+    background: none;
+}
+
 .flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {
     margin-top: 5px;
 }
 
 .flicket-btn-delete {
-
+    background: red;
+    color: white;
+    border: none;
 }
 
 .flicket-btn-subscribe {
@@ -116,6 +126,7 @@ input[type="radio"] {
     margin: 0;
     padding: 2pt;
 }
+
 
 .flicket-main {
     border-radius: 3pt;
@@ -178,7 +189,7 @@ input[type="radio"] {
 
 .flicket-row-action {
     background-color: #fff;
-    margin-top: 2px;
+    margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
     padding: 5px 20px;
@@ -229,14 +240,15 @@ input[type="radio"] {
 }
 
 .flicket-ticket-details-btn-ul {
-    margin: 20px 0;
-    font-size: 12px;
+    font-size: 10px;
+    text-align: center;
+    margin: 4px 0px 0px 0px;
 }
 
 .flicket-ticket-details-btn-li {
     border: 1px solid #ddd;
-    padding: 6px 12px;
-    margin: 0 12px;
+    padding: 3px;
+    margin: 2px 6px;
     display: block;
     text-decoration: None;
 }
@@ -266,4 +278,8 @@ td {
     position: relative;
 }
 
-.flciket-top-buffer { margin-top:20px; }
+.flciket-top-buffer {
+    margin-top: 20px;
+}
+
+

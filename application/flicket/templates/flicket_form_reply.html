@@ -17,7 +17,8 @@
                 {{ form.content(class="form-control") }}
                 <div class="row">
                     <div class="col-sm-6">
-                        <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">{{ _('MarkDown Help') }}</a>
+                        <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}"
+                           target="_blank">{{ _('MarkDown Help') }}</a>
                     </div>
                     <div class="col-sm-6">
                         <div class="text-right" style="padding-top: 5pt">
@@ -40,9 +41,9 @@
             {{ form.uploads }}
         {% endif %}
 
+
         <div class="form-group">
-            <label class="col-sm-1 control-label">{{ form.file.label }}</label>
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 {{ form.file }}
             </div>
             <label class="col-sm-1 control-label">{{ form.status.label }}</label>
@@ -54,16 +55,21 @@
                 {{ form.priority(class="form-control") }}
             </div>
             <div class="col-sm-3 text-right">
-                {% if ticket %}
-                    {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
-                        {% if ticket.current_status.status != 'Closed' %}
-                            {{ form.submit_close }}
-                        {% endif %}
-                    {% endif %}
-                {% endif %}
                 {{ form.submit }}
             </div>
         </div>
+    {% if ticket %}
+        {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
+            {% if ticket.current_status.status != 'Closed' %}
+                <div class="form-group">
+                <div class="col-sm-12 text-right">
+                    {{ form.submit_close }}
+                </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
 
     </div>
 </form>

@@ -133,6 +133,7 @@ def ticket_view(ticket_id, page=1):
     replies = replies.paginate(page, app.config['posts_per_page'])
 
     form.status.data = ticket.status_id
+    form.priority.data = ticket.ticket_priority_id
 
     title = gettext('View Ticket')
 

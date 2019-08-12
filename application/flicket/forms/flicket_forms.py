@@ -178,7 +178,7 @@ class AssignUserForm(SearchUserForm):
 
 class SubscribeUser(SearchUserForm):
     """ Search user. """
-    submit = SubmitField(gettext('subscribe user'), render_kw=form_class_button_sm)
+    submit = SubmitField(gettext('subscribe user'), render_kw=form_class_button)
 
 
 class DepartmentForm(FlaskForm):

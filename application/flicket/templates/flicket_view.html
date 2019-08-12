@@ -7,15 +7,23 @@
 
         <!-- flicket_view.html -->
         <div class="row flicket-row-title-main">
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 <div class="flicket-ticket-cell flicket-ticket-title-title" id="ticket-number-title">
                     #{{ ticket.id_zfill }} - {{ ticket.title }}
                 </div>
             </div>
-            <div class="col-sm-3 text-right" style="padding-top:10px;">
+
+            <div class="col-sm-4 text-right" style="padding-top:10px;">
                 {% if g.user.is_admin %}
                     <a class="btn btn-default flicket-btn-delete"
                        href="{{ url_for('flicket_bp.delete_ticket', ticket_id = ticket.id) }}">{{ _('delete') }}</a>
+                {% endif %}
+                {% if ticket.is_subscribed(g.user) %}
+                    <a class="btn btn-default"
+                       href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">{{ _('unsubscribe') }}</a>
+                {% else %}
+                    <a class="btn btn-default"
+                       href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">{{ _('subscribe') }}</a>
                 {% endif %}
             </div>
         </div>
@@ -24,7 +32,7 @@
                 <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Department') }}</div>
                 <div class="flicket-ticket-cell">{{ ticket.category.department.department }}</div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Category') }}</div>
                 <div class="flicket-ticket-cell">{{ ticket.category.category }}</div>
             </div>
@@ -36,7 +44,7 @@
                 <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Priority') }}</div>
                 <div class="flicket-ticket-cell">{{ ticket.ticket_priority.priority }}</div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Assigned') }}</div>
                 <div class="flicket-ticket-cell">
                     {% if ticket.assigned.username %}
@@ -44,42 +52,63 @@
                     {% else %}ticket not assigned{% endif %}
                 </div>
             </div>
+            <div class="col-sm-2">
+                <ul class="flicket-ticket-details-btn-ul">
+                    <li class="flicket-ticket-details-btn-li">
+                        <a style="text-decoration: none"
+                           href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">
+                            {{ _('claim') }}
+                        </a>
+                    </li>
+                    <li class="flicket-ticket-details-btn-li">
+                        <a style="text-decoration: none"
+                           href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">
+                            {{ _('release') }}</a>
+                    </li>
+                    <li class="flicket-ticket-details-btn-li">
+                        <a style="text-decoration: none"
+                           href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">
+                            {{ _('assign') }}
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
 
         <!-- subscribers -->
         <div class="row flicket-row-title-sub">
-            <div class="col-sm-7">
+            <div class="col-sm-8">
                 <div class="flicket-ticket-cell">
                     Subscribed: {% for s in ticket.subscribers %}
-                    <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>,
-                    {% if loop.last %}
                     <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
-                    {%  endif %}
+                    {%- if ticket.is_subscribed(g.user) and s.user == g.user -%}
+                        &nbsp;<a class="btn btn-default btn-sm flicket-btn-borderless" style="color:red"
+                           href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}" title="unsubscribe">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    {%- endif -%},
+                    {%- if loop.last -%}
+                        <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
+                        {% if ticket.is_subscribed(g.user) and s.user == g.user %}
+                            &nbsp;<a class="btn btn-default btn-sm flicket-btn-borderless" style="color:red"
+                                href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}" title="unsubscribe">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </a>
+                        {%- endif -%}
+                    {% endif %}
                 {% endfor %}
                 </div>
             </div>
-            <div class="col-sm-1">
-                {% if ticket.is_subscribed(g.user) %}
-                    <a class="btn btn-default btn-sm"
-                       href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">{{ _('unsubscribe') }}</a>
-                {% else %}
-                    <a class="btn btn-default btn-sm"
-                       href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">{{ _('subscribe') }}</a>
-                {% endif %}
-            </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 form-inline text-right">
                 <form action=""
                       class="form-horizontal"
                       enctype="multipart/form-data"
                       method="post"
                       name="subscribe_user">
                     {{ form.hidden_tag() }}
-                    <div class="col-sm-8">
-                        {{ subscribers_form.username(class="form-control", id="autocomplete-username", placeholder="User Name") }}
-                    </div>
-                    <div class="col-sm-4">
-                        {{ subscribers_form.submit }}
-                    </div>
+                    {{ subscribers_form.username(class="form-control", id="autocomplete-username", placeholder="User Name") }}
+                    {{ subscribers_form.submit }}
                 </form>
             </div>
         </div>
@@ -107,17 +136,7 @@
                 </ul>
             </div>
             <div class="col-sm-4 text-right">
-                <ul class="list-inline flicket-ticket-details-btn-ul">
-                    <li class="flicket-ticket-details-btn-li"><a style="text-decoration: none"
-                                                                 href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">{{ _('claim') }}</a>
-                    </li>
-                    <li class="flicket-ticket-details-btn-li"><a style="text-decoration: none"
-                                                                 href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">{{ _('release') }}</a>
-                    </li>
-                    <li class="flicket-ticket-details-btn-li"><a style="text-decoration: none"
-                                                                 href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">{{ _('assign') }}</a>
-                    </li>
-                </ul>
+                &nbsp;
             </div>
         </div>
 
