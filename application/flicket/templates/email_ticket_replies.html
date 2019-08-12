@@ -9,6 +9,6 @@
         {{ _('There are new replies to ticket:') }} <a href="{{ ticket_url }}">{{ number }}</a>.
     </p>
     <p>
-        {{ reply.user.name }} replied:<br><i>{{ reply.content }}</i>
+        {{ reply.user.name }} replied:<br>{{ reply.content }}
     </p>
 {% endblock %}
