@@ -16,11 +16,10 @@ Can I See It Working?
 ---------------------
 I have a working version at: https://flicket.evereux.uk/. If you'd like access
 drop an email to me at evereux@gmail.com. Tell me username / email you would
-like to use.
+like to use. Currently, all the views require login so I'll have to create an 
+account for you.
 
-Currently, all the views require login so I'll have to create and account.
-
-Alternatively, see the screenshots at the bottom of this page.
+Alternatively, see the screenshots that can be found in the documentation link.
 
 
 Upgrading From Earlier Versions
