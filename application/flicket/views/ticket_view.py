@@ -57,7 +57,7 @@ def ticket_view(ticket_id, page=1):
             flash(gettext('User already subscribed.'))
 
     # add reply post
-    if form.submit.data and form.validate_on_submit():
+    if form.validate_on_submit():
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
