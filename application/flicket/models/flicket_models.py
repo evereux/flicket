@@ -294,7 +294,7 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         if sort == 'priority':
             ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id, FlicketTicket.id)
         elif sort == 'priority_desc':
-            ticket_query = ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id.desc(), FlicketTicket.id)
+            ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id.desc(), FlicketTicket.id)
         elif sort == 'title':
             ticket_query = ticket_query.order_by(FlicketTicket.title, FlicketTicket.id)
         elif sort == 'title_desc':
