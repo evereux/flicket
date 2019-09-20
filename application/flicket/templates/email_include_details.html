@@ -12,7 +12,7 @@
         <td>{% if ticket.assigned.username %}{{ ticket.assigned.name }}{% else %}ticket not claimed{% endif %}</td>
     </tr>
     <tr>
-        <th style="text-align: left">{{ _('Content') }}</th>
+        <th style="text-align: left; vertical-align: text-top">{{ _('Content') }}</th>
         <td>{{ ticket.content }}</td>
     </tr>
 </table>
