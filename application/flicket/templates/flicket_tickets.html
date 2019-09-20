@@ -65,31 +65,121 @@
             <table class="table table-responsive table-hover">
                 <tr>
                     <th class="text-nowrap">
-                        {{ _('Ticket ID') }}
+                        <a {% if sort == 'ticketid' -%}
+                                href="{{ url_for(base_url, sort='ticketid_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='ticketid', **request.args) }}"{% endif %}>
+                            {{ _('Ticket ID') }}
+                            {%- if sort == 'ticketid' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'ticketid_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Priority') }}
+                        <a {% if sort == 'priority_desc' -%}
+                                href="{{ url_for(base_url, sort='priority', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='priority_desc', **request.args) }}"{% endif %}>
+                            {{ _('Priority') }}
+                            {%- if sort == 'priority' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'priority_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Title') }}
+                        <a {% if sort == 'title' -%}
+                                href="{{ url_for(base_url, sort='title_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='title', **request.args) }}"{% endif %}>
+                            {{ _('Title') }}
+                            {%- if sort == 'title' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'title_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th nowrap="nowrap">
-                        {{ _('Submitted By') }}
+                        <a {% if sort == 'addedby' -%}
+                                href="{{ url_for(base_url, sort='addedby_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='addedby', **request.args) }}"{% endif %}>
+                            {{ _('Submitted By') }}
+                            {%- if sort == 'addedby' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'addedby_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th nowrap="nowrap">
-                        {{ _('Date') }}
+                        <a {% if sort == 'addedon' -%}
+                                href="{{ url_for(base_url, sort='addedon_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='addedon', **request.args) }}"{% endif %}>
+                            {{ _('Date') }}
+                            {%- if sort == 'addedon' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'addedon_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Replies') }}
+                        <a {% if sort == 'replies' -%}
+                                href="{{ url_for(base_url, sort='replies_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='replies', **request.args) }}"{% endif %}>
+                            {{ _('Replies') }}
+                            {%- if sort == 'replies' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'replies_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Category') }}
+                        <a {% if sort == 'queue' -%}
+                                href="{{ url_for(base_url, sort='queue_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='queue', **request.args) }}"{% endif %}>
+                            {{ _('Category') }}
+                            {%- if sort == 'queue' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'queue_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Status') }}
+                        <a {% if sort == 'status' -%}
+                                href="{{ url_for(base_url, sort='status_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='status', **request.args) }}"{% endif %}>
+                            {{ _('Status') }}
+                            {%- if sort == 'status' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'status_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                     <th>
-                        {{ _('Assigned') }}
+                        <a {% if sort == 'assigned' -%}
+                                href="{{ url_for(base_url, sort='assigned_desc', **request.args) }}"{% else -%}
+                                href="{{ url_for(base_url, sort='assigned', **request.args) }}"{% endif %}>
+                            {{ _('Assigned') }}
+                            {%- if sort == 'assigned' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+                            {%- endif -%}
+                            {%- if sort == 'assigned_desc' -%}
+                                <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+                            {%- endif %}
+                        </a>
                     </th>
                 </tr>
                 {% for t in tickets.items %}
