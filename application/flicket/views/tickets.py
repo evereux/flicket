@@ -5,7 +5,7 @@
 
 from datetime import datetime
 
-from flask import redirect, request, render_template, Response, url_for
+from flask import redirect, request, make_response, render_template, Response, url_for
 from flask_babel import gettext
 from flask_login import login_required
 
@@ -40,8 +40,21 @@ def tickets(page=1):
 
         return redirect(redirect_url)
 
+    sort = request.args.get('sort')
+    if sort:
+        args = request.args.copy()
+        del args['sort']
+
+        response = make_response(redirect(url_for('flicket_bp.tickets', **args)))
+        response.set_cookie('tickets_sort', sort)
+
+        return response
+
+    sort = request.cookies.get('tickets_sort', 'priority_desc')
+
     ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
                                                      user_id=user_id, content=content)
+    ticket_query = FlicketTicket.sorted_tickets(ticket_query, sort)
     number_results = ticket_query.count()
 
     ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
@@ -62,8 +75,8 @@ def tickets(page=1):
                            department=department,
                            category=category,
                            user_id=user_id,
-                           base_url='flicket_bp.tickets'
-                           )
+                           sort=sort,
+                           base_url='flicket_bp.tickets')
 
 
 @flicket_bp.route(app.config['FLICKET'] + 'tickets_csv/', methods=['GET', 'POST'])
@@ -77,7 +90,8 @@ def tickets_csv():
     user_id = request.args.get('user_id')
 
     ticket_query, form = FlicketTicket.query_tickets(department=department, category=category, status=status,
-                                                     user_id=user_id, content=content, limit=app.config['csv_dump_limit'])
+                                                     user_id=user_id, content=content)
+    ticket_query = ticket_query.limit(app.config['csv_dump_limit'])
 
     date_stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     file_name = date_stamp + 'ticketdump.csv'
@@ -131,10 +145,22 @@ def my_tickets(page=1):
 
         return redirect(redirect_url)
 
+    sort = request.args.get('sort')
+    if sort:
+        args = request.args.copy()
+        del args['sort']
+
+        response = make_response(redirect(url_for('flicket_bp.my_tickets', **args)))
+        response.set_cookie('mytickets_sort', sort)
+
+        return response
+
+    sort = request.cookies.get('mytickets_sort', 'priority_desc')
+
     ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
                                                      user_id=user_id, content=content)
-
     ticket_query = FlicketTicket.my_tickets(ticket_query)
+    ticket_query = FlicketTicket.sorted_tickets(ticket_query, sort)
     number_results = ticket_query.count()
 
     ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
@@ -151,5 +177,5 @@ def my_tickets(page=1):
                            department=department,
                            category=category,
                            user_id=user_id,
-                           base_url='flicket_bp.my_tickets'
-                           )
+                           sort=sort,
+                           base_url='flicket_bp.my_tickets')
