@@ -259,15 +259,17 @@ input[type="radio"] {
 }
 
 .flicket-status-high {
-    background-color: #EEA28B
+    border-left: red solid 5pt;
+    border-right: red solid 5pt;
 }
 
 .flicket-status-medium {
-    background-color: rgba(255, 181, 145, 0.58);
+    border-left: rgba(255, 181, 145, 0.58) solid 3pt;
+    border-right: rgba(255, 181, 145, 0.58) solid 3pt;
 }
 
 .flicket-status-low {
-    background-color: #FFFFFF;
+
 }
 
 .flicket-status-closed {
