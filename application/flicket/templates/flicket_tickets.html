@@ -77,7 +77,7 @@
                             {%- endif %}
                         </a>
                     </th>
-                    <th>
+                    <th nowrap="nowrap">
                         <a {% if sort == 'priority_desc' -%}
                                 href="{{ url_for(base_url, sort='priority', **request.args) }}"{% else -%}
                                 href="{{ url_for(base_url, sort='priority_desc', **request.args) }}"{% endif %}>
