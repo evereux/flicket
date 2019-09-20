@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import url_for, g
+from sqlalchemy.sql.functions import func
 
 from application import app, db
 from application.flicket.models import Base
@@ -222,11 +223,10 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         return emails
 
     @staticmethod
-    def query_tickets(form=None, limit=None, **kwargs):
+    def query_tickets(form=None, **kwargs):
         """
         Returns a filtered query and modified form based on form submission
         :param form:
-        :param limit:
         :param kwargs:
         :return:
         """
@@ -270,11 +270,6 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 f3 = FlicketTicket.posts.any(FlicketPost.content.ilike('%' + value + '%'))
                 ticket_query = ticket_query.filter(f1 | f2 | f3)
 
-        ticket_query = ticket_query.order_by(FlicketTicket.id.desc())
-
-        if limit:
-            ticket_query = ticket_query.limit(limit)
-
         return ticket_query, form
 
     @staticmethod
@@ -284,8 +279,68 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         :return:
         """
         ticket_query = ticket_query.filter(
-            (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id)).order_by(
-            FlicketTicket.id.desc())
+            (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id))
+
+        return ticket_query
+
+    @staticmethod
+    def sorted_tickets(ticket_query, sort):
+        """
+        Function to return sorted tickets.
+        :param ticket_query:
+        :param sort:
+        :return:
+        """
+        if sort == 'priority':
+            ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id, FlicketTicket.id)
+        elif sort == 'priority_desc':
+            ticket_query = ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id.desc(), FlicketTicket.id)
+        elif sort == 'title':
+            ticket_query = ticket_query.order_by(FlicketTicket.title, FlicketTicket.id)
+        elif sort == 'title_desc':
+            ticket_query = ticket_query.order_by(FlicketTicket.title.desc(), FlicketTicket.id)
+        elif sort == 'ticketid':
+            ticket_query = ticket_query.order_by(FlicketTicket.id)
+        elif sort == 'ticketid_desc':
+            ticket_query = ticket_query.order_by(FlicketTicket.id.desc())
+        elif sort == 'addedby':
+            ticket_query = ticket_query.join(FlicketUser, FlicketTicket.user)\
+                    .order_by(FlicketUser.name, FlicketTicket.id)
+        elif sort == 'addedby_desc':
+            ticket_query = ticket_query.join(FlicketUser, FlicketTicket.user)\
+                    .order_by(FlicketUser.name.desc(), FlicketTicket.id)
+        elif sort == 'addedon':
+            ticket_query = ticket_query.order_by(FlicketTicket.date_added, FlicketTicket.id)
+        elif sort == 'addedon_desc':
+            ticket_query = ticket_query.order_by(FlicketTicket.date_added.desc(), FlicketTicket.id)
+        elif sort == 'replies':
+            subquery = db.session.query(FlicketPost.ticket_id, func.count(FlicketPost.id).label('replies_count'))\
+                    .group_by(FlicketPost.ticket_id).subquery()
+            ticket_query = ticket_query.outerjoin(subquery, FlicketTicket.id == subquery.c.ticket_id)\
+                    .order_by(subquery.c.replies_count, FlicketTicket.id)
+        elif sort == 'replies_desc':
+            subquery = db.session.query(FlicketPost.ticket_id, func.count(FlicketPost.id).label('replies_count'))\
+                    .group_by(FlicketPost.ticket_id).subquery()
+            ticket_query = ticket_query.outerjoin(subquery, FlicketTicket.id == subquery.c.ticket_id)\
+                    .order_by(subquery.c.replies_count.desc(), FlicketTicket.id)
+        elif sort == 'queue':
+            ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category)\
+                    .join(FlicketDepartment, FlicketCategory.department)\
+                    .order_by(FlicketDepartment.department, FlicketCategory.category, FlicketTicket.id)
+        elif sort == 'queue_desc':
+            ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category)\
+                    .join(FlicketDepartment, FlicketCategory.department)\
+                    .order_by(FlicketDepartment.department.desc(), FlicketCategory.category.desc(), FlicketTicket.id)
+        elif sort == 'status':
+            ticket_query = ticket_query.order_by(FlicketTicket.status_id, FlicketTicket.id)
+        elif sort == 'status_desc':
+            ticket_query = ticket_query.order_by(FlicketTicket.status_id.desc(), FlicketTicket.id)
+        elif sort == 'assigned':
+            ticket_query = ticket_query.outerjoin(FlicketUser, FlicketTicket.assigned)\
+                    .order_by(FlicketUser.name, FlicketTicket.id)
+        elif sort == 'assigned_desc':
+            ticket_query = ticket_query.outerjoin(FlicketUser, FlicketTicket.assigned)\
+                    .order_by(FlicketUser.name.desc(), FlicketTicket.id)
 
         return ticket_query
 
