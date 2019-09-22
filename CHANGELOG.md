@@ -12,6 +12,8 @@ If you are migrating from any earlier version you should ensure:
 *   user can reset password 
 *   when replying to ticket the priority level is set correctly. would previously always be set to low.
 *   can sort tickets using column headers (xdml).
+*   token expiration checked prior to login. fixes problems with auto-filling forms due to api authentication fails.
+*   other minor tweaks and cosmetic changes. see commit history for more detauls.
 
 
 # 0.1.9
