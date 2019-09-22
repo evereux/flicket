@@ -11,6 +11,8 @@ If you are migrating from any earlier version you should ensure:
 *   users can add subscriber other users to ticket so they receive notifications of tickets.
 *   user can reset password 
 *   when replying to ticket the priority level is set correctly. would previously always be set to low.
+*   can sort tickets using column headers (xdml).
+
 
 # 0.1.9
 *   Expanded API functionality ... still work to be done during this release
