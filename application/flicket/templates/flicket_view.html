@@ -87,16 +87,7 @@
                            href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}" title="unsubscribe">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                         </a>
-                    {%- endif -%},
-                    {%- if loop.last -%}
-                        <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
-                        {% if ticket.is_subscribed(g.user) and s.user == g.user %}
-                            &nbsp;<a class="btn btn-default btn-sm flicket-btn-borderless" style="color:red"
-                                href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}" title="unsubscribe">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            </a>
-                        {%- endif -%}
-                    {% endif %}
+                    {%- endif -%} {{ ", " if not loop.last }}
                 {% endfor %}
                 </div>
             </div>
