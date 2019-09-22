@@ -1,0 +1,31 @@
+<!-- extend from base layout -->
+{% extends "flicket_base.html" %}
+{% block content %}
+    <div class="container">
+        <h1>{{ title }}</h1>
+        {% include 'admin_menu.html' %}
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-3">
+                <form class="form-inline" action="" method="post" name="email_test">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ form.email_address.label }}
+                        {{ form.email_address() }}
+                        {{ form.submit }}
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-3">
+                {% if form.email_address.errors %}
+                    <div class="alert alert-warning small">
+                        {% for error in form.email_address.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>s
+{% endblock %}

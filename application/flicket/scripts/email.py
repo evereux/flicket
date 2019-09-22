@@ -131,6 +131,15 @@ class FlicketMail:
 
         self.send_email(title, self.sender, recipient, html_body)
 
+    def test_email(self, recipients):
+        """
+        :return:
+        """
+
+        html_body = render_template('email_test.html')
+
+        self.send_email('Flicket Test Email', self.sender, recipients, html_body)
+
     @send_async_email
     def send_email(self, subject, sender, recipients, html_body):
         """

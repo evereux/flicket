@@ -34,6 +34,13 @@
                                 {% endif %}
                             </td>
                         </tr>
+                    {%- if field.name == "mail_ascii_attachments" -%}
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <a class="btn btn-info" href="{{ url_for('admin_bp.email_test') }}">Test Email</a>
+                            </td>
+                        </tr>
+                    {%- endif -%}
                 {% endfor %}
             </table>
             <div class="form-group">
