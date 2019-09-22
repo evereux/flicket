@@ -1,3 +1,4 @@
 # CONTRIBUTORS
 
 * SolvingCurves
+* xdml
