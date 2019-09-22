@@ -7,6 +7,7 @@ from flask import (flash,
                    redirect,
                    url_for,
                    request,
+                   session,
                    render_template,
                    g)
 from flask_babel import gettext
@@ -22,7 +23,11 @@ from application.flicket.models.flicket_models_ext import FlicketTicketExt
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_create/', methods=['GET', 'POST'])
 @login_required
 def ticket_create():
-    form = CreateTicketForm()
+    # defalut category based on last submit (get from session)
+    # using session, as information about last created ticket can be sensitive
+    # in future it can be stored in extened user model instead
+    last_category = session.get('ticket_create_last_category')
+    form = CreateTicketForm(category=last_category)
 
     if form.validate_on_submit():
 
@@ -34,6 +39,8 @@ def ticket_create():
                                                     files=request.files.getlist("file"))
 
         flash(gettext('New Ticket created.'), category='success')
+
+        session['ticket_create_last_category'] = form.category.data
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=new_ticket.id))
 
