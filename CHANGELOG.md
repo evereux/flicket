@@ -9,11 +9,12 @@ If you are migrating from any earlier version you should ensure:
 
 # 0.2.0
 *   users can add subscriber other users to ticket so they receive notifications of tickets.
-*   user can reset password 
+*   user can reset password.
 *   when replying to ticket the priority level is set correctly. would previously always be set to low.
 *   can sort tickets using column headers (xdml).
 *   token expiration checked prior to login. fixes problems with auto-filling forms due to api authentication fails.
-*   other minor tweaks and cosmetic changes. see commit history for more detauls.
+*   admin can send test email.
+*   other minor tweaks and cosmetic changes. see commit history for more details.
 
 
 # 0.1.9
