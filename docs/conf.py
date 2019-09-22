@@ -12,6 +12,7 @@
 #
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath('../application/'))
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -25,7 +26,6 @@ author = 'evereux@gmail.com'
 # The full version, including alpha/beta/rc tags
 release = '0.2.0'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
@@ -33,7 +33,7 @@ release = '0.2.0'
 # ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinxcontrib.httpdomain',
-]
+              ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -42,7 +42,6 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
 
 # -- Options for HTML output -------------------------------------------------
 

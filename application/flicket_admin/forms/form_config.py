@@ -7,7 +7,24 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, NumberRange, Length
 
+from application.flicket.scripts.functions_login import check_email_format
+
 form_class_button = {'class': 'btn btn-primary'}
+
+
+def check_email_formatting(form, field):
+    """
+    Checks formatting of email and also checks that a user is not already registered with the same email address
+    :param form:
+    :param field:
+    :return:
+    """
+    ok = True
+    if not check_email_format(form.email_address.data):
+        field.errors.append('Please enter a correctly formatted email address.')
+        ok = False
+
+    return ok
 
 
 class ConfigForm(FlaskForm):
@@ -33,5 +50,11 @@ class ConfigForm(FlaskForm):
     auth_domain = StringField('auth_domain', validators=[])
 
     csv_dump_limit = IntegerField('csv_dump_limit', validators=[])
+
+    submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])
+
+
+class EmailTest(FlaskForm):
+    email_address = StringField('email_address', validators=[DataRequired(), check_email_formatting])
 
     submit = SubmitField('Submit', render_kw=form_class_button, validators=[DataRequired()])

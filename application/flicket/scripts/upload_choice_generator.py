@@ -9,6 +9,9 @@ from application.flicket.models.flicket_models import FlicketTicket, FlicketPost
 
 
 def generate_choices(item, id=id):
+
+    query = None
+
     if item == 'Ticket':
         query = FlicketTicket.query.filter_by(id=id).first()
     elif item == 'Post':

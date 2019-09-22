@@ -57,38 +57,43 @@ lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'flicket_bp.login'
 
-from .flicket_admin.views import view_admin, view_config
-from .flicket.views import (ticket_assign,
-                            categories,
-                            edit_status,
-                            ticket_claim,
-                            ticket_create,
-                            delete,
-                            departments,
-                            edit,
-                            history,
-                            index,
-                            login,
-                            help,
-                            tickets,
-                            ticket_release,
-                            render_uploads,
-                            subscribe,
-                            user_edit,
-                            users,
-                            ticket_view)
-from .flicket_api.views import (actions,
-                                categories,
-                                departments,
-                                histories,
-                                posts,
-                                priorities,
-                                status,
-                                subscriptions,
-                                tickets,
-                                tokens,
-                                uploads,
-                                users)
+from .flicket_admin.views import view_admin
+from .flicket_admin.views import view_config
+from .flicket_admin.views import view_email_test
+
+from .flicket.views import ticket_assign
+from .flicket.views import categories
+from .flicket.views import edit_status
+from .flicket.views import ticket_claim
+from .flicket.views import ticket_create
+from .flicket.views import delete
+from .flicket.views import departments
+from .flicket.views import edit
+from .flicket.views import history
+from .flicket.views import index
+from .flicket.views import login
+from .flicket.views import help
+from .flicket.views import tickets
+from .flicket.views import ticket_release
+from .flicket.views import render_uploads
+from .flicket.views import subscribe
+from .flicket.views import user_edit
+from .flicket.views import users
+from .flicket.views import ticket_view
+
+from .flicket_api.views import actions
+from .flicket_api.views import categories
+from .flicket_api.views import departments
+from .flicket_api.views import histories
+from .flicket_api.views import posts
+from .flicket_api.views import priorities
+from .flicket_api.views import status
+from .flicket_api.views import subscriptions
+from .flicket_api.views import tickets
+from .flicket_api.views import tokens
+from .flicket_api.views import uploads
+from .flicket_api.views import users
+
 from .flicket_errors import handlers
 
 app.register_blueprint(admin_bp)

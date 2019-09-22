@@ -140,8 +140,8 @@ def delete_category(category_id=False):
 
         notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
                        "to department <span class=\"label label-default\">{}</span>.".format(
-            category.category,
-            category.department.department)
+                        category.category,
+                        category.department.department)
 
         title = gettext('Delete Category')
 

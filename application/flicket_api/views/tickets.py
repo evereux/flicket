@@ -36,15 +36,15 @@
             {
                 "assigned_id": 7,
                 "category_id": 1,
-                "content": "She spent her earliest years reading classic literature, and writing poetry. Haskell features a
-                type system with type inference and lazy evaluation. They are written as strings of consecutive alphanumeric
-                characters, the first character being lowercase. Tuples are containers for a fixed number of Erlang data
-                types. Erlang is a general-purpose, concurrent, functional programming language. Where are my pants? He
-                looked inquisitively at his keyboard and wrote another sentence. The arguments can be primitive data types
-                or compound data types. It is also a garbage-collected runtime system. He looked inquisitively at his
-                keyboard and wrote another sentence. Do you come here often? Ports are created with the built-in function
-                open_port. He looked inquisitively at his keyboard and wrote another sentence. Haskell features a type
-                system with type inference and lazy evaluation.",
+                "content": "She spent her earliest years reading classic literature, and writing poetry. Haskell
+                features a type system with type inference and lazy evaluation. They are written as strings of
+                consecutive alphanumeric characters, the first character being lowercase. Tuples are containers for
+                a fixed number of Erlang data types. Erlang is a general-purpose, concurrent, functional programming
+                language. Where are my pants? He looked inquisitively at his keyboard and wrote another sentence. The
+                arguments can be primitive data types or compound data types. It is also a garbage-collected runtime
+                system. He looked inquisitively at his keyboard and wrote another sentence. Do you come here often?
+                Ports are created with the built-in function open_port. He looked inquisitively at his keyboard and
+                wrote another sentence. Haskell features a type system with type inference and lazy evaluation.",
                 "date_added": "Sun, 23 Jun 2019 18:25:36 GMT",
                 "date_modified": null,
                 "id": 1,
@@ -112,12 +112,12 @@
                         features a type system with type inference and lazy evaluation. They are written as strings of
                         consecutive alphanumeric characters, the first character being lowercase. Tuples are containers
                         for a fixed number of Erlang data types. Erlang is a general-purpose, concurrent, functional
-                        programming language. Where are my pants? He looked inquisitively at his keyboard and wrote another
-                        sentence. The arguments can be primitive data types or compound data types. It is also a
+                        programming language. Where are my pants? He looked inquisitively at his keyboard and wrote
+                        another sentence. The arguments can be primitive data types or compound data types. It is also a
                         garbage-collected runtime system. He looked inquisitively at his keyboard and wrote another
-                        sentence. Do you come here often? Ports are created with the built-in function open_port. He looked
-                        inquisitively at his keyboard and wrote another sentence. Haskell features a type system with type
-                        inference and lazy evaluation.",
+                        sentence. Do you come here often? Ports are created with the built-in function open_port. He
+                        looked inquisitively at his keyboard and wrote another sentence. Haskell features a type system
+                        with type inference and lazy evaluation.",
                         "date_added": "Sun, 23 Jun 2019 18:25:36 GMT",
                         "date_modified": null,
                         "id": 1,

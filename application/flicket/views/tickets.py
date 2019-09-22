@@ -133,7 +133,7 @@ def tickets_csv():
         csv_contents,
         mimetype='text/csv',
         headers={"Content-disposition":
-                     f"attachment; filename={file_name}"}
+                 f"attachment; filename={file_name}"}
     )
 
 

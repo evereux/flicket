@@ -22,8 +22,10 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.hash_password import hash_password
 from setup import admin
 
+
 # todo: add random subscriptions
 # todo: add random edits
+
 
 # get a list of users and return a random one
 def get_random_user():

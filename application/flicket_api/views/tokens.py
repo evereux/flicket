@@ -58,7 +58,7 @@ from flask import g, jsonify
 
 from .sphinx_helper import api_url
 from . import bp_api
-from application import app, db
+from application import db
 from application.flicket_api.views.auth import basic_auth, token_auth
 
 

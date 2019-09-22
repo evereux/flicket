@@ -167,7 +167,9 @@ def create_category():
     if not isinstance(data['department_id'], int):
         return bad_request('department_id must be an integer.')
 
-    if FlicketCategory.query.filter_by(category=data['category']).filter_by(department_id=data['department_id']).first():
+    if FlicketCategory.query. \
+            filter_by(category=data['category']). \
+            filter_by(department_id=data['department_id']).first():
         return bad_request('Category within department already exists.')
 
     department = FlicketDepartment.query.filter_by(id=data['department_id']).first()
