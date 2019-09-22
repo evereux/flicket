@@ -46,11 +46,16 @@ def tickets(page=1):
         del args['sort']
 
         response = make_response(redirect(url_for('flicket_bp.tickets', **args)))
-        response.set_cookie('tickets_sort', sort)
+        response.set_cookie('tickets_sort', sort, max_age=2419200, path=url_for('flicket_bp.tickets'))
 
         return response
 
-    sort = request.cookies.get('tickets_sort', 'priority_desc')
+    sort = request.cookies.get('tickets_sort')
+    if sort:
+        set_cookie = True
+    else:
+        sort = 'priority_desc'
+        set_cookie = False
 
     ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
                                                      user_id=user_id, content=content)
@@ -65,18 +70,23 @@ def tickets(page=1):
     if content:
         form.content.data = content
 
-    return render_template('flicket_tickets.html',
-                           title=title,
-                           form=form,
-                           tickets=ticket_query,
-                           page=page,
-                           number_results=number_results,
-                           status=status,
-                           department=department,
-                           category=category,
-                           user_id=user_id,
-                           sort=sort,
-                           base_url='flicket_bp.tickets')
+    response = make_response(render_template('flicket_tickets.html',
+                                             title=title,
+                                             form=form,
+                                             tickets=ticket_query,
+                                             page=page,
+                                             number_results=number_results,
+                                             status=status,
+                                             department=department,
+                                             category=category,
+                                             user_id=user_id,
+                                             sort=sort,
+                                             base_url='flicket_bp.tickets'))
+
+    if set_cookie:
+        response.set_cookie('tickets_sort', sort, max_age=2419200, path=url_for('flicket_bp.tickets'))
+
+    return response
 
 
 @flicket_bp.route(app.config['FLICKET'] + 'tickets_csv/', methods=['GET', 'POST'])
@@ -151,11 +161,16 @@ def my_tickets(page=1):
         del args['sort']
 
         response = make_response(redirect(url_for('flicket_bp.my_tickets', **args)))
-        response.set_cookie('mytickets_sort', sort)
+        response.set_cookie('my_tickets_sort', sort, max_age=2419200, path=url_for('flicket_bp.my_tickets'))
 
         return response
 
-    sort = request.cookies.get('mytickets_sort', 'priority_desc')
+    sort = request.cookies.get('my_tickets_sort')
+    if sort:
+        set_cookie = True
+    else:
+        sort = 'priority_desc'
+        set_cookie = False
 
     ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
                                                      user_id=user_id, content=content)
@@ -167,15 +182,20 @@ def my_tickets(page=1):
 
     title = gettext('My Tickets')
 
-    return render_template('flicket_tickets.html',
-                           title=title,
-                           form=form,
-                           tickets=ticket_query,
-                           page=page,
-                           number_results=number_results,
-                           status=status,
-                           department=department,
-                           category=category,
-                           user_id=user_id,
-                           sort=sort,
-                           base_url='flicket_bp.my_tickets')
+    response = make_response(render_template('flicket_tickets.html',
+                                             title=title,
+                                             form=form,
+                                             tickets=ticket_query,
+                                             page=page,
+                                             number_results=number_results,
+                                             status=status,
+                                             department=department,
+                                             category=category,
+                                             user_id=user_id,
+                                             sort=sort,
+                                             base_url='flicket_bp.my_tickets'))
+
+    if set_cookie:
+        response.set_cookie('my_tickets_sort', sort, max_age=2419200, path=url_for('flicket_bp.my_tickets'))
+
+    return response
