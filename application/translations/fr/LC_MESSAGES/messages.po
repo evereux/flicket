@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-05-18 12:57+0100\n"
+"POT-Creation-Date: 2019-09-23 13:54+0100\n"
 "PO-Revision-Date: 2019-01-14 22:04+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,69 +18,83 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: application/flicket/forms/flicket_forms.py:38
-#: application/flicket/forms/flicket_forms.py:56
+#: application/flicket/forms/flicket_forms.py:39
+#: application/flicket/forms/flicket_forms.py:57
 msgid "Can't find user."
 msgstr "Impossible de trouver l'utilisateur"
 
-#: application/flicket/forms/flicket_forms.py:73
+#: application/flicket/forms/flicket_forms.py:74
 msgid "Department already exists."
 msgstr "Le département existe déjà."
 
-#: application/flicket/forms/flicket_forms.py:89
+#: application/flicket/forms/flicket_forms.py:90
 msgid "Category already exists."
 msgstr "La catégorie existe déjà."
 
-#: application/flicket/forms/flicket_forms.py:111
-#: application/flicket/forms/flicket_forms.py:149
+#: application/flicket/forms/flicket_forms.py:112
 msgid "Upload Documents"
 msgstr "Télécharger_Documents"
 
-#: application/flicket/forms/flicket_forms.py:112
+#: application/flicket/forms/flicket_forms.py:113
 msgid "Submit"
 msgstr "Enregistrer"
 
-#: application/flicket/forms/flicket_forms.py:137
+#: application/flicket/forms/flicket_forms.py:138
 #: application/flicket/views/edit.py:72
 msgid "Edit Ticket"
 msgstr "Modifier Demande"
 
-#: application/flicket/forms/flicket_forms.py:147
+#: application/flicket/forms/flicket_forms.py:149
 msgid "Reply"
 msgstr "Répondre"
 
-#: application/flicket/forms/flicket_forms.py:150
+#: application/flicket/forms/flicket_forms.py:151
+msgid "Add Files"
+msgstr ""
+
+#: application/flicket/forms/flicket_forms.py:152
 #: application/flicket/templates/email_include_details.html:3
-#: application/flicket/templates/flicket_tickets.html:89
-#: application/flicket/templates/flicket_view.html:30
+#: application/flicket/templates/flicket_tickets.html:162
+#: application/flicket/templates/flicket_view.html:40
 msgid "Status"
 msgstr "Statut"
 
-#: application/flicket/forms/flicket_forms.py:151
+#: application/flicket/forms/flicket_forms.py:153
+#: application/flicket/templates/email_include_details.html:7
+#: application/flicket/templates/flicket_tickets.html:84
+#: application/flicket/templates/flicket_view.html:44
+msgid "Priority"
+msgstr "Priorité"
+
+#: application/flicket/forms/flicket_forms.py:154
 msgid "submit reply"
 msgstr "Enregistrer la réponse"
 
-#: application/flicket/forms/flicket_forms.py:152
+#: application/flicket/forms/flicket_forms.py:155
 msgid "reply and close"
 msgstr "Répondre et fermer"
 
-#: application/flicket/forms/flicket_forms.py:161
+#: application/flicket/forms/flicket_forms.py:164
 msgid "Edit Reply"
 msgstr "Modifier la réponse"
 
-#: application/flicket/forms/flicket_forms.py:168
+#: application/flicket/forms/flicket_forms.py:171
 msgid "search user"
 msgstr "Rechercher un utilisateur"
 
-#: application/flicket/forms/flicket_forms.py:173
+#: application/flicket/forms/flicket_forms.py:176
 msgid "assign user"
 msgstr "Assigner un utilisateur"
 
 #: application/flicket/forms/flicket_forms.py:181
+msgid "subscribe user"
+msgstr ""
+
+#: application/flicket/forms/flicket_forms.py:189
 msgid "add department"
 msgstr "Ajouter un département"
 
-#: application/flicket/forms/flicket_forms.py:190
+#: application/flicket/forms/flicket_forms.py:198
 msgid "add category"
 msgstr "Ajouter une catégorie"
 
@@ -129,16 +143,15 @@ msgstr "Toute autre information qui pourrait aider à résoudre cette erreur."
 msgid "It appears your view request url was incomplete."
 msgstr "L'url que vous demandez est incomplète."
 
-#: application/flicket/templates/email_include_details.html:7
-#: application/flicket/templates/flicket_tickets.html:71
-#: application/flicket/templates/flicket_view.html:34
-msgid "Priority"
-msgstr "Priorité"
+#: application/flicket/templates/email_footer.html:4
+#: application/flicket/templates/flicket_footer.html:4
+msgid "Source code available at:"
+msgstr "Code source disponible ici : "
 
 #: application/flicket/templates/email_include_details.html:11
-#: application/flicket/templates/flicket_tickets.html:92
+#: application/flicket/templates/flicket_tickets.html:175
 #: application/flicket/templates/flicket_users.html:74
-#: application/flicket/templates/flicket_view.html:38
+#: application/flicket/templates/flicket_view.html:48
 msgid "Assigned"
 msgstr "Assignée"
 
@@ -171,10 +184,8 @@ msgid "There are new replies to ticket:"
 msgstr "Il  ya de nouvelles réponses à la demande : "
 
 #: application/flicket/templates/flicket_assign.html:11
-msgid "Type name and pick from drop down list to. For a complete list of"
+msgid "Type name and pick from drop down list to assign ticket. "
 msgstr ""
-"Saisissez le nom et sélectionnez ce dernier dans la liste. Pour une liste"
-" complète"
 
 #: application/flicket/templates/flicket_base.html:35
 msgid "a simple ticket system"
@@ -187,8 +198,8 @@ msgstr "Catégories existantes"
 #: application/flicket/templates/flicket_categories.html:41
 #: application/flicket/templates/flicket_category_edit.html:17
 #: application/flicket/templates/flicket_include_ticket.html:58
-#: application/flicket/templates/flicket_tickets.html:86
-#: application/flicket/templates/flicket_view.html:26
+#: application/flicket/templates/flicket_tickets.html:149
+#: application/flicket/templates/flicket_view.html:36
 msgid "Category"
 msgstr "Catégorie"
 
@@ -199,12 +210,12 @@ msgstr "Modifier"
 #: application/flicket/templates/flicket_delete.html:14
 #: application/flicket/templates/flicket_deletepost.html:15
 #: application/flicket/templates/flicket_deletetopic.html:14
-#: application/flicket/templates/login.html:30
+#: application/flicket/templates/login.html:31
 msgid "Password"
 msgstr "Mot de passe"
 
 #: application/flicket/templates/flicket_department_edit.html:16
-#: application/flicket/templates/flicket_view.html:22
+#: application/flicket/templates/flicket_view.html:32
 msgid "Department"
 msgstr "Département"
 
@@ -216,20 +227,16 @@ msgstr ""
 "Si vous avez besoin d'ajouter ou de supprimer des départements / des "
 "catégories, créez une nouvelle demande"
 
-#: application/flicket/templates/flicket_footer.html:3
-msgid "Source code available at:"
-msgstr "Code source disponible ici : "
-
-#: application/flicket/templates/flicket_footer.html:3
+#: application/flicket/templates/flicket_footer.html:5
 msgid "This site uses:"
 msgstr "Ce site utilise : "
 
-#: application/flicket/templates/flicket_form_reply.html:20
+#: application/flicket/templates/flicket_form_reply.html:21
 #: application/flicket/templates/flicket_include_ticket.html:34
-msgid "MarkDown reference"
-msgstr "Référence des commandes Markdown"
+msgid "MarkDown Help"
+msgstr ""
 
-#: application/flicket/templates/flicket_form_reply.html:25
+#: application/flicket/templates/flicket_form_reply.html:26
 #: application/flicket/templates/flicket_include_ticket.html:39
 msgid "Show / Hide Markdown"
 msgstr "Montrer / Cacher Markdown"
@@ -247,12 +254,12 @@ msgid "No changes have been made to the post content."
 msgstr "Aucun changement n'a été effectué au contenu de ce post."
 
 #: application/flicket/templates/flicket_include_ticket.html:2
-msgid "Ticket contents supports markdown syntax. Please refer to"
-msgstr "Les demandes supportent la synthaxe Markdown. Références ici"
+msgid "Ticket contents supports markdown syntax. Please refer to the"
+msgstr ""
 
 #: application/flicket/templates/flicket_include_ticket.html:3
-msgid "md help"
-msgstr "Aide Markdown"
+msgid "markdown_primer"
+msgstr ""
 
 #: application/flicket/templates/flicket_include_ticket.html:15
 msgid "Ticket Title"
@@ -301,67 +308,65 @@ msgid "There are currently"
 msgstr "Il y a actuellement"
 
 #: application/flicket/templates/flicket_index.html:18
-#: application/flicket/templates/flicket_menu.html:20
+#: application/flicket/templates/flicket_navbar.html:20
 #: application/flicket/views/departments.py:34
 msgid "Departments"
 msgstr "Département"
 
-#: application/flicket/templates/flicket_menu.html:17
-#: application/flicket/views/tickets.py:143
+#: application/flicket/templates/flicket_navbar.html:17
+#: application/flicket/views/tickets.py:183
 msgid "My Tickets"
 msgstr "Mes demandes"
 
-#: application/flicket/templates/flicket_menu.html:18
-#: application/flicket/views/tickets.py:49
+#: application/flicket/templates/flicket_navbar.html:18
+#: application/flicket/views/tickets.py:67
 msgid "Tickets"
 msgstr "Demandes"
 
-#: application/flicket/templates/flicket_menu.html:19
-#: application/flicket/views/ticket_create.py:40
+#: application/flicket/templates/flicket_navbar.html:19
+#: application/flicket/views/ticket_create.py:47
 msgid "Create Ticket"
 msgstr "Créer une demande"
 
-#: application/flicket/templates/flicket_menu.html:21
+#: application/flicket/templates/flicket_navbar.html:21
 #: application/flicket/views/users.py:39
 #: application/flicket_admin/templates/admin_menu.html:6
 msgid "Users"
 msgstr "Utilisateurs"
 
-#: application/flicket/templates/flicket_menu.html:22
-msgid "FAQ"
-msgstr "Questions fréquentes"
-
-#: application/flicket/templates/flicket_menu.html:24
+#: application/flicket/templates/flicket_navbar.html:23
 msgid "Admin View"
 msgstr "Administrateur"
 
-#: application/flicket/templates/flicket_menu.html:36
+#: application/flicket/templates/flicket_navbar.html:35
 #: application/flicket/views/users.py:53
 msgid "User Details"
 msgstr "Utilisateurs"
 
-#: application/flicket/templates/flicket_menu.html:38
+#: application/flicket/templates/flicket_navbar.html:37
 msgid "Log Out"
 msgstr "Déconnexion"
 
-#: application/flicket/templates/flicket_menu.html:46
+#: application/flicket/templates/flicket_navbar.html:45
 msgid "Log In"
 msgstr "Connexion"
 
-#: application/flicket/templates/flicket_post.html:62
+#: application/flicket/templates/flicket_post.html:64
 msgid "This post was modified by"
 msgstr "Ce post a été modifié par"
 
-#: application/flicket/templates/flicket_post.html:63
+#: application/flicket/templates/flicket_post.html:65
 msgid "on"
 msgstr "sur"
 
-#: application/flicket/templates/flicket_post.html:65
 #: application/flicket/templates/flicket_post.html:67
-msgid "edit history"
-msgstr "Modifier l'historique"
+#: application/flicket/templates/flicket_post.html:70
+msgid ""
+"edit\n"
+"                history"
+msgstr ""
 
-#: application/flicket/templates/flicket_post.html:86
+#: application/flicket/templates/flicket_post.html:91
 msgid "reply"
 msgstr "Répondre"
 
@@ -369,29 +374,29 @@ msgstr "Répondre"
 msgid "search"
 msgstr "Chercher"
 
-#: application/flicket/templates/flicket_tickets.html:68
+#: application/flicket/templates/flicket_tickets.html:71
 msgid "Ticket ID"
 msgstr "ID Demande"
 
-#: application/flicket/templates/flicket_tickets.html:74
+#: application/flicket/templates/flicket_tickets.html:97
 msgid "Title"
 msgstr "Titre"
 
-#: application/flicket/templates/flicket_tickets.html:77
+#: application/flicket/templates/flicket_tickets.html:110
 msgid "Submitted By"
 msgstr "Soumise par"
 
-#: application/flicket/templates/flicket_tickets.html:80
+#: application/flicket/templates/flicket_tickets.html:123
 msgid "Date"
 msgstr "Date"
 
-#: application/flicket/templates/flicket_tickets.html:83
+#: application/flicket/templates/flicket_tickets.html:136
 msgid "Replies"
 msgstr "Réponses"
 
 #: application/flicket/templates/flicket_user_details.html:16
 #: application/flicket/templates/flicket_users.html:59
-#: application/flicket/templates/login.html:16
+#: application/flicket/templates/login.html:17
 #: application/flicket_admin/templates/admin_delete_user.html:25
 #: application/flicket_admin/templates/admin_users.html:28
 msgid "Username"
@@ -432,39 +437,43 @@ msgstr "Nom"
 msgid "Posts"
 msgstr "Posts"
 
-#: application/flicket/templates/flicket_view.html:16
+#: application/flicket/templates/flicket_view.html:19
 #: application/flicket_admin/templates/admin_groups.html:24
 #: application/flicket_admin/templates/admin_users.html:40
 msgid "delete"
 msgstr "Supprimer"
 
-#: application/flicket/templates/flicket_view.html:57
+#: application/flicket/templates/flicket_view.html:23
 msgid "unsubscribe"
 msgstr "Se désabonner"
 
-#: application/flicket/templates/flicket_view.html:60
+#: application/flicket/templates/flicket_view.html:26
 msgid "subscribe"
 msgstr "S'abonner"
 
-#: application/flicket/templates/flicket_view.html:90
+#: application/flicket/templates/flicket_view.html:60
 msgid "claim"
 msgstr "S'approprier"
 
-#: application/flicket/templates/flicket_view.html:93
+#: application/flicket/templates/flicket_view.html:66
 msgid "release"
 msgstr "Libérer"
 
-#: application/flicket/templates/flicket_view.html:96
+#: application/flicket/templates/flicket_view.html:71
 msgid "assign"
 msgstr "Assigner à"
 
-#: application/flicket/templates/login.html:13
+#: application/flicket/templates/login.html:14
 msgid "Please enter your credentials to login."
 msgstr "S'il vous plait saisissez vos identifiants pour vous connecter"
 
-#: application/flicket/templates/login.html:45
+#: application/flicket/templates/login.html:46
 msgid "Remember Me"
 msgstr "Se rappeler"
+
+#: application/flicket/templates/password_reset.html:14
+msgid "Email Address"
+msgstr ""
 
 #: application/flicket/views/categories.py:30
 #, python-format
@@ -531,11 +540,11 @@ msgstr "Nouveau département \"%(value)s\" ajouté."
 msgid "Department \"%(value)s\" edited."
 msgstr "Départment \"%(value)s\" modifié."
 
-#: application/flicket/views/edit.py:34
+#: application/flicket/views/edit.py:35
 msgid "Could not find ticket."
 msgstr "Impossible de trouver la demande."
 
-#: application/flicket/views/edit.py:47
+#: application/flicket/views/edit.py:48
 msgid "You are not authorised to edit this ticket."
 msgstr "Vous n'êtes pas autorisé à modifier cette demande."
 
@@ -561,25 +570,29 @@ msgstr "La demande %(value)s est fermée."
 msgid "History"
 msgstr "Historique"
 
-#: application/flicket/views/login.py:103
+#: application/flicket/views/login.py:106
 msgid "Please set your email and job title."
 msgstr ""
 
-#: application/flicket/views/login.py:106
+#: application/flicket/views/login.py:109
 msgid "You were logged in successfully."
 msgstr "Connexion réussie."
 
-#: application/flicket/views/login.py:118
+#: application/flicket/views/login.py:121
 msgid "You were logged out successfully."
 msgstr "Déconnexion réussie."
+
+#: application/flicket/views/login.py:140
+msgid "Password reset. Please check your email for your new password"
+msgstr ""
 
 #: application/flicket/views/subscribe.py:32
 msgid "You have been subscribed to this ticket."
 msgstr "Vous avez été abonné à cette demande."
 
 #: application/flicket/views/subscribe.py:36
-msgid "You are already subscribed to this ticket"
-msgstr "Vous êtes déjà abonné à cette demande."
+msgid "Already subscribed to this ticket"
+msgstr ""
 
 #: application/flicket/views/subscribe.py:56
 msgid "You have been unsubscribed from this ticket."
@@ -615,7 +628,7 @@ msgstr "Cette demande vous a été assignée."
 msgid "You claimed ticket: %(value)s"
 msgstr "Vous vous êtes assigné la demande: %(value)s"
 
-#: application/flicket/views/ticket_create.py:36
+#: application/flicket/views/ticket_create.py:41
 msgid "New Ticket created."
 msgstr "Nouvelle demande créée."
 
@@ -632,18 +645,26 @@ msgstr "Vous ne pouvez pas libérer une demande sur laquelle vous travaillez."
 msgid "You released ticket: %(value)s"
 msgstr "Vous avez libéré la demande : %(value)s"
 
-#: application/flicket/views/ticket_view.py:32
+#: application/flicket/views/ticket_view.py:38
 #, python-format
 msgid "Cannot find ticket: \"%(value)s\""
 msgstr "Impossible de trouver la demande : \"%(value)s\""
 
-#: application/flicket/views/ticket_view.py:87
+#: application/flicket/views/ticket_view.py:55
+msgid "User subscribed."
+msgstr ""
+
+#: application/flicket/views/ticket_view.py:57
+msgid "User already subscribed."
+msgstr ""
+
+#: application/flicket/views/ticket_view.py:109
 #, python-format
 msgid "You have replied to ticket %(value_1)s: %(value_2)s."
 msgstr "Vous avez répondu à la demande : %(value_1)s: %(value_2)s."
 
-#: application/flicket/views/ticket_view.py:99
-#: application/flicket/views/ticket_view.py:105
+#: application/flicket/views/ticket_view.py:121
+#: application/flicket/views/ticket_view.py:127
 #, python-format
 msgid ""
 "%(value_1)s wrote on %(value_2)s\r\n"
@@ -654,7 +675,7 @@ msgstr ""
 "\r\n"
 "%(value_3)s"
 
-#: application/flicket/views/ticket_view.py:115
+#: application/flicket/views/ticket_view.py:138
 msgid "View Ticket"
 msgstr "Voir Demande"
 
@@ -813,9 +834,16 @@ msgstr "Suppression du groupe %(value)s"
 msgid "Delete Group"
 msgstr "Supprimer Groupe"
 
-#: application/flicket_admin/views/view_config.py:58
+#: application/flicket_admin/views/view_config.py:60
 msgid "Config details updated."
 msgstr "Configuration mise à jour."
+
+#: application/flicket_admin/views/view_email_test.py:35
+msgid ""
+"Flicket has tried to send an email to the address you entered. Please "
+"check your inbox. If no email has arrived please double check the <a "
+"href=\"{}{}\">config</a> settings."
+msgstr ""
 
 #~ msgid ""
 #~ "Category is linked to posts. Category"
@@ -860,4 +888,28 @@ msgstr "Configuration mise à jour."
 
 #~ msgid "Flicket - History"
 #~ msgstr "Historique"
+
+#~ msgid "Type name and pick from drop down list to. For a complete list of"
+#~ msgstr ""
+#~ "Saisissez le nom et sélectionnez ce "
+#~ "dernier dans la liste. Pour une "
+#~ "liste complète"
+
+#~ msgid "MarkDown reference"
+#~ msgstr "Référence des commandes Markdown"
+
+#~ msgid "Ticket contents supports markdown syntax. Please refer to"
+#~ msgstr "Les demandes supportent la synthaxe Markdown. Références ici"
+
+#~ msgid "md help"
+#~ msgstr "Aide Markdown"
+
+#~ msgid "FAQ"
+#~ msgstr "Questions fréquentes"
+
+#~ msgid "edit history"
+#~ msgstr "Modifier l'historique"
+
+#~ msgid "You are already subscribed to this ticket"
+#~ msgstr "Vous êtes déjà abonné à cette demande."
 
