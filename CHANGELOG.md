@@ -7,6 +7,10 @@ If you are migrating from any earlier version you should ensure:
     python manage.py db upgrade
     ~~~
 
+# 0.2.1
+*   
+
+
 # 0.2.0
 *   users can add subscriber other users to ticket so they receive notifications of tickets.
 *   user can reset password.
