@@ -6,6 +6,7 @@ __pycache__/
 .idea/
 
 __archive__
+__reference__
 __other__
 config.json
 users.json
