@@ -13,7 +13,7 @@ Tickets
 
 All tickets.
 
-.. image:: images/02_tickets_2019-05-12_16-23-34.png
+.. image:: images/02_tickets_2019-09-23_13-57-46.png
 
 View Ticket
 -----------
