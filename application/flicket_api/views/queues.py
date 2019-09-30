@@ -37,16 +37,16 @@ def get_queue(id):
 @bp_api.route(api_url + 'queues/', methods=['GET'])
 @token_auth.login_required
 def get_queues():
-    name = request.args.get('name')
+    queue = request.args.get('queue')
     department_id = request.args.get('department_id')
     department = request.args.get('department')
     queues = FlicketQueue.query.order_by(FlicketQueue.queue)
     kwargs = {}
-    if name:
-        queues = queues.filter(FlicketQueue.queue.ilike(f'%{name}%'))
-        kwargs['name'] = name
+    if queue:
+        queues = queues.filter(FlicketQueue.queue.ilike(f'%{queue}%'))
+        kwargs['queue'] = queue
     if department_id:
-        queues = queues.filter(department_id=department_id)
+        queues = queues.filter_by(department_id=department_id)
         kwargs['department_id'] = department_id
     if department:
         queues = queues.filter(FlicketQueue.department.ilike(f'%{department}'))
