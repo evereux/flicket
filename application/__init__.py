@@ -93,6 +93,7 @@ from .flicket_api.views import tickets
 from .flicket_api.views import tokens
 from .flicket_api.views import uploads
 from .flicket_api.views import users
+from .flicket_api.views import queues
 
 from .flicket_errors import handlers
 

@@ -4,7 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import url_for, g
-from sqlalchemy.sql.functions import func
+from sqlalchemy import select, join, func
 
 from application import app, db
 from application.flicket.models import Base
@@ -747,3 +747,43 @@ class FlicketAction(PaginatedAPIMixin, Base):
                                                                                                    self.user_id,
                                                                                                    self.recipient_id,
                                                                                                    self.date)
+
+# Virtual Model Flicket Queue
+# xdml: as not sure how to best implement it, I created "Virtual Model" or how to call it
+# that is similar to SQL VIEW, it is simple SELECT FROM flicket_category JOIN flicket_department
+# query, setting primary_key, so Flask SqlAlchemy ORM can be used as on regular SQL table
+class FlicketQueue(PaginatedAPIMixin, Base):
+    __table__ = select([
+            func.concat(FlicketDepartment.department, ' - ', FlicketCategory.category).label('queue'),
+            FlicketCategory.id.label('category_id'),
+            FlicketCategory.category.label('category'),
+            FlicketDepartment.id.label('department_id'),
+            FlicketDepartment.department.label('department')
+        ]).select_from(join(
+            FlicketCategory,
+            FlicketDepartment,
+            FlicketCategory.department_id == FlicketDepartment.id)
+        ).alias()
+    __mapper_args__ = {
+            'primary_key': [FlicketCategory.id]
+        }
+
+    def to_dict(self):
+        data = {
+                'queue': self.queue,
+                'category_id': self.category_id,
+                'category': self.category,
+                'department_id': self.department_id,
+                'department': self.department,
+                'links': {
+                    'self': app.config['base_url'] + url_for('bp_api.get_queue', id=self.category_id),
+                    'queues': app.config['base_url'] + url_for('bp_api.get_queues'),
+                    'department': app.config['base_url'] + url_for('bp_api.get_department', id=self.department_id),
+                    'category': app.config['base_url'] + url_for('bp_api.get_category', id=self.category_id),
+                },
+            }
+
+        return data
+
+    def __repr__(self):
+        return f"<FlicketQueue: name='{self.name}', category_id={self.category_id}>"
