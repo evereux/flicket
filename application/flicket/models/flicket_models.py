@@ -786,4 +786,4 @@ class FlicketQueue(PaginatedAPIMixin, Base):
         return data
 
     def __repr__(self):
-        return f"<FlicketQueue: name='{self.name}', category_id={self.category_id}>"
+        return f"<FlicketQueue: queue='{self.queue}', category_id={self.category_id}>"
