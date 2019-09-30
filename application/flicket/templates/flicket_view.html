@@ -71,6 +71,12 @@
                             {{ _('assign') }}
                         </a>
                     </li>
+		    <li class="flicket-ticket-details-btn-li">
+                        <a style="text-decoration: none"
+                           href="{{ url_for('flicket_bp.ticket_queue', ticket_id = ticket.id) }}">
+                            {{ _('queue') }}
+                        </a>
+		    </li>
                 </ul>
 
             </div>

@@ -80,6 +80,7 @@ from .flicket.views import subscribe
 from .flicket.views import user_edit
 from .flicket.views import users
 from .flicket.views import ticket_view
+from .flicket.views import ticket_queue
 
 from .flicket_api.views import actions
 from .flicket_api.views import categories

@@ -16,6 +16,7 @@ from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketPriority,
                                                        FlicketStatus,
                                                        FlicketTicket,
+                                                       FlicketQueue,
                                                        field_size)
 from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
@@ -92,6 +93,22 @@ def does_category_exist(form, field):
 
     return True
 
+def does_unique_queue_exist(form, field):
+    """
+    Queue is CONCAT of '{FlicketDepartment.department} - {FlicketCategory.category}'
+    :param form:
+    :param field:
+    :return True / False:
+    """
+    result = FlicketQueue.query.filter_by(queue=form.queue.data).count()
+    if result == 0:
+        field.errors.append(gettext('Queue does not exist.'))
+        return False
+    if result > 1:
+        field.errors.append(gettext('Ambiguous queue, contact administrator to fix it!'))
+        return False
+
+    return True
 
 class CreateTicketForm(FlaskForm):
     def __init__(self, *args, **kwargs):
@@ -196,3 +213,12 @@ class CategoryForm(FlaskForm):
                                                    does_category_exist])
     department_id = HiddenField('department_id')
     submit = SubmitField(gettext('add category'), render_kw=form_class_button)
+
+class SearchQueueForm(FlaskForm):
+    """ Search queue. """
+    queue = StringField('queue', validators=[DataRequired(), does_unique_queue_exist])
+    submit = SubmitField(gettext('search queue'), render_kw=form_class_button)
+
+class ChangeQueueForm(SearchQueueForm):
+    """ Change queue. """
+    submit = SubmitField(gettext('change queue'), render_kw=form_class_button)

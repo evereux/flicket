@@ -1,0 +1,45 @@
+{% extends "flicket_base.html" %}
+<!-- extend from base layout -->
+{% block content %}
+
+    {% include('flicket_apijson_queues.html') %}
+
+    <div class="container">
+        <h1>{{ title }}</h1>
+        <h2 class="flicket-title">#{{ ticket.id_zfill }} - {{ ticket.title }}</h2>
+        <p>
+            {{ _('Type queue and pick from drop down list to assign ticket. ') }} <a
+                href="{{ url_for('flicket_bp.departments') }}" target="_blank">Available queues</a>.
+        </p>
+        <form action=""
+              class="form-horizontal"
+              enctype="multipart/form-data"
+              method="post"
+              name="change_queue">
+            {{ form.hidden_tag() }}
+
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="autocomplete-queue">{{ form.queue.label }}</label>
+                <div class="col-sm-3">
+                    {{ form.queue(class="form-control", id="autocomplete-queue") }}
+                </div>
+            </div>
+            {% if form.queue.errors %}
+                <div class="alert alert-warning small">
+                    {% for error in form.queue.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="form-group">
+                <div class="col-sm-6 text-center">
+                    {{ form.submit }}
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+{% endblock %}

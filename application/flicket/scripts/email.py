@@ -76,6 +76,22 @@ class FlicketMail:
 
         self.send_email(title, self.sender, recipients, html_body)
 
+    def queue_ticket(self, ticket):
+        """
+        Change ticket queue email notification
+
+        :param ticket: ticket object
+        :return:
+        """
+
+        recipients = ticket.get_subscriber_emails()
+        title = 'Ticket #{} - {} has changed queue.'.format(ticket.id_zfill, ticket.title)
+        ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
+        html_body = render_template('email_ticket_queue.html', ticket=ticket, number=ticket.id_zfill,
+                ticket_url=ticket_url)
+
+        self.send_email(title, self.sender, recipients, html_body)
+
     def release_ticket(self, ticket):
         """
         :param ticket: ticket object

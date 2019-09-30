@@ -205,6 +205,10 @@ class FlicketTicket(PaginatedAPIMixin, Base):
     def id_zfill(self):
         return str(self.id).zfill(5)
 
+    @property
+    def queue(self):
+        return f'{self.category.department.department} - {self.category.category}'
+
     def is_subscribed(self, user):
         for s in self.subscribers:
             if s.user == user:
