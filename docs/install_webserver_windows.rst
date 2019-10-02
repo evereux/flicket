@@ -49,12 +49,18 @@ folder structure like this::
         C:\Apache24\cgi-bin
         ...
 
-Open the file `C:\Apache24\conf\httpd.conf` in a text editor like
+Open the file `C:\\Apache24\\conf\\httpd.conf` in a text editor like
 `notepad++ <https://notepad-plus-plus.org/>`_.
 
-Modify the following line to read the following::
+Ensure SRVROOT is pointing to the correct folder::
 
     SRVROOT "C:\Apache24"
+
+
+Uncomment mod_version line::
+
+    LoadModule version_module modules/mod_version.so
+
 
 Add the following lines (put these after the other LoadModule declarations)::
 
@@ -65,11 +71,9 @@ Uncomment the vhosts line::
 
     Include conf/extra/httpd-vhosts.conf
 
-Uncomment mod_version line
 
-    LoadModule version_module modules/mod_version.so
 
-Edit the file `C:\Apache24\conf\extra\httpd-vhosts.conf`.
+Edit the file `C:\\Apache24\\conf\\extra\\httpd-vhosts.conf`.
 
 Comment out the existing configurations lines by prefixing with a # (good
 reference for future troubleshooting).
@@ -122,7 +126,7 @@ Start Apache
 ~~~~~~~~~~~~
 
 To start the service use either Windows Serivce Manage and start the service
-`Apache HTTP Server` or from the command prompt whilst in the folder `c:\Apache24\bin`::
+`Apache HTTP Server` or from the command prompt whilst in the folder `c:\\Apache24\\bin`::
 
     httpd -k start -n "Apache HTTP Server"
 
