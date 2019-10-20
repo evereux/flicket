@@ -63,8 +63,6 @@ Set Up
 
 4. Initialise the database using manage.py from the command line::
 
-    python manage.py db init
-    python manage.py db migrate
     python manage.py db upgrade
 
 6. Run the set-up script:. This is required to create the Admin user and site url defaults.
