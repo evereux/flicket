@@ -10,13 +10,13 @@ __reference__
 __other__
 config.json
 users.json
-migrations
 migrations_laptop
 migrations_desktop
 test.db
 test.py
 
 env*/
+venv*/
 .directory
 .cache/v/cache/lastfailed
 

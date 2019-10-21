@@ -47,7 +47,7 @@ def ticket_assign(ticket_id=False):
             user.total_assigned += 1
 
         # add action record
-        add_action(action='assign', ticket=ticket, recipient=user)
+        add_action(ticket, 'assign', recipient=user)
 
         # subscribe to the ticket
         if not ticket.is_subscribed(user):

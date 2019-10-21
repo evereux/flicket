@@ -34,7 +34,7 @@ def ticket_claim(ticket_id=False):
         db.session.commit()
 
         # add action record
-        add_action(action='claim', ticket=ticket)
+        add_action(ticket, 'claim')
 
         # send email notifications
         f_mail = FlicketMail()

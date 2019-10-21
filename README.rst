@@ -32,9 +32,10 @@ Requirements
 ------------
 Prior to installing and running Flicket please read these requirements.
 
-* Python =>3.5 - I have not tested earlier versions of Python 3.
+* Python =>3.6
 
-* SQL Database server
+* SQL Database server with JSON support (for example PostgreSQL >=9.2,
+  MySQL >=5.7, MariaDB >=10.2, SQLite >=3.9)
 
 
 Production Environment

@@ -141,7 +141,7 @@
         {{ display_post_box(ticket, page=page)|safe }}
         <!-- end display ticket -->
         <!-- display actions -->
-        {% for action in ticket.actions %}
+        {% for action in ticket.actions_nonepost %}
             <div class="row flicket-row flicket-row-action">
                 {{ action.output_action()|safe }}
             </div>
