@@ -42,6 +42,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 *   Migration scripts now under git revision control.
 *   New `FlicketAction` structure and updated `add_action()` function.
+*   Change queue feature (user can put ticket into another "department - catagory").
 
 
 ## 0.2.0
