@@ -718,6 +718,10 @@ class FlicketAction(PaginatedAPIMixin, Base):
             return (f'Ticked closed'
                     f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
+        if self.action == 'queue':
+            return (f'Ticket queue has been changed to "{self.data["queue"]}"'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+
     def to_dict(self):
         """
 

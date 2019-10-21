@@ -34,17 +34,20 @@ def ticket_queue(ticket_id=False):
             flash(gettext('Queue is already assigned to ticket.'))
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-        # set status to open
-        status = FlicketStatus.query.filter_by(status='Open').first()
-        # change queue of the ticket
+        # change queue, unassign and set status to open
+        status = FlicketStatus.query.filter_by(status='Open').one()
         ticket.category_id = queue.category_id
         ticket.current_status = status
+        ticket.assigned = None
 
         # add action record
-        # TODO: update add_action function and FlicketAction model to support new action
-        # until it is done, and new action ready for use, this will not be merged into
-        # 0.2.1 branch
-        #add_action(action='queue', ticket=ticket, recipient=g.user)
+        add_action(ticket, 'queue', data={
+            'queue': queue.queue,
+            'category_id': queue.category_id,
+            'category': queue.category,
+            'department_id': queue.department_id,
+            'department': queue.department})
+        add_action(ticket, 'status', data={'status_id': status.id, 'status': status.status})
 
         # subscribe to the ticket
         if not ticket.is_subscribed(g.user):
