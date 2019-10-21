@@ -43,7 +43,7 @@ def release(ticket_id=False):
         db.session.commit()
 
         # add action record
-        add_action(action='release', ticket=ticket)
+        add_action(ticket, 'release')
 
         # send email to state ticket has been released.
         f_mail = FlicketMail()

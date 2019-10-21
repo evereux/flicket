@@ -1,17 +1,50 @@
 # Changelog
 
-If you are migrating from any earlier version you should ensure:
-       * you upgrade the database. 
-    ~~~
-    python manage.py db migrate
+If you are migrating from earlier version (since 0.2.1) you should ensure:
+
+*   you upgrade the database:
+
+    ```
     python manage.py db upgrade
-    ~~~
-
-# 0.2.1
-*   
+    ```
 
 
-# 0.2.0
+## 0.2.1
+*   **When upgrading from 0.2.0, follow:**
+
+      * Do database backup according to your database engine.
+      * Backup `migrations/` directory.
+      * Clean `migrations/` directory:
+
+        ```
+        git clean -fdx migrations
+        ```
+
+      * Drop 'alembic_version' table:
+
+        ```
+        python manage.py shell
+        >>> from application import db
+        >>> db.engine.execute('DROP TABLE IF EXISTS alembic_version')
+        ```
+
+      * Stamp migration:
+
+        ```
+        python manage.py db stamp fe0f77ef3f46
+        ```
+
+      * Upgrade database:
+
+        ```
+        python manage.py db upgrade
+        ```
+
+*   Migration scripts now under git revision control.
+*   New `FlicketAction` structure and updated `add_action()` function.
+
+
+## 0.2.0
 *   users can add subscriber other users to ticket so they receive notifications of tickets.
 *   user can reset password.
 *   when replying to ticket the priority level is set correctly. would previously always be set to low.
@@ -21,7 +54,7 @@ If you are migrating from any earlier version you should ensure:
 *   other minor tweaks and cosmetic changes. see commit history for more details.
 
 
-# 0.1.9
+## 0.1.9
 *   Expanded API functionality ... still work to be done during this release
 *   Fixed issue where field contents were not remembered after a search.
 *   Added command to send emails to users who have tickets not closed. This needs to be invoked from the command line
@@ -37,7 +70,7 @@ If you are migrating from any earlier version you should ensure:
 *   Documentation. 
 
 
-# 0.1.8
+## 0.1.8
 *   Upgraded SQLAlchemy and Jinja2 due to security warnings.
 *   Updated wording of prompts in 'populate_database_with_junk.py'.
 *   Added admin setting so the page banner title can be changed from 'Flicket'.
@@ -61,7 +94,7 @@ If you are migrating from any earlier version you should ensure:
         configuration area to do this.
     
 
-# 0.1.7
+## 0.1.7
 *   Added view 'my_tickets'.
 *   Added links to ticket views filtered by department on main page.
 *   Refactored ticket views methods and placed in FlicketTicket model.

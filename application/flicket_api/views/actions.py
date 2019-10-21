@@ -18,11 +18,11 @@ def get_action(id):
     return jsonify(FlicketAction.query.get_or_404(id).to_dict())
 
 
-@bp_api.route(api_url + 'actions/<int:ticket_id>/', methods=['GET'])
-@bp_api.route(api_url + 'actions/<int:ticket_id>/<int:page>/', methods=['GET'])
+@bp_api.route(api_url + 'actions/<int:ticket_id>', methods=['GET'])
 @token_auth.login_required
-def get_actions(page=1, ticket_id=None):
+def get_actions(ticket_id):
     actions = FlicketAction.query.filter_by(ticket_id=ticket_id)
+    page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', app.config['posts_per_page'], type=int), 100)
     data = FlicketAction.to_collection_dict(actions, page, per_page, 'bp_api.get_actions', ticket_id=ticket_id)
     return jsonify(data)

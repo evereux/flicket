@@ -26,7 +26,8 @@ field_size = {
     'filename_min_length': 3,
     'filename_max_length': 128,
     'priority_min_length': 3,
-    'priority_max_length': 12
+    'priority_max_length': 12,
+    'action_max_length': 30,
 }
 
 
@@ -192,9 +193,13 @@ class FlicketTicket(PaginatedAPIMixin, Base):
     # finds all the users who are subscribed to the ticket.
     subscribers = db.relationship('FlicketSubscription', order_by='FlicketSubscription.user_def')
 
-    # finds all the actions associated with the post
+    # finds all the actions associated with the ticket
     actions = db.relationship('FlicketAction',
-                              primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id)")
+            primaryjoin="FlicketTicket.id == FlicketAction.ticket_id")
+
+    # finds all the actions associated with the ticket and not associated with any post
+    actions_nonepost = db.relationship('FlicketAction',
+            primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, FlicketAction.post_id == None)")
 
     @property
     def num_replies(self):
@@ -465,7 +470,7 @@ class FlicketPost(PaginatedAPIMixin, Base):
 
     # finds all the actions associated with the post
     actions = db.relationship('FlicketAction',
-                              primaryjoin="and_(FlicketPost.id == FlicketAction.post_id)")
+            primaryjoin="FlicketPost.id == FlicketAction.post_id")
 
     def to_dict(self):
         """
@@ -650,8 +655,7 @@ class FlicketAction(PaginatedAPIMixin, Base):
     """
     SQL table that stores the action history of a ticket.
     For example, if a user claims a ticket that action is stored here.
-    The action is associated with either the ticket_id (if no posts) or post_id (of
-    lastest post). The reason for this is displaying within the ticket view.
+    The action is associated with ticket_id and latest post_id (if exists).
     """
     __tablename__ = 'flicket_ticket_action'
 
@@ -663,13 +667,8 @@ class FlicketAction(PaginatedAPIMixin, Base):
     post_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
     post = db.relationship(FlicketPost)
 
-    assigned = db.Column(db.Boolean)
-    claimed = db.Column(db.Boolean)
-    released = db.Column(db.Boolean)
-    closed = db.Column(db.Boolean)
-    opened = db.Column(db.Boolean)
-    status = db.Column(db.String(field_size['status_max_length']))
-    priority = db.Column(db.String(field_size['priority_max_length']))
+    action = db.Column(db.String(field_size['action_max_length']))
+    data = db.Column(db.JSON(none_as_null=True))
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser, foreign_keys=[user_id])
@@ -687,24 +686,33 @@ class FlicketAction(PaginatedAPIMixin, Base):
 
         _date = self.date.strftime('%d-%m-%Y %H:%M')
 
-        if self.assigned:
-            return 'Ticket assigned to <a href="mailto:{1}">{0}</a> by <a href="mailto:{3}">{2}</a> | {4}'.format(
-                self.recipient.name, self.recipient.email, self.user.name, self.user.email, _date)
+        if self.action == 'open':
+            return (f'Ticket opened'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.claimed:
-            return 'Ticked claimed by <a href="mailto:{}">{}</a>  | {}'.format(self.user.email, self.user.name, _date)
+        if self.action == 'assign':
+            return (f'Ticket assigned to <a href="mailto:{self.recipient.email}">{self.recipient.name}</a>'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.status:
-            return 'Ticket status has been changed to "{}" by {} | {}'.format(self.status, self.user.name, _date)
+        if self.action == 'claim':
+            return (f'Ticked claimed'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.priority:
-            return 'Ticket priority has been changed to "{}" by {} | {}'.format(self.priority, self.user.name, _date)
+        if self.action == 'status':
+            return (f'Ticket status has been changed to "{self.data["status"]}"'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.released:
-            return 'Ticket released by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
+        if self.action == 'priority':
+            return (f'Ticket priority has been changed to "{self.data["priority"]}"'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.closed:
-            return 'Ticked closed by <a href="mailto:{}">{}</a> | {}'.format(self.user.email, self.user.name, _date)
+        if self.action == 'release':
+            return (f'Ticket released'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+
+        if self.action == 'close':
+            return (f'Ticked closed'
+                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
     def to_dict(self):
         """
@@ -714,36 +722,22 @@ class FlicketAction(PaginatedAPIMixin, Base):
 
         data = {
             'id': self.id,
-            'assigned': self.assigned,
-            'claimed': self.claimed,
-            'closed': self.closed,
-            'date': self.date,
-            'opened': self.opened,
-            'post_id': self.post_id,
-            'released': self.released,
             'ticket_id': self.ticket_id,
-            'recipient_id': self.recipient_id,
+            'post_id': self.post_id,
+            'action': self.action,
+            'data': self.data,
             'user_id': self.user_id,
+            'recipient_id': self.recipient_id,
+            'date': self.date,
             'links': {
                 'self': app.config['base_url'] + url_for('bp_api.get_action', id=self.id),
-                'actions': app.config['base_url'] + url_for('bp_api.get_actions'),
+                'actions': app.config['base_url'] + url_for('bp_api.get_actions', ticket_id=self.ticket_id),
             }
-
         }
 
         return data
 
     def __repr__(self):
 
-        return ('<Class FlicketAction: ticket_id={}, post_id={}, assigned={}, unassigned={}, claimed={},'
-                'released={}, closed={}, opened={}, user_id={}, recipient_id={}, date={}>').format(self.ticket_id,
-                                                                                                   self.post_id,
-                                                                                                   self.assigned,
-                                                                                                   self.unassigned,
-                                                                                                   self.claimed,
-                                                                                                   self.released,
-                                                                                                   self.closed,
-                                                                                                   self.opened,
-                                                                                                   self.user_id,
-                                                                                                   self.recipient_id,
-                                                                                                   self.date)
+        return (f'<Class FlicketAction: ticket_id={self.ticket_id}, post_id={self.ticket_id}, action={self.action!r}, '
+                f'data={self.data}, user_id={self.user_id}, recipient_id={self.recipient_id}, date={self.date}>')

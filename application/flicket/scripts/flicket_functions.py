@@ -11,57 +11,23 @@ from application import db
 from application.flicket.models.flicket_models import FlicketAction
 
 
-def add_action(action=None, ticket=None, recipient=None):
-
+def add_action(ticket, action, data=None, recipient=None):
     """
-    :param recipient:
-    :param action: string 'assign', 'unassign', 'close', 'claim', 'release'
     :param ticket: ticket object 
+    :param action: string
+    :param data: dictionary
+    :param recipient: user object
     :return:
     """
-    ticket_id = None
     post_id = None
-    assigned = None
-    claimed = None
-    released = None
-    closed = None
-    opened = None
-    status = None
-    priority = None
-
-    if len(ticket.posts) == 0:
-        ticket_id = ticket.id
-    else:
-        post_id = ticket.posts[len(ticket.posts) - 1].id
-
-    if action == 'assign':
-        assigned = True
-
-    if action == 'claim':
-        claimed = True
-
-    if action == 'release':
-        released = True
-
-    if action == 'close':
-        closed = True
-
-    if action == 'Awaiting Information' or action == 'In Work' or action == 'Open':
-        status = action
-
-    if action == 'low' or action == 'medium' or action == 'high':
-        priority = action
+    if ticket.posts:
+        post_id = ticket.posts[-1].id
 
     new_action = FlicketAction(
-        ticket_id=ticket_id,
+        ticket=ticket,
         post_id=post_id,
-        assigned=assigned,
-        claimed=claimed,
-        released=released,
-        closed=closed,
-        opened=opened,
-        status=status,
-        priority=priority,
+        action=action,
+        data=data,
         user=g.user,
         recipient=recipient,
         date=datetime.datetime.now()

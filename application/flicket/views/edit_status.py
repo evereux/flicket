@@ -44,7 +44,7 @@ def change_status(ticket_id, status):
     f_mail.close_ticket(ticket)
 
     # add action record
-    add_action(action='close', ticket=ticket)
+    add_action(ticket, 'close')
 
     ticket.current_status = closed
     ticket.assigned_id = None

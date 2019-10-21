@@ -14,6 +14,7 @@ from application import app, db
 from application.flicket.forms.flicket_forms import ReplyForm, SubscribeUser
 from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_models import FlicketStatus
+from application.flicket.models.flicket_models import FlicketPriority
 from application.flicket.models.flicket_models import FlicketPost
 from application.flicket.models.flicket_models import FlicketSubscription
 from application.flicket.models.flicket_user import FlicketUser
@@ -72,12 +73,14 @@ def ticket_view(ticket_id, page=1):
         )
 
         if ticket.status_id != form.status.data:
-            ticket.status_id = form.status.data
-            add_action(action=ticket.current_status.status, ticket=ticket)
+            status = FlicketStatus.query.get(form.status.data)
+            ticket.current_status = status
+            add_action(ticket, 'status', data={'status_id': status.id, 'status': status.status})
 
         if ticket.ticket_priority_id != form.priority.data:
-            ticket.ticket_priority_id = form.priority.data
-            add_action(action=ticket.ticket_priority.priority, ticket=ticket)
+            priority = FlicketPriority.query.get(form.priority.data)
+            ticket.ticket_priority = priority
+            add_action(ticket, 'priority', data={'priority_id': priority.id, 'priority': priority.priority})
 
         db.session.add(new_reply)
 
