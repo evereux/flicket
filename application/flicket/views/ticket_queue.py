@@ -38,7 +38,9 @@ def ticket_queue(ticket_id=False):
         status = FlicketStatus.query.filter_by(status='Open').one()
         ticket.category_id = queue.category_id
         ticket.current_status = status
-        ticket.assigned = None
+        if ticket.assigned:
+            ticket.assigned.total_assigned -= 1
+            ticket.assigned = None
 
         # add action record
         add_action(ticket, 'queue', data={
