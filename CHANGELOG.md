@@ -13,19 +13,32 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   **When upgrading from 0.2.0, follow:**
 
       * Do database backup according to your database engine.
+      
       * Backup `migrations/` directory.
+      
       * Clean `migrations/` directory:
+       
+        This can be done using git using the following command.
 
         ```
         git clean -fdx migrations
         ```
-
-      * Drop 'alembic_version' table:
+        
+        Otherwise use another method to delete all migration files prior to merging this version. 
+        The `migrations/versions` folder should only contain the following files:
+        ```
+        ../../flicket/migrations/versions/36c91aa9b3b5_new_action_model.py
+        ../../flicket/migrations/versions/fe0f77ef3f46_migrations_before_source_code_control.py
+        ```
+           
+        * Drop 'alembic_version' table:
 
         ```
         python manage.py shell
         >>> from application import db
         >>> db.engine.execute('DROP TABLE IF EXISTS alembic_version')
+        <sqlalchemy.engine.result.ResultProxy object at 0x7fe5484034e0>
+        >>> exit()
         ```
 
       * Stamp migration:

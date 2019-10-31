@@ -18,6 +18,10 @@ Getting Flicket
 The source code for Flicket is hosted at GitHub. You can either get
 the latest frozen zip file or use the latest master branch.
 
+
+.. WARNING::
+    If you are upgrading from a previous version please read the CHANGELOG.
+
 Zip Package
 ~~~~~~~~~~~
 
