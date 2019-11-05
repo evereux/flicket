@@ -91,8 +91,7 @@ def add_user():
                     name=form.name.data,
                     job_title=form.job_title.data,
                     locale=form.locale.data)
-        flash(gettext('You have successfully registered new user "%(value)s".', value=form.username.data),
-              category='success')
+        flash(gettext(f'You have successfully registered new user "{form.username.data}".'), category='success')
         return redirect(url_for('admin_bp.users'))
     # noinspection PyUnresolvedReferences
     return render_template('admin_user.html', title='Add User', form=form)
@@ -134,7 +133,7 @@ def edit_user():
                 group_id = FlicketGroup.query.filter_by(id=g).first()
                 group_id.users.append(user)
             db.session.commit()
-            flash(gettext("User %(value)s edited.", value=user.username))
+            flash(gettext(f"User {user.username} edited."))
             return redirect(url_for('admin_bp.edit_user', id=_id))
 
         # populate form with form data retrieved from database.
@@ -153,7 +152,8 @@ def edit_user():
         return redirect(url_for('admin_bp.index'))
 
     # noinspection PyUnresolvedReferences
-    return render_template('admin_user.html', title='Edit User', comment='Edit user details. Use "CTRL" to deselect',
+    return render_template('admin_user.html',
+                           title='Edit User',
                            admin_edit=True,
                            form=form, user=user)
 
@@ -174,7 +174,7 @@ def delete_user():
 
     if form.validate_on_submit():
         # delete the user.
-        flash(gettext('Deleted user %(value)s', value=user_details.username))
+        flash(gettext(f'Deleted user {user_details.username}s'))
         db.session.delete(user_details)
         db.session.commit()
         return redirect(url_for('admin_bp.users'))
@@ -198,7 +198,7 @@ def groups():
         )
         db.session.add(add_group)
         db.session.commit()
-        flash(gettext('New group "%(value)s" added.', value=form.group_name.data))
+        flash(gettext(f'New group "{form.group_name.data}" added.'), category='success')
         return redirect(url_for('admin_bp.groups'))
 
     # noinspection PyUnresolvedReferences
@@ -221,7 +221,7 @@ def admin_edit_group():
 
     # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
     if group.group_name == app.config['ADMIN_GROUP_NAME']:
-        flash(gettext('Can\'t edit group %(value)s', value=app.config['ADMIN_GROUP_NAME']), category='warning')
+        flash(gettext(f'Can\'t edit group {app.config["ADMIN_GROUP_NAME"]}s.'), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
@@ -245,12 +245,12 @@ def admin_delete_group():
 
     # we won't ever delete the flicket_admin group (id = 1)
     if id == '1':
-        flash(gettext('Can\'t delete default flicket_admin group.'))
+        flash(gettext('Can\'t delete default flicket_admin group.'), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the group.
-        flash(gettext('Deleted group %(value)s', value=group_details.group_name))
+        flash(gettext(f'Deleted group {group_details.group_name}s'), category="info")
         db.session.delete(group_details)
         db.session.commit()
         return redirect(url_for('admin_bp.groups'))
