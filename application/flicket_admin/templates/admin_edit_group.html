@@ -1,35 +1,59 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-<div class="container">
-    <h1>{{ _('Administration') }}</h1>
-    {% include 'admin_menu.html' %}
-    <h2>{{ title }}</h2>
-    <form action="" method="post" name="edit_group">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ _('Please add new users credentials.') }}
-        </p>
-        <table>
-            <tr>
-                <th>{{ _('Group Name') }}</th>
-                <td>{{ form.group_name(size=(24)) }}</td>
-                <td>
-                    {% if form.group_name.errors %}
-                    <span style="color: red;">
-                    {% for error in form.group_name.errors %}
-                    [{{ error }}]
-                    {% endfor %}
-                    </span>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input class="btn btn-primary" type="submit" value="edit group"/></td>
-                <td></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="container" xmlns="http://www.w3.org/1999/html">
+        {% include 'admin_menu.html' %}
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <h2>{{ title }}</h2>
+            </div>
+        </div>
+
+        <div class="row m-2 p-2 border rounded bg-white">
+
+            <div class="w-25"></div>
+
+            <div class="col">
+
+
+                <form action="" method="post" name="edit_group">
+                    {{ form.hidden_tag() }}
+
+
+                    <div class="row m-2">
+                        <div class="col">
+                            {{ _('Please add new users credentials.') }}
+                        </div>
+                    </div>
+
+                    <div class="row m-2">
+                        <div class="col-5">
+                            {{ _('Group Name') }}
+                        </div>
+                        <div class="col">
+                            {{ form.group_name(class="form-control form-control-sm") }}
+                            {% if form.group_name.errors %}
+                                <span style="color: red;">
+                                {% for error in form.group_name.errors %}
+                                    [{{ error }}]
+                                {% endfor %}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col text-center">
+                            <input class="btn btn-primary" type="submit" value="edit group"/>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="w-25"></div>
+
+        </div>
+    </div>
+
 {% endblock %}

@@ -2,33 +2,62 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        <h3><label class="small">Department</label> {{ department }}</h3>
 
-        <form action=""
-              class="form-horizontal"
-              enctype="multipart/form-data"
-              method="post"
-              name="create_ticket">
-            {{ form.hidden_tag() }}
+        <div class="row m-2 p-2 border rounded">
+            <div class="col"><h1>{{ title }}</h1></div>
+        </div>
 
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{ _('Category') }}</label>
-                <div class="col-sm-3">
-                    {{ form.category(class="form-control") }}
+        <div class="row m-2 p-2 border rounded">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col"><h1>{{ title }}</h1></div>
                 </div>
-                <div class="col-sm-2">
-                    <input class="btn btn-primary" type="submit" value="edit category"/>
+
+                <div class="row">
+                    <div class="col">Department: {{ department }}</div>
                 </div>
+                <form action=""
+                      class="form-horizontal"
+                      enctype="multipart/form-data"
+                      method="post"
+                      name="create_ticket">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <label class="col-2 col-form-label">{{ _('Category') }}</label>
+                        <div class="col">
+                            {{ form.category(class="form-control form-control-sm") }}
+                        </div>
+                        <div class="col">
+                            <input class="btn btn-primary btn-sm" type="submit" value="edit category"/>
+                        </div>
+                    </div>
+
+
+                    {% if form.category.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.category.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </form>
+
             </div>
-            {% if form.category.errors %}
-                <div class="alert alert-warning small">
-                    {% for error in form.category.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+
+        </div>
+
+        <h3></h3>
+
+
+        <div class="form-group">
+
+        </div>
+
 
         </form>
 

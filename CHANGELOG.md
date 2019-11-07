@@ -7,6 +7,8 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     ```
     python manage.py db upgrade
     ```
+    
+*   Please read the changelog descriptions. Particularly those for 0.2.1.
 
 
 ## 0.2.1
@@ -55,6 +57,10 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 *   Migration scripts now under git revision control.
 *   New `FlicketAction` structure and updated `add_action()` function.
+*   Moved to bootstrap 4.
+*   Lots of UI changes as a result of change. Removed usage of html tables. 
+*   Changed icon-set from glyphicons to font-awesome.
+*   Fixed a number of Flash message rendering issues introduced during locale implementation.
 
 
 ## 0.2.0

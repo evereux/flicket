@@ -1,0 +1,20 @@
+<!-- pagination bar -->
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-sm m-0">
+        {%- for page in tickets.iter_pages() -%}
+            {% if page %}
+                <li class="page-item {% if page == tickets.page %} active {% endif %}">
+                    <a class="page-link" href="{{ url_for(base_url, page=page, **request.args) }}">
+                        {{ page }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="">
+                        ...
+                    </a>
+                </li>
+            {%- endif -%}
+        {% endfor %}
+    </ul>
+</nav>

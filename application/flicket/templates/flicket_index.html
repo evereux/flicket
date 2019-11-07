@@ -1,31 +1,46 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
-<div class="container">
-        <h1>{{ _('Stats') }}</h1>
-        <h2>{{ _('Overall') }}</h2>
-        <p>
+    <div class="container">
+        <h1 class="m-2 p-2 border rounded bg-white">{{ _('Statistics') }}</h1>
+        <p class="m-2 p-2 border rounded bg-white ">
             <mark>{{ total }}</mark>
             {{ _('tickets have been raised') }}.
-        </p>
-        <p>
+            <br/>
             <mark>{{ total_days }}</mark>
-            {{ _('tickets') }}{% if total_days > 1 %}s {{ _('have') }}{% else %} {{ _('has') }}{% endif %} {{ _('been raised over the last') }} {{ days }} {{ _('days') }}.
+            {{ _('tickets') }}{% if total_days > 1 %} {{ _('have') }}{% else %}
+                {{ _('has') }}{% endif %} {{ _('been raised over the last') }} {{ days }} {{ _('days') }}.
+            <br/>
+            {%- for s in statuses -%}
+                {{ _('There are currently') }}
+                <mark>{{ s[1]['ticket_num'] }}</mark>
+                {{ _('tickets') }}
+                <mark>{{ s[0]['status'] }}</mark>
+                .<br/>
+            {%- endfor -%}
         </p>
-        {% for s in statuses %}
-            <p>{{ _('There are currently') }} <mark>{{ s[1]['ticket_num'] }}</mark> {{ _('tickets') }} <mark>{{ s[0]['status'] }}</mark>.</p>
-        {% endfor  %}
-        <h3>{{ _('Departments') }}</h3>
-    <div class="row">
-        {% for d in departments %}
-        <div class="col-sm-3">
-            <h4>{{ d[0]['department'] }} <a href="{{ url_for('flicket_bp.tickets', department=d[0]['department']) }}"><span class="glyphicon glyphicon-list"></span></a></h4>
-            {% for s in d[1] %}
-            <div><mark>{{ s[1]['total_num'] }}</mark> {{ _('tickets') }} <mark>{{ s[0]['status'] }}</mark></div>
+        <h3 class="m-2 p-2 border rounded bg-white">{{ _('Departments') }}</h3>
+        <div class="row m-2">
+            {%- for d in departments -%}
+                <div class="card bg-white mr-2 mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ d[0]['department'] }}
+                            <a href="{{ url_for('flicket_bp.tickets', department=d[0]['department']) }}"
+                               title="department">
+                                <i class="fas fa-link"></i>
+                            </a>
+                        </h5>
+                        {%- for s in d[1] -%}
+                            <p class="card-text">
+                                <mark>{{ s[1]['total_num'] }}</mark>
+                                {{ _('tickets') }}
+                                <mark>{{ s[0]['status'] }}</mark>
+                            </p>
+                        {%- endfor -%}
+                    </div>
+                </div>
             {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     </div>
 
 {% endblock %}

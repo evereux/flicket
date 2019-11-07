@@ -61,11 +61,11 @@ from .flicket_admin.views import view_admin
 from .flicket_admin.views import view_config
 from .flicket_admin.views import view_email_test
 
-from .flicket.views import ticket_assign
+from .flicket.views import assign
 from .flicket.views import categories
 from .flicket.views import edit_status
-from .flicket.views import ticket_claim
-from .flicket.views import ticket_create
+from .flicket.views import claim
+from .flicket.views import create
 from .flicket.views import delete
 from .flicket.views import departments
 from .flicket.views import edit
@@ -74,12 +74,12 @@ from .flicket.views import index
 from .flicket.views import login
 from .flicket.views import help
 from .flicket.views import tickets
-from .flicket.views import ticket_release
+from .flicket.views import release
 from .flicket.views import render_uploads
 from .flicket.views import subscribe
 from .flicket.views import user_edit
 from .flicket.views import users
-from .flicket.views import ticket_view
+from .flicket.views import view_ticket
 
 from .flicket_api.views import actions
 from .flicket_api.views import categories

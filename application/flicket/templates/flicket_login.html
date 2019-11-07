@@ -1,0 +1,77 @@
+{% extends "flicket_base.html" %}
+<!-- extend from base layout -->
+{% block content %}
+    <div class="container">
+
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col text-center">
+                        <h1>{{ title }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m-5">
+                        <div class="row ml-5 mr-5">
+                            <div class="w-25"></div>
+                            <div class="col">
+                                &nbsp;<form class="form" action="" method="post" name="login">
+                                {{ form.hidden_tag() }}
+                                <p class="text-center">
+                                    {{ _('Please enter your credentials to login.') }}
+                                </p>
+                                <div class="row mb-2">
+                                    <label class="col-3 col-form-label">{{ _('Username') }}</label>
+                                    <div class="col-9">
+                                        {{ form.username(class="form-control") }}
+                                    </div>
+                                </div>
+                                {% if form.username.errors %}
+                                    <div class="alert alert-warning small">
+                                        {% for error in form.username.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                <div class="row mb-2">
+                                    <label class="col-3 col-form-label">{{ _('Password') }}</label>
+                                    <div class="col-9">
+                                        {{ form.password(class="form-control") }}
+                                    </div>
+                                </div>
+                                {% if form.password.errors %}
+                                    <div class="alert alert-warning small">
+                                        {% for error in form.password.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+
+                                <div class="row mb-2">
+                                    <div class="col text-center">
+                                        {{ form.remember_me }} {{ _('Remember Me') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col text-center">
+                                        <input class="btn btn-primary btn-sm" type="submit" value="log in"/>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                            <div class="w-25"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <a href="{{ url_for('flicket_bp.password_reset') }}">reset password</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

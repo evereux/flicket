@@ -1,12 +1,8 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-<div class="container">
-    <h1>{{ _('Administration') }}</h1>
-    {% include 'admin_menu.html' %}
-    <h2>{{ title }}</h2>
-    <p>
-        {{ _('Administration home page.') }}
-    </p>
-</div>
+    <div class="container">
+
+        {% include 'admin_menu.html' %}
+    </div>
 {% endblock %}

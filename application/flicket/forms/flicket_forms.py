@@ -21,9 +21,9 @@ from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
 from flask_babel import gettext
 
-form_class_button = {'class': 'btn btn-primary'}
+form_class_button = {'class': 'btn btn-primary btn-sm'}
 form_class_button_sm = {'class': 'btn btn-primary btn-sm'}
-form_danger_button = {'class': 'btn btn-danger'}
+form_danger_button = {'class': 'btn btn-danger btn-sm'}
 
 
 def does_email_exist(form, field):
@@ -151,7 +151,7 @@ class ReplyForm(FlaskForm):
     file = FileField(gettext('Add Files'), render_kw={'multiple': True})
     status = SelectField(gettext('Status'), validators=[DataRequired()], coerce=int)
     priority = SelectField(gettext('Priority'), validators=[DataRequired()], coerce=int)
-    submit = SubmitField(gettext('submit reply'), render_kw=form_class_button)
+    submit = SubmitField(gettext('reply'), render_kw=form_class_button)
     submit_close = SubmitField(gettext('reply and close'), render_kw=form_danger_button)
 
 
@@ -168,7 +168,7 @@ class SearchUserForm(FlaskForm):
     """ Search user. """
     username = StringField('username', validators=[DataRequired(), Length(min=user_field_size['username_min'],
                                                                           max=user_field_size['username_max'])])
-    submit = SubmitField(gettext('search user'), render_kw=form_class_button)
+    submit = SubmitField(gettext('find user'), render_kw=form_class_button)
 
 
 class AssignUserForm(SearchUserForm):

@@ -12,7 +12,7 @@
     <title>{{ g.application_title }}{% if title %} - {{ title }} {% endif %}</title>
 
 
-    <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/flicket.css') }}">
     <link rel="stylesheet" href="{{ url_for('flicket_bp.static', filename='css/jquery-ui.min.css') }}">
 
@@ -20,6 +20,8 @@
     <script src="{{ url_for('flicket_bp.static', filename='js/jquery-ui.js') }}"></script>
     <script src="{{ url_for('flicket_bp.static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('flicket_bp.static', filename='js/hide_element.js') }}"></script>
+    <script src="{{ url_for('flicket_bp.static', filename='js/all.js') }}"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         $(document).ready(function () {
@@ -28,16 +30,23 @@
     </script>
 </head>
 <body>
-<!-- body -->
+
 {% include 'flicket_navbar.html' %}
 <header>
     <div class="container-fluid">
-        <div style="font-size: 24pt">{{ g.application_title }} <span style="font-size: 10pt; color: #d5d2cf">{{ _('a simple ticket system') }}</span></div>
+        <div class="row">
+            <div class="col pt-5" style="font-size: 2rem">
+                {{ g.application_title }}
+                <span style="font-size: 0.8rem; color: #d5d2cf">
+                    {{ _('a simple ticket system') }}
+                </span>
+            </div>
+        </div>
     </div>
 </header>
 {% include 'flicket_flashmessages.html' %}
 {% block content %}{% endblock %}
 {% include 'flicket_footer.html' %}
-<!-- end body -->
+
 </body>
 </html>

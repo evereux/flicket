@@ -2,35 +2,41 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        <dl class="list-unstyled">
 
-            <dt class="col-sm-2">{{ user.name}}</dt>
-            <dd>{% if user.avatar %}
-                <img src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}" style="width: 100pt">
-                {% else %}
-                <img src="{{ url_for('flicket_bp.static', filename='flicket_avatars/__default_profile.png') }}" style="width: 100pt">
-                {% endif %}
-            </dd>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <h1 class="offset-3">{{ title }}</h1>
+                <dl class="row">
+                    <dt class="col-3 text-right">{{ user.name }}</dt>
+                    <dd class="col-9">{% if user.avatar %}
+                        <img src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}"
+                             style="width: 100pt">
+                    {% else %}
+                        <i class="fas fa-user"></i>
+                    {% endif %}
+                    </dd>
 
-            <dt class="col-sm-2">{{ _('Username') }}</dt>
-            <dd>{{ user.username }}</dd>
+                    <dt class="col-3 text-right">{{ _('Username') }}</dt>
+                    <dd class="col-9">{{ user.username }}</dd>
 
-            <dt class="col-sm-2">{{ _('Email') }}</dt>
-            <dd><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
+                    <dt class="col-3 text-right">{{ _('Email') }}</dt>
+                    <dd class="col-9"><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
 
-            <dt class="col-sm-2">{{ _('Date Joined') }}</dt>
-            <dd>{{ user.date_added }}</dd>
+                    <dt class="col-3 text-right">{{ _('Date Joined') }}</dt>
+                    <dd class="col-9">{{ user.date_added }}</dd>
 
-            <dt class="col-sm-2">{{ _('Job Title') }}</dt>
-            <dd>{{ user.job_title }}</dd>
+                    <dt class="col-3 text-right">{{ _('Job Title') }}</dt>
+                    <dd class="col-9">{{ user.job_title }}</dd>
 
-            <dt class="col-sm-2">{{ _('Number Of Posts') }}</dt>
-            <dd>{{ user.total_posts }}</dd>
+                    <dt class="col-3 text-right">{{ _('Number Of Posts') }}</dt>
+                    <dd class="col-9">{{ user.total_posts }}</dd>
 
-            <dt class="col-sm-2">{{ _('Number Assigned') }}</dt>
-            <dd>{{ user.total_assigned }}</dd>
+                    <dt class="col-3 text-right">{{ _('Number Assigned') }}</dt>
+                    <dd class="col-9">{{ user.total_assigned }}</dd>
 
-        </dl>
+                </dl>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

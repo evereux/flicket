@@ -9,7 +9,7 @@ from wtforms.validators import DataRequired, NumberRange, Length
 
 from application.flicket.scripts.functions_login import check_email_format
 
-form_class_button = {'class': 'btn btn-primary'}
+form_class_button = {'class': 'btn btn-primary btn-sm'}
 
 
 def check_email_formatting(form, field):
