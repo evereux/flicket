@@ -63,7 +63,7 @@ def ticket_assign(ticket_id=False):
         f_mail = FlicketMail()
         f_mail.assign_ticket(ticket)
 
-        flash(gettext('You reassigned ticket: %(value)s', value=ticket.id))
+        flash(gettext(f'You reassigned ticket: {ticket.id}s to {user.name}'))
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     title = gettext('Assign Ticket')

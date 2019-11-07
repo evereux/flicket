@@ -227,6 +227,7 @@ def admin_edit_group():
     if form.validate_on_submit():
         group.group_name = form.group_name.data
         db.session.commit()
+        flash(gettext(f'Group name changed to {group.group_name}.'), category='success')
         return redirect(url_for('admin_bp.groups'))
     form.group_name.data = group.group_name
 
