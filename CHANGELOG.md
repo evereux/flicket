@@ -61,6 +61,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Lots of UI changes as a result of change. Removed usage of html tables. 
 *   Changed icon-set from glyphicons to font-awesome.
 *   Fixed a number of Flash message rendering issues introduced during locale implementation.
+*   Added carousel to front page showing all open high priority tickets.
 
 
 ## 0.2.0

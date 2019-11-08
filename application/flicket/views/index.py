@@ -25,6 +25,10 @@ def index():
     # converts days into datetime object
     days_obj = datetime.datetime.now() - datetime.timedelta(days=days)
 
+    # get open tickets set to high priority
+    tickets = FlicketTicket.query.filter(FlicketTicket.ticket_priority_id == 3). \
+        filter(FlicketTicket.status_id == 1).limit(100)
+
     # initialise base query
     query = FlicketTicket.query
     total = FlicketTicket.query.count()
@@ -58,4 +62,5 @@ def index():
                            total_days=total_days,
                            days=days,
                            statuses=statuses,
-                           departments=departments)
+                           departments=departments,
+                           tickets=tickets)

@@ -2,7 +2,22 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
+
+
+        {% if tickets.count() > 0 %}
+            <div id="carouselExampleControls" class="carousel slide mt-3" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for t in tickets %}
+                        <div class="bg-light carousel-item {% if loop.first %} active {% endif %}">
+                            {% include('flicket_items.html') %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         <h1 class="m-2 p-2 border rounded bg-white">{{ _('Statistics') }}</h1>
+
         <p class="m-2 p-2 border rounded bg-white ">
             <mark>{{ total }}</mark>
             {{ _('tickets have been raised') }}.
