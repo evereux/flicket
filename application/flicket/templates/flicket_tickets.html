@@ -32,10 +32,10 @@
                   method="post"
                   name="search_ticket">
                 {{ form.hidden_tag() }}
-                <div class="col-2 text-center">
+                <div class="col text-center">
                     {{ form.department(class="form-control form-control-sm flicket-tickets-content p-0", id="department") }}
                 </div>
-                <div class="col-2 text-center">
+                <div class="col text-center">
                     {{ form.category(class="form-control form-control-sm flicket-tickets-content p-0", id="category") }}
                 </div>
                 <div class="col text-center">
@@ -49,10 +49,10 @@
                 <div class="col text-center">
                     {{ form.content(class="form-control form-control-sm flicket-tickets-content", placeholder="contents") }}
                 </div>
-                <div class="col-1 text-center">
+                <div class="col text-center">
                     <input class="btn btn-primary btn-sm" type="submit" value={{ _('search') }}>
                 </div>
-                <div class="col-1 text-center">
+                <div class="col text-center">
                     <button class="btn btn-link btn-sm border-primary">
                         <a href="{{ url_for('flicket_bp.tickets', sort='ticketid_desc') }}">reset</a>
                     </button>
