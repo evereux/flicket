@@ -115,29 +115,45 @@
         <!-- pagination row -->
         <div class="row m-2">
             <div class="col">
-                <ul class="pagination pagination-sm m-0">{% for page in replies.iter_pages() %}
-                    {%- if page -%}
-                        {%- if page != replies.page -%}
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
-                                    {{ page }}
-                                </a>
-                            </li>
+                <ul class="pagination pagination-sm m-0">
+
+                    <li class="page-item {% if not replies.has_prev -%} disabled {%- endif -%} ">
+                        <a class="page-link"
+                           href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.prev_num, **request.args) }}">
+                            <<
+                        </a>
+                    </li>
+
+                    {% for page in replies.iter_pages() %}
+                        {%- if page -%}
+                            {%- if page != replies.page -%}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {%- else -%}
+                                <li class="page-item active">
+                                    <a class="page-link"
+                                       href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {%- endif -%}
                         {%- else -%}
-                            <li class="page-item active">
-                                <a class="page-link"
-                                   href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
-                                    {{ page }}
-                                </a>
+                            <li class="page-item">
+                                <a href="">...</a>
                             </li>
                         {%- endif -%}
-                    {%- else -%}
-                        <li class="page-item">
-                            <a href="">...</a>
-                        </li>
-                    {%- endif -%}
-                {%- endfor -%}
+                    {%- endfor -%}
+
+                    <li class="page-item {% if not replies.has_next -%} disabled {%- endif -%} ">
+                        <a class="page-link"
+                           href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.next_num, **request.args) }}">
+                            >>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -42,30 +42,47 @@
         </form>
 
 
-        <ul class="pagination pagination-sm m-2">{% for page in users.iter_pages() %}
-            {%- if page -%}
-                {%- if page != users.page -%}
-                    <li class="page-item">
-                        <a class="page-link"
-                           href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
-                            {{ page }}
-                        </a>
-                    </li>
+        <ul class="pagination pagination-sm m-2">
+
+            <li class="page-item {% if not users.has_prev -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.flicket_users', page=users.prev_num, **request.args) }}">
+                    <<
+                </a>
+            </li>
+            {% for page in users.iter_pages() %}
+                {%- if page -%}
+                    {%- if page != users.page -%}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {%- else -%}
+                        <li class="page-item active">
+                            <a class="page-link"
+                               href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {%- endif -%}
                 {%- else -%}
-                    <li class="page-item active">
-                        <a class="page-link"
-                           href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
-                            {{ page }}
-                        </a>
+                    <li class="page-item">
+                        <a class="page-link" href="">...</a>
                     </li>
                 {%- endif -%}
-            {%- else -%}
-                <li class="page-item">
-                    <a class="page-link" href="">...</a>
-                </li>
-            {%- endif -%}
-        {% endfor %}
+            {% endfor %}
+
+            <li class="page-item {% if not users.has_next -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.flicket_users', page=users.next_num, **request.args) }}">
+                    >>
+                </a>
+            </li>
         </ul>
+
+
         <div class="row border rounded bg-white m-2">
             <div class="col">
                 <div class="row p-2 border-bottom">

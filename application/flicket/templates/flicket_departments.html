@@ -36,6 +36,13 @@
 
 
         <ul class="pagination pagination-sm m-2">
+            <li class="page-item {% if not departments.has_prev -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.departments', page=departments.prev_num, **request.args) }}">
+                    <<
+                </a>
+            </li>
+
             {%- for page in departments.iter_pages() -%}
                 {%- if page -%}
                     {%- if page != departments.page -%}
@@ -59,6 +66,14 @@
                     </li>
                 {%- endif -%}
             {%- endfor -%}
+
+            <li class="page-item {% if not departments.has_next -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.departments', page=departments.next_num, **request.args) }}">
+                    >>
+                </a>
+            </li>
+
         </ul>
 
         <div class="row m-2 border rounded bg-white">

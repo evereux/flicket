@@ -1,7 +1,7 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         <div class="container">
-            <div class="alert alert-{{ messages.0.0 }}" role="alert">
+            <div class=" col alert alert-{{ messages.0.0 }}" role="alert">
                 {% for category, message in messages %}
                     {{ message }} <br>
                 {% endfor %}
