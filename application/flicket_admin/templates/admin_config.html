@@ -2,64 +2,77 @@
 {% extends "flicket_base.html" %}
 {% block content %}
     <div class="container">
-        <h1>{{ _('Administration - Configuration') }}</h1>
+
         {% include 'admin_menu.html' %}
 
         <div class="row m-5 border rounded p-2 bg-white">
             <div class="col">
-                <form class="form" action="" method="post" name="register">
-                    {{ form.hidden_tag() }}
-                    <div class="row p-2">
-                        <div class="col-3 text-lg">
-                            {{ _('Field') }}
-                        </div>
-                        <div class="col text-lg">
-                            {{ _('Value') }}
-                        </div>
+                <div class="row">
+                    <div class="col">
+                        <h2 class="text-center">{{ _('Configuration') }}</h2>
                     </div>
-                    {% set insert_button = False %}
-                    {%- for field in form if field.widget.input_type != 'hidden' and field.widget.input_type != 'submit' -%}
-                        <div class="row form-group p-2">
-                        {{ field.label(class="col-3") }}
-                        {% if field.type == 'BooleanField' %}
-                            <div class="col-1">
-                        {% else %}
-                            <div class="col-9">
-                        {% endif %}
+                </div>
 
-                    {{ field(class="form-control form-control-sm") }}
-                    {%- if field.name == 'allowed_extensions' -%}
-                        {{ _('This must be a comma delimited list.') }}
-                    {% endif %}
-                    {%- if field.errors -%}
-                        <span class="alert alert-warning">
+                <div class="row">
+                    <div class="col">
+
+                        <form class="form" action="" method="post" name="register">
+                            {{ form.hidden_tag() }}
+                            <div class="row p-2">
+                                <div class="col-3 text-lg">
+                                    {{ _('Field') }}
+                                </div>
+                                <div class="col text-lg">
+                                    {{ _('Value') }}
+                                </div>
+                            </div>
+                            {% set insert_button = False %}
+                            {%- for field in form if field.widget.input_type != 'hidden' and field.widget.input_type != 'submit' -%}
+                                <div class="row form-group p-2">
+                                {{ field.label(class="col-3") }}
+                                {% if field.type == 'BooleanField' %}
+                                    <div class="col-1">
+                                {% else %}
+                                    <div class="col-9">
+                                {% endif %}
+
+                            {{ field(class="form-control form-control-sm") }}
+                            {%- if field.name == 'allowed_extensions' -%}
+                                {{ _('This must be a comma delimited list.') }}
+                            {% endif %}
+                            {%- if field.errors -%}
+                                <span class="alert alert-warning">
                                         {%- for error in field.errors -%}
                                             {{ error }}.
                                         {%- endfor -%}
                                      </span>
-                    {%- endif -%}
+                            {%- endif -%}
 
-                    {%- if field.name == "mail_ascii_attachments" -%}
-                        {% set insert_button = True %}
-                    {%- endif -%}
-                    </div>
-                    </div>
-                        {%- if insert_button -%}
-                            <div class="row">
-                                <div class="col offset-3">
-                                    <a class="btn btn-info" href="{{ url_for('admin_bp.email_test') }}">Test Email</a>
+                            {%- if field.name == "mail_ascii_attachments" -%}
+                                {% set insert_button = True %}
+                            {%- endif -%}
+                            </div>
+                            </div>
+                                {%- if insert_button -%}
+                                    <div class="row">
+                                        <div class="col offset-3">
+                                            <a class="btn btn-info" href="{{ url_for('admin_bp.email_test') }}">Test
+                                                Email</a>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+                            {%- endfor -%}
+                            <div class="form-group">
+                                <div class="text-center">
+                                    {{ form.submit }}
                                 </div>
                             </div>
-                        {%- endif -%}
-                    {%- endfor -%}
-                    <div class="form-group">
-                        <div class="text-center">
-                            {{ form.submit }}
-                        </div>
+                            </div>
+                        </form>
+
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
-        <form cl
-    </div>
 {% endblock %}
