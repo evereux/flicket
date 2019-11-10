@@ -10,10 +10,8 @@ from flask_login import login_required
 
 from . import flicket_bp
 from application import app
-from application.flicket.models.flicket_models import (FlicketTicket,
-                                                       FlicketStatus,
-                                                       FlicketDepartment,
-                                                       FlicketCategory)
+from application.flicket.scripts.pie_charts import create_pie_chart_dict
+from application.flicket.models.flicket_models import FlicketTicket
 
 
 # view users
@@ -25,42 +23,14 @@ def index():
     # converts days into datetime object
     days_obj = datetime.datetime.now() - datetime.timedelta(days=days)
 
-    # get open tickets set to high priority
-    tickets = FlicketTicket.query.filter(FlicketTicket.ticket_priority_id == 3). \
-        filter(FlicketTicket.status_id == 1).limit(100)
+    # CAROUSEL
+    tickets = FlicketTicket.carousel_query()
 
-    # initialise base query
-    query = FlicketTicket.query
-    total = FlicketTicket.query.count()
-    total_days = query.filter(FlicketTicket.date_added > days_obj).count()
-
-    # get list of statuses
-    statuses = [({'id': s.id, 'status': s.status}, {}) for s in
-                FlicketStatus.query.order_by(FlicketStatus.status).all()]
-    # find number of tickets for each status
-    for s in statuses:
-        ticket_num = query.filter(FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
-        s[1]['ticket_num'] = ticket_num
-
-    # get list of departments
-    departments = [({'id': d.id, 'department': d.department}, []) for d in
-                   FlicketDepartment.query.order_by(FlicketDepartment.department.asc()).all()]
-
-    # department_filter = FlicketDepartment.query.filter_by(department=department).first()
-    # tickets = tickets.filter(FlicketTicket.category.has(FlicketCategory.department == department_filter))
-
-    # find number of tickets for each department based on status
-    for d in departments:
-        for s in statuses:
-            department_filter = query.filter(FlicketTicket.category.has(FlicketCategory.department_id == d[0]['id']))
-            ticket_num = department_filter.filter(
-                FlicketTicket.current_status.has(FlicketStatus.id == s[0]['id'])).count()
-            d[1].append(({'status': s[0]['status']}, {'total_num': ticket_num}))
+    # PIE CHARTS
+    ids, graph_json = create_pie_chart_dict()
 
     return render_template('flicket_index.html',
-                           total=total,
-                           total_days=total_days,
                            days=days,
-                           statuses=statuses,
-                           departments=departments,
-                           tickets=tickets)
+                           tickets=tickets,
+                           ids=ids,
+                           graph_json=graph_json)

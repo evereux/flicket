@@ -1,61 +1,71 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+    <script src="{{ url_for('flicket_bp.static', filename='js/plotly.min.js') }}"></script>
+
     <div class="container">
 
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <div class="row">
+                    <div class="col text-center">
+                        <h1 class=>{{ _('Open High Priority Tickets') }}</h1>
+                    </div>
 
-        {% if tickets.count() > 0 %}
-            <div id="carouselExampleControls" class="carousel slide mt-3" data-ride="carousel">
-                <div class="carousel-inner">
-                    {% for t in tickets %}
-                        <div class="bg-light carousel-item {% if loop.first %} active {% endif %}">
-                            {% include('flicket_items.html') %}
-                        </div>
-                    {% endfor %}
+
                 </div>
-            </div>
-        {% endif %}
-
-        <h1 class="m-2 p-2 border rounded bg-white">{{ _('Statistics') }}</h1>
-
-        <p class="m-2 p-2 border rounded bg-white ">
-            <mark>{{ total }}</mark>
-            {{ _('tickets have been raised') }}.
-            <br/>
-            <mark>{{ total_days }}</mark>
-            {{ _('tickets') }}{% if total_days > 1 %} {{ _('have') }}{% else %}
-                {{ _('has') }}{% endif %} {{ _('been raised over the last') }} {{ days }} {{ _('days') }}.
-            <br/>
-            {%- for s in statuses -%}
-                {{ _('There are currently') }}
-                <mark>{{ s[1]['ticket_num'] }}</mark>
-                {{ _('tickets') }}
-                <mark>{{ s[0]['status'] }}</mark>
-                .<br/>
-            {%- endfor -%}
-        </p>
-        <h3 class="m-2 p-2 border rounded bg-white">{{ _('Departments') }}</h3>
-        <div class="row m-2">
-            {%- for d in departments -%}
-                <div class="card bg-white mr-2 mb-2">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ d[0]['department'] }}
-                            <a href="{{ url_for('flicket_bp.tickets', department=d[0]['department']) }}"
-                               title="department">
-                                <i class="fas fa-link"></i>
-                            </a>
-                        </h5>
-                        {%- for s in d[1] -%}
-                            <p class="card-text">
-                                <mark>{{ s[1]['total_num'] }}</mark>
-                                {{ _('tickets') }}
-                                <mark>{{ s[0]['status'] }}</mark>
-                            </p>
-                        {%- endfor -%}
+                <div class="row">
+                    <div class="col">
+                        {% if tickets.count() > 0 %}
+                            <div id="carouselExampleControls" class="carousel slide mt-3" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for t in tickets %}
+                                        <div class="bg-white carousel-item {% if loop.first %} active {% endif %}">
+                                            {% include('flicket_items.html') %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
+
+
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <h1 class="text-center">{{ _('Statistics') }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+
+                    {% for id in ids %}
+                        <div class="col-md-4 col-sm-6">
+                            <div id="{{ id }}"></div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+
+    <script type="text/javascript">
+        var graphs = {{graph_json | safe}};
+        var ids = {{ids | safe}};
+        for (var i in graphs) {
+            Plotly.plot(ids[i], // the ID of the div, created above
+                graphs[i].data,
+                graphs[i].layout || {},
+                {responsive: true});
+        }
+    </script>
 
 {% endblock %}

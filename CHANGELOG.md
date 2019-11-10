@@ -62,6 +62,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Changed icon-set from glyphicons to font-awesome.
 *   Fixed a number of Flash message rendering issues introduced during locale implementation.
 *   Added carousel to front page showing all open high priority tickets.
+*   Added pie charts to front page showing overall ticket status for each department. Removed tables showing same data.
 
 
 ## 0.2.0
