@@ -199,7 +199,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
     # finds all the actions associated with the ticket and not associated with any post
     actions_nonepost = db.relationship('FlicketAction',
-                                       primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, FlicketAction.post_id == None)")
+                                       primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, "
+                                                   "FlicketAction.post_id == None)")
 
     @property
     def num_replies(self):

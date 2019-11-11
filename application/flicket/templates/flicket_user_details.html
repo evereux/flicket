@@ -9,7 +9,8 @@
                 <dl class="row">
                     <dt class="col-3 text-right">{{ user.name }}</dt>
                     <dd class="col-9">{% if user.avatar %}
-                        <img src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}"
+                        <img alt="avatar"
+                             src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}"
                              style="width: 100pt">
                     {% else %}
                         <i class="fas fa-user"></i>

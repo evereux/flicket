@@ -20,8 +20,6 @@ from application.flicket.models.flicket_models import FlicketTicket
 def index():
     """ View showing flicket main page. We use this to display some statistics."""
     days = 7
-    # converts days into datetime object
-    days_obj = datetime.datetime.now() - datetime.timedelta(days=days)
 
     # CAROUSEL
     tickets = FlicketTicket.carousel_query()

@@ -143,7 +143,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   user can now change status when replying to ticket.
 
 ## 0.1.5a
-*   Changed dependancy from Flask-Misaka to the python library Markdown.
+*   Changed dependency from Flask-Misaka to the python library Markdown.
     This is because installing Flask-Misaka on Windows is too many hoops
     to jump through.
 

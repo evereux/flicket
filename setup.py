@@ -230,7 +230,7 @@ class RunSetUP(Command):
     @staticmethod
     def set_email_config(silent=False):
         """
-        To stop mail send errors after intial set-up set the email configuration value for suppress
+        To stop mail send errors after initial set-up set the email configuration value for suppress
         send will be set to True
         :return:
         """

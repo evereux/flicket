@@ -5,4 +5,4 @@
 
 from flask import Blueprint
 
-bp_errors = Blueprint('flicket-errrors', __name__)
+bp_errors = Blueprint('flicket-errors', __name__)

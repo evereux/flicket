@@ -14,10 +14,10 @@
             </div>
             <div class="col text-center">
                 {% if content.user.avatar %}
-                    <img class="flicket-avatar"
+                    <img class="flicket-avatar" alt="avatar"
                          src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ content.user.avatar }}">
                 {% else %}
-                    <img class="flicket-avatar"
+                    <img class="flicket-avatar" alt="avatar"
                          src="{{ url_for('flicket_bp.static', filename='flicket_avatars/__default_profile.png') }}">
                 {% endif %}
             </div>
