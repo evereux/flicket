@@ -54,6 +54,14 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
         ```
         python manage.py db upgrade
         ```
+        
+      * update virtual env with latest module requirements
+      
+        ```
+        pip install -r requirements.txt
+        ```
+      
+      
 
 *   Migration scripts now under git revision control.
 *   New `FlicketAction` structure and updated `add_action()` function.
