@@ -65,7 +65,9 @@ Set Up
     python -m scripts.create_json
 
 
-4. Initialise the database using manage.py from the command line::
+4. Initialise  and upgrade the database using manage.py from the command line::
+
+    python manage.py db init
 
     python manage.py db upgrade
 
