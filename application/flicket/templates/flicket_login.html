@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col m-5">
                         <div class="row ml-5 mr-5">
-                            <div class="w-25"></div>
+
                             <div class="col">
                                 &nbsp;<form class="form" action="" method="post" name="login">
                                 {{ form.hidden_tag() }}
@@ -22,8 +22,8 @@
                                     {{ _('Please enter your credentials to login.') }}
                                 </p>
                                 <div class="row mb-2">
-                                    <label class="col-3 col-form-label">{{ _('Username') }}</label>
-                                    <div class="col-9">
+                                    <label class="col-4 col-form-label text-nowrap">{{ _('Username') }}</label>
+                                    <div class="col-8">
                                         {{ form.username(class="form-control") }}
                                     </div>
                                 </div>
@@ -36,8 +36,8 @@
                                 {% endif %}
 
                                 <div class="row mb-2">
-                                    <label class="col-3 col-form-label">{{ _('Password') }}</label>
-                                    <div class="col-9">
+                                    <label class="col-4 col-form-label text-nowrap">{{ _('Password') }}</label>
+                                    <div class="col-8">
                                         {{ form.password(class="form-control") }}
                                     </div>
                                 </div>
@@ -62,7 +62,7 @@
                                 </div>
                             </form>
                             </div>
-                            <div class="w-25"></div>
+
                         </div>
                         <div class="row">
                             <div class="col text-center">

@@ -9,7 +9,7 @@
             {{ t.title }}
         </div>
         <div class="col-2 flicket-tickets-content">
-            Replies: {{ t.num_replies }}
+            {{ _('Replies') }}: {{ t.num_replies }}
         </div>
     </div>
 
@@ -17,7 +17,7 @@
                                         flicket-status-closed{% endif %}">
         <div class="col-1">
             <div class="flicket-tickets-title">
-                priority
+                {{ _('priority') }}
             </div>
             <div class="flicket-tickets-content  {%- if t.current_status.status == 'Closed' %}
                                         flicket-status-closed{% endif %}
@@ -33,7 +33,7 @@
         </div>
         <div class="col-2">
             <div class="flicket-tickets-title">
-                submitted by
+                {{ _('submitted by') }}
             </div>
             <div class="flicket-tickets-content">
                 {{ t.user.name }}
@@ -41,7 +41,7 @@
         </div>
         <div class="col-2 text-right">
             <div class="flicket-tickets-title">
-                date
+                {{ _('date') }}
             </div>
             <div class="flicket-tickets-content">
                 {{ t.date_added.strftime('%Y-%m-%d') }}
@@ -49,7 +49,7 @@
         </div>
         <div class="col-3">
             <div class="flicket-tickets-title">
-                department / category
+                {{ _('department / category') }}
             </div>
             <div class="flicket-tickets-content">
                 {{ t.category.department.department }} / {{ t.category.category }}
@@ -57,7 +57,7 @@
         </div>
         <div class="col-2">
             <div class="flicket-tickets-title">
-                status
+                {{ _('status') }}
             </div>
             <div class="flicket-tickets-content">
                 {{ t.current_status.status }}
@@ -65,7 +65,7 @@
         </div>
         <div class="col-2">
             <div class="flicket-tickets-title">
-                assigned
+                {{ _('assigned') }}
             </div>
             <div class="flicket-tickets-content">
                 {{ t.assigned.name }}

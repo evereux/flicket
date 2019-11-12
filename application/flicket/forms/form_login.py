@@ -5,6 +5,7 @@
 
 import bcrypt
 from flask_wtf import FlaskForm
+from flask_babel import lazy_gettext
 from sqlalchemy import func, or_
 from wtforms import BooleanField
 from wtforms import PasswordField
@@ -63,12 +64,12 @@ def login_user_exist(form, field):
 
 class LogInForm(FlaskForm):
     """ Log in form. """
-    username = StringField('username', validators=[DataRequired(), login_user_exist])
-    password = PasswordField('password', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
+    username = StringField(lazy_gettext('username'), validators=[DataRequired(), login_user_exist])
+    password = PasswordField(lazy_gettext('password'), validators=[DataRequired()])
+    remember_me = BooleanField(lazy_gettext('remember_me'), default=False)
 
 
 class PasswordResetForm(FlaskForm):
     """ Log in form. """
-    email = StringField('email', validators=[DataRequired()])
-    submit = SubmitField('reset password', render_kw=form_class_button)
+    email = StringField(lazy_gettext('email'), validators=[DataRequired()])
+    submit = SubmitField(lazy_gettext('reset password'), render_kw=form_class_button)

@@ -1,6 +1,7 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <div class="container">
 
         {% include 'admin_menu.html' %}
@@ -8,128 +9,130 @@
         <div class="row rounded border m-2 p-2 bg-white">
             <div class="col">
                 <h2 class="text-center">{{ title }}</h2>
-                <p>
-                    Edit user details. Use "CTRL" to deselect within group column.
-                </p>
+                {% if admin_edit %}
+                    <p>
+                        Edit user details. Use "CTRL" to deselect within group column.
+                    </p>
+                {% endif %}
             </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="row border rounded m-2 ml-5 mr-5 p-2 bg-white">
-                <div class="col ml-5 mr-5">
-                    <form class="form" action="" method="post" name="register">
-                        {{ form.hidden_tag() }}
-                        {% if form.user_id %}{{ form.user_id() }}{% endif %}
+        <div class="row border rounded m-2 p-2 bg-white">
+            <div class="col">
+                <form class="form" action="" method="post" name="register">
+                    {{ form.hidden_tag() }}
+                    {% if form.user_id %}{{ form.user_id() }}{% endif %}
 
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Username</label>
-                            <div class="col">
-                                {{ form.username(class="form-control") }}
-                            </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.username.label.text }}</label>
+                        <div class="col">
+                            {{ form.username(class="form-control") }}
                         </div>
-                        {% if form.username.errors %}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.username.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.name.label.text }}</label>
+                        <div class="col">
+                            {{ form.name(class="form-control", placeholder="name") }}
+                        </div>
+                        {% if form.name.errors %}
                             <div class="alert alert-warning small">
-                                {% for error in form.username.errors %}
+                                {% for error in form.name.errors %}
                                     {{ error }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Name</label>
-                            <div class="col">
-                                {{ form.name(class="form-control", placeholder="name") }}
-                            </div>
-                            {% if form.name.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.name.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.email.label.text }}</label>
+                        <div class="col">
+                            {{ form.email(class="form-control", placeholder="email") }}
                         </div>
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Email</label>
-                            <div class="col">
-                                {{ form.email(class="form-control", placeholder="email") }}
-                            </div>
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
                         </div>
-                        {% if form.email.errors %}
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.job_title.label.text }}</label>
+                        <div class="col">
+                            {{ form.job_title(class="form-control", placeholder="job title / role") }}
+                        </div>
+                    </div>
+                    {% if form.job_title.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.job_title.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.locale.label.text }}</label>
+                        <div class="col">
+                            {{ form.locale(class="form-control", placeholder="locale") }}
+                        </div>
+                        {% if form.locale.errors %}
                             <div class="alert alert-warning small">
-                                {% for error in form.email.errors %}
+                                {% for error in form.locale.errors %}
                                     {{ error }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Job Title</label>
-                            <div class="col">
-                                {{ form.job_title(class="form-control", placeholder="job title / role") }}
-                            </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.password.label.text }}</label>
+                        <div class="col">
+                            {{ form.password(class="form-control", placeholder="password") }}
                         </div>
-                        {% if form.job_title.errors %}
+                        {% if form.password.errors %}
                             <div class="alert alert-warning small">
-                                {% for error in form.job_title.errors %}
+                                {% for error in form.password.errors %}
                                     {{ error }}
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Locale</label>
-                            <div class="col">
-                                {{ form.locale(class="form-control", placeholder="locale") }}
-                            </div>
-                            {% if form.locale.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.locale.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.confirm.label.text }}</label>
+                        <div class="col">
+                            {{ form.confirm(class="form-control", placeholder="repeat password") }}
                         </div>
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Password</label>
-                            <div class="col">
-                                {{ form.password(class="form-control", placeholder="password") }}
+                        {% if form.confirm.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.confirm.errors %}
+                                    {{ error }}
+                                {% endfor %}
                             </div>
-                            {% if form.password.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.password.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="row mb-2">
-                            <label class="col-2 col-form-label">Confirm</label>
-                            <div class="col">
-                                {{ form.confirm(class="form-control", placeholder="repeat password") }}
-                            </div>
-                            {% if form.confirm.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.confirm.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="row mb-2">
-                            {% if admin_edit %}
+                        {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        {% if admin_edit %}
 
-                                <label class="col-2 col-form-label">Groups</label>
-                                <div class="col">
-                                    {{ form.groups(class="form-control") }}
+                            <label class="col-2 col-form-label">Groups</label>
+                            <div class="col">
+                                {{ form.groups(class="form-control") }}
 
-                                </div>
-                                </div>
-                            {% endif %}
-                        <div class="row">
-                            <div class="col text-center">
-                                {{ form.submit(class="btn btn-primary") }}
                             </div>
+
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            {{ form.submit(class="btn btn-primary") }}
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+
     </div>
 {% endblock %}

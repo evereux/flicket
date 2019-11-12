@@ -1,6 +1,7 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <script src="{{ url_for('flicket_bp.static', filename='js/uri.js') }}"></script>
 
     {% include('flicket_apijson_users.html') %}
@@ -15,7 +16,7 @@
             <div class="col">
                 <h1>{{ title }}</h1>
                 <p>
-                    Download results as a csv file <a
+                    {{ _('Download results as a csv file') }} <a
                         href="{{ url_for('flicket_bp.tickets_csv', status=status, department=departnent, category=category, content=content, user_id=user_id) }}"
                         title="csv file">
                     <i class="fas fa-file-csv"></i>
