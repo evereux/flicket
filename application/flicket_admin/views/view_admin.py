@@ -5,20 +5,29 @@
 
 import datetime
 
-from flask import (flash,
-                   g,
-                   redirect,
-                   render_template,
-                   request,
-                   url_for)
+from flask import flash
+from flask import g
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import url_for
 from flask_babel import gettext
-from flask_login import current_user, login_required
-from flask_principal import Permission, Principal, RoleNeed, identity_loaded, UserNeed
+from flask_login import current_user
+from flask_login import login_required
+from flask_principal import identity_loaded
+from flask_principal import Permission
+from flask_principal import Principal
+from flask_principal import RoleNeed
+from flask_principal import UserNeed
 
 from application import app, db
-from application.flicket.models.flicket_user import FlicketUser, FlicketGroup
+from application.flicket.models.flicket_user import FlicketUser
+from application.flicket.models.flicket_user import FlicketGroup
 from application.flicket.scripts.hash_password import hash_password
-from application.flicket_admin.forms.forms_admin import AddGroupForm, EditUserForm, EnterPasswordForm, AddUserForm
+from application.flicket_admin.forms.forms_admin import AddGroupForm
+from application.flicket_admin.forms.forms_admin import AddUserForm
+from application.flicket_admin.forms.forms_admin import EnterPasswordForm
+from application.flicket_admin.forms.forms_admin import EditUserForm
 from . import admin_bp
 
 principals = Principal(app)
