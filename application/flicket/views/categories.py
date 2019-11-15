@@ -27,7 +27,7 @@ def categories(department_id=False):
         add_category = FlicketCategory(category=form.category.data, department=department)
         db.session.add(add_category)
         db.session.commit()
-        flash(gettext('New category %(value)s added.', value=form.category.data))
+        flash(gettext(f'New category {form.category.data} added.'), category="success")
         return redirect(url_for('flicket_bp.categories', department_id=department_id))
 
     title = gettext('Categories')
@@ -51,7 +51,7 @@ def category_edit(category_id=False):
         if form.validate_on_submit():
             category.category = form.category.data
             db.session.commit()
-            flash('Category {} edited.'.format(form.category.data))
+            flash(f'Category {form.category.data} edited.')
             return redirect(url_for('flicket_bp.departments'))
 
         form.category.data = category.category

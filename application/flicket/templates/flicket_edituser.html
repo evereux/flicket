@@ -1,147 +1,190 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
-<div class="container">
-    <h1 class="text-center">{{ title }}</h1>
+    <div class="container">
 
-    <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" name="user_edit">
-        {{ form.hidden_tag() }}
+        <div class="row m-2 p-2 border radius bg-white">
+            <div class="col">
+                <form class="form-horizontal" enctype="multipart/form-data" action="" method="post" name="user_edit">
+                    {{ form.hidden_tag() }}
 
-        <div class="col-sm-3">
+
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="text-center">{{ title }}</h1>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="offset-3">
+                                You can't edit your user name / login id:
+                                <span class="amber_span">{{ g.user.username }}</span>.
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <!-- username -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.username.label }}</label>
+                        <div class="col-9">
+                            {{ form.username(class="form-control form-control-sm", readonly=True) }}
+                        </div>
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    <!-- name -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.name.label }}</label>
+                        <div class="col-9">
+                            {{ form.name(class="form-control form-control-sm") }}
+                        </div>
+                    </div>
+                    {% if form.name.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- email -->
+                    <div class="row">
+                        <label class="col-3 control-label text-right">{{ form.email.label }}</label>
+                        <div class="col-9">
+                            {{ form.email(class="form-control form-control-sm") }}
+                        </div>
+                    </div>
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <div class="row">
+                                <div class="alert alert-warning small">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <!-- job title -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.job_title.label }}</label>
+                        <div class="col-9">
+                            {{ form.job_title(class="form-control form-control-sm") }}
+                        </div>
+                    </div>
+                    {% if form.job_title.errors %}̉̉̉̉̉̉̉
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.job_title.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- locale -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.locale.label }}</label>
+                        <div class="col-9">
+                            {{ form.locale(class="form-control form-control-sm") }}
+                        </div>
+                    </div>
+                    {% if form.locale.errors %}̉̉̉̉̉̉̉
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.locale.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- avatar -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.avatar.label }}</label>
+                        <div class="col-3">
+                            {{ form.avatar }}
+                        </div>
+                    </div>
+
+                    <!-- password - authentication -->
+                    <div class="row">
+                        <label class="col-sm-3 control-label text-right">{{ form.password.label }}</label>
+                        <div class="col-sm-9">
+                            {{ form.password(class="form-control form-control-sm", placeholder="password") }}
+                        </div>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p class="alert alert-warning">
+                                {{ _('Enter details below only if you want to change your password.') }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- new password -->
+                    <div class="row">
+                        <label class="col-3 control-label text-right">{{ form.new_password.label }}</label>
+                        <div class="col-9">
+                            {{ form.new_password(class="form-control form-control-sm", placeholder="new password") }}
+                        </div>
+                    </div>
+                    {% if form.new_password.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.new_password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- new password repeat -->
+                    <div class="row">
+                        <label class="col-3 col-form-label text-right">{{ form.confirm.label }}</label>
+                        <div class="col-9">
+                            {{ form.confirm(class="form-control form-control-sm", placeholder="repeat password") }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col offset-3">
+                            <input class="btn btn-primary btn-sm" type="submit" value="edit user"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+
+
+                </form>
+            </div>
         </div>
 
-
-        <div class="col-sm-6 text-center">
-
-            <p>
-                You can't edit your user name / login id: <span class="amber_span">{{ g.user.username }}</span>.
-            </p>
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.username.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.username(class="form-control", readonly=True) }}
-                </div>
-            </div>
-            {% if form.username.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.username.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.name.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.name(class="form-control") }}
-                </div>
-            </div>
-            {% if form.name.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.name.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.email.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.email(class="form-control") }}
-                </div>
-            </div>
-            {% if form.email.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.email.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.job_title.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.job_title(class="form-control") }}
-                </div>
-            </div>
-            {% if form.job_title.errors %}̉̉̉̉̉̉̉
-            <div class="alert alert-warning small">
-                {% for error in form.job_title.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.locale.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.locale(class="form-control") }}
-                </div>
-            </div>
-            {% if form.locale.errors %}̉̉̉̉̉̉̉
-            <div class="alert alert-warning small">
-                {% for error in form.locale.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.avatar.label }}</label>
-                <div class="col-sm-3">
-                    {{ form.avatar }}
-                </div>
-            </div>
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.password.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.password(class="form-control", placeholder="password") }}
-                </div>
-            </div>
-            {% if form.password.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.password.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <p class="alert alert-warning">
-                Enter details below only if you want to change your password.
-            </p>
-
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.new_password.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.new_password(class="form-control", placeholder="new password") }}
-                </div>
-            </div>
-            {% if form.new_password.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.new_password.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">{{ form.confirm.label }}</label>
-                <div class="col-sm-9">
-                    {{ form.confirm(class="form-control", placeholder="repeat password") }}
-                </div>
-            </div>
-
-            <input class="btn btn-primary" type="submit" value="edit user"/>
-
-        </div>
-
-
-        <div class="col-sm-3">
-        </div>
-    </form>
-</div>
+    </div>
 
 {% endblock %}

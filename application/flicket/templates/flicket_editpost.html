@@ -2,7 +2,10 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col"><h1 class="text-center">{{ title }}</h1></div>
+        </div>
+
         {% include('flicket_form_reply.html') %}
     </div>
 {% endblock %}

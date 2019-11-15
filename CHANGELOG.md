@@ -7,6 +7,8 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     ```
     python manage.py db upgrade
     ```
+    
+*   Please read the changelog descriptions. Particularly those for 0.2.1.
 
 
 ## 0.2.1
@@ -52,9 +54,23 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
         ```
         python manage.py db upgrade
         ```
+        
+      * update virtual env with latest module requirements
+      
+        ```
+        pip install -r requirements.txt
+        ```
+      
+      
 
 *   Migration scripts now under git revision control.
 *   New `FlicketAction` structure and updated `add_action()` function.
+*   Moved to bootstrap 4.
+*   Lots of UI changes as a result of change. Removed usage of html tables. 
+*   Changed icon-set from glyphicons to font-awesome.
+*   Fixed a number of Flash message rendering issues introduced during locale implementation.
+*   Added carousel to front page showing all open high priority tickets.
+*   Added pie charts to front page showing overall ticket status for each department. Removed tables showing same data.
 *   Change queue feature (user can put ticket into another "department - catagory").
 
 
@@ -136,7 +152,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   user can now change status when replying to ticket.
 
 ## 0.1.5a
-*   Changed dependancy from Flask-Misaka to the python library Markdown.
+*   Changed dependency from Flask-Misaka to the python library Markdown.
     This is because installing Flask-Misaka on Windows is too many hoops
     to jump through.
 

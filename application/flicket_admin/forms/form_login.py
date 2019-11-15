@@ -4,8 +4,11 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import bcrypt
+from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, StringField
+from wtforms import BooleanField
+from wtforms import PasswordField
+from wtforms import StringField
 from wtforms.validators import DataRequired
 
 from application.flicket.models.flicket_user import FlicketUser
@@ -32,6 +35,6 @@ def login_user_exist(form, field):
 
 class LogInForm(FlaskForm):
     """ Log in form. """
-    username = StringField('username', validators=[DataRequired(), login_user_exist])
-    password = PasswordField('password', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
+    username = StringField(lazy_gettext('username'), validators=[DataRequired(), login_user_exist])
+    password = PasswordField(lazy_gettext('password'), validators=[DataRequired()])
+    remember_me = BooleanField(lazy_gettext('remember_me'), default=False)

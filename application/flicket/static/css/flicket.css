@@ -7,12 +7,26 @@
 /* color pallete http://paletton.com/#uid=20b0u0k2NvK02Yk0WJ55yre9mn7 */
 
 
-.anchor, body {
-    padding-top: 50px;
+.flicket-button-link-white:hover, .flicket-button-link-white:link, .flicket-button-link-white:visited {
+    color: white;
 }
 
-hr {
-    border-top: 1px solid #F1592A;
+.btn-primary {
+    background-color: #0000b4;
+    border-color: #0000b4;
+}
+
+.btn-outline-primary {
+    border-color: #0000b4;
+}
+
+.active {
+    background-color: #0000b4;
+}
+
+body {
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
 }
 
 blockquote {
@@ -20,20 +34,34 @@ blockquote {
     font-size: inherit
 }
 
+h1 {
+    margin: 1rem;
+}
+
 .navbar-flicket {
     border-bottom: 1px solid #F1592A;
 }
 
+/*noinspection CssInvalidFunction*/
 footer {
+    font-size: 0.7rem;
+    color: darkslategray;
     text-align: center;
     border-top: solid 1px #F1592A;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 0.4rem;
+    margin-top: 2rem;
+    background: -moz-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241, 86, 39, 1)), color-stop(61%, rgba(237, 187, 173, 1)), color-stop(100%, rgba(237, 187, 173, 1)));
+    background: -webkit-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -o-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: -ms-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    background: linear-gradient(to right, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
 }
 
 header {
     background: rgba(241, 86, 39, 1);
     background: -moz-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
+    /*noinspection CssInvalidFunction*/
     background: -webkit-gradient(left top, right top, color-stop(0%, rgba(241, 86, 39, 1)), color-stop(61%, rgba(237, 187, 173, 1)), color-stop(100%, rgba(237, 187, 173, 1)));
     background: -webkit-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
     background: -o-linear-gradient(left, rgba(241, 86, 39, 1) 0%, rgba(237, 187, 173, 1) 61%, rgba(237, 187, 173, 1) 100%);
@@ -57,32 +85,26 @@ input[type="radio"] {
     background-color: white;
 }
 
+.flicket-action {
+    background-color: rgba(254, 203, 190, 0.3);
+    font-size: 0.8rem;
+}
+
+.flicket-avatar {
+    max-width: 90%;
+}
+
+.flicket-avatar-admin {
+    color: red
+}
+
+.flicket-avatar-super {
+    color: #0c5460;
+}
+
+
 .white_space {
     white-space: pre-wrap;
-}
-
-.form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-}
-
-.alert-message {
-    color: #31708f;
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-}
-
-.table-width-400 {
-    width: 400px;
-}
-
-.table-header-center {
-    text-align: center;
-}
-
-.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
-    border: none;
 }
 
 .flask-pagedown-preview {
@@ -94,182 +116,42 @@ input[type="radio"] {
     display: none;
 }
 
-.flicket-btn-borderless {
-    padding: 0;
-    border: none;
-    background: none;
+.flicket-post-col-author {
+    flex: 0 0 125px;
 }
 
-.flicket-btn, .flicket-btn-subscribe, .flicket-btn-unsubscribe {
-    margin-top: 5px;
+.flicket-tickets-header {
+    background-color: #F5F5F5;
 }
 
-.flicket-btn-delete {
-    background: red;
-    color: white;
-    border: none;
+.flicket-tickets-header-a:link, .flicket-tickets-header-a:hover, .flicket-tickets-header-a:visited {
+    color: #121a35;
 }
 
-.flicket-btn-subscribe {
-
+.flicket-tickets-title {
+    font-size: 0.8rem;
+    color: #659dca;
 }
 
-.flicket-btn-unsubscribe {
-
+.flicket-tickets-content {
+    font-size: 0.8rem;
 }
 
-.flicket-form {
-    margin-top: 10px;
-}
-
-.flicket-form-control {
-    margin: 0;
-    padding: 2pt;
-}
-
-
-.flicket-main {
-    border-radius: 3pt;
-    border: 1px solid Silver;
-    background-color: White;
-}
-
-.flicket-post-attachments {
-    padding: 10px;
-    border-top: solid #ff9c7c 1px;
-}
-
-.flicket-post-author {
-    margin-bottom: 10px;
-    border: solid 1px Silver;
-    border-radius: 5px;
-
-}
-
-.flicket-post-author-author {
-    font-weight: bold;
-}
-
-.flicket-post-author-jobtitle {
-    color: #7a7a7a;
-    text-align: center;
-}
-
-.flicket-post-author-author {
-    text-align: center;
-}
-
-.flicket-post-attachments {
-    padding: 10px 0px 10px 10px;
-    border-top: solid Silver 1px;
-}
-
-.flicket-post-content {
-    padding: 10px;
-}
-
-.flicket-post-header {
-    padding: 10px;
-    border-bottom: solid Silver 1px;
-}
-
-.flicket-post-modified {
-    font-style: italic;
-    background-color: #FAFAFA;
-    margin-top: 10px;
-    padding: 5px;
-    white-space: normal;
-}
-
-.flicket-row {
-    margin-top: 20px;
-    padding: 5px;
-
-}
-
-.flicket-row-action {
-    background-color: #fff;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 5px 20px;
-    border: solid 1px silver;
-    background-color: rgba(254, 203, 190, 0.3);
-    border-radius: 3px;
-}
-
-.flicket-row-reply {
-    border: solid 1px silver;
-    border-radius: 3px;
-}
-
-.flicket-row-title-main {
-    margin-top: 20px;
-    padding: 5px;
-    border: solid 1px #ddd;
-    border-radius: 3px 3px 0px 0px;
-}
-
-.flicket-row-title-details {
-    padding: 5px;
-    border-left: solid 1px #ddd;
-    border-right: solid 1px #ddd;
-}
-
-.flicket-row-title-sub {
-    padding: 5px;
-    border: solid 1px #ddd;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-}
-
-.flicket-ticket-cell {
-    margin: 2px;
-    padding: 5px 10px;
-}
-
-.flicket-ticket-cell-title {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.flicket-ticket-title-title {
-    font-size: 2em;
-    font-weight: bold;
-    padding: 5px 10px;
-}
-
-.flicket-ticket-details-btn-ul {
-    font-size: 10px;
-    text-align: center;
-    margin: 4px 0px 0px 0px;
-}
-
-.flicket-ticket-details-btn-li {
-    border: 1px solid #ddd;
-    padding: 3px;
-    margin: 2px 6px;
-    display: block;
-    text-decoration: None;
-}
-
-.flicket-ticket-details-btn-li:hover {
-    background-color: #eee;
-    text-decoration: None;
+.flicket-ticket-title {
+    font-size: 1.3rem;
 }
 
 .flicket-status-high {
-    border-left: red solid 5pt;
-    border-right: red solid 5pt;
+    border-bottom: red solid 0.3rem;
+
 }
 
 .flicket-status-medium {
-    border-left: rgba(255, 181, 145, 0.58) solid 3pt;
-    border-right: rgba(255, 181, 145, 0.58) solid 3pt;
+    border-bottom: rgba(255, 181, 145, 0.58) solid 0.3rem;
 }
 
 .flicket-status-low {
-
+    border-bottom: rgba(255, 255, 255, 0) solid 0.3rem;
 }
 
 .flicket-status-closed {
@@ -280,8 +162,11 @@ td {
     position: relative;
 }
 
-.flciket-top-buffer {
+.flicket-top-buffer {
     margin-top: 20px;
 }
 
 
+.oi-flicket-cl-dg {
+    fill: #000000;
+}

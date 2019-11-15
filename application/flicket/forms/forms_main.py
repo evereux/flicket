@@ -6,6 +6,7 @@
 import bcrypt
 from flask import g
 from flask_wtf import FlaskForm
+from flask_babel import lazy_gettext
 from wtforms import (PasswordField,
                      StringField,
                      FileField,
@@ -122,27 +123,29 @@ class EditUserForm(FlaskForm):
         form = super(EditUserForm, self).__init__(*args, **kwargs)
         self.locale.choices = [(_id, lang) for _id, lang in app.config['SUPPORTED_LANGUAGES'].items()]
 
-    username = StringField('username')
-    name = StringField('name', validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
-    email = StringField('email', validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
-                                             change_email])
-    avatar = FileField('avatar')
-    password = PasswordField('password',
+    username = StringField(lazy_gettext('username'))
+    name = StringField(lazy_gettext('name'),
+                       validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
+    email = StringField(lazy_gettext('email'),
+                        validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
+                                    change_email])
+    avatar = FileField(lazy_gettext('avatar'))
+    password = PasswordField(lazy_gettext('password'),
                              validators=[DataRequired(),
                                          CheckPasswordCorrect(),
                                          Length(min=user_field_size['password_min'],
                                                 max=user_field_size['password_max'])])
-    new_password = PasswordField('new_password',
+    new_password = PasswordField(lazy_gettext('new_password'),
                                  validators=[EqualTo('confirm',
                                                      message='Passwords must match'),
                                              ])
-    confirm = PasswordField('Repeat Password')
-    job_title = StringField('job_title', validators=[Length(max=user_field_size['job_title'])])
-    locale = SelectField('Locale', validators=[DataRequired()],)
+    confirm = PasswordField(lazy_gettext('Repeat Password'))
+    job_title = StringField(lazy_gettext('job_title'), validators=[Length(max=user_field_size['job_title'])])
+    locale = SelectField(lazy_gettext('Locale'), validators=[DataRequired()], )
 
 
 class ConfirmPassword(FlaskForm):
-    password = PasswordField('password',
+    password = PasswordField(lazy_gettext('password'),
                              validators=[DataRequired(),
                                          check_password
                                          ])

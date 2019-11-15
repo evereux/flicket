@@ -5,7 +5,7 @@ Screenshots
 Home Page
 ---------
 
-.. image:: images/01_home_page_2019-05-12_16-23-44.png
+.. image:: images/01_home_page_2019-11-12_14-16-55.png
 
 
 Tickets
@@ -13,23 +13,23 @@ Tickets
 
 All tickets.
 
-.. image:: images/02_tickets_2019-09-23_13-57-46.png
+.. image:: images/02_tickets_2019-11-12_17-12-44.png
 
 View Ticket
 -----------
 
-.. image:: images/03_ticket_2019-05-12_16-27-49.png
+.. image:: images/03_ticket_2019-11-12_17-14-20.png
 
 
 Create Ticket
 -------------
 
-.. image:: images/04_create_ticket_markdown_preview_2019-05-12_16-27-24.png
+.. image:: images/04_create_ticket_markdown_preview_2019-11-12_17-17-04.png
 
 Users
 -----
 
-.. image:: images/05_users_2019-05-12_16-28-00.png
+.. image:: images/05_users_2019-11-12_17-18-36.png
 
 Admin Panel
 -----------

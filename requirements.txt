@@ -25,6 +25,7 @@ marshmallow==2.15.6
 marshmallow-jsonapi==0.20.3
 mimesis==2.1.0
 packaging==16.8
+plotly==4.2.1
 pycparser==2.17
 PyMySQL==0.9.2
 pyparsing==2.2.1

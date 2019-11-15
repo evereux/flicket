@@ -195,11 +195,12 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
     # finds all the actions associated with the ticket
     actions = db.relationship('FlicketAction',
-            primaryjoin="FlicketTicket.id == FlicketAction.ticket_id")
+                              primaryjoin="FlicketTicket.id == FlicketAction.ticket_id")
 
     # finds all the actions associated with the ticket and not associated with any post
     actions_nonepost = db.relationship('FlicketAction',
-            primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, FlicketAction.post_id == None)")
+                                       primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, "
+                                                   "FlicketAction.post_id == None)")
 
     @property
     def num_replies(self):
@@ -220,6 +221,52 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 return True
         return False
 
+    @staticmethod
+    def carousel_query():
+        """
+        Return all 'open' 'high priority' tickets for carousel.
+        :return:
+        """
+
+        tickets = FlicketTicket.query.filter(FlicketTicket.ticket_priority_id == 3). \
+            filter(FlicketTicket.status_id == 1).limit(100)
+
+        return tickets
+
+    @staticmethod
+    def form_redirect(form, url='flicket_bp.tickets'):
+        """
+
+        :param form:
+        :param url:
+        :return:
+        """
+
+        department = ''
+        category = ''
+        status = ''
+        user_id = ''
+
+        user = FlicketUser.query.filter_by(username=form.username.data).first()
+        if user:
+            user_id = user.id
+
+        # convert form inputs to it's table title
+        if form.department.data:
+            department = FlicketDepartment.query.filter_by(id=form.department.data).first().department
+        if form.category.data:
+            category = FlicketCategory.query.filter_by(id=form.category.data).first().category
+        if form.status.data:
+            status = FlicketStatus.query.filter_by(id=form.status.data).first().status
+
+        redirect_url = url_for(url, content=form.content.data,
+                               department=department,
+                               category=category,
+                               status=status,
+                               user_id=user_id)
+
+        return redirect_url
+
     def get_subscriber_emails(self):
         """
         Function to return a list of email addresses of subscribed users.
@@ -230,6 +277,17 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             emails.append(user.user.email)
 
         return emails
+
+    @staticmethod
+    def my_tickets(ticket_query):
+        """
+        Function to return all tickets created by or assigned to user.
+        :return:
+        """
+        ticket_query = ticket_query.filter(
+            (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id))
+
+        return ticket_query
 
     @staticmethod
     def query_tickets(form=None, **kwargs):
@@ -280,17 +338,6 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 ticket_query = ticket_query.filter(f1 | f2 | f3)
 
         return ticket_query, form
-
-    @staticmethod
-    def my_tickets(ticket_query):
-        """
-        Function to return all tickets created by or assigned to user.
-        :return:
-        """
-        ticket_query = ticket_query.filter(
-            (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id))
-
-        return ticket_query
 
     @staticmethod
     def sorted_tickets(ticket_query, sort):
@@ -353,40 +400,6 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
         return ticket_query
 
-    @staticmethod
-    def form_redirect(form, url='flicket_bp.tickets'):
-        """
-
-        :param form:
-        :param url:
-        :return:
-        """
-
-        department = ''
-        category = ''
-        status = ''
-        user_id = ''
-
-        user = FlicketUser.query.filter_by(username=form.username.data).first()
-        if user:
-            user_id = user.id
-
-        # convert form inputs to it's table title
-        if form.department.data:
-            department = FlicketDepartment.query.filter_by(id=form.department.data).first().department
-        if form.category.data:
-            category = FlicketCategory.query.filter_by(id=form.category.data).first().category
-        if form.status.data:
-            status = FlicketStatus.query.filter_by(id=form.status.data).first().status
-
-        redirect_url = url_for(url, content=form.content.data,
-                               department=department,
-                               category=category,
-                               status=status,
-                               user_id=user_id)
-
-        return redirect_url
-
     def from_dict(self, data):
         """
 
@@ -442,11 +455,13 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         return data
 
     def __repr__(self):
-        return '<FlicketTicket: id={}, title="{}", create_by={}, status={}, assigned={}>'.format(self.id,
-                                                                                                 self.title,
-                                                                                                 self.user,
-                                                                                                 self.current_status,
-                                                                                                 self.assigned)
+        return (f'<FlicketTicket: '
+                f'id={self.id}, '
+                f'title="{self.title}", '
+                f'created_by={self.user}, '
+                f'category={self.category}'
+                f'status={self.current_status}'
+                f'assigned={self.assigned}>')
 
 
 class FlicketPost(PaginatedAPIMixin, Base):
@@ -474,7 +489,7 @@ class FlicketPost(PaginatedAPIMixin, Base):
 
     # finds all the actions associated with the post
     actions = db.relationship('FlicketAction',
-            primaryjoin="FlicketPost.id == FlicketAction.post_id")
+                              primaryjoin="FlicketPost.id == FlicketAction.post_id")
 
     def to_dict(self):
         """

@@ -1,0 +1,98 @@
+<!-- {{ self._TemplateReference__context.name }} -->
+{{ pagedown.html_head() }}
+<form action=""
+      class="form m-2 p-3 bg-white border rounded"
+      enctype="multipart/form-data"
+      method="post"
+      name="create_ticket">
+    {{ form.hidden_tag() }}
+
+    <div class="col mb-2">
+        {{ _('Ticket content supports markdown syntax. Please refer to the') }}
+        <a href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">
+            {{ _('markdown_primer') }}
+        </a>.
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label class="control-label mb-0">{{ _('Ticket Title') }}</label>
+            {{ form.title(class="form-control") }}
+        </div>
+    </div>
+    {% if form.title.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.title.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row mt-2">
+        <div class="col">
+            <label class="control-label mb-0">{{ _('Content') }}</label>
+            {{ form.content(class="form-control") }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">
+                {{ _('MarkDown Help') }}
+            </a>
+
+        </div>
+        <div class="col mt-2 text-right">
+            <button type="button" class="btn btn-info btn-sm" onclick="hide_element()">
+                {{ _('Show / Hide Markdown') }}
+            </button>
+        </div>
+    </div>
+
+    <div class="row mt-2 align-self-end">
+        <div class="col-auto align-self-end">
+            {{ form.file(class="form-control-sm m-0 d-inline ") }}
+        </div>
+        <div class="col-2 align-self-end">
+            <label class="m-0 flicket-tickets-title">{{ _('Priority Level') }}</label>
+            {{ form.priority(class="form-control form-control-sm m-0") }}
+        </div>
+        <div class="col align-self-end">
+            <label class="m-0 flicket-tickets-title">{{ _('Category') }}</label>
+            {{ form.category(class="form-control form-control-sm m-0") }}
+        </div>
+        <div class="col-2 text-right align-self-end">
+            {{ form.submit(class="btn btn-primary btn-sm") }}
+        </div>
+    </div>
+
+    {% if form.content.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.content.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if form.priority.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.priority.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    {% if form.category.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.category.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if form.uploads %}
+        {{ form.uploads }}
+    {% endif %}
+
+</form>

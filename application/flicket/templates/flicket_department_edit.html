@@ -2,34 +2,39 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
 
-        <form action=""
-              class="form-horizontal"
-              enctype="multipart/form-data"
-              method="post"
-              name="create_ticket">
-            {{ form.hidden_tag() }}
-
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{ _('Department') }}</label>
-                <div class="col-sm-3">
-                    {{ form.department(class="form-control") }}
-                </div>
-                <div class="col-sm-2">
-                    <input class="btn btn-primary" type="submit" value="edit department"/>
-                </div>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <h1 class="text-center">{{ title }}</h1>
             </div>
-            {% if form.department.errors %}
-                <div class="alert alert-warning small">
-                    {% for error in form.department.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+        </div>
 
-        </form>
+        <div class="row m-2 p-2 border rounded bg-white">
+
+            <form class="form form-inline"
+                  action=""
+                  enctype="multipart/form-data"
+                  method="post"
+                  name="create_ticket">
+                {{ form.hidden_tag() }}
+                <label class="col-3 col-form-label">
+                    {{ _('Department') }}
+                </label>
+                <div class="col-5 mr-2">
+                    {{ form.department(class="form-control form-control-sm") }}
+                </div>
+                <div class="col">
+                    <input class="btn btn-primary btn-sm" type="submit" value="edit department"/>
+                </div>
+                {% if form.department.errors %}
+                    <div class="alert alert-warning small">
+                        {% for error in form.department.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
 
     </div>
 {% endblock %}

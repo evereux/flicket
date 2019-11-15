@@ -9,7 +9,7 @@ from application.flicket.models import Base
 
 class FlicketConfig(Base):
     """
-    Server configuration settings editable by administrators only via the adminstration page `/flicket_admin/config/`.
+    Server configuration settings editable by administrators only via the administration page `/flicket_admin/config/`.
 
     For email configuration settings see https://flask-mail.readthedocs.io/en/latest/ for more information.
 

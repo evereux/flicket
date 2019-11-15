@@ -2,35 +2,44 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <form class="form-horizontal" action="" method="post" name="create_ticket">
-            {{ form.hidden_tag() }}
 
-            <h1>{{ title }}</h1>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
 
-            <p>{{ post.id }}</p>
-            <p>{{ post.content }}</p>
-
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">{{ _('Password') }}</label>
-                    <div class="col-sm-9">
-                        {{ form.password(class="form-control") }}
+                <div class="row">
+                    <div class="col">
+                        <h2>{{ title }}</h2>
                     </div>
                 </div>
-                {% if form.password.errors %}
-                    <div class="alert alert-warning small">
-                        {% for error in form.password.errors %}
-                            {{ error }}
-                        {% endfor %}
+
+                <p><b>post_id:</b> {{ post.id }} | <b>content:</b> {{ post.content }}</p>
+
+                <form class="form-horizontal" action="" method="post" name="create_ticket">
+                    {{ form.hidden_tag() }}
+                    <div class="row">
+                        <label class="col-3 col-form-label">{{ _('Password') }}</label>
+                        <div class="col">
+                            {{ form.password(class="form-control") }}
+                        </div>
+                        <div class="col">
+                            <input class="btn btn-danger" type="submit" name="delete" value="delete ticket"/>
+                        </div>
                     </div>
-                {% endif %}
-                <div class="form-group text-center">
-                    <input class="btn btn-danger" type="submit" name="delete" value="delete ticket"/>
-                </div>
+                    {% if form.password.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+
             </div>
-        </form>
+
+        </div>
+
     </div>
 
-
-    </div>
 {% endblock %}

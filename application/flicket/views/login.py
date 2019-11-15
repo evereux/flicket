@@ -109,7 +109,7 @@ def login():
             flash(gettext('You were logged in successfully.'), category='success')
         return redirect(url_for('flicket_bp.index'))
 
-    return render_template('login.html', title='Log In', form=form)
+    return render_template('flicket_login.html', title='Log In', form=form)
 
 
 # logout page
@@ -141,4 +141,4 @@ def password_reset():
         return redirect(url_for('flicket_bp.login'))
 
     title = 'Password Reset'
-    return render_template('password_reset.html', form=form, title=title)
+    return render_template('flicket_password_reset.html', form=form, title=title)

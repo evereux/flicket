@@ -11,7 +11,7 @@
     Get Token
     ~~~~~~~~~
 
-    The user will need to provide their username and password to retrieve an authentictaion token. The authentication
+    The user will need to provide their username and password to retrieve an authentication token. The authentication
     token is required to access all other parts of the API.
 
     .. code-block::

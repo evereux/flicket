@@ -1,58 +1,69 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
+    <div class="container">
 
-<div class="container">
-    <h1>{{ _('Administration') }}</h1>
-    {% include 'admin_menu.html' %}
-    <h2>{{ title }}</h2>
+        {% include 'admin_menu.html' %}
 
-    <p>
-        {{ _('Click on group name to edit.') }}
-    </p>
-    <table class="table table-striped table-width-400">
-        <tr>
-            <th>{{ _('Group Name') }}</th>
-            <th>{{ _('Delete') }}</th>
-        </tr>
-        {% for g in groups %}
-        <tr>
-            <td>
-                <a href="{{ url_for('admin_bp.admin_edit_group', id=g.id) }}">{{ g.group_name }}</a>
-            </td>
-            <td>
-                <a href="{{ url_for('admin_bp.admin_delete_group', id=g.id) }}">{{ _('delete') }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <hr/>
-    <h2>{{ _('Add Group') }}</h2>
-    <form action="" method="post" name="add_group">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ _('Please enter group name.') }}
-        </p>
-        <table class="table table-width-400">
-            <tr>
-                <th>{{ _('Group Name') }}</th>
-                <td>{{ form.group_name(size=(24)) }}</td>
-                <td>
-                    {% if form.group_name.errors %}
-                    <span style="color: red;">
-                    {% for error in form.group_name.errors %}
-                    [{{ error }}]
-                    {% endfor %}
-                    </span>
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" align="center">
-                    <input class="btn btn-primary" type="submit" value="add group"/>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+        <div class="row border rounded m-2 p-2 bg-white">
+            <div class="col"><h2>{{ title }}</h2>
+                <p>
+                    {{ _('Click on group name to edit.') }}
+                </p>
+            </div>
+        </div>
+
+        <div class="row border rounded bg-white m-2 p-2">
+            <div class="col">
+                <div class="row border-bottom m-2">
+                    <div class="col">{{ _('Group Name') }}</div>
+                    <div class="col">{{ _('Delete') }}</div>
+                </div>
+                {%- for group in groups -%}
+                    <div class="row m-2">
+                        <div class="col">
+                            <a href="{{ url_for('admin_bp.admin_edit_group', id=group.id) }}">
+                                {{ group.group_name }}
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ url_for('admin_bp.admin_delete_group', id=group.id) }}">
+                                {{ _('delete') }}
+                            </a>
+                        </div>
+                    </div>
+                {%- endfor -%}
+
+                <hr/>
+                <h2>{{ _('Add Group') }}</h2>
+                <form action="" method="post" name="add_group">
+                    {{ form.hidden_tag() }}
+                    <p>
+                        {{ _('Please enter group name.') }}
+                    </p>
+                    <div class="row mb-2">
+                        <div class="col">
+                            {{ _('Group Name') }}
+
+                        </div>
+                        <div class="col">
+                            {{ form.group_name(size=(24)) }}
+                            {% if form.group_name.errors %}
+                                <span style="color: red;">
+                            {% for error in form.group_name.errors %}
+                                [{{ error }}]
+                            {% endfor %}
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <input class="btn btn-primary" type="submit" value="add group"/></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

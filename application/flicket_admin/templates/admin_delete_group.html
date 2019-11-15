@@ -1,36 +1,57 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-<div class="container">
-    <h1>{{ _('Administration') }}</h1>
-    {% include 'admin_menu.html' %}
-    <h2>{{ title }}</h2>
-    <form action="" method="post" name="delete_group">
-        {{ form.hidden_tag() }}
-        {{ form.id() }}
-        <p>
-            {{ _('Are you sure you want to delete the following group?') }}
-        </p>
-        <p>{{ _('Please enter your password to delete group.') }} {{ form.password() }}
-            {% if form.password.errors %}
-            <span style="color: red;">
-            {% for error in form.password.errors %}
-            [{{ error }}]
-            {% endfor %}
-            </span>
-            {% endif %}
-        </p>
-        <table class="table table-width-400">
-            <tr>
-                <th>{{ _('Group Name') }}</th>
-                <td>{{ group_details.group_name}}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="delete group"/></td>
-                <td></td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <!-- {{ self._TemplateReference__context.name }} -->
+    <div class="container">
+        {% include 'admin_menu.html' %}
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <h2>{{ title }}</h2>
+            </div>
+        </div>
+
+        <div class="row m-3 p-2 border rounded bg-white">
+            <div class="w-25"></div>
+            <div class="col">
+                <form action="" method="post" name="delete_group">
+                    {{ form.hidden_tag() }}
+                    {{ form.id() }}
+                    <div class="row">
+                        <div class="col text-center">
+                            {{ _('Are you sure you want to delete the group:') }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <b style="font-size: 2rem;">{{ group_details.group_name }}</b>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col text-center">
+                            {{ _('Please enter your password to delete group.') }}
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            {{ form.password(class="form-control form-control-sm") }}
+                            {%- if form.password.errors -%}
+                                <span style="color: red;">
+                        {%- for error in form.password.errors -%}
+                            [{{ error }}]<br/>
+                        {%- endfor -%}
+                            </span>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <input class="btn btn-danger btn-sm" type="submit" value="delete group"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="w-25"></div>
+        </div>
+
+    </div>
 {% endblock %}

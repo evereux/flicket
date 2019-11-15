@@ -95,6 +95,8 @@ Add the following::
         </Directory>
 
         WSGIScriptAlias / <path_to_flicket>run.wsgi
+        # Make sure to enable so that the API requests will work.
+        WSGIPassAuthorization On
 
         <Directory <path_to_flicket>>
         <IfVersion < 2.4>

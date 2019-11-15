@@ -218,7 +218,7 @@ from application.flicket_api.views.auth import token_auth
 from application.flicket_api.views.errors import bad_request
 
 
-@bp_api.route(api_url+ 'ticket/<int:id>', methods=['GET'])
+@bp_api.route(api_url + 'ticket/<int:id>', methods=['GET'])
 @token_auth.login_required
 def get_ticket(id):
     return jsonify(FlicketTicket.query.get_or_404(id).to_dict())
@@ -267,4 +267,3 @@ def create_ticket():
     response.headers['Location'] = url_for('bp_api.get_ticket', id=ticket.id)
 
     return response
-

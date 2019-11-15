@@ -2,75 +2,77 @@
 
 {{ pagedown.html_head() }}
 
-<form action=""
-      class="form-horizontal"
-      enctype="multipart/form-data"
-      method="post"
-      name="add_reply">
-    {{ form.hidden_tag() }}
+<div class="row m-2 ml-3 mr-3">
+    <div class="col ml-5 mr-5 border rounded p-2 bg-white">
+        <form action=""
+              class="form"
+              enctype="multipart/form-data"
+              method="post"
+              name="add_reply">
+            {{ form.hidden_tag() }}
 
-    <div class="row flicket-row flicket-row-reply">
-
-        <div class="form-group">
-            <a name="reply"><label class="col-sm-2 control-label">{{ form.content.label }}</label></a>
-            <div class="col-sm-10">
-                {{ form.content(class="form-control") }}
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}"
-                           target="_blank">{{ _('MarkDown Help') }}</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-right" style="padding-top: 5pt">
-                            <button type="button" class="btn btn btn-info btn-sm"
-                                    onclick="hide_element()">{{ _('Show / Hide Markdown') }}</button>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-1">
+                    <a title="reply"><label class="col">{{ form.content.label }}</label></a>
+                </div>
+                <div class="col-11">
+                    {{ form.content(class="form-control") }}
                 </div>
             </div>
-        </div>
-        {% if form.content.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.content.errors %}
-                    {{ error }}
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        {% if form.uploads %}
-            {{ form.uploads }}
-        {% endif %}
-
-
-        <div class="form-group">
-            <div class="col-sm-3">
-                {{ form.file }}
-            </div>
-            <label class="col-sm-1 control-label">{{ form.status.label }}</label>
-            <div class="col-sm-2">
-                {{ form.status(class="form-control") }}
-            </div>
-            <label class="col-sm-1 control-label">{{ form.priority.label }}</label>
-            <div class="col-sm-2">
-                {{ form.priority(class="form-control") }}
-            </div>
-            <div class="col-sm-3 text-right">
-                {{ form.submit }}
-            </div>
-        </div>
-    {% if ticket %}
-        {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
-            {% if ticket.current_status.status != 'Closed' %}
-                <div class="form-group">
-                <div class="col-sm-12 text-right">
-                    {{ form.submit_close }}
-                </div>
+            {% if form.content.errors %}
+                <div class="alert alert-warning small mt-2">
+                    {% for error in form.content.errors %}
+                        {{ error }}
+                    {% endfor %}
                 </div>
             {% endif %}
-        {% endif %}
-    {% endif %}
 
+            {% if form.uploads %}
+                {{ form.uploads }}
+            {% endif %}
 
+            <div class="row mt-2">
+                <div class="col offset-1">
+                    <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">
+                        {{ _('MarkDown Help') }}
+                    </a>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-info btn-sm" onclick="hide_element()">
+                        {{ _('Show / Hide Markdown') }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col align-self-end">
+                    {{ form.file(class="form-control form-control-sm border-0") }}
+                </div>
+                <div class="col-3">
+                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.status.name }}</label>
+                    {{ form.status(class="form-control form-control-sm") }}
+                </div>
+                <div class="col-3">
+                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.priority.name }}</label>
+                    {{ form.priority(class="form-control form-control-sm") }}
+                </div>
+                <div class="col-2 align-self-end text-right">
+                    {{ form.submit(class="btn btn-primary btn-sm") }}
+                </div>
+            </div>
+            {% if ticket %}
+                {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
+                    {% if ticket.current_status.status != 'Closed' %}
+                        <div class="row mt-2">
+                            <div class="col-2 offset-10 text-right">
+                                {{ form.submit_close(class="btn btn-warning btn-sm") }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+        </form>
     </div>
-</form>
+</div>
 <!-- ticket reply /end -->

@@ -1,60 +1,78 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <div class="container">
-        <h1>{{ title }}</h1>
-        <h3><label class="small">Department</label> {{ department.department }}</h3>
 
-        <form action=""
-              class="form-horizontal"
-              enctype="multipart/form-data"
-              method="post"
-              name="create_ticket">
-            {{ form.hidden_tag() }}
-            {{ form.department_id() }}
-
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{ form.category.label }}</label>
-                <div class="col-sm-3">
-                    {{ form.category(class="form-control") }}
-                </div>
-                <div class="col-sm-2">
-                    {{ form.submit }}
-                </div>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <h1 class="text-center">{{ title }}</h1>
             </div>
-            {% if form.category.errors %}
-                <div class="alert alert-warning small">
-                    {% for error in form.category.errors %}
-                        {{ error }}
-                    {% endfor %}
+        </div>
+
+        <div class="row m-2 p-2 border rounded bg-white">
+
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <h3><span class="small">Department:</span> {{ department.department }}</h3>
+                    </div>
                 </div>
-            {% endif %}
+                <form action=""
+                      class="form form-inline"
+                      enctype="multipart/form-data"
+                      method="post"
+                      name="create_ticket">
+                    {{ form.hidden_tag() }}
+                    {{ form.department_id() }}
+                    <div class="row">
+                        <label class="col-2 col-form-label">{{ form.category.label }}</label>
+                        <div class="col">
+                            {{ form.category(class="form-control form-control-sm") }}
+                        </div>
+                        <div class="col">{{ form.submit() }}
+                        </div>
+                    </div>
+                    {% if form.category.errors %}
+                        <div class="row">
+                            <div class="alert alert-warning small">
+                                {% for error in form.category.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
 
-        </form>
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+                <div class="row">
+                    <div class="col"><h2>{{ _('Existing Categories') }}</h2></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h3>{{ _('Category') }}</h3>
+                    </div>
+                </div>
+                {% for c in categories %}
+                    <div class="row">
+                        <div class="col">
+                            {{ c.category }}&nbsp;
+                            <a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}" title="edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
 
-        <h2>{{ _('Existing Categories') }}</h2>
+                            <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}" title="delete">
+                                <i class="fas fa-trash" style="color: red"></i>
+                            </a>
 
-        <table class="table table-bordered">
-            <tr>
-                <th>
-                    {{ _('Category') }}
-                </th>
-            </tr>
-            {% for c in categories %}
-                <tr>
-                    <td>
-                        {{ c.category }}&nbsp;&nbsp;<span class="small"><a
-                            href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}">{{ _('edit') }}</a></span>
-                            <span class="small">
-                                <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}" title="delete">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
     </div>
 {% endblock %}
