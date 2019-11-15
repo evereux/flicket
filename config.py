@@ -5,7 +5,9 @@
 import json
 import os
 
-from scripts.create_json import WriteConfigJson, config_file
+from scripts.create_json import config_file
+from scripts.create_json import WriteConfigJson
+from scripts.create_json import check_db_connection
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -61,6 +63,8 @@ class BaseConfiguration(object):
     SUPPORTED_LANGUAGES = {'en': 'English', 'fr': 'Francais'}
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+    check_db_connection(SQLALCHEMY_DATABASE_URI)
 
 
 class TestConfiguration(BaseConfiguration):
