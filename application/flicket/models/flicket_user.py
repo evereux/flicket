@@ -117,7 +117,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
     @property
     def is_super_user(self):
         """
-        Returns true if the user is a member of the 'flicket_admin' group.
+        Returns true if the user is a member of the 'super_user' group.
         :return True if condition met.
         """
         user = FlicketUser.query.filter_by(id=self.id).first()

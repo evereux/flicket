@@ -17,11 +17,11 @@
                   method="post"
                   name="create_ticket">
                 {{ form.hidden_tag() }}
-                <label class="col col-auto control-label">{{ form.department.label }}</label>
-                <div class="col">
-                    {{ form.department(class="form-control") }}
+                <label class="sr-only">{{ form.department.label }}</label>
+                <div class="col-md-6 col-12 mb-1">
+                    {{ form.department(class="form-control form-control-sm", placeholder="department") }}
                 </div>
-                <div class="col text-right">
+                <div class="col-md-6 col text-center">
                     {{ form.submit }}
                 </div>
                 {% if form.department.errors %}
@@ -99,7 +99,7 @@
 
                                 <a href="{{ url_for('flicket_bp.delete_department', department_id=d.id) }}"
                                    title="delete">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash" style="color: red"></i>
                                 </a>
 
                             {%- endif -%}
@@ -114,7 +114,7 @@
                                     </a>
                                     <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}"
                                        title="delete">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash" style="color: red"></i>
                                     </a>
                                 {%- endif -%}
                             {%- endfor -%}

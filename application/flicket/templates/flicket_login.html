@@ -3,58 +3,61 @@
 {% block content %}
     <div class="container">
 
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
+    <div class="row m-2 p-2 border rounded bg-white">
+        <div class="col">
 
-                <div class="row">
-                    <div class="col">
-                        <h1 class="text-center">{{ title }}</h1>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <h1 class="text-center">{{ title }}</h1>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-md-4 offset-md-4 col-6 offset-3">
+            <div class="row">
+                <div class="col-md-4 offset-md-4 col-6 offset-3">
 
-                        <form action="" class="form justify-content-center" method="post" name="login">
-                            {{ form.hidden_tag() }}
-                            <div class="form-group">
-                                <label class="sr-only">{{ _('Username') }}</label>
-                                {{ form.username(class="form-control") }}
+                    <form action="" class="form justify-content-center" method="post" name="login">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            <label class="sr-only">{{ _('Username') }}</label>
+                            {{ form.username(class="form-control") }}
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
                             </div>
-                            {% if form.username.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.username.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                            <div class="form-group">
-                                <label class="sr-only">{{ _('Password') }}</label>
-                                {{ form.password(class="form-control") }}
+                        {% endif %}
+                        <div class="form-group">
+                            <label class="sr-only">{{ _('Password') }}</label>
+                            {{ form.password(class="form-control") }}
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
                             </div>
-                            {% if form.password.errors %}
-                                <div class="alert alert-warning small">
-                                    {% for error in form.password.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
+                        {% endif %}
 
-                            <div class="form-group text-center">
-                                <label class="col-form-label">{{ _('Remember Me') }}</label>
-                                {{ form.remember_me }}
-                            </div>
+                        <div class="form-group text-center">
+                            <label class="col-form-label">{{ _('Remember Me') }}</label>
+                            {{ form.remember_me }}
+                        </div>
 
-                            <br>
-                            <div class="form-group text-center">
-                                <input class="btn btn-primary btn-sm" type="submit" value="log in"/>
-                            </div>
+                        <br>
+                        <div class="form-group text-center">
+                            <input class="btn btn-primary btn-sm" type="submit" value="log in"/>
+                        </div>
 
-                        </form>
+                    </form>
 
-                    </div>
                 </div>
-
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a href="{{ url_for('flicket_bp.password_reset') }}">reset password</a>
+                </div>
             </div>
         </div>
 

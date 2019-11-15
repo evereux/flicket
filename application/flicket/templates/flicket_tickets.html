@@ -33,27 +33,27 @@
                   method="post"
                   name="search_ticket">
                 {{ form.hidden_tag() }}
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     {{ form.department(class="form-control form-control-sm flicket-tickets-content p-0", id="department") }}
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     {{ form.category(class="form-control form-control-sm flicket-tickets-content p-0", id="category") }}
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     {{ form.status(class="form-control form-control-sm flicket-tickets-content p-0", id="status") }}
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     {{ form.username(class="form-control form-control-sm flicket-tickets-content", placeholder="username", id="autocomplete-username",
                         **{'data-toggle': "tool-tip",
                         'title':'Filter results by user. Results will include all tickets user has either submitted or replied to.'}) }}
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-12 text-center">
                     {{ form.content(class="form-control form-control-sm flicket-tickets-content", placeholder="contents") }}
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     <input class="btn btn-primary btn-sm" type="submit" value={{ _('search') }}>
                 </div>
-                <div class="col text-center">
+                <div class="col-md col-6 text-center">
                     <button class="btn btn-link btn-sm border-primary">
                         <a href="{{ url_for('flicket_bp.tickets', sort='ticketid_desc') }}">reset</a>
                     </button>
@@ -63,7 +63,7 @@
 
         <!-- sort bar -->
         <div class="row m-2 bg-white border rounded p-2 flicket-tickets-content text-nowrap">
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Ticket ID') }}&nbsp;
                 <a {% if sort == 'ticketid' -%}
                     href="{{ url_for(base_url, sort='ticketid_desc', **request.args) }}"
@@ -79,7 +79,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Priority') }}&nbsp;
                 <a {% if sort == 'priority_desc' -%}
                     href="{{ url_for(base_url, sort='priority', **request.args) }}"
@@ -95,7 +95,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Title') }}&nbsp;
                 <a {% if sort == 'title' -%}
                     href="{{ url_for(base_url, sort='title_desc', **request.args) }}"
@@ -111,7 +111,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Submitted By') }}&nbsp;
                 <a {% if sort == 'addedby' -%}
                     href="{{ url_for(base_url, sort='addedby_desc', **request.args) }}"
@@ -127,7 +127,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Date') }}&nbsp;
                 <a {% if sort == 'addedon' -%}
                     href="{{ url_for(base_url, sort='addedon_desc', **request.args) }}"
@@ -144,7 +144,7 @@
                 </a>
             </div>
 
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Category') }}&nbsp;
                 <a {% if sort == 'queue' -%}
                     href="{{ url_for(base_url, sort='queue_desc', **request.args) }}"
@@ -160,7 +160,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Status') }}&nbsp;
                 <a {% if sort == 'status' -%}
                     href="{{ url_for(base_url, sort='status_desc', **request.args) }}"
@@ -176,7 +176,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Replies') }}&nbsp;
                 <a {% if sort == 'replies' -%}
                     href="{{ url_for(base_url, sort='replies_desc', **request.args) }}"
@@ -192,7 +192,7 @@
                     {%- endif -%}
                 </a>
             </div>
-            <div class="col">
+            <div class="col-md col-4">
                 {{ _('Assigned') }}&nbsp;
                 <a {% if sort == 'assigned' -%}
                     href="{{ url_for(base_url, sort='assigned_desc', **request.args) }}"
@@ -226,20 +226,21 @@
 
                         <div class="row m-1 pb-2 border-bottom {%- if t.current_status.status == 'Closed' %}
                                         flicket-status-closed{% endif %}">
-                            <div class="col-1">
-                                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
+                            <div class="col-md-1 col-6 order-1">
+                                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}"
+                                   title="ticket number">{{ t.id_zfill }}</a>
                             </div>
-                            <div class="col-9">
+                            <div class="col-md-9 col-12 order-md-2 order-3" title="title">
                                 {{ t.title }}
                             </div>
-                            <div class="col-2 flicket-tickets-content">
+                            <div class="col-md-2 col-6 order-2 flicket-tickets-content">
                                 Replies: {{ t.num_replies }}
                             </div>
                         </div>
 
                         <div class="row m-1 {%- if t.current_status.status == 'Closed' %}
                                         flicket-status-closed{% endif %}">
-                            <div class="col-1">
+                            <div class="col-md-1 col-6">
                                 <div class="flicket-tickets-title">
                                     priority
                                 </div>
@@ -255,7 +256,7 @@
                                     {{ t.ticket_priority.priority }}
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
                                     submitted by
                                 </div>
@@ -263,7 +264,7 @@
                                     {{ t.user.name }}
                                 </div>
                             </div>
-                            <div class="col-2 text-right">
+                            <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
                                     date
                                 </div>
@@ -271,7 +272,7 @@
                                     {{ t.date_added.strftime('%Y-%m-%d') }}
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-md-3 col-6">
                                 <div class="flicket-tickets-title">
                                     department / category
                                 </div>
@@ -279,7 +280,7 @@
                                     {{ t.category.department.department }} / {{ t.category.category }}
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
                                     status
                                 </div>
@@ -287,7 +288,7 @@
                                     {{ t.current_status.status }}
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
                                     assigned
                                 </div>
