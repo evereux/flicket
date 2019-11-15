@@ -3,19 +3,15 @@
 {% block content %}
     <div class="container">
 
-        <div class="row m-2 p-2 border rounded">
+        <div class="row m-2 p-2 border rounded bg-white">
             <div class="col"><h1>{{ title }}</h1></div>
         </div>
 
 
-        <div class="row m-2 p-2 border rounded">
+        <div class="row m-2 p-2 border rounded bg-white">
             <div class="col">
 
-                <div class="row">
-                    <div class="col"><h1>{{ title }}</h1></div>
-                </div>
-
-                <div class="row">
+                <div class="row mb-1">
                     <div class="col">{{ _('Department') }}: {{ department }}</div>
                 </div>
                 <form action=""
@@ -25,9 +21,9 @@
                       name="create_ticket">
                     {{ form.hidden_tag() }}
                     <div class="row">
-                        <label class="col-2 col-form-label">{{ _('Category') }}</label>
+                        <label class="sr-only">{{ _('Category') }}</label>
                         <div class="col">
-                            {{ form.category(class="form-control form-control-sm") }}
+                            {{ form.category(class="form-control form-control-sm", title="category") }}
                         </div>
                         <div class="col">
                             <input class="btn btn-primary btn-sm" type="submit" value="edit category"/>

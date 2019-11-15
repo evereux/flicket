@@ -2,20 +2,20 @@
 
     <div class="row m-1 pb-2 border-bottom {%- if t.current_status.status == 'Closed' %}
                                         flicket-status-closed{% endif %}">
-        <div class="col-1">
+        <div class="col-md-1 col-6 order-1">
             <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
         </div>
-        <div class="col-9">
+        <div class="col-md-9 col-12 order-md-2 order-3">
             {{ t.title }}
         </div>
-        <div class="col-2 flicket-tickets-content">
+        <div class="col-md-2 col-6 order-2 flicket-tickets-content">
             {{ _('Replies') }}: {{ t.num_replies }}
         </div>
     </div>
 
     <div class="row m-1 {%- if t.current_status.status == 'Closed' %}
                                         flicket-status-closed{% endif %}">
-        <div class="col-1">
+        <div class="col-md-1 col-6">
             <div class="flicket-tickets-title">
                 {{ _('priority') }}
             </div>
@@ -31,7 +31,7 @@
                 {{ t.ticket_priority.priority }}
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-md-2 col-6">
             <div class="flicket-tickets-title">
                 {{ _('submitted by') }}
             </div>
@@ -39,7 +39,7 @@
                 {{ t.user.name }}
             </div>
         </div>
-        <div class="col-2 text-right">
+        <div class="col-md-2 col-6">
             <div class="flicket-tickets-title">
                 {{ _('date') }}
             </div>
@@ -47,7 +47,7 @@
                 {{ t.date_added.strftime('%Y-%m-%d') }}
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-md-3 col-6">
             <div class="flicket-tickets-title">
                 {{ _('department / category') }}
             </div>
@@ -55,7 +55,7 @@
                 {{ t.category.department.department }} / {{ t.category.category }}
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-md-2 col-6">
             <div class="flicket-tickets-title">
                 {{ _('status') }}
             </div>
@@ -63,7 +63,7 @@
                 {{ t.current_status.status }}
             </div>
         </div>
-        <div class="col-2">
+        <div class="col-2 col-6">
             <div class="flicket-tickets-title">
                 {{ _('assigned') }}
             </div>

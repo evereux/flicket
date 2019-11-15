@@ -22,13 +22,13 @@
 
             <div class="form-group">
                 <label class="col control-label" for="autocomplete-username">Name</label>
-                <div class="col">
+                <div class="col mb-1 text-center">
                     {{ form.username(class="form-control", id="autocomplete-username") }}
                 </div>
-                <div class="col">
+                <div class="col mb-1 text-center">
                     {{ form.submit }}
                 </div>
-                <div class="col">
+                <div class="col mb-1 text-center">
                     <a class="btn btn-outline-primary btn-sm" href="{{ url_for('flicket_bp.flicket_users') }}">reset</a>
                 </div>
             </div>
