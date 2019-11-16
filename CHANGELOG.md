@@ -29,6 +29,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
         Otherwise use another method to delete all migration files prior to merging this version. 
         The `migrations/versions` folder should only contain the following files:
         ```
+        ../../flicket/migrations/versions/253ae54f5788_change_category_config_options.py
         ../../flicket/migrations/versions/36c91aa9b3b5_new_action_model.py
         ../../flicket/migrations/versions/fe0f77ef3f46_migrations_before_source_code_control.py
         ```
@@ -71,7 +72,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Fixed a number of Flash message rendering issues introduced during locale implementation.
 *   Added carousel to front page showing all open high priority tickets.
 *   Added pie charts to front page showing overall ticket status for each department. Removed tables showing same data.
-*   Change queue feature (user can put ticket into another "department - catagory").
+*   Change category feature (user can put ticket into another "department / catagory").
 
 
 ## 0.2.0

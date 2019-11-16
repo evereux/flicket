@@ -3,7 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-from flask import redirect, url_for, flash, render_template, g
+from flask import abort, redirect, url_for, flash, render_template, g
 from flask_babel import gettext
 from flask_login import login_required
 
@@ -23,6 +23,13 @@ from . import flicket_bp
 @flicket_bp.route(app.config['FLICKET'] + 'ticket_department_category/<int:ticket_id>/', methods=['GET', 'POST'])
 @login_required
 def ticket_department_category(ticket_id=False):
+    if not app.config['change_category']:
+        abort(404)
+
+    if app.config['change_category_only_admin_or_super_user']:
+        if not g.user.is_admin and not g.user.is_super_user:
+            abort(404)
+
     form = ChangeDepartmentCategoryForm()
     ticket = FlicketTicket.query.get_or_404(ticket_id)
 

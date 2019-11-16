@@ -24,4 +24,6 @@ def set_flicket_config():
         use_auth_domain=config.use_auth_domain,
         auth_domain=config.auth_domain,
         csv_dump_limit=config.csv_dump_limit,
+        change_category=config.change_category,
+        change_category_only_admin_or_super_user=config.change_category_only_admin_or_super_user,
     )

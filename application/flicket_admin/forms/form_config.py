@@ -54,6 +54,10 @@ class ConfigForm(FlaskForm):
 
     csv_dump_limit = IntegerField(lazy_gettext('csv_dump_limit'), validators=[])
 
+    change_category = BooleanField(lazy_gettext('change_category'), validators=[])
+    change_category_only_admin_or_super_user = BooleanField(lazy_gettext('change_category_only_admin_or_super_user'),
+            validators=[])
+
     submit = SubmitField(lazy_gettext('Submit'), render_kw=form_class_button, validators=[DataRequired()])
 
 
