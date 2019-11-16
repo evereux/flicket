@@ -21,12 +21,12 @@
                     <div class="col-auto align-self-center">
                         <a class="btn btn-primary btn-sm flicket-button-link-white" role="button"
                                 {%- if ticket.is_subscribed(g.user) -%}
-                           href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">
+                                    {{ ' ' }}href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">
                                     {{ _('unsubscribe') }}
                                 {%- else -%}
-                                    href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">
+                                    {{ ' ' }}href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">
                                     {{ _('subscribe') }}
-                                {%- endif -%}
+                                {%- endif %}
                         </a>
                     </div>
                 </div>
@@ -46,15 +46,17 @@
                     </div>
                     <div class="col">
                         <div class="flicket-tickets-title">{{ _('Priority') }}</div>
-                        <div class="flicket-tickets-content {%- if ticket.current_status.status == 'Closed' %}
-                                        flicket-status-closed{% endif %}
-                                            {%- if ticket.ticket_priority.priority == 'high' %}
-                                        flicket-status-high
-                                            {% elif ticket.ticket_priority.priority == 'medium' %}
-                                        flicket-status-medium
-                                            {% elif ticket.ticket_priority.priority == 'low' %}
-                                        flicket-status-low
-                                            {% endif %}">{{ ticket.ticket_priority.priority }}</div>
+                        <div class="flicket-tickets-content
+                                {%- if ticket.current_status.status == 'Closed' -%}
+                                    {{ ' ' }}flicket-status-closed
+                                {%- endif -%}
+                                {%- if ticket.ticket_priority.priority == 'high' -%}
+                                    {{ ' ' }}flicket-status-high
+                                {%- elif ticket.ticket_priority.priority == 'medium' -%}
+                                    {{ ' ' }}flicket-status-medium
+                                {%- elif ticket.ticket_priority.priority == 'low' -%}
+                                    {{ ' ' }}flicket-status-low
+                                {%- endif %}">{{ ticket.ticket_priority.priority }}</div>
                     </div>
                     <div class="col">
                         <div class="flicket-tickets-title">{{ _('Assigned') }}</div>
@@ -79,13 +81,13 @@
                             {{ _('assign') }}
                         </a>
 
-			{%- if change_category %}
+                        {%- if change_category %}
 
                         <a class="btn btn-outline-primary btn-sm"
                            href="{{ url_for('flicket_bp.ticket_department_category', ticket_id = ticket.id) }}">
                             {{ _('category') }}
                         </a>
-			{%- endif %}
+                        {%- endif %}
                     </div>
                 </div>
             </div>
@@ -129,7 +131,7 @@
                     <li class="page-item {% if not replies.has_prev -%} disabled {%- endif -%} ">
                         <a class="page-link"
                            href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.prev_num, **request.args) }}">
-                            <<
+                            &lt;&lt;
                         </a>
                     </li>
 
@@ -160,7 +162,7 @@
                     <li class="page-item {% if not replies.has_next -%} disabled {%- endif -%} ">
                         <a class="page-link"
                            href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.next_num, **request.args) }}">
-                            >>
+                            &gt;&gt;
                         </a>
                     </li>
                 </ul>
