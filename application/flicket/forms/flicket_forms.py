@@ -232,10 +232,10 @@ class CategoryForm(FlaskForm):
 
 class SearchDepartmentCategoryForm(FlaskForm):
     """ Search department / category. """
-    department_category = StringField('department_category',
+    department_category = StringField(lazy_gettext('Department / Category'),
             validators=[DataRequired(), does_unique_department_category_exist])
-    submit = SubmitField(gettext('search department / category'), render_kw=form_class_button)
+    submit = SubmitField(lazy_gettext('search department / category'), render_kw=form_class_button)
 
 class ChangeDepartmentCategoryForm(SearchDepartmentCategoryForm):
     """ Change department / category. """
-    submit = SubmitField(gettext('change department_/ category'), render_kw=form_class_button)
+    submit = SubmitField(lazy_gettext('change department / category'), render_kw=form_class_button)
