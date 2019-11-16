@@ -105,7 +105,7 @@ from .flicket.views import users
 # noinspection PyPep8
 from .flicket.views import view_ticket
 # noinspection PyPep8
-from .flicket.views import ticket_queue
+from .flicket.views import department_category
 
 # noinspection PyPep8
 from .flicket_api.views import actions
@@ -131,7 +131,7 @@ from .flicket_api.views import tokens
 from .flicket_api.views import uploads
 # noinspection PyPep8
 from .flicket_api.views import users
-from .flicket_api.views import queues
+from .flicket_api.views import department_categories
 
 # noinspection PyPep8
 from .flicket_errors import handlers

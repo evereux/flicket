@@ -212,8 +212,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         return str(self.id).zfill(5)
 
     @property
-    def queue(self):
-        return f'{self.category.department.department} - {self.category.category}'
+    def department_category(self):
+        return f'{self.category.department.department} / {self.category.category}'
 
     def is_subscribed(self, user):
         for s in self.subscribers:
@@ -379,11 +379,11 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 .group_by(FlicketPost.ticket_id).subquery()
             ticket_query = ticket_query.outerjoin(subquery, FlicketTicket.id == subquery.c.ticket_id) \
                 .order_by(subquery.c.replies_count.desc(), FlicketTicket.id)
-        elif sort == 'queue':
+        elif sort == 'department_category':
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
                 .order_by(FlicketDepartment.department, FlicketCategory.category, FlicketTicket.id)
-        elif sort == 'queue_desc':
+        elif sort == 'department_category_desc':
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
                 .order_by(FlicketDepartment.department.desc(), FlicketCategory.category.desc(), FlicketTicket.id)
@@ -733,8 +733,8 @@ class FlicketAction(PaginatedAPIMixin, Base):
             return (f'Ticked closed'
                     f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
-        if self.action == 'queue':
-            return (f'Ticket queue has been changed to "{self.data["queue"]}"'
+        if self.action == 'department_category':
+            return (f'Ticket category has been changed to "{self.data["department_category"]}"'
                     f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
     def to_dict(self):
@@ -764,13 +764,13 @@ class FlicketAction(PaginatedAPIMixin, Base):
         return (f'<Class FlicketAction: ticket_id={self.ticket_id}, post_id={self.ticket_id}, action={self.action!r}, '
                 f'data={self.data}, user_id={self.user_id}, recipient_id={self.recipient_id}, date={self.date}>')
 
-# Virtual Model Flicket Queue
+# Virtual Model Flicket DepartmentCategory
 # xdml: as not sure how to best implement it, I created "Virtual Model" or how to call it
 # that is similar to SQL VIEW, it is simple SELECT FROM flicket_category JOIN flicket_department
 # query, setting primary_key, so Flask SqlAlchemy ORM can be used as on regular SQL table
-class FlicketQueue(PaginatedAPIMixin, Base):
+class FlicketDepartmentCategory(PaginatedAPIMixin, Base):
     __table__ = select([
-            func.concat(FlicketDepartment.department, ' - ', FlicketCategory.category).label('queue'),
+            func.concat(FlicketDepartment.department, ' / ', FlicketCategory.category).label('department_category'),
             FlicketCategory.id.label('category_id'),
             FlicketCategory.category.label('category'),
             FlicketDepartment.id.label('department_id'),
@@ -786,14 +786,14 @@ class FlicketQueue(PaginatedAPIMixin, Base):
 
     def to_dict(self):
         data = {
-                'queue': self.queue,
+                'department_category': self.department_category,
                 'category_id': self.category_id,
                 'category': self.category,
                 'department_id': self.department_id,
                 'department': self.department,
                 'links': {
-                    'self': app.config['base_url'] + url_for('bp_api.get_queue', id=self.category_id),
-                    'queues': app.config['base_url'] + url_for('bp_api.get_queues'),
+                    'self': app.config['base_url'] + url_for('bp_api.get_department_category', id=self.category_id),
+                    'department_categories': app.config['base_url'] + url_for('bp_api.get_department_categories'),
                     'department': app.config['base_url'] + url_for('bp_api.get_department', id=self.department_id),
                     'category': app.config['base_url'] + url_for('bp_api.get_category', id=self.category_id),
                 },
@@ -802,4 +802,5 @@ class FlicketQueue(PaginatedAPIMixin, Base):
         return data
 
     def __repr__(self):
-        return f"<FlicketQueue: queue='{self.queue}', category_id={self.category_id}>"
+        return (f"<FlicketDepartmentCategory: department_category='{self.department_category}',"
+                f" category_id={self.category_id}>")

@@ -2,32 +2,32 @@
 <!-- extend from base layout -->
 {% block content %}
 
-    {% include('flicket_apijson_queues.html') %}
+    {% include('flicket_apijson_department_categories.html') %}
 
     <div class="container">
         <h1>{{ title }}</h1>
         <h2 class="flicket-title">#{{ ticket.id_zfill }} - {{ ticket.title }}</h2>
         <p>
-            {{ _('Type queue and pick from drop down list to assign ticket. ') }} <a
-                href="{{ url_for('flicket_bp.departments') }}" target="_blank">Available queues</a>.
+            {{ _('Type department and/or category and pick from drop down list to assign ticket. ') }} <a
+                href="{{ url_for('flicket_bp.departments') }}" target="_blank">Available departments and categories</a>.
         </p>
         <form action=""
               class="form-horizontal"
               enctype="multipart/form-data"
               method="post"
-              name="change_queue">
+              name="change_department_category">
             {{ form.hidden_tag() }}
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label" for="autocomplete-queue">{{ form.queue.label }}</label>
+                <label class="col-sm-2 control-label" for="autocomplete-department_category">{{ form.department_category.label }}</label>
                 <div class="col-sm-3">
-                    {{ form.queue(class="form-control", id="autocomplete-queue") }}
+                    {{ form.department_category(class="form-control", id="autocomplete-department_category") }}
                 </div>
             </div>
-            {% if form.queue.errors %}
+            {% if form.department_category.errors %}
                 <div class="alert alert-warning small">
-                    {% for error in form.queue.errors %}
+                    {% for error in form.department_category.errors %}
                         {{ error }}
                     {% endfor %}
                 </div>

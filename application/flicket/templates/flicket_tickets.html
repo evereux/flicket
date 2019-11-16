@@ -146,14 +146,14 @@
 
             <div class="col-md col-4">
                 {{ _('Category') }}&nbsp;
-                <a {% if sort == 'queue' -%}
-                    href="{{ url_for(base_url, sort='queue_desc', **request.args) }}"
+                <a {% if sort == 'department_category' -%}
+                    href="{{ url_for(base_url, sort='department_category_desc', **request.args) }}"
                 {%- else -%}
-                    href="{{ url_for(base_url, sort='queue', **request.args) }}"
+                    href="{{ url_for(base_url, sort='department_category', **request.args) }}"
                 {%- endif %}>
-                    {%- if sort == 'queue' -%}
+                    {%- if sort == 'department_category' -%}
                         <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'queue_desc' -%}
+                    {%- elif sort == 'department_category_desc' -%}
                         <i class="fas fa-sort-alpha-down"></i>
                     {%- else -%}
                         <i class="fas fa-long-arrow-alt-down"></i>

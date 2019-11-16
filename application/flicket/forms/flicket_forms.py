@@ -17,7 +17,7 @@ from application.flicket.models.flicket_models import (FlicketCategory,
                                                        FlicketPriority,
                                                        FlicketStatus,
                                                        FlicketTicket,
-                                                       FlicketQueue,
+                                                       FlicketDepartmentCategory,
                                                        field_size)
 from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
@@ -94,19 +94,19 @@ def does_category_exist(form, field):
 
     return True
 
-def does_unique_queue_exist(form, field):
+def does_unique_department_category_exist(form, field):
     """
-    Queue is CONCAT of '{FlicketDepartment.department} - {FlicketCategory.category}'
+    DepartmentCategory is CONCAT of '{FlicketDepartment.department} / {FlicketCategory.category}'
     :param form:
     :param field:
     :return True / False:
     """
-    result = FlicketQueue.query.filter_by(queue=form.queue.data).count()
+    result = FlicketDepartmentCategory.query.filter_by(department_category=form.department_category.data).count()
     if result == 0:
-        field.errors.append(gettext('Queue does not exist.'))
+        field.errors.append(gettext('Category does not exist.'))
         return False
     if result > 1:
-        field.errors.append(gettext('Ambiguous queue, contact administrator to fix it!'))
+        field.errors.append(gettext('Ambiguous department / category, contact administrator to fix it!'))
         return False
 
     return True
@@ -230,11 +230,12 @@ class CategoryForm(FlaskForm):
     department_id = HiddenField('department_id')
     submit = SubmitField(lazy_gettext('add category'), render_kw=form_class_button)
 
-class SearchQueueForm(FlaskForm):
-    """ Search queue. """
-    queue = StringField('queue', validators=[DataRequired(), does_unique_queue_exist])
-    submit = SubmitField(gettext('search queue'), render_kw=form_class_button)
+class SearchDepartmentCategoryForm(FlaskForm):
+    """ Search department / category. """
+    department_category = StringField('department_category',
+            validators=[DataRequired(), does_unique_department_category_exist])
+    submit = SubmitField(gettext('search department / category'), render_kw=form_class_button)
 
-class ChangeQueueForm(SearchQueueForm):
-    """ Change queue. """
-    submit = SubmitField(gettext('change queue'), render_kw=form_class_button)
+class ChangeDepartmentCategoryForm(SearchDepartmentCategoryForm):
+    """ Change department / category. """
+    submit = SubmitField(gettext('change department_/ category'), render_kw=form_class_button)
