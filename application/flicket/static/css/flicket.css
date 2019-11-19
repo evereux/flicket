@@ -184,3 +184,11 @@ td {
     line-height: .5;
     border-radius: .2rem;
 }
+
+.form-control-xs {
+    height: calc(1em + .375rem + 2px) !important;
+    padding: .0rem .2rem;
+    font-size: 0.7rem !important;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}

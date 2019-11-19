@@ -2,8 +2,8 @@
 
 {{ pagedown.html_head() }}
 
-<div class="row m-2 ml-3 mr-3">
-    <div class="col ml-5 mr-5 border rounded p-2 bg-white">
+<div class="row m-2 p-2 border rounded bg-white">
+    <div class="col">
         <form action=""
               class="form"
               enctype="multipart/form-data"
@@ -11,11 +11,12 @@
               name="add_reply">
             {{ form.hidden_tag() }}
 
+            <!-- post content -->
             <div class="row">
-                <div class="col-1">
-                    <a title="reply"><label class="col">{{ form.content.label }}</label></a>
+                <div class="col-2">
+                    <a title="reply"><label class="col-form-label-sm">{{ form.content.label }}</label></a>
                 </div>
-                <div class="col-11">
+                <div class="col-10">
                     {{ form.content(class="form-control") }}
                 </div>
             </div>
@@ -31,8 +32,9 @@
                 {{ form.uploads }}
             {% endif %}
 
-            <div class="row mt-2">
-                <div class="col offset-1">
+            <!-- markdown links -->
+            <div class="row mt-1">
+                <div class="col offset-2">
                     <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">
                         {{ _('MarkDown Help') }}
                     </a>
@@ -44,34 +46,36 @@
                 </div>
             </div>
 
-            <div class="row mt-2">
-                <div class="col align-self-end">
-                    {{ form.file(class="form-control form-control-sm border-0") }}
+            <!-- optional buttons -->
+            <div class="row mt-1">
+                <div class="col small align-self-end">
+                    {{ form.file(class="form-control-file border-0") }}
                 </div>
-                <div class="col-3">
+                <div class="col">
                     <label class="col p-0 m-0 flicket-tickets-title">{{ form.status.name }}</label>
-                    {{ form.status(class="form-control form-control-sm") }}
+                    {{ form.status(class="form-control form-control-xs") }}
                 </div>
-                <div class="col-3">
+                <div class="col">
                     <label class="col p-0 m-0 flicket-tickets-title">{{ form.priority.name }}</label>
-                    {{ form.priority(class="form-control form-control-sm") }}
+                    {{ form.priority(class="form-control form-control-xs") }}
                 </div>
-                <div class="col-2 align-self-end text-right">
+                <div class="col-auto align-self-end text-right">
                     {{ form.submit(class="btn btn-primary btn-sm") }}
                 </div>
             </div>
+
             {% if ticket %}
                 {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
+                    <!-- reply and close if admin or ticket owner -->
                     {% if ticket.current_status.status != 'Closed' %}
                         <div class="row mt-2">
-                            <div class="col-2 offset-10 text-right">
+                            <div class="col text-right">
                                 {{ form.submit_close(class="btn btn-warning btn-sm") }}
                             </div>
                         </div>
                     {% endif %}
                 {% endif %}
             {% endif %}
-
         </form>
     </div>
 </div>
