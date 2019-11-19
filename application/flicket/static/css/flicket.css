@@ -170,3 +170,17 @@ td {
 .oi-flicket-cl-dg {
     fill: #000000;
 }
+
+.btn-group-xs > .btn, .btn-xs {
+    padding: .4rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+.btn-group-xxs > .btn, .btn-xxs {
+    padding: .25rem .25rem;
+    font-size: .6rem;
+    line-height: .5;
+    border-radius: .2rem;
+}

@@ -39,10 +39,12 @@ def ticket_department_category(ticket_id=False):
 
     if form.validate_on_submit():
         department_category = FlicketDepartmentCategory.query.filter_by(
-                department_category=form.department_category.data).one()
+            department_category=form.department_category.data).one()
 
         if ticket.category_id == department_category.category_id:
-            flash(gettext('Category is already assigned to ticket.'))
+            flash(gettext(
+                f'Category "{ticket.category.category} / {ticket.category.department.department}" is already assigned to ticket.'),
+                category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
         # change category, unassign and set status to open
@@ -76,7 +78,7 @@ def ticket_department_category(ticket_id=False):
         f_mail = FlicketMail()
         f_mail.department_category_ticket(ticket)
 
-        flash(gettext('You changed category of ticket: %(value)s', value=ticket.id))
+        flash(gettext(f'You changed category of ticket: {ticket_id}'), category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     title = gettext('Change Department / Category of Ticket')

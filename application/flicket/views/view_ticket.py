@@ -53,9 +53,9 @@ def ticket_view(ticket_id, page=1):
     if subscribers_form.validate_on_submit():
         user = FlicketUser.query.filter_by(username=subscribers_form.username.data).first()
         if subscribe_user(ticket, user):
-            flash(gettext('User subscribed.'))
+            flash(gettext('User subscribed.'), category='success')
         else:
-            flash(gettext('User already subscribed.'))
+            flash(gettext('User already subscribed.'), category="warning")
 
     # add reply post
     if form.validate_on_submit():
