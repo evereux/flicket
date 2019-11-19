@@ -276,10 +276,9 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         :return:
         """
 
-        hours = db.session.query(func.sum(FlicketPost.hours)).filter(
-            FlicketPost.ticket_id == self.id).scalar() + self.hours
+        hours = db.session.query(func.sum(FlicketPost.hours)).filter_by(ticket_id=self.id).scalar() or 0
 
-        return hours
+        return hours + self.hours
 
     def get_subscriber_emails(self):
         """
