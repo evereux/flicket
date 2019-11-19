@@ -70,6 +70,7 @@ def ticket_view(ticket_id, page=1):
             user=g.user,
             date_added=datetime.datetime.now(),
             content=form.content.data,
+            hours=form.hours.data
         )
 
         if ticket.status_id != form.status.data:

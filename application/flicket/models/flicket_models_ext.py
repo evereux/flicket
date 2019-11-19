@@ -21,7 +21,7 @@ class FlicketTicketExt:
     """
 
     @staticmethod
-    def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None):
+    def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None, hours=0):
         """
         :param title:
         :param user:
@@ -29,6 +29,7 @@ class FlicketTicketExt:
         :param priority:
         :param category:
         :param files:
+        :param hours:
         :return:
         """
 
@@ -47,7 +48,8 @@ class FlicketTicketExt:
                                    current_status=ticket_status,
                                    content=content,
                                    ticket_priority=ticket_priority,
-                                   category=ticket_category
+                                   category=ticket_category,
+                                   hours=hours,
                                    )
 
         db.session.add(new_ticket)

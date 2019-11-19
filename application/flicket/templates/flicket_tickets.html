@@ -230,11 +230,14 @@
                                 <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}"
                                    title="ticket number">{{ t.id_zfill }}</a>
                             </div>
-                            <div class="col-md-9 col-12 order-md-2 order-3" title="title">
+                            <div class="col-md-7 col-12 order-md-2 order-4" title="title">
                                 {{ t.title }}
                             </div>
                             <div class="col-md-2 col-6 order-2 flicket-tickets-content">
                                 Replies: {{ t.num_replies }}
+                            </div>
+                            <div class="col-md-2 col-6 order-3 flicket-tickets-content">
+                                Hours: {{ t.total_hours }}
                             </div>
                         </div>
 

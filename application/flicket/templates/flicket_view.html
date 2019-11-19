@@ -65,12 +65,20 @@
                                     {{ ' ' }}flicket-status-low
                                 {%- endif %}">{{ ticket.ticket_priority.priority }}</div>
                             </div>
+
                             <div class="col">
                                 <div class="flicket-tickets-title">{{ _('Assigned') }}</div>
                                 <div class="flicket-tickets-content">
                                     {% if ticket.assigned.username %}
                                         {{ ticket.assigned.name }}
                                     {% else %}ticket not assigned{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Total Hours') }}</div>
+                                <div class="flicket-tickets-content">
+                                    {{ ticket.total_hours }}
                                 </div>
                             </div>
 

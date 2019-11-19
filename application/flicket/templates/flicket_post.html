@@ -38,7 +38,7 @@
     <div class="col border rounded p-0 bg-white">
 
         <div class="row border-bottom m-0 p-2">
-            <div class="col">
+            <div class="col-auto">
                 {% if replies %}
                     <a class="anchor" id="{{ content.id }}" href="#{{ content.id }}">Reply #{{ (replies.page - 1)
                     *
@@ -48,6 +48,7 @@
                 {% endif %}
                 {{ content.date_added.strftime('%d-%m-%Y %H:%M') }}
             </div>
+
             <div class="col text-right">
                 {% if ( g.user.id == content.user_id ) or (g.user.is_admin) or (g.user.id == ticket.started_id) %}
                     {% if post %}
@@ -71,27 +72,34 @@
                     {% endif %}
                 {% endif %}
             </div>
+
         </div>
 
 
-        <div class="col p-2">
-            {{- show_markdown(content.content)|safe -}}
-            {%- if content.modified_id -%}
-                <div class="">
-                    {{ _('This post was modified by') }} {{ content.modified.name }}
-                    {{ _('on') }} {{ content.date_modified }} |
-                    {%- if post -%}
-                        &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">{{ _('edit
+        <div class="row border-bottom m-0  p-2">
+            <div class="col">
+                {{- show_markdown(content.content)|safe -}}
+                {%- if content.modified_id -%}
+                    <div class="">
+                        {{ _('This post was modified by') }} {{ content.modified.name }}
+                        {{ _('on') }} {{ content.date_modified }} |
+                        {%- if post -%}
+                            &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_post', post_id=content.id) }}">{{ _('edit
                 history') }}</a>
-                    {%- else -%}
-                        &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">{{ _('edit
+                        {%- else -%}
+                            &nbsp;<a href="{{ url_for('flicket_bp.flicket_history_topic', topic_id=ticket.id) }}">{{ _('edit
                 history') }}</a>
-                    {%- endif -%}
-                </div>
-            {%- endif -%}
+                        {%- endif -%}
+                    </div>
+                {%- endif -%}
+            </div>
         </div>
 
-        <div class="col border-top p-2">
+        <div class="row p-2">
+            <div class="col">
+                <span class="flicket-tickets-title">Hours:</span>
+                {{ content.hours }}
+            </div>
             <div class="col">
                 {%- if content.uploads -%}
                     {%- for upload in content.uploads %}

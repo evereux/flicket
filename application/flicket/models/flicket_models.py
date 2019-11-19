@@ -186,6 +186,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
     posts = db.relationship("FlicketPost", back_populates="ticket")
 
+    hours = db.Column(db.Numeric, server_default='0')
+
     # find all the images associated with the topic
     uploads = db.relationship('FlicketUploads',
                               primaryjoin="and_(FlicketTicket.id == FlicketUploads.topic_id)")
@@ -266,6 +268,18 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                                user_id=user_id)
 
         return redirect_url
+
+    @property
+    def total_hours(self):
+        """
+        Sums all hours related to ticket (posts + ticket itself).
+        :return:
+        """
+
+        hours = db.session.query(func.sum(FlicketPost.hours)).filter(
+            FlicketPost.ticket_id == self.id).scalar() + self.hours
+
+        return hours
 
     def get_subscriber_emails(self):
         """
@@ -482,6 +496,8 @@ class FlicketPost(PaginatedAPIMixin, Base):
 
     modified_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     modified = db.relationship(FlicketUser, foreign_keys='FlicketPost.modified_id')
+
+    hours = db.Column(db.Numeric, server_default='0')
 
     # finds all the images associated with the post
     uploads = db.relationship('FlicketUploads',
@@ -764,40 +780,41 @@ class FlicketAction(PaginatedAPIMixin, Base):
         return (f'<Class FlicketAction: ticket_id={self.ticket_id}, post_id={self.ticket_id}, action={self.action!r}, '
                 f'data={self.data}, user_id={self.user_id}, recipient_id={self.recipient_id}, date={self.date}>')
 
+
 # Virtual Model Flicket DepartmentCategory
 # xdml: as not sure how to best implement it, I created "Virtual Model" or how to call it
 # that is similar to SQL VIEW, it is simple SELECT FROM flicket_category JOIN flicket_department
 # query, setting primary_key, so Flask SqlAlchemy ORM can be used as on regular SQL table
 class FlicketDepartmentCategory(PaginatedAPIMixin, Base):
     __table__ = select([
-            func.concat(FlicketDepartment.department, ' / ', FlicketCategory.category).label('department_category'),
-            FlicketCategory.id.label('category_id'),
-            FlicketCategory.category.label('category'),
-            FlicketDepartment.id.label('department_id'),
-            FlicketDepartment.department.label('department')
-        ]).select_from(join(
-            FlicketCategory,
-            FlicketDepartment,
-            FlicketCategory.department_id == FlicketDepartment.id)
-        ).alias()
+        func.concat(FlicketDepartment.department, ' / ', FlicketCategory.category).label('department_category'),
+        FlicketCategory.id.label('category_id'),
+        FlicketCategory.category.label('category'),
+        FlicketDepartment.id.label('department_id'),
+        FlicketDepartment.department.label('department')
+    ]).select_from(join(
+        FlicketCategory,
+        FlicketDepartment,
+        FlicketCategory.department_id == FlicketDepartment.id)
+    ).alias()
     __mapper_args__ = {
-            'primary_key': [FlicketCategory.id]
-        }
+        'primary_key': [FlicketCategory.id]
+    }
 
     def to_dict(self):
         data = {
-                'department_category': self.department_category,
-                'category_id': self.category_id,
-                'category': self.category,
-                'department_id': self.department_id,
-                'department': self.department,
-                'links': {
-                    'self': app.config['base_url'] + url_for('bp_api.get_department_category', id=self.category_id),
-                    'department_categories': app.config['base_url'] + url_for('bp_api.get_department_categories'),
-                    'department': app.config['base_url'] + url_for('bp_api.get_department', id=self.department_id),
-                    'category': app.config['base_url'] + url_for('bp_api.get_category', id=self.category_id),
-                },
-            }
+            'department_category': self.department_category,
+            'category_id': self.category_id,
+            'category': self.category,
+            'department_id': self.department_id,
+            'department': self.department,
+            'links': {
+                'self': app.config['base_url'] + url_for('bp_api.get_department_category', id=self.category_id),
+                'department_categories': app.config['base_url'] + url_for('bp_api.get_department_categories'),
+                'department': app.config['base_url'] + url_for('bp_api.get_department', id=self.department_id),
+                'category': app.config['base_url'] + url_for('bp_api.get_category', id=self.category_id),
+            },
+        }
 
         return data
 

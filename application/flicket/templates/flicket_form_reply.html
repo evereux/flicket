@@ -51,13 +51,17 @@
                 <div class="col small align-self-end">
                     {{ form.file(class="form-control-file border-0") }}
                 </div>
-                <div class="col">
+                <div class="col-auto">
                     <label class="col p-0 m-0 flicket-tickets-title">{{ form.status.name }}</label>
                     {{ form.status(class="form-control form-control-xs") }}
                 </div>
-                <div class="col">
+                <div class="col-auto">
                     <label class="col p-0 m-0 flicket-tickets-title">{{ form.priority.name }}</label>
                     {{ form.priority(class="form-control form-control-xs") }}
+                </div>
+                <div class="col-1">
+                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.hours.label.text }}</label>
+                    {{ form.hours(class="form-control form-control-xs", value="0") }}
                 </div>
                 <div class="col-auto align-self-end text-right">
                     {{ form.submit(class="btn btn-primary btn-sm") }}

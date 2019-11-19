@@ -51,7 +51,7 @@
 
     <div class="row mt-2 align-self-end">
         <div class="col-auto align-self-end">
-            {{ form.file(class="form-control-sm m-0 d-inline ") }}
+            {{ form.file(class="form-control-file m-0 d-inline ") }}
         </div>
         <div class="col-2 align-self-end">
             <label class="m-0 flicket-tickets-title">{{ _('Priority Level') }}</label>
@@ -61,7 +61,11 @@
             <label class="m-0 flicket-tickets-title">{{ _('Category') }}</label>
             {{ form.category(class="form-control form-control-sm m-0") }}
         </div>
-        <div class="col-2 text-right align-self-end">
+        <div class="col-1 align-self-end">
+            <label class="m-0 flicket-tickets-title">{{ form.hours.label.text }}</label>
+            {{ form.hours(class="form-control form-control-sm m-0", value="0") }}
+        </div>
+        <div class="col-auto text-right align-self-end">
             {{ form.submit(class="btn btn-primary btn-sm") }}
         </div>
     </div>

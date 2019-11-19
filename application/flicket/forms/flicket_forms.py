@@ -7,7 +7,7 @@ from flask import url_for
 from flask_babel import lazy_gettext
 from flask_pagedown.fields import PageDownField
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, HiddenField, SubmitField, FileField
+from wtforms import StringField, SelectField, HiddenField, SubmitField, FileField, DecimalField
 from wtforms.fields import SelectMultipleField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -94,6 +94,7 @@ def does_category_exist(form, field):
 
     return True
 
+
 def does_unique_department_category_exist(form, field):
     """
     DepartmentCategory is CONCAT of '{FlicketDepartment.department} / {FlicketCategory.category}'
@@ -110,6 +111,7 @@ def does_unique_department_category_exist(form, field):
         return False
 
     return True
+
 
 class CreateTicketForm(FlaskForm):
     def __init__(self, *args, **kwargs):
@@ -138,6 +140,7 @@ class CreateTicketForm(FlaskForm):
     priority = SelectField(lazy_gettext('priority'), validators=[DataRequired()], coerce=int)
     category = SelectField(lazy_gettext('category'), validators=[DataRequired()], coerce=int)
     file = FileField(lazy_gettext('Upload Documents'), render_kw={'multiple': True})
+    hours = DecimalField(lazy_gettext('hours'))
     submit = SubmitField(lazy_gettext('Submit'), render_kw=form_class_button, validators=[DataRequired()])
 
 
@@ -180,6 +183,7 @@ class ReplyForm(FlaskForm):
     file = FileField(lazy_gettext('Add Files'), render_kw={'multiple': True})
     status = SelectField(lazy_gettext('Status'), validators=[DataRequired()], coerce=int)
     priority = SelectField(lazy_gettext('Priority'), validators=[DataRequired()], coerce=int)
+    hours = DecimalField(lazy_gettext('hours'))
     submit = SubmitField(lazy_gettext('reply'), render_kw=form_class_button)
     submit_close = SubmitField(lazy_gettext('reply and close'), render_kw=form_danger_button)
 
@@ -230,11 +234,13 @@ class CategoryForm(FlaskForm):
     department_id = HiddenField('department_id')
     submit = SubmitField(lazy_gettext('add category'), render_kw=form_class_button)
 
+
 class SearchDepartmentCategoryForm(FlaskForm):
     """ Search department / category. """
     department_category = StringField(lazy_gettext('Department / Category'),
-            validators=[DataRequired(), does_unique_department_category_exist])
+                                      validators=[DataRequired(), does_unique_department_category_exist])
     submit = SubmitField(lazy_gettext('search department / category'), render_kw=form_class_button)
+
 
 class ChangeDepartmentCategoryForm(SearchDepartmentCategoryForm):
     """ Change department / category. """

@@ -35,6 +35,7 @@ def ticket_create():
                                                     content=form.content.data,
                                                     category=form.category.data,
                                                     priority=form.priority.data,
+                                                    hours=form.hours.data,
                                                     files=request.files.getlist("file"))
 
         flash(gettext('New Ticket created.'), category='success')
