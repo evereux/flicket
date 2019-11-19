@@ -55,6 +55,12 @@ def before_request():
     set_flicket_config()
     g.user = current_user
 
+    # reset the user token if the user is authenticated and token is expired.
+    if g.user.is_authenticated and hasattr(g.user, 'token'):
+        if FlicketUser.check_token(g.user.token) is None:
+            g.user.get_token()
+            db.session.commit()
+
     # used in the page footer
     g.__version__ = __version__
 
