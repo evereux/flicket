@@ -120,7 +120,7 @@ def edit_user():
             if user.username != form.username.data:
                 query = FlicketUser.query.filter_by(username=form.username.data)
                 if query.count() > 0:
-                    flash(gettext('Username already exists'))
+                    flash(gettext('Username already exists'), category='warning')
                 else:
                     # change the username.
                     user.username = form.username.data
@@ -142,7 +142,7 @@ def edit_user():
                 group_id = FlicketGroup.query.filter_by(id=g).first()
                 group_id.users.append(user)
             db.session.commit()
-            flash(gettext(f"User {user.username} edited."))
+            flash(gettext(f"User {user.username} edited."), category='success')
             return redirect(url_for('admin_bp.edit_user', id=_id))
 
         # populate form with form data retrieved from database.
@@ -157,7 +157,7 @@ def edit_user():
             groups.append(g.id)
         form.groups.data = groups
     else:
-        flash(gettext("Could not find user."))
+        flash(gettext("Could not find user."), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     # noinspection PyUnresolvedReferences
@@ -178,12 +178,12 @@ def delete_user():
 
     # we won't ever delete the flicket_admin user (id = 1)
     if id == '1':
-        flash(gettext('Can\'t delete default flicket_admin user.'))
+        flash(gettext('Can\'t delete default flicket_admin user.'), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     if form.validate_on_submit():
         # delete the user.
-        flash(gettext(f'Deleted user {user_details.username}s'))
+        flash(gettext(f'Deleted user {user_details.username}s'), category='success')
         db.session.delete(user_details)
         db.session.commit()
         return redirect(url_for('admin_bp.users'))
@@ -225,7 +225,7 @@ def admin_edit_group():
 
     # if group can't be found in database.
     if not group:
-        flash(gettext('Could not find group %(value)s', value=group.group_name))
+        flash(gettext(f'Could not find group {group.group_name}'), category='warning')
         return redirect(url_for('admin_bp.index'))
 
     # prevent editing of flicket_admin group name as this is hard coded into flicket_admin view permissions.
