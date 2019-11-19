@@ -12,6 +12,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 
 ## 0.2.1
+*   now requires python =>3.6
 *   **When upgrading from 0.2.0, follow:**
 
       * Do database backup according to your database engine.
