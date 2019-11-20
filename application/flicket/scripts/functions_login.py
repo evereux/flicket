@@ -6,19 +6,37 @@
 import re
 
 import bcrypt
+from flask_babel import gettext
 
 from application.flicket.models.flicket_user import FlicketUser
 
+password_requirements = gettext('Passwords shall adhere to the following:<br>'
+                                '1. Be a minimum of 8 characters.<br>'
+                                '2. Contain at least one digit.<br>'
+                                '3. Contain at least one upper and lower case character.<br>'
+                                '4. Not contain your username.<br>')
 
-def check_password_format(password):
+
+def check_password_format(password, username, email):
     """
     Checks that the password adheres to the rules defined by this function.
-    Passwords must contain upper and lower case letters.
+    See `password_requirements`.
     :param password:
+    :param username:
+    :param email:
     :return: True if ok
     """
     if not ((any(s.isupper() for s in password)) and (any(s.islower() for s in password))):
         return False
+    if len(password) < 8:
+        return False
+    if not any([c.isdigit() for c in password]):
+        return False
+    if username in password:
+        return False
+    if email in password:
+        return False
+
     return True
 
 

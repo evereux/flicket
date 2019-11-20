@@ -10,7 +10,7 @@ from application import app, db
 from application.flicket.forms.forms_main import EditUserForm
 from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_upload import UploadAvatar
-from application.flicket.scripts.functions_login import check_password_format
+from application.flicket.scripts.functions_login import check_password_format, password_requirements
 from application.flicket.scripts.hash_password import hash_password
 from . import flicket_bp
 
@@ -43,22 +43,33 @@ def user_details():
 
         # find the user in db to edit
         user = FlicketUser.query.filter_by(id=g.user.id).first()
-        # set the new details
-        user.name = form.name.data
-        user.email = form.email.data
-        user.job_title = form.job_title.data
-        user.locale = form.locale.data
+
+        # update details, if changed
+        if user.name != form.name.data:
+            user.name = form.name.data
+            flash('You have changed your "name".', category='success')
+        if user.email != form.email.data:
+            user.email = form.email.data
+            flash('You have changed your "email".', category='success')
+        if user.job_title != form.job_title.data:
+            user.job_title = form.job_title.data
+            flash('You have changed your "job title".', category='success')
+        if user.locale != form.locale.data:
+            user.locale = form.locale.data
+            flash('You have changed your "locale".', category='success')
 
         if avatar_filename:
             user.avatar = avatar_filename
 
         # change the password if the user has entered a new password.
         password = form.new_password.data
-        if (password != '') and (check_password_format(password)):
+        if (password != '') and (check_password_format(password, user.username, user.email)):
             password = hash_password(password)
             user.password = password
             flash('You have changed your password.', category='success')
-        flash('You have edited your user details.', category='success')
+        elif password != '':
+            flash('Password not changed.', category='warning')
+            flash(password_requirements, category='warning')
 
         db.session.commit()
 
