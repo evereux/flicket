@@ -76,6 +76,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Added pie charts to front page showing overall ticket status for each department. Removed tables showing same data.
 *   Change category feature (user can put ticket into another "department / catagory").
 *   Added time tracking. Users can now see total hours spent per ticket.
+*   Can now login with username or email.
 
 
 ## 0.2.0

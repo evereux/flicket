@@ -48,7 +48,7 @@ def login_user_exist(form, field):
             create_user(username, password, name=username)
         else:
             # user can't be authenticated on the domain or found in the database.
-            field.errors.append('Invalid username.')
+            field.errors.append('Invalid username or email.')
         return False
     result = result.first()
     if bcrypt.hashpw(password.encode('utf-8'), result.password) != result.password:
