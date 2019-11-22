@@ -74,18 +74,6 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
         self.date_added = date_added
         self.locale = locale
 
-    # @property
-    # def is_authenticated(self):
-    #     """
-    #
-    #     :return: True if authenticated.
-    #     """
-    #
-    #     if self.check_token(self.token) is None:
-    #         return False
-    #
-    #     return True
-
     @property
     def is_admin(self):
         """
