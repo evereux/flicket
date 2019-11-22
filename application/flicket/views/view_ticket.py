@@ -108,7 +108,7 @@ def ticket_view(ticket_id, page=1):
 
         # send email notification
         mail = FlicketMail()
-        mail.reply_ticket(ticket=ticket, reply=new_reply)
+        mail.reply_ticket(ticket=ticket, reply=new_reply, user=g.user)
 
         flash(gettext('You have replied to ticket %(value_1)s: %(value_2)s.', value_1=ticket.id_zfill,
                       value_2=ticket.title), category="success")

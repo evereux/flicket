@@ -74,9 +74,10 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Fixed a number of Flash message rendering issues introduced during locale implementation.
 *   Added carousel to front page showing all open high priority tickets.
 *   Added pie charts to front page showing overall ticket status for each department. Removed tables showing same data.
-*   Change category feature (user can put ticket into another "department / catagory").
+*   Change category feature (user can put ticket into another "department / category").
 *   Added time tracking. Users can now see total hours spent per ticket.
 *   Can now login with username or email.
+*   Person replying to ticket no longer receives an email. Other subscribers still do.
 
 
 ## 0.2.0
