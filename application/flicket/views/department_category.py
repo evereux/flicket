@@ -47,14 +47,6 @@ def ticket_department_category(ticket_id=False):
                 category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
-        # change category, unassign and set status to open
-        status = FlicketStatus.query.filter_by(status='Open').one()
-        ticket.category_id = department_category.category_id
-        ticket.current_status = status
-        if ticket.assigned:
-            ticket.assigned.total_assigned -= 1
-            ticket.assigned = None
-
         # add action record
         add_action(ticket, 'department_category', data={
             'department_category': department_category.department_category,
@@ -62,21 +54,8 @@ def ticket_department_category(ticket_id=False):
             'category': department_category.category,
             'department_id': department_category.department_id,
             'department': department_category.department})
-        add_action(ticket, 'status', data={'status_id': status.id, 'status': status.status})
-
-        # subscribe to the ticket
-        if not ticket.is_subscribed(g.user):
-            subscribe = FlicketSubscription(
-                ticket=ticket,
-                user=g.user
-            )
-            db.session.add(subscribe)
-
+        
         db.session.commit()
-
-        # send email to state ticket has been assigned.
-        f_mail = FlicketMail()
-        f_mail.department_category_ticket(ticket)
 
         flash(gettext(f'You changed category of ticket: {ticket_id}'), category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
