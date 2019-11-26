@@ -5,7 +5,7 @@
 
         <li class="page-item {% if not tickets.has_prev -%} disabled {%- endif -%} ">
             <a class="page-link" href="{{ url_for(base_url, page=tickets.prev_num, **request.args) }}">
-                <<
+                &lt;&lt;
             </a>
         </li>
 
@@ -27,7 +27,7 @@
 
         <li class="page-item {% if not tickets.has_next -%} disabled {%- endif -%} ">
             <a class="page-link" href="{{ url_for(base_url, page=tickets.next_num, **request.args) }}">
-                >>
+                &gt;&gt;
             </a>
         </li>
     </ul>
