@@ -410,6 +410,14 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         elif sort == 'assigned_desc':
             ticket_query = ticket_query.outerjoin(FlicketUser, FlicketTicket.assigned) \
                 .order_by(FlicketUser.name.desc(), FlicketTicket.id)
+        elif sort == 'time':
+            total_hours = (FlicketTicket.hours + func.sum(FlicketPost.hours)).label('total_hours')
+            ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
+                    .order_by(total_hours, FlicketTicket.id)
+        elif sort == 'time_desc':
+            total_hours = (FlicketTicket.hours + func.sum(FlicketPost.hours)).label('total_hours')
+            ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
+                    .order_by(total_hours.desc(), FlicketTicket.id)
 
         return ticket_query
 

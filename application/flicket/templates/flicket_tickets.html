@@ -147,6 +147,14 @@
                             <i class="fas fa-sort-numeric-up"></i>
                             {{ _('Replies') }}
                         </a>
+                        <a class="dropdown-item small{% if sort == 'time' %} active{% endif %}" href="{{ url_for(base_url, sort='time', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Hours') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'time_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='time_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Hours') }}
+                        </a>
                     </div>
                 </div>
             </div>
