@@ -61,160 +61,94 @@
             </form>
         </div>
 
-        <!-- sort bar -->
-        <div class="row m-2 bg-white border rounded p-2 flicket-tickets-content text-nowrap">
-            <div class="col-md col-4">
-                {{ _('Ticket ID') }}&nbsp;
-                <a {% if sort == 'ticketid' -%}
-                    href="{{ url_for(base_url, sort='ticketid_desc', **request.args) }}"
-                {% else -%}
-                    href="{{ url_for(base_url, sort='ticketid', **request.args) }}"
-                {% endif %}>
-                    {%- if sort == 'ticketid' -%}
-                        <i class="fas fa-sort-numeric-up"></i>
-                    {%- elif sort == 'ticketid_desc' -%}
-                        <i class="fas fa-sort-numeric-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Priority') }}&nbsp;
-                <a {% if sort == 'priority_desc' -%}
-                    href="{{ url_for(base_url, sort='priority', **request.args) }}"
-                {% else -%}
-                    href="{{ url_for(base_url, sort='priority_desc', **request.args) }}"
-                {% endif %}>
-                    {%- if sort == 'priority' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'priority_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Title') }}&nbsp;
-                <a {% if sort == 'title' -%}
-                    href="{{ url_for(base_url, sort='title_desc', **request.args) }}"
-                {% else -%}
-                    href="{{ url_for(base_url, sort='title', **request.args) }}"
-                {% endif %}>
-                    {%- if sort == 'title' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'title_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Submitted By') }}&nbsp;
-                <a {% if sort == 'addedby' -%}
-                    href="{{ url_for(base_url, sort='addedby_desc', **request.args) }}"
-                {% else -%}
-                    href="{{ url_for(base_url, sort='addedby', **request.args) }}"
-                {% endif %}>
-                    {%- if sort == 'addedby' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'addedby_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Date') }}&nbsp;
-                <a {% if sort == 'addedon' -%}
-                    href="{{ url_for(base_url, sort='addedon_desc', **request.args) }}"
-                {% else -%}
-                    href="{{ url_for(base_url, sort='addedon', **request.args) }}"
-                {% endif %}>
-                    {%- if sort == 'addedon' -%}
-                        <i class="fas fa-sort-numeric-up"></i>
-                    {%- elif sort == 'addedon_desc' -%}
-                        <i class="fas fa-sort-numeric-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif %}
-                </a>
-            </div>
-
-            <div class="col-md col-4">
-                {{ _('Category') }}&nbsp;
-                <a {% if sort == 'department_category' -%}
-                    href="{{ url_for(base_url, sort='department_category_desc', **request.args) }}"
-                {%- else -%}
-                    href="{{ url_for(base_url, sort='department_category', **request.args) }}"
-                {%- endif %}>
-                    {%- if sort == 'department_category' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'department_category_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Status') }}&nbsp;
-                <a {% if sort == 'status' -%}
-                    href="{{ url_for(base_url, sort='status_desc', **request.args) }}"
-                {%- else -%}
-                    href="{{ url_for(base_url, sort='status', **request.args) }}"
-                {%- endif %}>
-                    {%- if sort == 'status' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'status_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Replies') }}&nbsp;
-                <a {% if sort == 'replies' -%}
-                    href="{{ url_for(base_url, sort='replies_desc', **request.args) }}"
-                {%- else -%}
-                    href="{{ url_for(base_url, sort='replies', **request.args) }}"
-                {%- endif %}>
-                    {%- if sort == 'replies' -%}
-                        <i class="fas fa-sort-numeric-up"></i>
-                    {%- elif sort == 'replies_desc' -%}
-                        <i class="fas fa-sort-numeric-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-            <div class="col-md col-4">
-                {{ _('Assigned') }}&nbsp;
-                <a {% if sort == 'assigned' -%}
-                    href="{{ url_for(base_url, sort='assigned_desc', **request.args) }}"
-                {%- else -%}
-                    href="{{ url_for(base_url, sort='assigned', **request.args) }}"
-                {%- endif %}>
-                    {%- if sort == 'assigned' -%}
-                        <i class="fas fa-sort-alpha-up"></i>
-                    {%- elif sort == 'assigned_desc' -%}
-                        <i class="fas fa-sort-alpha-down"></i>
-                    {%- else -%}
-                        <i class="fas fa-long-arrow-alt-down"></i>
-                    {%- endif -%}
-                </a>
-            </div>
-
-        </div>
-
-        <!-- pagination -->
         <div class="row">
+            <!-- pagination -->
             <div class="col m-2">
                 {% include('flicket_tickets_pag.html') %}
+            </div>
+
+            <!-- sort dropdown -->
+            <div class="col-auto m-2">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
+                            data-display="static" aria-haspopup="true" aria-expanded="false">
+                        {{ _('Sort') }}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item small{% if sort == 'priority_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='priority_desc', **request.args) }}">
+                            <i class="fas fa-sort-amount-down"></i>
+                            {{ _('Priority') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'priority' %} active{% endif %}" href="{{ url_for(base_url, sort='priority', **request.args) }}">
+                            <i class="fas fa-sort-amount-up"></i>
+                            {{ _('Priority') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'ticketid' %} active{% endif %}" href="{{ url_for(base_url, sort='ticketid', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Ticket ID') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'ticketid_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='ticketid_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Ticket ID') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'title' %} active{% endif %}" href="{{ url_for(base_url, sort='title', **request.args) }}">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            {{ _('Title') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'title_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='title_desc', **request.args) }}">
+                            <i class="fas fa-sort-alpha-up"></i>
+                            {{ _('Title') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'addedby' %} active{% endif %}" href="{{ url_for(base_url, sort='addedby', **request.args) }}">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            {{ _('Submitted By') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'addedby_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='addedby_desc', **request.args) }}">
+                            <i class="fas fa-sort-alpha-up"></i>
+                            {{ _('Submitted By') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'addedon' %} active{% endif %}" href="{{ url_for(base_url, sort='addedon', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Date') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'addedon_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='addedon_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Date') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'department_category' %} active{% endif %}" href="{{ url_for(base_url, sort='department_category', **request.args) }}">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            {{ _('Department / Category') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'department_category_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='department_category_desc', **request.args) }}">
+                            <i class="fas fa-sort-alpha-up"></i>
+                            {{ _('Department / Category') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'status' %} active{% endif %}" href="{{ url_for(base_url, sort='status', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Status') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'status_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='status_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Status') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'assigned' %} active{% endif %}" href="{{ url_for(base_url, sort='assigned', **request.args) }}">
+                            <i class="fas fa-sort-alpha-down"></i>
+                            {{ _('Assigned') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'assigned_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='assigned_desc', **request.args) }}">
+                            <i class="fas fa-sort-alpha-up"></i>
+                            {{ _('Assigned') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'replies' %} active{% endif %}" href="{{ url_for(base_url, sort='replies', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Replies') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'replies_desc' %} active{% endif %}" href="{{ url_for(base_url, sort='replies_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Replies') }}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
