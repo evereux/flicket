@@ -383,15 +383,13 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         elif sort == 'addedon_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.date_added.desc(), FlicketTicket.id)
         elif sort == 'replies':
-            subquery = db.session.query(FlicketPost.ticket_id, func.count(FlicketPost.id).label('replies_count')) \
-                .group_by(FlicketPost.ticket_id).subquery()
-            ticket_query = ticket_query.outerjoin(subquery, FlicketTicket.id == subquery.c.ticket_id) \
-                .order_by(subquery.c.replies_count, FlicketTicket.id)
+            replies_count = func.count(FlicketPost.id).label('replies_count')
+            ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
+                    .order_by(replies_count, FlicketTicket.id)
         elif sort == 'replies_desc':
-            subquery = db.session.query(FlicketPost.ticket_id, func.count(FlicketPost.id).label('replies_count')) \
-                .group_by(FlicketPost.ticket_id).subquery()
-            ticket_query = ticket_query.outerjoin(subquery, FlicketTicket.id == subquery.c.ticket_id) \
-                .order_by(subquery.c.replies_count.desc(), FlicketTicket.id)
+            replies_count = func.count(FlicketPost.id).label('replies_count')
+            ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
+                    .order_by(replies_count.desc(), FlicketTicket.id)
         elif sort == 'department_category':
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
