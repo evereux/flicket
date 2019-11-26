@@ -63,7 +63,7 @@
         </div>
         <div class="col-1 align-self-end">
             <label class="m-0 flicket-tickets-title">{{ form.hours.label.text }}</label>
-            {{ form.hours(class="form-control form-control-sm m-0", value="0") }}
+            {{ form.hours(class="form-control form-control-sm m-0") }}
         </div>
         <div class="col-auto text-right align-self-end">
             {{ form.submit(class="btn btn-primary btn-sm") }}
@@ -90,6 +90,14 @@
     {% if form.category.errors %}
         <div class="alert alert-warning small">
             {% for error in form.category.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if form.hours.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.hours.errors %}
                 {{ error }}
             {% endfor %}
         </div>

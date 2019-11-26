@@ -68,7 +68,7 @@ class FlicketTicketExt:
 
     @staticmethod
     def edit_ticket(ticket=None, title=None, user=None, content=None, priority=None, category=None,
-                    files=None, form_uploads=None):
+                    files=None, form_uploads=None, hours=None):
         """
 
         :param ticket:
@@ -119,6 +119,7 @@ class FlicketTicketExt:
         ticket.date_modified = datetime.datetime.now()
         ticket.ticket_priority = ticket_priority
         ticket.category = ticket_category
+        ticket.hours = hours
 
         files = files
         upload_attachments = UploadAttachment(files)
