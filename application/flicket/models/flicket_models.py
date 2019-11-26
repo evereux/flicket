@@ -186,7 +186,7 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
     posts = db.relationship("FlicketPost", back_populates="ticket")
 
-    hours = db.Column(db.Numeric, server_default='0')
+    hours = db.Column(db.Numeric(10, 2), server_default='0')
 
     # find all the images associated with the topic
     uploads = db.relationship('FlicketUploads',
@@ -496,7 +496,7 @@ class FlicketPost(PaginatedAPIMixin, Base):
     modified_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     modified = db.relationship(FlicketUser, foreign_keys='FlicketPost.modified_id')
 
-    hours = db.Column(db.Numeric, server_default='0')
+    hours = db.Column(db.Numeric(10, 2), server_default='0')
 
     # finds all the images associated with the post
     uploads = db.relationship('FlicketUploads',

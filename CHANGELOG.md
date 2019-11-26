@@ -34,6 +34,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
         ../../flicket/migrations/versions/36c91aa9b3b5_new_action_model.py
         ../../flicket/migrations/versions/70820003badd_add_logging_of_hours.py
         ../../flicket/migrations/versions/fe0f77ef3f46_migrations_before_source_code_control.py
+        ../../flicket/migrations/versions/bcac6741b320_hours_scale_two_dp.py
         ```
            
         * Drop 'alembic_version' table:

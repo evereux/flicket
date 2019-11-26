@@ -11,7 +11,7 @@ from scripts.users_export_to_json import ExportUsersToJson
 from scripts.users_import_from_json import ImportUsersFromJson
 from scripts.update_user_details import TotalUserPosts, TotalUserAssigned
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, compare_type=True)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
