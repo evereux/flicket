@@ -47,6 +47,9 @@ def ticket_department_category(ticket_id=False):
                 category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
+        # change category
+        ticket.category_id = department_category.category_id
+
         # add action record
         add_action(ticket, 'department_category', data={
             'department_category': department_category.department_category,
@@ -54,7 +57,7 @@ def ticket_department_category(ticket_id=False):
             'category': department_category.category,
             'department_id': department_category.department_id,
             'department': department_category.department})
-        
+
         db.session.commit()
 
         flash(gettext(f'You changed category of ticket: {ticket_id}'), category='success')
