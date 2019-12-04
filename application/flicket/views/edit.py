@@ -167,6 +167,8 @@ def edit_post(post_id):
 
     form.content.data = post.content
     form.hours.data = post.hours
+    form.status.data = post.ticket.status_id
+    form.priority.data = post.ticket.ticket_priority_id
 
     return render_template('flicket_editpost.html',
                            title='Edit Post',
