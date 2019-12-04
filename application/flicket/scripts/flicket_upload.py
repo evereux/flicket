@@ -175,7 +175,7 @@ class UploadAttachment(object):
         if self.new_files:
             for new_file in self.new_files:
                 if new_file[1] is False:
-                    flash('There was a problem uploading one of the files.')
+                    flash('There was a problem uploading one or more of the files.', category='warning')
                 else:
                     # all looks good, so add file to the datbase.
                     new_image = FlicketUploads(
