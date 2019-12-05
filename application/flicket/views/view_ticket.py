@@ -56,6 +56,8 @@ def ticket_view(ticket_id, page=1):
             flash(gettext('User subscribed.'), category='success')
         else:
             flash(gettext('User already subscribed.'), category="warning")
+        return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
+
 
     # add reply post
     if form.validate_on_submit():
