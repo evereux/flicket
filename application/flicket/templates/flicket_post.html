@@ -96,23 +96,27 @@
         </div>
 
         <div class="row p-2">
-            <div class="col">
+            <div class="col-auto">
                 <span class="flicket-tickets-title">Hours:</span>
                 {{ content.hours }}
             </div>
             <div class="col">
                 {%- if content.uploads -%}
                     {%- for upload in content.uploads %}
-                        <a href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
+                        <a class="flicket-tickets-title" href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
                            title="{{ upload.original_filename }}"
                            target="_blank">
+                            {% if upload.original_filename|length > 12 %}
+                            {{ upload.original_filename[0:12] }}...{{ upload.original_filename[-3:] }}
+                            {% else %}
                             {{ upload.original_filename }}
+                            {% endif %}
                             <i class="fas fa-file"></i>
                         </a>
                     {%- endfor -%}
                 {% endif %}
             </div>
-            <div class="col text-right">
+            <div class="col-auto text-right">
                 <a class="btn btn-primary btn-sm flicket-button-link-white"
                    href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, post_id=post.id, ticket_rid=ticket.id) }}#reply">{{ _('quote') }}</a>
             </div>
