@@ -11,11 +11,7 @@ from application import app, db
 from application.flicket.forms.flicket_forms import ChangeDepartmentCategoryForm
 from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_models import FlicketDepartmentCategory
-from application.flicket.models.flicket_models import FlicketStatus
-from application.flicket.models.flicket_models import FlicketSubscription
-from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.flicket_functions import add_action
-from application.flicket.scripts.email import FlicketMail
 from . import flicket_bp
 
 

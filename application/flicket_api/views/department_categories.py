@@ -18,14 +18,13 @@
     .. http:get:: /flicket-api/department_categories/
 """
 
-from flask import jsonify, request, url_for
+from flask import jsonify, request
 
 from .sphinx_helper import api_url
 from . import bp_api
-from application import app, db
+from application import app
 from application.flicket.models.flicket_models import FlicketDepartmentCategory
 from application.flicket_api.views.auth import token_auth
-from application.flicket_api.views.errors import bad_request
 
 
 @bp_api.route(api_url + 'department_category/<int:id>', methods=['GET'])
@@ -44,16 +43,17 @@ def get_department_categories():
     kwargs = {}
     if department_category:
         department_categories = department_categories.filter(
-                FlicketDepartmentCategory.department_category.ilike(f'%{department_category}%'))
+            FlicketDepartmentCategory.department_category.ilike(f'%{department_category}%'))
         kwargs['department_category'] = department_category
     if department_id:
         department_categories = department_categories.filter_by(department_id=department_id)
         kwargs['department_id'] = department_id
     if department:
-        department_categories = department_categories.filter(FlicketDepartmentCategory.department.ilike(f'%{department}'))
+        department_categories = department_categories.filter(
+            FlicketDepartmentCategory.department.ilike(f'%{department}'))
         kwargs['department'] = department
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', app.config['posts_per_page'], type=int), 100)
     data = FlicketDepartmentCategory.to_collection_dict(
-            department_categories, page, per_page, 'bp_api.get_department_categories', **kwargs)
+        department_categories, page, per_page, 'bp_api.get_department_categories', **kwargs)
     return jsonify(data)

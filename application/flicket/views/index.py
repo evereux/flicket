@@ -3,8 +3,6 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
-import datetime
-
 from flask import render_template
 from flask_login import login_required
 
