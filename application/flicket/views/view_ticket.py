@@ -58,13 +58,12 @@ def ticket_view(ticket_id, page=1):
             flash(gettext('User already subscribed.'), category="warning")
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
-
     # add reply post
     if form.validate_on_submit():
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         new_reply = FlicketPost(

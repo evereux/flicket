@@ -40,9 +40,9 @@ General
 3. How do I release a ticket?
 
    Scenario: You have been assigned a ticket but the ticket isn't your
-   repsonsibility to complete or you are unable to for another reason.
+   responsibility to complete or you are unable to for another reason.
 
-   Navgiate to [flicket home page](/flicket/) and select the ticket to
+   Navigate to [flicket home page](/flicket/) and select the ticket to
    which you have been assigned. Within the ticket page is a button
    to `release` the ticket from your ticket list.
 
@@ -51,7 +51,7 @@ General
    Scenario: The ticket has been resolved to your satisfaction and you
    want to close the ticket.
 
-   Navgiate to [flicket home page](/flicket/) and select the ticket
+   Navigate to [flicket home page](/flicket/) and select the ticket
    which you would like to close. Within the ticket page is a button
    to `replay and close` the ticket.
 

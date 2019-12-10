@@ -194,7 +194,7 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
 
         :return: str() with user details.
         """
-        return '<User: id={}, usename={}, email={}>'.format(self.id, self.username, self.email)
+        return '<User: id={}, username={}, email={}>'.format(self.id, self.username, self.email)
 
 
 class FlicketGroup(Base):

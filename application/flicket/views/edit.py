@@ -154,7 +154,7 @@ def edit_post(post_id):
 
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # add files to database.

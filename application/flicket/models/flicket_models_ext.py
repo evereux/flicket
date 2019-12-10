@@ -38,7 +38,7 @@ class FlicketTicketExt:
         ticket_category = FlicketCategory.query.filter_by(id=int(category)).first()
 
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # submit ticket data to database
@@ -123,7 +123,7 @@ class FlicketTicketExt:
 
         files = files
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # add files to database.
