@@ -39,7 +39,8 @@ def ticket_department_category(ticket_id=False):
 
         if ticket.category_id == department_category.category_id:
             flash(gettext(
-                f'Category "{ticket.category.category} / {ticket.category.department.department}" is already assigned to ticket.'),
+                f'Category "{ticket.category.category} / {ticket.category.department.department}" '
+                'is already assigned to ticket.'),
                 category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 

@@ -52,6 +52,7 @@ class FlicketMail:
         """
         :param ticket: ticket object
         :param reply: reply object
+        :param user: user object
         :return:
         """
         recipients = ticket.get_subscriber_emails()

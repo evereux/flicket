@@ -385,11 +385,11 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         elif sort == 'replies':
             replies_count = func.count(FlicketPost.id).label('replies_count')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
-                    .order_by(replies_count, FlicketTicket.id)
+                .order_by(replies_count, FlicketTicket.id)
         elif sort == 'replies_desc':
             replies_count = func.count(FlicketPost.id).label('replies_count')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
-                    .order_by(replies_count.desc(), FlicketTicket.id)
+                .order_by(replies_count.desc(), FlicketTicket.id)
         elif sort == 'department_category':
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
@@ -411,11 +411,11 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         elif sort == 'time':
             total_hours = (FlicketTicket.hours + func.sum(FlicketPost.hours)).label('total_hours')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
-                    .order_by(total_hours, FlicketTicket.id)
+                .order_by(total_hours, FlicketTicket.id)
         elif sort == 'time_desc':
             total_hours = (FlicketTicket.hours + func.sum(FlicketPost.hours)).label('total_hours')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
-                    .order_by(total_hours.desc(), FlicketTicket.id)
+                .order_by(total_hours.desc(), FlicketTicket.id)
 
         return ticket_query
 

@@ -99,9 +99,8 @@ class WriteConfigJson:
 
 def check_db_connection(sqlalchemy_database_uri):
     """
-    
-    :param config_data: 
-    :param SQLALCHEMY_DATABASE_URI: 
+
+    :param sqlalchemy_database_uri:
     :return: 
     """
 

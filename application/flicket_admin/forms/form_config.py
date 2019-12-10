@@ -56,7 +56,7 @@ class ConfigForm(FlaskForm):
 
     change_category = BooleanField(lazy_gettext('change_category'), validators=[])
     change_category_only_admin_or_super_user = BooleanField(lazy_gettext('change_category_only_admin_or_super_user'),
-            validators=[])
+                                                            validators=[])
 
     submit = SubmitField(lazy_gettext('Submit'), render_kw=form_class_button, validators=[DataRequired()])
 

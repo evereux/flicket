@@ -79,6 +79,7 @@ class FlicketTicketExt:
         :param category:
         :param files:
         :param form_uploads:
+        :param hours:
         :return:
         """
         # before we make any changes store the original post content in the history table if it has changed.
