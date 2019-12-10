@@ -18,6 +18,10 @@ Getting Flicket
 The source code for Flicket is hosted at GitHub. You can either get
 the latest frozen zip file or use the latest master branch.
 
+
+.. WARNING::
+    If you are upgrading from a previous version please read the CHANGELOG.
+
 Zip Package
 ~~~~~~~~~~~
 
@@ -61,10 +65,8 @@ Set Up
     python -m scripts.create_json
 
 
-4. Initialise the database using manage.py from the command line::
+4. Upgrade the database using manage.py from the command line::
 
-    python manage.py db init
-    python manage.py db migrate
     python manage.py db upgrade
 
 6. Run the set-up script:. This is required to create the Admin user and site url defaults.

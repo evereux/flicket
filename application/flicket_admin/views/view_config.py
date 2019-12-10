@@ -52,6 +52,9 @@ def config():
 
         config_details.csv_dump_limit = form.csv_dump_limit.data
 
+        config_details.change_category = form.change_category.data
+        config_details.change_category_only_admin_or_super_user = form.change_category_only_admin_or_super_user.data
+
         # Don't change the password if nothing was entered.
         if form.mail_password.data != '':
             config_details.mail_password = form.mail_password.data
@@ -84,6 +87,9 @@ def config():
     form.auth_domain.data = config_details.auth_domain
 
     form.csv_dump_limit.data = config_details.csv_dump_limit
+
+    form.change_category.data = config_details.change_category
+    form.change_category_only_admin_or_super_user.data = config_details.change_category_only_admin_or_super_user
 
     return render_template('admin_config.html',
                            title='Flicket Configuration',

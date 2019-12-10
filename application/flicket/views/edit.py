@@ -15,6 +15,8 @@ from application import app, db
 from application.flicket.forms.flicket_forms import EditTicketForm, EditReplyForm
 from application.flicket.models.flicket_models import FlicketHistory
 from application.flicket.models.flicket_models import FlicketPost
+from application.flicket.models.flicket_models import FlicketStatus
+from application.flicket.models.flicket_models import FlicketPriority
 from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket.models.flicket_models_ext import FlicketTicketExt
@@ -57,6 +59,7 @@ def edit_ticket(ticket_id):
             priority=form.priority.data,
             category=form.category.data,
             files=request.files.getlist("file"),
+            hours=form.hours.data,
             form_uploads=form.uploads.data,
         )
 
@@ -137,18 +140,21 @@ def edit_post(post_id):
         post.content = form.content.data
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
+        post.hours = form.hours.data
 
         if post.ticket.status_id != form.status.data:
-            post.ticket.status_id = form.status.data
-            add_action(action=post.ticket.current_status.status, ticket=post.ticket)
+            status = FlicketStatus.query.get(form.status.data)
+            post.ticket.current_status = status
+            add_action(post.ticket, 'status', data={'status_id': status.id, 'status': status.status})
 
         if post.ticket.ticket_priority_id != form.priority.data:
-            post.ticket.ticket_priority_id = form.priority.data
-            add_action(action=post.ticket.ticket_priority.priority, ticket=post.ticket)
+            priority = FlicketPriority.query.get(form.priority.data)
+            post.ticket.ticket_priority = priority
+            add_action(post.ticket, 'priority', data={'priority_id': priority.id, 'priority': priority.priority})
 
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # add files to database.
@@ -160,6 +166,9 @@ def edit_post(post_id):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=post.ticket_id))
 
     form.content.data = post.content
+    form.hours.data = post.hours
+    form.status.data = post.ticket.status_id
+    form.priority.data = post.ticket.ticket_priority_id
 
     return render_template('flicket_editpost.html',
                            title='Edit Post',

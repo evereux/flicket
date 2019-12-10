@@ -1,23 +1,39 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <div class="container">
-        <h1>{{ title }}</h1>
         {% include 'admin_menu.html' %}
-        <div class="row">
-            <div class="col-sm-8 col-sm-offset-3">
-                <form class="form-inline" action="" method="post" name="email_test">
+
+        <div class="row m-2 p2 border rounded bg-white">
+            <div class="col">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        <div class="row m-2 p2 border rounded bg-white">
+            <div class="col">
+                <form class="form" action="" method="post" name="email_test">
                     {{ form.hidden_tag() }}
-                    <div class="form-group">
-                        {{ form.email_address.label }}
-                        {{ form.email_address() }}
-                        {{ form.submit }}
+
+                    <div class="row m-2">
+                        <div class="col">
+                            {{ form.email_address.label }}
+                        </div>
+                        <div class="col">{{ form.email_address(class="form-control form-control-sm") }}</div>
                     </div>
+
+                    <div class="row m-2">
+                        <div class="col text-center">
+                            {{ form.submit }}
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-sm-8 col-sm-offset-3">
+            <div class="col">
                 {% if form.email_address.errors %}
                     <div class="alert alert-warning small">
                         {% for error in form.email_address.errors %}
@@ -27,5 +43,6 @@
                 {% endif %}
             </div>
         </div>
-    </div>s
+
+    </div>
 {% endblock %}

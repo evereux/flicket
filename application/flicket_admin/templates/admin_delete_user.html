@@ -1,45 +1,76 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-<div class="container">
-    <h1>{{ _('Administration') }}</h1>
-    {% include 'admin_menu.html' %}
-    <h1>{{ title }}</h1>
-    <form action="" method="post" name="delete_user">
-        {{ form.hidden_tag() }}
-        {{ form.id() }}
-        <p>
-            {{ _('Are you sure you want to delete the following user? This may impact relational query look ups.') }}
-        </p>
-        <p>{{ _('Please enter your password to delete user.') }} {{ form.password() }}
-            {% if form.password.errors %}
-            <span style="color: red;">
-            {% for error in form.password.errors %}
-            [{{ error }}]
-            {% endfor %}
-            </span>
-            {% endif %}
-        </p>
-        <table>
-            <tr>
-                <th>{{ _('Username') }}</th>
-                <td>{{ user_details.username}}</td>
-            </tr>
-            <tr>
-                <th>{{ _('Name') }}</th>
-                <td>{{ user_details.name}}</td>
-            </tr>
-            <tr>
-                <th>{{ _('Email') }}</th>
-                <td>{{ user_details.email}}</td>
-            </tr>
+    <!-- {{ self._TemplateReference__context.name }} -->
+    <div class="container">
+        {% include 'admin_menu.html' %}
+        <div class="row m-2 b-2 border rounded bg-white">
+            <div class="col">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
 
-            <tr>
-                <td></td>
-                <td><input type="submit" value="delete user"/></td>
-                <td></td>
-            </tr>
-        </table>
-    </form>
-</div>
+        <div class="row m-2 b-2 border rounded bg-white">
+            <div class="col ml-5 mr-5">
+
+                <div class="col w-25"></div>
+
+                <div class="col">
+                    <form action="" method="post" name="delete_user">
+                        {{ form.hidden_tag() }}
+                        {{ form.id() }}
+                        <div class="row m-2 text-center">
+                            <div class="col">
+                                {{ _('Are you sure you want to delete the following user? This may impact relational query look ups.') }}
+                            </div>
+                        </div>
+
+                        <div class="row m-2">
+                            <div class="col-4 text-right">
+                                {{ _('Username') }}
+                            </div>
+                            <div class="col">
+                                {{ user_details.username }}
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col-4 text-right">
+                                {{ _('Name') }}
+                            </div>
+                            <div class="col">{{ user_details.name }}</div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col-4 text-right">
+                                {{ _('Email') }}
+                            </div>
+                            <div class="col">
+                                {{ user_details.email }}
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col-4 text-right">
+                                {{ _('Enter password') }}
+                            </div>
+                            <div class="col">
+                                {{ form.password(class="form-control form-control-sm") }}
+                                {% if form.password.errors %}
+                                    <span style="color: red;">
+                            {% for error in form.password.errors %}
+                                [{{ error }}]
+                            {% endfor %}
+                            </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row m-2">
+                            <div class="col text-center">
+                                <input class="btn btn-danger btn-sm" type="submit" value="delete user"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col w-25"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

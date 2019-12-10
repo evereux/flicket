@@ -5,19 +5,20 @@
 
 from urllib.parse import urlparse, urljoin
 
-from flask import (flash,
-                   g,
-                   redirect,
-                   render_template,
-                   request,
-                   session,
-                   url_for)
-from flask_login import (current_user,
-                         login_user,
-                         logout_user)
-from flask_principal import (Identity,
-                             identity_changed)
+from flask import flash
+from flask import g
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import url_for
+from flask_login import current_user
+from flask_login import login_user
+from flask_login import logout_user
+from flask_principal import Identity
+from flask_principal import identity_changed
 from flask_babel import gettext
+from sqlalchemy import func
+from sqlalchemy import or_
 
 from application import app, lm, db, flicket_bp
 from application import __version__
@@ -55,6 +56,12 @@ def load_user(user_id):
 def before_request():
     set_flicket_config()
     g.user = current_user
+
+    # reset the user token if the user is authenticated and token is expired.
+    if g.user.is_authenticated and hasattr(g.user, 'token'):
+        if FlicketUser.check_token(g.user.token) is None:
+            g.user.get_token()
+            db.session.commit()
 
     # used in the page footer
     g.__version__ = __version__
@@ -94,14 +101,14 @@ def login():
     form = LogInForm()
 
     if form.validate_on_submit():
-        user = FlicketUser.query.filter_by(username=form.username.data).first()
-        session['remember_me'] = form.remember_me.data
+        user = FlicketUser.query.filter(
+            or_(FlicketUser.username == form.username.data,
+                func.lower(FlicketUser.email) == form.username.data.lower())).first()
         identity_changed.send(app, identity=Identity(user.id))
-        login_user(user)
+        login_user(user, remember=form.remember_me.data)
         # set the user token, authentication token is required for api use.
         user.get_token()
         db.session.commit()
-
         if user.email is None or user.email == '':
             flash(gettext('Please set your email and job title.'), category='danger')
             return redirect(url_for('flicket_bp.user_details'))
@@ -109,7 +116,7 @@ def login():
             flash(gettext('You were logged in successfully.'), category='success')
         return redirect(url_for('flicket_bp.index'))
 
-    return render_template('login.html', title='Log In', form=form)
+    return render_template('flicket_login.html', title='Log In', form=form)
 
 
 # logout page
@@ -141,4 +148,4 @@ def password_reset():
         return redirect(url_for('flicket_bp.login'))
 
     title = 'Password Reset'
-    return render_template('password_reset.html', form=form, title=title)
+    return render_template('flicket_password_reset.html', form=form, title=title)

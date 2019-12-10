@@ -7,6 +7,9 @@ from getpass import getpass
 import json
 import os
 
+from sqlalchemy import create_engine
+from sqlalchemy.exc import OperationalError
+
 from scripts.password_valdation import PasswordStrength
 
 config_file = 'config.json'
@@ -92,6 +95,24 @@ class WriteConfigJson:
         with open(config_file, 'w') as f:
             print('Writing config file to {}'.format(config_file))
             json.dump(config_values, f)
+
+
+def check_db_connection(sqlalchemy_database_uri):
+    """
+
+    :param sqlalchemy_database_uri:
+    :return: 
+    """
+
+    base_error_message = 'There was a problem connecting to the database. Please check your config.json file.'
+
+    try:
+        engine = create_engine(sqlalchemy_database_uri)
+        engine.connect()
+    except ValueError:
+        raise Exception(base_error_message)
+    except OperationalError:
+        raise Exception(base_error_message)
 
 
 if __name__ == '__main__':

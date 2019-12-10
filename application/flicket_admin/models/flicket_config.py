@@ -9,7 +9,7 @@ from application.flicket.models import Base
 
 class FlicketConfig(Base):
     """
-    Server configuration settings editable by administrators only via the adminstration page `/flicket_admin/config/`.
+    Server configuration settings editable by administrators only via the administration page `/flicket_admin/config/`.
 
     For email configuration settings see https://flask-mail.readthedocs.io/en/latest/ for more information.
 
@@ -32,6 +32,8 @@ class FlicketConfig(Base):
     :param str base_url: The sites base url. This is used to resolve urls for emails and links. Broken links are
       probably a result of not setting this value.
     :param str csv_dump_limit: The maximum number of rows exported to csv.
+    :param bool change_category: Enable/disable change category.
+    :param bool change_category_only_admin_or_super_user: Only admins or super users can change category.
 
     """
     __tablename__ = 'flicket_config'
@@ -72,6 +74,10 @@ class FlicketConfig(Base):
     use_auth_domain = db.Column(db.BOOLEAN, default=False)
 
     csv_dump_limit = db.Column(db.Integer, default=1000)
+
+    # features
+    change_category = db.Column(db.BOOLEAN, default=False)
+    change_category_only_admin_or_super_user = db.Column(db.BOOLEAN, default=False)
 
     def __repr__(self):
         return "<FlicketConfig model class>"

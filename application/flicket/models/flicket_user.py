@@ -11,6 +11,7 @@ import string
 
 import bcrypt
 from flask import url_for
+from flask_login import UserMixin
 
 from application import db, app
 from application.flicket.models import Base
@@ -37,7 +38,7 @@ flicket_groups = db.Table('flicket_groups',
                           )
 
 
-class FlicketUser(PaginatedAPIMixin, Base):
+class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
     __tablename__ = 'flicket_users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -74,34 +75,6 @@ class FlicketUser(PaginatedAPIMixin, Base):
         self.locale = locale
 
     @property
-    def is_authenticated(self):
-        """
-
-        :return: True if authenticated.
-        """
-
-        if self.check_token(self.token) is None:
-            return False
-
-        return True
-
-    @property
-    def is_active(self):
-        """
-
-        :return: True if active.
-        """
-        return True
-
-    @property
-    def is_anonymous(self):
-        """
-
-        :return: False if anonymous.
-        """
-        return False
-
-    @property
     def is_admin(self):
         """
         Returns true if the user is a member of the 'flicket_admin' group.
@@ -117,7 +90,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
     @property
     def is_super_user(self):
         """
-        Returns true if the user is a member of the 'flicket_admin' group.
+        Returns true if the user is a member of the 'super_user' group.
         :return True if condition met.
         """
         user = FlicketUser.query.filter_by(id=self.id).first()
@@ -126,13 +99,6 @@ class FlicketUser(PaginatedAPIMixin, Base):
                 return True
         else:
             return False
-
-    def get_id(self):
-        """
-
-        :return: self.id
-        """
-        return str(self.id)
 
     def check_password(self, password):
         """
@@ -228,7 +194,7 @@ class FlicketUser(PaginatedAPIMixin, Base):
 
         :return: str() with user details.
         """
-        return '<User: id={}, usename={}, email={}>'.format(self.id, self.username, self.email)
+        return '<User: id={}, username={}, email={}>'.format(self.id, self.username, self.email)
 
 
 class FlicketGroup(Base):

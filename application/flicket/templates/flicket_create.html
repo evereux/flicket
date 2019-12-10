@@ -1,8 +1,9 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <div class="container">
-        <h1>{{ title }}</h1>
-        {% include 'flicket_include_ticket.html' %}
+        <h1 class="m-2 border rounded bg-white p-2">{{ title }}</h1>
+        {% include 'flicket_post_box.html' %}
     </div>
 {% endblock %}

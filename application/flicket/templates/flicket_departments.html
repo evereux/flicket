@@ -2,92 +2,133 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        <p>{{ _('If you require new departments and / or categories added / deleted, please raise a ticket.') }}</p>
-
-        <form action=""
-              class="form-horizontal"
-              enctype="multipart/form-data"
-              method="post"
-              name="create_ticket">
-            {{ form.hidden_tag() }}
+        <div class="row bg-white m-2 border round">
+            <div class="col">
+                <h1>{{ title }}</h1>
+                <p>{{ _('If you require new departments and / or categories added / deleted, please raise a ticket.') }}</p>
+            </div>
+        </div>
 
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{ form.department.label }}</label>
-                <div class="col-sm-3">
-                    {{ form.department(class="form-control") }}
+        <div class="row m-2 bg-white border rounded p-2">
+            <form action=""
+                  class="col form form-inline"
+                  enctype="multipart/form-data"
+                  method="post"
+                  name="create_ticket">
+                {{ form.hidden_tag() }}
+                <label class="sr-only">{{ form.department.label }}</label>
+                <div class="col-md-6 col-12 mb-1">
+                    {{ form.department(class="form-control form-control-sm", placeholder="department") }}
                 </div>
-                <div class="col-sm-2">
+                <div class="col-md-6 col text-center">
                     {{ form.submit }}
                 </div>
-            </div>
-            {% if form.department.errors %}
-                <div class="alert alert-warning small">
-                    {% for error in form.department.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-        </form>
-
-
-        <ul class="pagination pagination-sm">{% for page in departments.iter_pages() %}
-            {% if page %}
-                {% if page != departments.page %}
-                    <li><a href="{{ url_for('flicket_bp.departments', page=page, **request.args) }}"> {{ page }}</a></li>
-                {% else %}
-                    <li class="active"><a
-                            href="{{ url_for('flicket_bp.departments', page=page, **request.args) }}"> {{ page }}</a>
-                    </li>
+                {% if form.department.errors %}
+                    <div class="alert alert-warning small">
+                        {% for error in form.department.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
                 {% endif %}
-            {% else %}
-                <li><a href="">...</a></li>
-            {% endif %}
-        {% endfor %}
+            </form>
+        </div>
+
+
+        <ul class="pagination pagination-sm m-2">
+            <li class="page-item {% if not departments.has_prev -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.departments', page=departments.prev_num, **request.args) }}">
+                    <<
+                </a>
+            </li>
+
+            {%- for page in departments.iter_pages() -%}
+                {%- if page -%}
+                    {%- if page != departments.page -%}
+                        <li class="page-item">
+                            <a class="page-link"
+                               href="{{ url_for('flicket_bp.departments', page=page, **request.args) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {%- else -%}
+                        <li class="page-item active">
+                            <a class="page-link active"
+                               href="{{ url_for('flicket_bp.departments', page=page, **request.args) }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {%- endif -%}
+                {%- else -%}
+                    <li class="page-item">
+                        <a class="page-link" href="">...</a>
+                    </li>
+                {%- endif -%}
+            {%- endfor -%}
+
+            <li class="page-item {% if not departments.has_next -%} disabled {%- endif -%} ">
+                <a class="page-link"
+                   href="{{ url_for('flicket_bp.departments', page=departments.next_num, **request.args) }}">
+                    >>
+                </a>
+            </li>
+
         </ul>
 
-        <table class="table table-bordered">
-            <tr>
-                <th>
-                    Department
-                </th>
-                <th>
-                    Categories
-                </th>
-            </tr>
-            {% for d in departments.items %}
-                <tr>
-                    <td>
-                        {{ d.department }}
-                        {% if g.user.is_admin or g.user.is_super_user %}
-                        <span class="small">
-                            <a href="{{ url_for('flicket_bp.department_edit', department_id=d.id) }}" title="edit"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </span>
-                        <span class="small">
-                            <a href="{{ url_for('flicket_bp.delete_department', department_id=d.id) }}" title="delete"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                        </span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% for c in d.categories %}{{ c.category }}
+        <div class="row m-2 border rounded bg-white">
+            <div class="col">
+                <div class="row border-bottom p-2">
+                    <div class="col">
+                        {{ _('Department') }}
+                    </div>
+                    <div class="col">
+                        {{ _('Categories') }}
+                    </div>
+                </div>
+                {%- for d in departments.items -%}
+                    <div class="row p-2">
+                        <div class="col">
+                            {{ d.department }}
                             {%- if g.user.is_admin or g.user.is_super_user -%}
-                            <span class="small">
-                                <a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}" title="edit"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                            </span>
-                            <span class="small">
-                                <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}" title="delete">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                </a>
-                            </span>
-                            {%- endif -%},
-                        {% endfor %}
-                        {% if g.user.is_admin or g.user.is_super_user %}<small class="small"><a href="{{ url_for('flicket_bp.categories', department_id=d.id) }}">add categories</a></small>{% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
 
+                                <a href="{{ url_for('flicket_bp.department_edit', department_id=d.id) }}"
+                                   title="edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a href="{{ url_for('flicket_bp.delete_department', department_id=d.id) }}"
+                                   title="delete">
+                                    <i class="fas fa-trash" style="color: red"></i>
+                                </a>
+
+                            {%- endif -%}
+                        </div>
+                        <div class="col">
+                            {%- for c in d.categories -%}
+                                {{ c.category }}
+                                {%- if g.user.is_admin or g.user.is_super_user -%}
+                                    <a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}"
+                                       title="edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}"
+                                       title="delete">
+                                        <i class="fas fa-trash" style="color: red"></i>
+                                    </a>
+                                {%- endif -%}
+                            {%- endfor -%}
+                            {%- if g.user.is_admin or g.user.is_super_user -%}
+                                <a href="{{ url_for('flicket_bp.categories', department_id=d.id) }}">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                {%- endfor -%}
+            </div>
+
+        </div>
     </div>
+
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "email_base.html" %}
+<!-- extend from base layout -->
+{% block content %}
+    <h1>
+        {{ title }}
+    </h1>
+    <p>
+    {{ _('Department') }} / {{_('Category') }} "{{ ticket.department_category }}" {{ _('has been assigned to ticket:') }} <a href="{{ ticket_url }}">{{ number }}</a>
+    </p>
+    {% include('email_include_details.html') %}
+
+{% endblock %}

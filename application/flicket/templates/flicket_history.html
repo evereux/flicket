@@ -2,20 +2,46 @@
 <!-- extend from base layout -->
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        <p>
-            {{ _('This page shows history of edits for a given post.') }}
-        </p>
-        <h2><a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">#{{ ticket.id_zfill }} | {{ ticket.title }}</a></h2>
-        <dl>
-            {% if history %}
-            {% for h in history %}
-            <dt>{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</dt>
-            <dd>{{ show_markdown(h.original_content)|safe }}</dd>
-            {% endfor %}
-            {% else %}
-            <dd>{{ _('No changes have been made to the post content.') }}</dd>
-            {% endif %}
-        </dl>
+
+        <div class="row m-2 p-2 border rounded bg-white">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col">
+                        <h1>{{ title }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            {{ _('Post edit history.') }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <h2>
+                            <a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">
+                                #{{ ticket.id_zfill }} | {{ ticket.title }}
+                            </a>
+                        </h2>
+                        <dl>
+                            {% if history %}
+                                {% for h in history %}
+                                    <dt>{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</dt>
+                                    <dd>{{ show_markdown(h.original_content)|safe }}</dd>
+                                {% endfor %}
+                            {% else %}
+                                <dd>{{ _('No changes have been made to the post content.') }}</dd>
+                            {% endif %}
+                        </dl>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 {% endblock %}

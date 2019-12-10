@@ -1,0 +1,30 @@
+
+<script type="text/javascript">
+    $(function () {
+        $('#autocomplete-department_category').autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/flicket-api/department_categories/',
+                    datatype: 'json',
+                    headers: {
+                        'Authorization' : 'Bearer {{ g.user.token }}'
+                    },
+                    data: {
+                        department_category: request.term
+                    },
+                    success: function (data) {
+                        console.log(data.items);
+                        response($.map(data.items, function (item) {
+                            return {
+                                label: item.department_category,
+                                value: item.department_category
+                            }
+                        }));
+                    }
+                })
+            },
+            minLength: 3
+        });
+    });
+</script>
+

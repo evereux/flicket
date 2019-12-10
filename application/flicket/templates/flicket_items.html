@@ -1,0 +1,78 @@
+<div class="border rounded p-1 m-2 mb-3 bg-white">
+
+    <div class="row m-1 pb-2 border-bottom {%- if t.current_status.status == 'Closed' %}
+                                        flicket-status-closed{% endif %}">
+        <div class="col-md-1 col-6 order-1">
+            <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}">{{ t.id_zfill }}</a>
+        </div>
+        <div class="col-md-7 col-12 order-md-2 order-3">
+            {{ t.title }}
+        </div>
+        <div class="col-md-2 col-6 order-2 flicket-tickets-content">
+            {{ _('Replies') }}: {{ t.num_replies }}
+        </div>
+        <div class="col-md-2 col-6 order-3 flicket-tickets-content">
+            Hours: {{ t.total_hours }}
+        </div>
+    </div>
+
+    <div class="row m-1 {%- if t.current_status.status == 'Closed' %}
+                                        flicket-status-closed{% endif %}">
+        <div class="col-md-1 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('priority') }}
+            </div>
+            <div class="flicket-tickets-content  {%- if t.current_status.status == 'Closed' %}
+                                        flicket-status-closed{% endif %}
+                                            {%- if t.ticket_priority.priority == 'high' %}
+                                        flicket-status-high
+                                            {% elif t.ticket_priority.priority == 'medium' %}
+                                        flicket-status-medium
+                                            {% elif t.ticket_priority.priority == 'low' %}
+                                        flicket-status-low
+                                            {% endif %}">
+                {{ t.ticket_priority.priority }}
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('submitted by') }}
+            </div>
+            <div class="flicket-tickets-content">
+                {{ t.user.name }}
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('date') }}
+            </div>
+            <div class="flicket-tickets-content">
+                {{ t.date_added.strftime('%Y-%m-%d') }}
+            </div>
+        </div>
+        <div class="col-md-3 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('department / category') }}
+            </div>
+            <div class="flicket-tickets-content">
+                {{ t.category.department.department }} / {{ t.category.category }}
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('status') }}
+            </div>
+            <div class="flicket-tickets-content">
+                {{ t.current_status.status }}
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="flicket-tickets-title">
+                {{ _('assigned') }}
+            </div>
+            <div class="flicket-tickets-content">
+                {{ t.assigned.name }}
+            </div>
+        </div>
+    </div>
+</div>

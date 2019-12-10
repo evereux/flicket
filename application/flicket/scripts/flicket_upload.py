@@ -66,7 +66,7 @@ class UploadFile:
 
     def upload_file(self):
         """
-        Method to upload the file. Returns True on sucess, otherwise False.
+        Method to upload the file. Returns True on success, otherwise False.
         :return: Boolean
         """
 
@@ -116,7 +116,7 @@ class UploadAvatar(UploadFile):
 class UploadAttachment(object):
     """
     
-    Class created for the uploading of attachements to tickets and comments.
+    Class created for the uploading of attachments to tickets and comments.
     
     Initialised with a list of file objects from form submission.
     
@@ -128,7 +128,7 @@ class UploadAttachment(object):
         self.upload_folder = app.config['ticket_upload_folder']
         self.new_files = None
 
-    def are_attachements(self):
+    def are_attachments(self):
         """
         Check self.files to see if any files were added to the upload form. Return True if there were.
         :return: Boolean
@@ -149,7 +149,7 @@ class UploadAttachment(object):
         """
 
         # Were any files added to form?
-        if not self.are_attachements():
+        if not self.are_attachments():
             return False
 
         self.new_files = list()
@@ -175,9 +175,9 @@ class UploadAttachment(object):
         if self.new_files:
             for new_file in self.new_files:
                 if new_file[1] is False:
-                    flash('There was a problem uploading one of the files.')
+                    flash('There was a problem uploading one or more of the files.', category='warning')
                 else:
-                    # all looks good, so add file to the datbase.
+                    # all looks good, so add file to the database.
                     new_image = FlicketUploads(
                         topic=topic,
                         post=post,

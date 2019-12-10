@@ -21,7 +21,7 @@ class FlicketTicketExt:
     """
 
     @staticmethod
-    def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None):
+    def create_ticket(title=None, user=None, content=None, priority=None, category=None, files=None, hours=0):
         """
         :param title:
         :param user:
@@ -29,6 +29,7 @@ class FlicketTicketExt:
         :param priority:
         :param category:
         :param files:
+        :param hours:
         :return:
         """
 
@@ -37,7 +38,7 @@ class FlicketTicketExt:
         ticket_category = FlicketCategory.query.filter_by(id=int(category)).first()
 
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # submit ticket data to database
@@ -47,7 +48,8 @@ class FlicketTicketExt:
                                    current_status=ticket_status,
                                    content=content,
                                    ticket_priority=ticket_priority,
-                                   category=ticket_category
+                                   category=ticket_category,
+                                   hours=hours,
                                    )
 
         db.session.add(new_ticket)
@@ -66,7 +68,7 @@ class FlicketTicketExt:
 
     @staticmethod
     def edit_ticket(ticket=None, title=None, user=None, content=None, priority=None, category=None,
-                    files=None, form_uploads=None):
+                    files=None, form_uploads=None, hours=None):
         """
 
         :param ticket:
@@ -77,6 +79,7 @@ class FlicketTicketExt:
         :param category:
         :param files:
         :param form_uploads:
+        :param hours:
         :return:
         """
         # before we make any changes store the original post content in the history table if it has changed.
@@ -117,10 +120,11 @@ class FlicketTicketExt:
         ticket.date_modified = datetime.datetime.now()
         ticket.ticket_priority = ticket_priority
         ticket.category = ticket_category
+        ticket.hours = hours
 
         files = files
         upload_attachments = UploadAttachment(files)
-        if upload_attachments.are_attachements():
+        if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
         # add files to database.

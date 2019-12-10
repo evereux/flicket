@@ -1,143 +1,207 @@
 {% extends "flicket_base.html" %}
 <!-- extend from base layout -->
 {% block content %}
+    <!-- {{ self._TemplateReference__context.name }} -->
     <div class="container">
 
         {% include 'flicket_apijson_users.html' %}
 
-        <!-- flicket_view.html -->
-        <div class="row flicket-row-title-main">
-            <div class="col-sm-8">
-                <div class="flicket-ticket-cell flicket-ticket-title-title" id="ticket-number-title">
-                    #{{ ticket.id_zfill }} - {{ ticket.title }}
+        <!-- ticket details -->
+
+        <div class="row m-2">
+            <div class="col p-2 border rounded bg-white">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="row m-0">
+                            <div class="col-2 align-self-center">
+                                {{ ticket.id_zfill }}
+                            </div>
+                            <div class="col flicket-ticket-title">
+                                {{ ticket.title }}
+                            </div>
+                        </div>
+
+                        <div class="row m-0">
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Department') }}</div>
+                                <div class="flicket-tickets-content">
+                                    {{ ticket.category.department.department }}
+                                    {%- if change_category %}
+                                        <a href="{{ url_for('flicket_bp.ticket_department_category', ticket_id = ticket.id) }}"
+                                           title="{{ _('category') }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    {%- endif %}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Category') }}</div>
+                                <div class="flicket-tickets-content">
+                                    {{ ticket.category.category }}
+                                    {%- if change_category %}
+                                        <a href="{{ url_for('flicket_bp.ticket_department_category', ticket_id = ticket.id) }}"
+                                           title="{{ _('department') }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    {%- endif %}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Status') }}</div>
+                                <div class="flicket-tickets-content">{{ ticket.current_status.status }}</div>
+                            </div>
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Priority') }}</div>
+                                <div class="flicket-tickets-content
+                                {%- if ticket.current_status.status == 'Closed' -%}
+                                    {{ ' ' }}flicket-status-closed
+                                {%- endif -%}
+                                {%- if ticket.ticket_priority.priority == 'high' -%}
+                                    {{ ' ' }}flicket-status-high
+                                {%- elif ticket.ticket_priority.priority == 'medium' -%}
+                                    {{ ' ' }}flicket-status-medium
+                                {%- elif ticket.ticket_priority.priority == 'low' -%}
+                                    {{ ' ' }}flicket-status-low
+                                {%- endif %}">{{ ticket.ticket_priority.priority }}</div>
+                            </div>
+
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Assigned') }}</div>
+                                <div class="flicket-tickets-content">
+                                    {% if ticket.assigned.username %}
+                                        {{ ticket.assigned.name }}
+                                    {% else %}ticket not assigned{% endif %}
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="flicket-tickets-title">{{ _('Total Hours') }}</div>
+                                <div class="flicket-tickets-content">
+                                    {{ ticket.total_hours }}
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-auto align-self-center">
+                        <div class="row">
+                            <div class="col text-right">
+                                <a class="btn btn-outline-primary btn-xxs"
+                                   href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">
+                                    {{ _('claim') }}
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col text-right">
+                                <a class="btn btn-outline-primary btn-xxs"
+                                   href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">
+                                    {{ _('release') }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-right">
+                                <a class="btn btn-outline-primary btn-xxs"
+                                   href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">
+                                    {{ _('assign') }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-sm-4 text-right" style="padding-top:10px;">
-                {% if g.user.is_admin %}
-                    <a class="btn btn-default flicket-btn-delete"
-                       href="{{ url_for('flicket_bp.delete_ticket', ticket_id = ticket.id) }}">{{ _('delete') }}</a>
-                {% endif %}
-                {% if ticket.is_subscribed(g.user) %}
-                    <a class="btn btn-default"
-                       href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}">{{ _('unsubscribe') }}</a>
-                {% else %}
-                    <a class="btn btn-default"
-                       href="{{ url_for('flicket_bp.subscribe_ticket', ticket_id = ticket.id) }}">{{ _('subscribe') }}</a>
-                {% endif %}
-            </div>
         </div>
-        <div class="row flicket-row-title-details">
-            <div class="col-sm-2">
-                <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Department') }}</div>
-                <div class="flicket-ticket-cell">{{ ticket.category.department.department }}</div>
-            </div>
-            <div class="col-sm-2">
-                <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Category') }}</div>
-                <div class="flicket-ticket-cell">{{ ticket.category.category }}</div>
-            </div>
-            <div class="col-sm-2">
-                <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Status') }}</div>
-                <div class="flicket-ticket-cell">{{ ticket.current_status.status }}</div>
-            </div>
-            <div class="col-sm-2">
-                <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Priority') }}</div>
-                <div class="flicket-ticket-cell">{{ ticket.ticket_priority.priority }}</div>
-            </div>
-            <div class="col-sm-2">
-                <div class="flicket-ticket-cell flicket-ticket-cell-title">{{ _('Assigned') }}</div>
-                <div class="flicket-ticket-cell">
-                    {% if ticket.assigned.username %}
-                        {{ ticket.assigned.name }}
-                    {% else %}ticket not assigned{% endif %}
-                </div>
-            </div>
-            <div class="col-sm-2">
-                <ul class="flicket-ticket-details-btn-ul">
-                    <li class="flicket-ticket-details-btn-li">
-                        <a style="text-decoration: none"
-                           href="{{ url_for('flicket_bp.ticket_claim', ticket_id = ticket.id) }}">
-                            {{ _('claim') }}
-                        </a>
-                    </li>
-                    <li class="flicket-ticket-details-btn-li">
-                        <a style="text-decoration: none"
-                           href="{{ url_for('flicket_bp.release', ticket_id = ticket.id) }}">
-                            {{ _('release') }}</a>
-                    </li>
-                    <li class="flicket-ticket-details-btn-li">
-                        <a style="text-decoration: none"
-                           href="{{ url_for('flicket_bp.ticket_assign', ticket_id = ticket.id) }}">
-                            {{ _('assign') }}
-                        </a>
-                    </li>
-                </ul>
 
-            </div>
-        </div>
 
         <!-- subscribers -->
-        <div class="row flicket-row-title-sub">
-            <div class="col-sm-8">
-                <div class="flicket-ticket-cell">
-                    Subscribed: {% for s in ticket.subscribers %}
-                    <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
-                    {%- if ticket.is_subscribed(g.user) and s.user == g.user -%}
-                        &nbsp;<a class="btn btn-default btn-sm flicket-btn-borderless" style="color:red"
-                           href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}" title="unsubscribe">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </a>
-                    {%- endif -%} {{ ", " if not loop.last }}
-                {% endfor %}
+        <div class="row m-2 border rounded p-2 bg-white">
+            <div class="col align-self-center small">
+                Subscribed: {% for s in ticket.subscribers %}
+                <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
+                {%- if ticket.is_subscribed(g.user) and s.user == g.user -%}
+                    &nbsp;<a class="small" style="color:red"
+                             href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}"
+                             title="unsubscribe"><i class="fas fa-times"></i></a>
+                {%- endif -%} {{ ", " if not loop.last }}
+            {% endfor %}
+            </div>
+            <form action=""
+                  class="form form-inline"
+                  enctype="multipart/form-data"
+                  method="post"
+                  name="subscribe_user">
+                {{ form.hidden_tag() }}
+                <div class="col">
+                    {{ subscribers_form.username(class="form-control form-control-sm mr-1", id="autocomplete-username", placeholder="User Name") }}
                 </div>
-            </div>
-            <div class="col-sm-4 form-inline text-right">
-                <form action=""
-                      class="form-horizontal"
-                      enctype="multipart/form-data"
-                      method="post"
-                      name="subscribe_user">
-                    {{ form.hidden_tag() }}
-                    {{ subscribers_form.username(class="form-control", id="autocomplete-username", placeholder="User Name") }}
-                    {{ subscribers_form.submit }}
-                </form>
-            </div>
+                <div class="col">
+                    {{ subscribers_form.submit(class="btn btn-primary btn-sm") }}
+                </div>
+            </form>
         </div>
 
         <!-- pagination row -->
-        <div class="row">
-            <div class="col-sm-8">
-                <ul class="pagination pagination-sm">{% for page in replies.iter_pages() %}
-                    {% if page %}
-                        {% if page != replies.page %}
-                            <li>
-                                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
-                                    {{ page }}</a>
+        <div class="row m-2">
+            <div class="col">
+                <ul class="pagination pagination-sm m-0">
+
+                    <li class="page-item {% if not replies.has_prev -%} disabled {%- endif -%} ">
+                        <a class="page-link"
+                           href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.prev_num, **request.args) }}">
+                            &lt;&lt;
+                        </a>
+                    </li>
+
+                    {% for page in replies.iter_pages() %}
+                        {%- if page -%}
+                            {%- if page != replies.page -%}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {%- else -%}
+                                <li class="page-item active">
+                                    <a class="page-link"
+                                       href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
+                                        {{ page }}
+                                    </a>
+                                </li>
+                            {%- endif -%}
+                        {%- else -%}
+                            <li class="page-item">
+                                <a href="">...</a>
                             </li>
-                        {% else %}
-                            <li class="active"><a
-                                    href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=page, **request.args) }}">
-                                {{ page }}</a>
-                            </li>
-                        {% endif %}
-                    {% else %}
-                        <li><a href="">...</a></li>
-                    {% endif %}
-                {% endfor %}
+                        {%- endif -%}
+                    {%- endfor -%}
+
+                    <li class="page-item {% if not replies.has_next -%} disabled {%- endif -%} ">
+                        <a class="page-link"
+                           href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id, page=replies.next_num, **request.args) }}">
+                            &gt;&gt;
+                        </a>
+                    </li>
                 </ul>
-            </div>
-            <div class="col-sm-4 text-right">
-                &nbsp;
             </div>
         </div>
 
         <!-- display ticket-->
         {{ display_post_box(ticket, page=page)|safe }}
         <!-- end display ticket -->
+
         <!-- display actions -->
-        {% for action in ticket.actions %}
-            <div class="row flicket-row flicket-row-action">
-                {{ action.output_action()|safe }}
+        {% for action in ticket.actions_nonepost %}
+            <div class="row m-3">
+                <div class="col border rounded p-1 flicket-action">
+                    {{ action.output_action()|safe }}
+                </div>
             </div>
         {% endfor %}
         <!-- end display actions -->
@@ -149,8 +213,10 @@
 
             <!-- display actions -->
             {% for action in r.actions %}
-                <div class="row flicket-row flicket-row-action">
-                    {{ action.output_action()|safe }}
+                <div class="row m-3">
+                    <div class="col border rounded p-1 flicket-action">
+                        {{ action.output_action()|safe }}
+                    </div>
                 </div>
             {% endfor %}
             <!-- end display actions -->
@@ -159,7 +225,5 @@
 
         {% include('flicket_form_reply.html') %}
 
-
     </div>
-
 {% endblock %}

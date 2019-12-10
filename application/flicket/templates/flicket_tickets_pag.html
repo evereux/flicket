@@ -1,0 +1,34 @@
+<!-- pagination bar -->
+<!-- {{ self._TemplateReference__context.name }} -->
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-sm m-0">
+
+        <li class="page-item {% if not tickets.has_prev -%} disabled {%- endif -%} ">
+            <a class="page-link" href="{{ url_for(base_url, page=tickets.prev_num, **request.args) }}">
+                &lt;&lt;
+            </a>
+        </li>
+
+        {%- for page in tickets.iter_pages() -%}
+            {% if page %}
+                <li class="page-item {% if page == tickets.page %} active {% endif %}">
+                    <a class="page-link" href="{{ url_for(base_url, page=page, **request.args) }}">
+                        {{ page }}
+                    </a>
+                </li>
+            {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="">
+                        ...
+                    </a>
+                </li>
+            {%- endif -%}
+        {% endfor %}
+
+        <li class="page-item {% if not tickets.has_next -%} disabled {%- endif -%} ">
+            <a class="page-link" href="{{ url_for(base_url, page=tickets.next_num, **request.args) }}">
+                &gt;&gt;
+            </a>
+        </li>
+    </ul>
+</nav>

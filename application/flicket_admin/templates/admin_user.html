@@ -1,140 +1,138 @@
 <!-- extend from base layout -->
 {% extends "flicket_base.html" %}
 {% block content %}
-<div class="container">
-    <h1>Administration</h1>
-    {% include 'admin_menu.html' %}
+    <!-- {{ self._TemplateReference__context.name }} -->
+    <div class="container">
 
-       <form class="form-horizontal" action="" method="post" name="register">
-        {{ form.hidden_tag() }}
-        {% if form.user_id %}{{ form.user_id() }}{% endif %}
+        {% include 'admin_menu.html' %}
 
-        <div class="col-sm-4">
-        </div>
-
-
-        <div class="col-sm-4 text-center">
-                <h2>{{ title }}</h2>
-            <p>
-                {{ comment }}
-            </p>
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Username</label>
-                <div class="col-sm-9">
-                    {{ form.username(class="form-control") }}
-                </div>
-            </div>
-            {% if form.username.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.username.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Name</label>
-                <div class="col-sm-9">
-                    {{ form.name(class="form-control", placeholder="name") }}
-                </div>
-            </div>
-            {% if form.name.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.name.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Email</label>
-                <div class="col-sm-9">
-                    {{ form.email(class="form-control", placeholder="email") }}
-                </div>
-            </div>
-            {% if form.email.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.email.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Job Title</label>
-                <div class="col-sm-9">
-                    {{ form.job_title(class="form-control", placeholder="job title / role") }}
-                </div>
-            </div>
-            {% if form.job_title.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.job_title.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Locale</label>
-                <div class="col-sm-9">
-                    {{ form.locale(class="form-control", placeholder="locale") }}
-                </div>
-            </div>
-            {% if form.locale.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.locale.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Password</label>
-                <div class="col-sm-9">
-                    {{ form.password(class="form-control", placeholder="password") }}
-                </div>
-            </div>
-            {% if form.password.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.password.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Confirm</label>
-                <div class="col-sm-9">
-                    {{ form.confirm(class="form-control", placeholder="repeat password") }}
-                </div>
-            </div>
-            {% if form.confirm.errors %}
-            <div class="alert alert-warning small">
-                {% for error in form.confirm.errors %}
-                {{ error }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            {% if admin_edit %}
-                <div class="form-group form-group-sm">
-                <label class="col-sm-3 control-label">Groups</label>
-                    <div class="col-sm-9">
-                        {{ form.groups(class="form-control") }}
-
-                </div>
-                </div>
-
-            {% endif %}
-
-            <div class="text-center">
-                {{ form.submit(class="btn btn-primary") }}
+        <div class="row rounded border m-2 p-2 bg-white">
+            <div class="col">
+                <h2 class="text-center">{{ title }}</h2>
+                {% if admin_edit %}
+                    <p>
+                        Edit user details. Use "CTRL" to deselect within group column.
+                    </p>
+                {% endif %}
             </div>
         </div>
 
-        <div class="col-sm-4">
+        <div class="row border rounded m-2 p-2 bg-white">
+            <div class="col">
+                <form class="form" action="" method="post" name="register">
+                    {{ form.hidden_tag() }}
+                    {% if form.user_id %}{{ form.user_id() }}{% endif %}
+
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.username.label.text }}</label>
+                        <div class="col">
+                            {{ form.username(class="form-control") }}
+                        </div>
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.username.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.name.label.text }}</label>
+                        <div class="col">
+                            {{ form.name(class="form-control", placeholder="name") }}
+                        </div>
+                        {% if form.name.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.email.label.text }}</label>
+                        <div class="col">
+                            {{ form.email(class="form-control", placeholder="email") }}
+                        </div>
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.job_title.label.text }}</label>
+                        <div class="col">
+                            {{ form.job_title(class="form-control", placeholder="job title / role") }}
+                        </div>
+                    </div>
+                    {% if form.job_title.errors %}
+                        <div class="alert alert-warning small">
+                            {% for error in form.job_title.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.locale.label.text }}</label>
+                        <div class="col">
+                            {{ form.locale(class="form-control", placeholder="locale") }}
+                        </div>
+                        {% if form.locale.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.locale.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.password.label.text }}</label>
+                        <div class="col">
+                            {{ form.password(class="form-control", placeholder="password") }}
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.confirm.label.text }}</label>
+                        <div class="col">
+                            {{ form.confirm(class="form-control", placeholder="repeat password") }}
+                        </div>
+                        {% if form.confirm.errors %}
+                            <div class="alert alert-warning small">
+                                {% for error in form.confirm.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row mb-2">
+                        {% if admin_edit %}
+
+                            <label class="col-2 col-form-label">Groups</label>
+                            <div class="col">
+                                {{ form.groups(class="form-control") }}
+
+                            </div>
+
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-    </form>
-</div>
+
+    </div>
 {% endblock %}
