@@ -11,6 +11,14 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 *   Please read the changelog descriptions. Particularly those for 0.2.1.
 
 
+## 0.2.2
+* Added favicon.
+* My Tickets menu now dropdown with additional filters for tickets assigned 
+  to self or created by self.
+
+
+
+
 ## 0.2.1
 *   now requires python =>3.6
 *   **When upgrading from 0.2.0, follow:**

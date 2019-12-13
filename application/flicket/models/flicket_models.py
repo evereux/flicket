@@ -316,6 +316,12 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         if kwargs['status'] is None:
             ticket_query = ticket_query.filter(FlicketTicket.current_status.has(FlicketStatus.status != 'Closed'))
 
+        if kwargs['assigned_id']:
+            ticket_query = ticket_query.filter_by(assigned_id=kwargs['assigned_id'])
+
+        if kwargs['created_id']:
+            ticket_query = ticket_query.filter_by(started_id=kwargs['created_id'])
+
         for key, value in kwargs.items():
 
             if key == 'status' and value:
@@ -327,12 +333,14 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 ticket_query = ticket_query.filter(FlicketTicket.category.has(FlicketCategory.category == value))
                 if form:
                     form.category.data = FlicketCategory.query.filter_by(category=value).first().id
+
             if key == 'department' and value:
                 department_filter = FlicketDepartment.query.filter_by(department=value).first()
                 ticket_query = ticket_query.filter(
                     FlicketTicket.category.has(FlicketCategory.department == department_filter))
                 if form:
                     form.department.data = department_filter.id
+
             if key == 'user_id' and value:
                 # ticket_query = ticket_query.filter_by(assigned_id=int(value))
                 ticket_query = ticket_query.filter(
@@ -340,6 +348,7 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 user = FlicketUser.query.filter_by(id=value).first()
                 if form:
                     form.username.data = user.username
+
             if key == 'content' and value:
                 # search the titles
                 if form:

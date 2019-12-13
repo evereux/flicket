@@ -5,6 +5,7 @@
 
 from datetime import datetime
 
+from flask import g
 from flask import redirect
 from flask import request
 from flask import make_response
@@ -40,6 +41,8 @@ def tickets_view(page, is_my_view=False):
     category = request.args.get('category')
     content = request.args.get('content')
     user_id = request.args.get('user_id')
+    assigned_id = request.args.get('assigned_id')
+    created_id = request.args.get('created_id')
 
     if form.validate_on_submit():
         redirect_url = FlicketTicket.form_redirect(form, url='flicket_bp.tickets')
@@ -64,7 +67,8 @@ def tickets_view(page, is_my_view=False):
         set_cookie = False
 
     ticket_query, form = FlicketTicket.query_tickets(form, department=department, category=category, status=status,
-                                                     user_id=user_id, content=content)
+                                                     user_id=user_id, content=content, assigned_id=assigned_id,
+                                                     created_id=created_id)
     if is_my_view:
         ticket_query = FlicketTicket.my_tickets(ticket_query)
     ticket_query = FlicketTicket.sorted_tickets(ticket_query, sort)
@@ -89,6 +93,8 @@ def tickets_view(page, is_my_view=False):
                                              department=department,
                                              category=category,
                                              user_id=user_id,
+                                             created_id=created_id,
+                                             assigned_id=assigned_id,
                                              sort=sort,
                                              base_url='flicket_bp.tickets'))
 

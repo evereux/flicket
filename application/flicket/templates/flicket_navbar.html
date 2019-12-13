@@ -11,8 +11,14 @@
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link"
-                                    href="{{ url_for('flicket_bp.my_tickets') }}">{{ _('My Tickets') }}</a></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Tickets</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownn">
+                    <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets') }}" title="Tickets assigned to or started by you.">{{ _('My Tickets') }}</a>
+                    <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets', created_id=g.user.id) }}" title="Tickets started by you.">{{ _('Created') }}</a>
+                    <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets', assigned_id=g.user.id) }}" title="Tickets assigned to you.">{{ _('Assigned') }}</a>
+                </div>
+            </li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('flicket_bp.tickets') }}">{{ _('Tickets') }}</a>
             </li>
             <li class="nav-item"><a class="nav-link"
