@@ -141,7 +141,7 @@ def ticket_view(ticket_id, page=1):
     form.status.data = ticket.status_id
     form.priority.data = ticket.ticket_priority_id
 
-    title = gettext('View Ticket')
+    title = f"Ticket #{ticket.id_zfill} {ticket.title}"
 
     # display or not category change link
     change_category = app.config['change_category']
