@@ -15,7 +15,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 * Added favicon.
 * My Tickets menu now dropdown with additional filters for tickets assigned 
   to self or created by self.
-
+* Fixed post quoting.
 
 
 
