@@ -43,7 +43,7 @@ def ticket_view(ticket_id, page=1):
     replies = FlicketPost.query.filter_by(ticket_id=ticket_id).order_by(FlicketPost.date_added.asc())
 
     # get reply id's
-    post_rid = request.args.get('post_rid')
+    post_id = request.args.get('post_id')
     ticket_rid = request.args.get('ticket_rid')
 
     form = ReplyForm()
@@ -121,13 +121,14 @@ def ticket_view(ticket_id, page=1):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # get post id and populate contents for auto quoting
-    if post_rid:
-        query = FlicketPost.query.filter_by(id=post_rid).first()
+    if post_id:
+        query = FlicketPost.query.filter_by(id=post_id).first()
         reply_contents = gettext("%(value_1)s wrote on %(value_2)s\r\n\r\n%(value_3)s",
                                  value_1=query.user.name,
                                  value_2=query.date_added,
                                  value_3=query.content)
         form.content.data = block_quoter(reply_contents)
+
     if ticket_rid:
         reply_contents = gettext("%(value_1)s wrote on %(value_2)s\r\n\r\n%(value_3)s",
                                  value_1=ticket.user.name,
