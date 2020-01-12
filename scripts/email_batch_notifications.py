@@ -6,6 +6,7 @@
 import time
 
 from flask_script import Command
+from sqlalchemy import or_
 
 from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_user import FlicketUser
@@ -24,9 +25,10 @@ class EmailOutStandingTickets(Command):
         users = FlicketUser.query.all()
         for user in users:
             # that have created a ticket or have a ticket assigned to them.
-            tickets = FlicketTicket.query.filter(
-                FlicketTicket.user == user).filter(
-                FlicketTicket.assigned == user).filter(
+            tickets = FlicketTicket.query.filter(or_(
+                FlicketTicket.user == user,
+                FlicketTicket.assigned == user,
+            )).filter(
                 FlicketTicket.status_id != 2)
 
             if tickets.count() > 0:
