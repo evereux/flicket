@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 .idea/
+.vscode/
 
 __archive__
 __reference__
