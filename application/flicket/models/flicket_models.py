@@ -785,6 +785,14 @@ class FlicketAction(PaginatedAPIMixin, Base):
             return (f'Ticket category has been changed to "{self.data["department_category"]}"'
                     f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
 
+        if self.action == 'subscribe':
+            return (f'<a href="mailto:{self.user.email}">{self.user.name}</a> has been subscribed to ticket'
+                    f' by <a href="mailto:{self.recipient.email}">{self.recipient.name}</a>. | {_date}')
+
+        if self.action == 'unsubscribe':
+            return (f'<a href="mailto:{self.user.email}">{self.user.name}</a> has been un-subscribed to ticket'
+                    f' by <a href="mailto:{self.recipient.email}">{self.recipient.name}</a>. | {_date}')
+
     def to_dict(self):
         """
 

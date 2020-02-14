@@ -14,6 +14,7 @@ from flask_login import login_required
 
 from application import app, db
 from application.flicket.models.flicket_models import FlicketTicket, FlicketSubscription
+from application.flicket.scripts.flicket_functions import add_action
 from . import flicket_bp
 
 
@@ -30,6 +31,7 @@ def subscribe_ticket(ticket_id=None):
             # subscribe user to ticket
             subscribe = FlicketSubscription(user=g.user, ticket=ticket)
             ticket.last_updated = datetime.datetime.now()
+            add_action(ticket, 'subscribe', recipient=g.user)
             db.session.add(subscribe)
             db.session.commit()
             flash(gettext('You have been subscribed to this ticket.'))
@@ -55,6 +57,7 @@ def unsubscribe_ticket(ticket_id=None):
             subscription = FlicketSubscription.query.filter_by(user=g.user, ticket=ticket).one()
             # unsubscribe user to ticket
             ticket.last_updated = datetime.datetime.now()
+            add_action(ticket, 'unsubscribe', recipient=g.user)
             db.session.delete(subscription)
             db.session.commit()
             flash(gettext('You have been unsubscribed from this ticket.'))
