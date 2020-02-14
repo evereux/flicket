@@ -18,7 +18,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 * Fixed post quoting.
 * Added date tracking of any changes to ticket (replies, edits, subscribing, assignined ...)
   so we can find those old tickets that have had no action.
-
+* Subscribing / un-subscribing actions now tracked.
 
 
 ## 0.2.1
