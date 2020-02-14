@@ -41,15 +41,18 @@ class FlicketTicketExt:
         if upload_attachments.are_attachments():
             upload_attachments.upload_files()
 
+        date_added = datetime.datetime.now()
+
         # submit ticket data to database
         new_ticket = FlicketTicket(title=title,
-                                   date_added=datetime.datetime.now(),
+                                   date_added=date_added,
                                    user=user,
                                    current_status=ticket_status,
                                    content=content,
                                    ticket_priority=ticket_priority,
                                    category=ticket_category,
                                    hours=hours,
+                                   last_updated=date_added,
                                    )
 
         db.session.add(new_ticket)
@@ -114,13 +117,16 @@ class FlicketTicketExt:
         ticket_priority = FlicketPriority.query.filter_by(id=int(priority)).first()
         ticket_category = FlicketCategory.query.filter_by(id=int(category)).first()
 
+        date_modified = datetime.datetime.now()
+
         ticket.content = content
         ticket.title = title
         ticket.modified = user
-        ticket.date_modified = datetime.datetime.now()
+        ticket.date_modified = date_modified
         ticket.ticket_priority = ticket_priority
         ticket.category = ticket_category
         ticket.hours = hours
+        ticket.last_updated = date_modified
 
         files = files
         upload_attachments = UploadAttachment(files)

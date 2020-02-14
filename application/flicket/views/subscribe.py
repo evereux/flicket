@@ -6,6 +6,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from flask import flash, g, redirect, url_for
 from flask_babel import gettext
 from flask_login import login_required
@@ -27,6 +29,7 @@ def subscribe_ticket(ticket_id=None):
         if not ticket.is_subscribed(g.user):
             # subscribe user to ticket
             subscribe = FlicketSubscription(user=g.user, ticket=ticket)
+            ticket.last_updated = datetime.datetime.now()
             db.session.add(subscribe)
             db.session.commit()
             flash(gettext('You have been subscribed to this ticket.'))
@@ -51,6 +54,7 @@ def unsubscribe_ticket(ticket_id=None):
 
             subscription = FlicketSubscription.query.filter_by(user=g.user, ticket=ticket).one()
             # unsubscribe user to ticket
+            ticket.last_updated = datetime.datetime.now()
             db.session.delete(subscription)
             db.session.commit()
             flash(gettext('You have been unsubscribed from this ticket.'))

@@ -3,6 +3,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from flask import redirect, url_for, g, flash
 from flask_babel import gettext
 from flask_login import login_required
@@ -48,6 +50,7 @@ def change_status(ticket_id, status):
 
     ticket.current_status = closed
     ticket.assigned_id = None
+    ticket.last_updated = datetime.datetime.now()
     db.session.commit()
 
     flash(gettext('Ticket %(value)s closed.', value=str(ticket_id).zfill(5)), category='success')

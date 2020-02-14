@@ -71,7 +71,7 @@ def ticket_view(ticket_id, page=1):
             user=g.user,
             date_added=datetime.datetime.now(),
             content=form.content.data,
-            hours=form.hours.data
+            hours=form.hours.data,
         )
 
         if ticket.status_id != form.status.data:
@@ -104,6 +104,9 @@ def ticket_view(ticket_id, page=1):
 
         # add count of 1 to users total posts.
         g.user.total_posts += 1
+
+        print('updating updating')
+        ticket.last_updated = datetime.datetime.now()
 
         db.session.commit()
 

@@ -3,6 +3,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from flask import redirect, url_for, flash, g
 from flask_babel import gettext
 from flask_login import login_required
@@ -31,6 +33,7 @@ def ticket_claim(ticket_id=False):
         ticket.assigned = g.user
         g.user.total_assigned += 1
         ticket.current_status = status
+        ticket.last_updated = datetime.datetime.now()
         db.session.commit()
 
         # add action record

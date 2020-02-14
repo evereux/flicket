@@ -3,6 +3,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from flask import url_for, g
 from sqlalchemy import select, join, func
 
@@ -187,6 +189,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
     posts = db.relationship("FlicketPost", back_populates="ticket")
 
     hours = db.Column(db.Numeric(10, 2), server_default='0')
+
+    last_updated = db.Column(db.DateTime(), server_default=datetime.datetime.now().strftime('%Y-%m-%d'))
 
     # find all the images associated with the topic
     uploads = db.relationship('FlicketUploads',
@@ -373,24 +377,34 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id, FlicketTicket.id)
         elif sort == 'priority_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.ticket_priority_id.desc(), FlicketTicket.id)
+
         elif sort == 'title':
             ticket_query = ticket_query.order_by(FlicketTicket.title, FlicketTicket.id)
         elif sort == 'title_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.title.desc(), FlicketTicket.id)
+
         elif sort == 'ticketid':
             ticket_query = ticket_query.order_by(FlicketTicket.id)
         elif sort == 'ticketid_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.id.desc())
+
         elif sort == 'addedby':
             ticket_query = ticket_query.join(FlicketUser, FlicketTicket.user) \
                 .order_by(FlicketUser.name, FlicketTicket.id)
         elif sort == 'addedby_desc':
             ticket_query = ticket_query.join(FlicketUser, FlicketTicket.user) \
                 .order_by(FlicketUser.name.desc(), FlicketTicket.id)
+
         elif sort == 'addedon':
             ticket_query = ticket_query.order_by(FlicketTicket.date_added, FlicketTicket.id)
         elif sort == 'addedon_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.date_added.desc(), FlicketTicket.id)
+
+        elif sort == 'last_updated':
+            ticket_query = ticket_query.order_by(FlicketTicket.last_updated, FlicketTicket.id)
+        elif sort == 'last_updated_desc':
+            ticket_query = ticket_query.order_by(FlicketTicket.last_updated.desc(), FlicketTicket.id)
+
         elif sort == 'replies':
             replies_count = func.count(FlicketPost.id).label('replies_count')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
@@ -399,6 +413,7 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             replies_count = func.count(FlicketPost.id).label('replies_count')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \
                 .order_by(replies_count.desc(), FlicketTicket.id)
+
         elif sort == 'department_category':
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
@@ -407,16 +422,19 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             ticket_query = ticket_query.join(FlicketCategory, FlicketTicket.category) \
                 .join(FlicketDepartment, FlicketCategory.department) \
                 .order_by(FlicketDepartment.department.desc(), FlicketCategory.category.desc(), FlicketTicket.id)
+
         elif sort == 'status':
             ticket_query = ticket_query.order_by(FlicketTicket.status_id, FlicketTicket.id)
         elif sort == 'status_desc':
             ticket_query = ticket_query.order_by(FlicketTicket.status_id.desc(), FlicketTicket.id)
+
         elif sort == 'assigned':
             ticket_query = ticket_query.outerjoin(FlicketUser, FlicketTicket.assigned) \
                 .order_by(FlicketUser.name, FlicketTicket.id)
         elif sort == 'assigned_desc':
             ticket_query = ticket_query.outerjoin(FlicketUser, FlicketTicket.assigned) \
                 .order_by(FlicketUser.name.desc(), FlicketTicket.id)
+
         elif sort == 'time':
             total_hours = (FlicketTicket.hours + func.sum(FlicketPost.hours)).label('total_hours')
             ticket_query = ticket_query.outerjoin(FlicketTicket.posts).group_by(FlicketTicket.id) \

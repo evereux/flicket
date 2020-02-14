@@ -85,6 +85,7 @@
                             <i class="fas fa-sort-amount-up"></i>
                             {{ _('Priority') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'ticketid' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='ticketid', **request.args) }}">
                             <i class="fas fa-sort-numeric-down"></i>
@@ -95,6 +96,7 @@
                             <i class="fas fa-sort-numeric-up"></i>
                             {{ _('Ticket ID') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'title' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='title', **request.args) }}">
                             <i class="fas fa-sort-alpha-down"></i>
@@ -105,6 +107,7 @@
                             <i class="fas fa-sort-alpha-up"></i>
                             {{ _('Title') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'addedby' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='addedby', **request.args) }}">
                             <i class="fas fa-sort-alpha-down"></i>
@@ -115,6 +118,7 @@
                             <i class="fas fa-sort-alpha-up"></i>
                             {{ _('Submitted By') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'addedon' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='addedon', **request.args) }}">
                             <i class="fas fa-sort-numeric-down"></i>
@@ -125,6 +129,18 @@
                             <i class="fas fa-sort-numeric-up"></i>
                             {{ _('Date') }}
                         </a>
+
+                        <a class="dropdown-item small{% if sort == 'last_updated' %} active{% endif %}"
+                           href="{{ url_for(base_url, sort='last_updated', **request.args) }}">
+                            <i class="fas fa-sort-numeric-down"></i>
+                            {{ _('Last Updated') }}
+                        </a>
+                        <a class="dropdown-item small{% if sort == 'last_updated_desc' %} active{% endif %}"
+                           href="{{ url_for(base_url, sort='last_updated_desc', **request.args) }}">
+                            <i class="fas fa-sort-numeric-up"></i>
+                            {{ _('Last Updated') }}
+                        </a>
+
                         <a class="dropdown-item small{% if sort == 'department_category' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='department_category', **request.args) }}">
                             <i class="fas fa-sort-alpha-down"></i>
@@ -135,6 +151,7 @@
                             <i class="fas fa-sort-alpha-up"></i>
                             {{ _('Department / Category') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'status' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='status', **request.args) }}">
                             <i class="fas fa-sort-numeric-down"></i>
@@ -145,6 +162,7 @@
                             <i class="fas fa-sort-numeric-up"></i>
                             {{ _('Status') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'assigned' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='assigned', **request.args) }}">
                             <i class="fas fa-sort-alpha-down"></i>
@@ -155,6 +173,7 @@
                             <i class="fas fa-sort-alpha-up"></i>
                             {{ _('Assigned') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'replies' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='replies', **request.args) }}">
                             <i class="fas fa-sort-numeric-down"></i>
@@ -165,6 +184,7 @@
                             <i class="fas fa-sort-numeric-up"></i>
                             {{ _('Replies') }}
                         </a>
+
                         <a class="dropdown-item small{% if sort == 'time' %} active{% endif %}"
                            href="{{ url_for(base_url, sort='time', **request.args) }}">
                             <i class="fas fa-sort-numeric-down"></i>
@@ -223,23 +243,31 @@
                             </div>
                             <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
-                                    submitted by
+                                    {{ _('submitted by') }}
                                 </div>
                                 <div class="flicket-tickets-content">
                                     {{ t.user.name }}
                                 </div>
                             </div>
-                            <div class="col-md-2 col-6">
+                            <div class="col-md-1 col-6">
                                 <div class="flicket-tickets-title">
-                                    date
+                                    {{ _('created') }}
                                 </div>
                                 <div class="flicket-tickets-content">
                                     {{ t.date_added.strftime('%Y-%m-%d') }}
                                 </div>
                             </div>
+                            <div class="col-md-1 col-6">
+                                <div class="flicket-tickets-title" title=" {{ _('date of last reply, action, edit ...') }}">
+                                    {{ _('updated') }}
+                                </div>
+                                <div class="flicket-tickets-content" title=" {{ _('date of last reply, action, edit ...') }}">
+                                    {{ t.last_updated.strftime('%Y-%m-%d') }}
+                                </div>
+                            </div>
                             <div class="col-md-3 col-6">
                                 <div class="flicket-tickets-title">
-                                    department / category
+                                    {{ _('department / category') }}
                                 </div>
                                 <div class="flicket-tickets-content">
                                     {{ t.category.department.department }} / {{ t.category.category }}
@@ -247,7 +275,7 @@
                             </div>
                             <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
-                                    status
+                                    {{ _('status') }}
                                 </div>
                                 <div class="flicket-tickets-content">
                                     {{ t.current_status.status }}
@@ -255,7 +283,7 @@
                             </div>
                             <div class="col-md-2 col-6">
                                 <div class="flicket-tickets-title">
-                                    assigned
+                                    {{ _('assigned') }}
                                 </div>
                                 <div class="flicket-tickets-content">
                                     {{ t.assigned.name }}

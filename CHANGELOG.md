@@ -16,6 +16,8 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 * My Tickets menu now dropdown with additional filters for tickets assigned 
   to self or created by self.
 * Fixed post quoting.
+* Added date tracking of any changes to ticket (replies, edits, subscribing, assignined ...)
+  so we can find those old tickets that have had no action.
 
 
 

@@ -3,6 +3,8 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import datetime
+
 from flask import redirect, url_for, flash, render_template
 from flask_babel import gettext
 from flask_login import login_required
@@ -40,6 +42,7 @@ def ticket_assign(ticket_id=False):
         # assign ticket
         ticket.assigned = user
         ticket.current_status = status
+        ticket.last_updated = datetime.datetime.now()
 
         if not user.total_assigned:
             user.total_assigned = 1

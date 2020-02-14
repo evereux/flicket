@@ -60,7 +60,7 @@ def edit_ticket(ticket_id):
             category=form.category.data,
             files=request.files.getlist("file"),
             hours=form.hours.data,
-            form_uploads=form.uploads.data,
+            form_uploads=form.uploads.data
         )
 
         flash('Ticket successfully edited.', category='success')
@@ -141,6 +141,7 @@ def edit_post(post_id):
         post.modified = g.user
         post.date_modified = datetime.datetime.now()
         post.hours = form.hours.data
+        post.ticket.last_updated = datetime.datetime.now()
 
         if post.ticket.status_id != form.status.data:
             status = FlicketStatus.query.get(form.status.data)
