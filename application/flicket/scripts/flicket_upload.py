@@ -31,6 +31,7 @@ class UploadFile:
         else:
             self.file_name = None
         self.upload_folder = None
+        self.target_file = None
         self.allowed_extensions = []
 
     def get_extension(self):
