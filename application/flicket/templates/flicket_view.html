@@ -124,9 +124,9 @@
             <div class="col align-self-center small">
                 Subscribed: {% for s in ticket.subscribers %}
                 <a href="mailto:{{ s.user.email }}">{{ s.user.name }}</a>
-                {%- if ticket.is_subscribed(g.user) and s.user == g.user -%}
+                {%- if (ticket.is_subscribed(g.user) and s.user == g.user) or g.user.is_admin or g.user.is_super_user -%}
                     &nbsp;<a class="small" style="color:red"
-                             href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id) }}"
+                             href="{{ url_for('flicket_bp.unsubscribe_ticket', ticket_id = ticket.id, user_id=s.user.id) }}"
                              title="unsubscribe"><i class="fas fa-times"></i></a>
                 {%- endif -%} {{ ", " if not loop.last }}
             {% endfor %}

@@ -227,6 +227,22 @@ class FlicketTicket(PaginatedAPIMixin, Base):
                 return True
         return False
 
+    def can_unsubscribe(self, user):
+        """
+
+        Return true if user is admin, super_user or is trying to unsubscribe them self.
+
+        :param user:
+        :return:
+        """
+        if any([g.user.is_admin, g.user.is_super_user]) and self.is_subscribed(user):
+            return True
+
+        if self.is_subscribed(user) and user.id == g.user.id:
+            return True
+
+        return False
+
     @staticmethod
     def carousel_query():
         """
