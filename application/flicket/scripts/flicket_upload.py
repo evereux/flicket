@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 from application import app, db
 from application.flicket.models.flicket_models import FlicketUploads
 from application.flicket.models.flicket_user import FlicketUser
+from application.flicket_admin.models.flicket_config import FlicketConfig
 
 
 class UploadFile:
@@ -32,7 +33,6 @@ class UploadFile:
             self.file_name = None
         self.upload_folder = None
         self.target_file = None
-        self.allowed_extensions = []
 
     def get_extension(self):
         try:
@@ -57,14 +57,6 @@ class UploadFile:
 
         return new_file_name
 
-    def check_extension(self):
-        """
-        Checks that it is a valid filename with a valid extension.
-        Returns True if valid
-        :return: Boolean
-        """
-        return '.' in self.file_name and self.file_extension in self.allowed_extensions
-
     def upload_file(self):
         """
         Method to upload the file. Returns True on success, otherwise False.
@@ -77,8 +69,7 @@ class UploadFile:
             # print('Problem with file_name {} or upload_folder {}.'.format(self.file_name, self.upload_folder))
             return False
 
-        # Is the file extension in the list of allowed extensions.
-        if self.check_extension():
+        if FlicketConfig.extension_allowed(self.file_name):
             self.file.save(self.target_file)
             return self.file
         else:
@@ -125,7 +116,6 @@ class UploadAttachment(object):
 
     def __init__(self, files):
         self.files = files
-        self.allowed_extensions = app.config['allowed_extensions']
         self.upload_folder = app.config['ticket_upload_folder']
         self.new_files = None
 
@@ -157,7 +147,6 @@ class UploadAttachment(object):
         for file in self.files:
             uploaded_file = UploadFile(file)
             uploaded_file.upload_folder = self.upload_folder
-            uploaded_file.allowed_extensions = self.allowed_extensions
 
             new_file_name = False
             if uploaded_file.upload_file():

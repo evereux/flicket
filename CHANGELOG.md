@@ -12,6 +12,10 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 ## 0.2.3
 * Assigned notification email now states who was assigned in ticket title.
+* File Uploads
+    - Ticket / Post not created if file extension is not allowed.
+    - Files created with uppercase characters now allowed. eg new_file.png or new_file.PNG
+    - User is now presented with a list of valid file extensions if file is rejected.
 
 ## 0.2.2
 * Added favicon.
