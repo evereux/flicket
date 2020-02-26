@@ -73,7 +73,7 @@ class FlicketMail:
         """
 
         recipients = ticket.get_subscriber_emails()
-        title = 'Ticket #{} - {} has been assigned.'.format(ticket.id_zfill, ticket.title)
+        title = f'Ticket #{ticket.id_zfill} - {ticket.title} has been assigned to {ticket.assigned.name}.'
         ticket_url = app.config['base_url'] + url_for('flicket_bp.ticket_view', ticket_id=ticket.id)
         html_body = render_template('email_ticket_assign.html', ticket=ticket, number=ticket.id_zfill,
                                     ticket_url=ticket_url)

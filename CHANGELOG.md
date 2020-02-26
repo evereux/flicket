@@ -10,6 +10,8 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     
 *   Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.2.3
+* Assigned notification email now states who was assigned in ticket title.
 
 ## 0.2.2
 * Added favicon.
