@@ -323,6 +323,16 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
         return ticket_query
 
+
+    @staticmethod
+    def my_subscribed_tickets(ticket_query):
+        """
+        Function to return all tickets subscribed to by user.
+        :return: query
+        """
+
+        return ticket_query.filter(FlicketTicket.subscribers.any(FlicketSubscription.user_id == g.user.id))
+
     @staticmethod
     def query_tickets(form=None, **kwargs):
         """

@@ -17,6 +17,7 @@
                     <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets') }}" title="Tickets assigned to or started by you.">{{ _('My Tickets') }}</a>
                     <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets', created_id=g.user.id) }}" title="Tickets started by you.">{{ _('Created') }}</a>
                     <a class="dropdown-item" href="{{ url_for('flicket_bp.my_tickets', assigned_id=g.user.id) }}" title="Tickets assigned to you.">{{ _('Assigned') }}</a>
+                    <a class="dropdown-item" href="{{ url_for('flicket_bp.subscribed') }}" title="Tickets you are subscribed to.">{{ _('Subscribed') }}</a>
                 </div>
             </li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('flicket_bp.tickets') }}">{{ _('Tickets') }}</a>
