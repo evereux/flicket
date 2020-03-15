@@ -307,7 +307,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         """
         emails = list()
         for user in self.subscribers:
-            emails.append(user.user.email)
+            if not user.disabled:
+                emails.append(user.user.email)
 
         return emails
 

@@ -164,7 +164,7 @@ class FlicketMail:
     def send_email(self, subject, sender, recipients, html_body):
         """
         Sends email via async thread.
-        
+
         :param subject: string
         :param sender: string
         :param recipients: list()

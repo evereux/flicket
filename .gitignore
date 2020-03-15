@@ -28,3 +28,7 @@ docs/_build/*
 # uwsgi files for server.
 flicket.ini
 flicket_uswgi.wsgi
+
+# vim
+tags
+
