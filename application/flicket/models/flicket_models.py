@@ -306,9 +306,9 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         :return:
         """
         emails = list()
-        for user in self.subscribers:
-            if not user.disabled:
-                emails.append(user.user.email)
+        for subscriber in self.subscribers:
+            if not subscriber.user.disabled:
+                emails.append(subscriber.user.email)
 
         return emails
 
