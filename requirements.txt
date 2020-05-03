@@ -2,7 +2,7 @@ alembic==1.0.0
 appdirs==1.4.3
 bcrypt==3.1.4
 blinker==1.4
-cffi==1.11.5
+cffi==1.14.0
 click==6.7
 coverage==4.3.4
 Flask==1.0.2
@@ -19,7 +19,7 @@ Flask-WTF==0.14.2
 itsdangerous==0.24
 Jinja2==2.10.1
 Mako==1.0.7
-MarkupSafe==1.0
+MarkupSafe==1.1.1
 Markdown==3.0
 marshmallow==2.15.6
 marshmallow-jsonapi==0.20.3
