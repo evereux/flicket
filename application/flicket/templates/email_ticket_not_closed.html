@@ -17,7 +17,7 @@
         </tr>
         {% for ticket in tickets %}
             <tr>
-                <td>{{ ticket.id_zfill }}</td>
+                <td><a href="{{ base_url + url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">{{ ticket.id_zfill }}</a></td>
                 <td>{{ ticket.title }}</td>
                 <td>{{ ticket.ticket_priority.priority }}</td>
                 <td>{{ ticket.current_status.status }}</td>

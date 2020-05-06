@@ -133,7 +133,7 @@ class FlicketMail:
         recipient = [user.email]
         title = 'Outstanding Ticket Notifications'
         html_body = render_template('email_ticket_not_closed.html', tickets=tickets,
-                                    title="Tickets Still Awaiting Resolution")
+                                    title="Tickets Still Awaiting Resolution", base_url=app.config['base_url'])
 
         self.send_email(title, self.sender, recipient, html_body)
 
