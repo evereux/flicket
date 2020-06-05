@@ -41,7 +41,7 @@ To add an additional local:
 
 .. code-block::
 
-    pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
+    pybabel extract -F babel.cfg -o messages.pot .
 
 
 * To get the new translations added to the .po files:
