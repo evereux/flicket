@@ -48,17 +48,17 @@ def allowed_file_extension(form, field):
         filename = file.filename
 
         if '.' not in filename:
-            field.errors.append(gettext(f'"{filename}" Is not a valid filename.'))
+            field.errors.append(gettext('"{}" Is not a valid filename.'.format(filename)))
             return False
 
         if FlicketConfig.extension_allowed(filename):
             return True
         else:
-            field.errors.append(gettext(f'"{filename}" Is not a an allowed extension. '
-                                        f'Only the following are currently allowed: "{valid_extensions}"'))
+            field.errors.append(gettext('"{}" Is not a an allowed extension. '
+                                        'Only the following are currently allowed: "{}"'.format(filename, valid_extensions)))
             return False
 
-    field.errors.append(gettext(f'There was a problem with the file attachment.'))
+    field.errors.append(gettext('There was a problem with the file attachment.'))
     return False
 
 
