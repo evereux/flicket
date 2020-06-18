@@ -55,16 +55,17 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
     token = db.Column(db.String(32), index=True, unique=True)
     token_expiration = db.Column(db.DateTime)
     locale = db.Column(db.String(10))
+    disabled = db.Column(db.Boolean, default=False)
 
-    def __init__(self, username, name, email, password, date_added, job_title=None, locale='en'):
+    def __init__(self, username, name, email, password, date_added, job_title=None, locale='en', disabled=False):
         """
-        :param username: username, must be unique.
-        :param name: Full name.
-        :param email: email address, must be unique.
-        :param password: password.
-        :param date_added: date added.
-        :param job_title: job title / description.
-        :param locale: locale 'en' = english. See app config for options.
+        :param str() username: username, must be unique.
+        :param str() name: Full name.
+        :param str() email: email address, must be unique.
+        :param str() password: password.
+        :param str() date_added: date added.
+        :param str() job_title: job title / description.
+        :param str() locale: locale 'en' = english. See app config for options.
         """
         self.username = username
         self.name = name
@@ -73,12 +74,15 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
         self.job_title = job_title
         self.date_added = date_added
         self.locale = locale
+        self.disabled = disabled
 
     @property
     def is_admin(self):
         """
+
         Returns true if the user is a member of the 'flicket_admin' group.
-        :return True if condition met.
+
+        :return bool:
         """
         user = FlicketUser.query.filter_by(id=self.id).first()
         for g in user.flicket_groups:
@@ -90,8 +94,10 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
     @property
     def is_super_user(self):
         """
+
         Returns true if the user is a member of the 'super_user' group.
-        :return True if condition met.
+
+        :return bool:
         """
         user = FlicketUser.query.filter_by(id=self.id).first()
         for g in user.flicket_groups:
@@ -103,21 +109,77 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
     def check_password(self, password):
         """
 
+        Returns True if password is validated. False if not or is user account is disabled.
+
         :param password:
-        :return: True if password matches.
+        :return bool:
         """
-        result = FlicketUser.query.filter_by(username=self.username)
-        if result.count() == 0:
+        users = FlicketUser.query.filter_by(username=self.username)
+        if users.count() == 0:
             return False
-        result = result.first()
-        if bcrypt.hashpw(password.encode('utf-8'), result.password) != result.password:
+        user = users.first()
+        if user.disabled:
+            return False
+        if bcrypt.hashpw(password.encode('utf-8'), user.password) != user.password:
             return False
         return True
 
+    @staticmethod
+    def check_token(token):
+        """
+
+        Returns True if token hasn't expired and user account isn't disabled. Otherwise False.
+
+        :param token:
+        :return bool:
+        """
+        user = FlicketUser.query.filter_by(token=token).first()
+        if user is None or user.token_expiration < datetime.utcnow():
+            return None
+        if user.disabled:
+            return None
+        return user
+
+    @staticmethod
+    def generate_password():
+        """
+        A pseudo randomly generated password used for registered users wanting to reset their password.
+
+        :return str():
+        """
+
+        characters = string.ascii_letters + string.digits
+        password = ''.join(random.sample(characters, 12))
+
+        return password
+
+    def get_token(self, expires_in=36000):
+        """
+
+        :param expires_in:
+        :return str(): self.token
+        """
+        now = datetime.utcnow()
+        if self.token and self.token_expiration > now + timedelta(seconds=60):
+            return self.token
+        self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
+        self.token_expiration = now + timedelta(seconds=expires_in)
+        db.session.add(self)
+        return self.token
+
+    def revoke_token(self):
+        """
+        Method to expire the token. Typically used on logging out.
+        :return:
+        """
+        self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
+
     def to_dict(self):
         """
+
         Returns a dictionary object about the user.
-        :return: dict()
+
+        :return dict:
         """
 
         avatar_url = app.config['base_url'] + url_for('flicket_bp.static',
@@ -143,51 +205,6 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
 
         return data
 
-    def get_token(self, expires_in=36000):
-        """
-
-        :param expires_in:
-        :return: self.token
-        """
-        now = datetime.utcnow()
-        if self.token and self.token_expiration > now + timedelta(seconds=60):
-            return self.token
-        self.token = base64.b64encode(os.urandom(24)).decode('utf-8')
-        self.token_expiration = now + timedelta(seconds=expires_in)
-        db.session.add(self)
-        return self.token
-
-    def revoke_token(self):
-        """
-        Method to expire the token. Typically used on logging out.
-        :return:
-        """
-        self.token_expiration = datetime.utcnow() - timedelta(seconds=1)
-
-    @staticmethod
-    def check_token(token):
-        """
-
-        :param token:
-        :return: None if token is expired otherwise returns self.
-        """
-        user = FlicketUser.query.filter_by(token=token).first()
-        if user is None or user.token_expiration < datetime.utcnow():
-            return None
-        return user
-
-    @staticmethod
-    def generate_password():
-        """
-        A pseudo randomly generated password used for registered users wanting to reset their password.
-
-        :return: str
-        """
-
-        characters = string.ascii_letters + string.digits
-        password = ''.join(random.sample(characters, 12))
-
-        return password
 
     def __repr__(self):
         """
@@ -232,6 +249,6 @@ class FlicketGroup(Base):
     def __repr__(self):
         """
 
-        :return: str() with group details.
+        :return str():
         """
         return '<Group: id={}. group_name={}>'.format(self.id, self.group_name)

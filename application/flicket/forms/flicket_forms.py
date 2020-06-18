@@ -3,6 +3,7 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+from flask import request
 from flask import url_for
 from flask_babel import lazy_gettext
 from flask_pagedown.fields import PageDownField
@@ -12,20 +13,53 @@ from wtforms.fields import SelectMultipleField
 from wtforms.validators import DataRequired, Length
 from wtforms.widgets import ListWidget, CheckboxInput
 
-from application.flicket.models.flicket_models import (FlicketCategory,
-                                                       FlicketDepartment,
-                                                       FlicketPriority,
-                                                       FlicketStatus,
-                                                       FlicketTicket,
-                                                       FlicketDepartmentCategory,
-                                                       field_size)
+from application.flicket.models.flicket_models import field_size
+from application.flicket.models.flicket_models import FlicketCategory
+from application.flicket.models.flicket_models import FlicketDepartment
+from application.flicket.models.flicket_models import FlicketDepartmentCategory
+from application.flicket.models.flicket_models import FlicketPriority
+from application.flicket.models.flicket_models import FlicketStatus
+from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_user import FlicketUser, user_field_size
 from application.flicket.scripts.upload_choice_generator import generate_choices
+from application.flicket_admin.models.flicket_config import FlicketConfig
 from flask_babel import gettext
 
 form_class_button = {'class': 'btn btn-primary btn-sm'}
 form_class_button_sm = {'class': 'btn btn-primary btn-sm'}
 form_danger_button = {'class': 'btn btn-danger btn-sm'}
+
+
+def allowed_file_extension(form, field):
+    """
+    Check the file extension is in allowed list.
+    :param form:
+    :param field:
+    :return:
+    """
+
+    files = request.files.getlist("file")
+    valid_extensions = ', '.join(FlicketConfig.valid_extensions())
+
+    if files[0].filename == '':
+        return False
+
+    for file in files:
+        filename = file.filename
+
+        if '.' not in filename:
+            field.errors.append(gettext('"{}" Is not a valid filename.'.format(filename)))
+            return False
+
+        if FlicketConfig.extension_allowed(filename):
+            return True
+        else:
+            field.errors.append(gettext('"{}" Is not a an allowed extension. '
+                                        'Only the following are currently allowed: "{}"'.format(filename, valid_extensions)))
+            return False
+
+    field.errors.append(gettext('There was a problem with the file attachment.'))
+    return False
 
 
 def does_email_exist(form, field):
@@ -139,7 +173,10 @@ class CreateTicketForm(FlaskForm):
                                                                    'content_max_length'])])
     priority = SelectField(lazy_gettext('priority'), validators=[DataRequired()], coerce=int)
     category = SelectField(lazy_gettext('category'), validators=[DataRequired()], coerce=int)
-    file = FileField(lazy_gettext('Upload Documents'), render_kw={'multiple': True})
+    file = FileField(lazy_gettext('Upload Documents'),
+                     validators=[allowed_file_extension],
+                     render_kw={'multiple': True}
+                     )
     hours = DecimalField(lazy_gettext('hours'), default=0)
     submit = SubmitField(lazy_gettext('Submit'), render_kw=form_class_button, validators=[DataRequired()])
 
@@ -180,7 +217,7 @@ class ReplyForm(FlaskForm):
     content = PageDownField(lazy_gettext('Reply'),
                             validators=[DataRequired(), Length(min=field_size['content_min_length'],
                                                                max=field_size['content_max_length'])])
-    file = FileField(lazy_gettext('Add Files'), render_kw={'multiple': True})
+    file = FileField(lazy_gettext('Add Files'), validators=[allowed_file_extension], render_kw={'multiple': True})
     status = SelectField(lazy_gettext('Status'), validators=[DataRequired()], coerce=int)
     priority = SelectField(lazy_gettext('Priority'), validators=[DataRequired()], coerce=int)
     hours = DecimalField(lazy_gettext('hours'), default=0)

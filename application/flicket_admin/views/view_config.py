@@ -60,7 +60,7 @@ def config():
             config_details.mail_password = form.mail_password.data
 
         db.session.commit()
-        flash(gettext('Config details updated.'))
+        flash(gettext('Config details updated.'), category='success')
         return redirect(url_for('admin_bp.config'))
 
     # populate form with details from database.

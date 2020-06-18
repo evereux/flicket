@@ -26,7 +26,7 @@ def departments(page=1):
         add_department = FlicketDepartment(department=form.department.data)
         db.session.add(add_department)
         db.session.commit()
-        flash(gettext(f'New department "{form.department.data}" added.'), category='success')
+        flash(gettext('New department "{}" added.'.format(form.department.data)), category='success')
         return redirect(url_for('flicket_bp.departments'))
 
     _departments = query.paginate(page, app.config['posts_per_page'])
@@ -51,7 +51,7 @@ def department_edit(department_id=False):
         if form.validate_on_submit():
             query.department = form.department.data
             db.session.commit()
-            flash(gettext('Department "%(value)s" edited.', value=form.department.data))
+            flash(gettext('Department "%(value)s" edited.', value=form.department.data), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
         form.department.data = query.department

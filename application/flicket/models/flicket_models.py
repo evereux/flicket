@@ -306,8 +306,9 @@ class FlicketTicket(PaginatedAPIMixin, Base):
         :return:
         """
         emails = list()
-        for user in self.subscribers:
-            emails.append(user.user.email)
+        for subscriber in self.subscribers:
+            if not subscriber.user.disabled:
+                emails.append(subscriber.user.email)
 
         return emails
 
@@ -321,6 +322,16 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             (FlicketTicket.started_id == g.user.id) | (FlicketTicket.assigned_id == g.user.id))
 
         return ticket_query
+
+
+    @staticmethod
+    def my_subscribed_tickets(ticket_query):
+        """
+        Function to return all tickets subscribed to by user.
+        :return: query
+        """
+
+        return ticket_query.filter(FlicketTicket.subscribers.any(FlicketSubscription.user_id == g.user.id))
 
     @staticmethod
     def query_tickets(form=None, **kwargs):
