@@ -25,7 +25,7 @@ def ticket_claim(ticket_id=False):
         ticket = FlicketTicket.query.filter_by(id=ticket_id).first()
 
         if ticket.assigned == g.user:
-            flash(gettext('You have already been assigned this ticket.'))
+            flash(gettext('You have already been assigned this ticket.'), category='success')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
         # set status to in work

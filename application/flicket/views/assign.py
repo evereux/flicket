@@ -26,7 +26,7 @@ def ticket_assign(ticket_id=False):
     ticket = FlicketTicket.query.filter_by(id=ticket_id).one()
 
     if ticket.current_status.status == 'Closed':
-        flash(gettext("Can't assign a closed ticket."))
+        flash(gettext("Can't assign a closed ticket."), category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     if form.validate_on_submit():
@@ -34,7 +34,7 @@ def ticket_assign(ticket_id=False):
         user = FlicketUser.query.filter_by(username=form.username.data).first()
 
         if ticket.assigned == user:
-            flash(gettext('User is already assigned to ticket.'))
+            flash(gettext('User is already assigned to ticket.'), category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
         # set status to in work
@@ -66,7 +66,7 @@ def ticket_assign(ticket_id=False):
         f_mail = FlicketMail()
         f_mail.assign_ticket(ticket)
 
-        flash(gettext(f'You reassigned ticket: {ticket.id} to {user.name}'))
+        flash(gettext('You reassigned ticket: {} to {}'.format(ticket.id, user.name)), category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     title = gettext('Assign Ticket')

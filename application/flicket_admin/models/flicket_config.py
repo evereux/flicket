@@ -79,5 +79,34 @@ class FlicketConfig(Base):
     change_category = db.Column(db.BOOLEAN, default=False)
     change_category_only_admin_or_super_user = db.Column(db.BOOLEAN, default=False)
 
+    @staticmethod
+    def extension_allowed(filename):
+        """
+        Validates extension of a given filename and returns True if valid. Otherwise False.
+        :param filename:
+        :return:
+        """
+
+        extension = filename.rsplit('.', 1)[1]
+
+        if extension.lower() in FlicketConfig.valid_extensions():
+            return True
+
+        return False
+
+    @staticmethod
+    def valid_extensions():
+        """
+        Returns a list of valid extensions.
+        :return: list()
+        """
+
+        config = FlicketConfig.query.one()
+
+        extensions = config.allowed_extensions.split(',')
+        extensions = [i.strip() for i in extensions]
+
+        return extensions
+
     def __repr__(self):
         return "<FlicketConfig model class>"

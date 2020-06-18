@@ -62,9 +62,30 @@ def login_user_exist(form, field):
     return True
 
 
+def is_disabled(form, field):
+    """
+    Ensure the username exists.
+    :param form:
+    :param field:
+    :return True False:
+    """
+    username = form.username.data
+
+    user = FlicketUser.query.filter(
+        or_(func.lower(FlicketUser.username) == username.lower(), func.lower(FlicketUser.email) == username.lower()))
+    if user.count() == 0:
+        return False
+    user = user.first()
+    if user.disabled:
+        field.errors.append('Account has been disabled.')
+        return False
+
+    return True
+
+
 class LogInForm(FlaskForm):
     """ Log in form. """
-    username = StringField(lazy_gettext('username'), validators=[DataRequired(), login_user_exist])
+    username = StringField(lazy_gettext('username'), validators=[DataRequired(), login_user_exist, is_disabled])
     password = PasswordField(lazy_gettext('password'), validators=[DataRequired()])
     remember_me = BooleanField(lazy_gettext('remember_me'), default=False)
 
