@@ -28,7 +28,7 @@ def clean_csv_data(input_text):
     return output_text
 
 
-def tickets_view(page, is_my_view=False):
+def tickets_view(page, is_my_view=False, subscribed=False):
     """
         Function common to 'tickets' and 'my_tickets' expect where query is filtered for users own tickets.
     """
@@ -72,6 +72,10 @@ def tickets_view(page, is_my_view=False):
     if is_my_view:
         ticket_query = FlicketTicket.my_tickets(ticket_query)
     ticket_query = FlicketTicket.sorted_tickets(ticket_query, sort)
+
+    if subscribed:
+        ticket_query = FlicketTicket.my_subscribed_tickets(ticket_query)
+
     number_results = ticket_query.count()
 
     ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
@@ -161,7 +165,6 @@ def tickets_csv():
                  f"attachment; filename={file_name}"}
     )
 
-
 @flicket_bp.route(app.config['FLICKET'] + 'my_tickets/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKET'] + 'my_tickets/<int:page>/', methods=['GET', 'POST'])
 @login_required
@@ -169,3 +172,12 @@ def my_tickets(page=1):
     response = tickets_view(page, is_my_view=True)
 
     return response
+
+@flicket_bp.route(app.config['FLICKET'] + 'subscribed/', methods=['GET', 'POST'])
+@flicket_bp.route(app.config['FLICKET'] + 'subscribed/<int:page>/', methods=['GET', 'POST'])
+@login_required
+def subscribed(page=1):
+    response = tickets_view(page, subscribed=True)
+
+    return response
+

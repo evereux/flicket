@@ -39,8 +39,8 @@ def ticket_department_category(ticket_id=False):
 
         if ticket.category_id == department_category.category_id:
             flash(gettext(
-                f'Category "{ticket.category.category} / {ticket.category.department.department}" '
-                'is already assigned to ticket.'),
+                'Category "{} / {}" '
+                'is already assigned to ticket.'.format(ticket.category.category, ticket.category.department.department)),
                 category='warning')
             return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
@@ -57,7 +57,7 @@ def ticket_department_category(ticket_id=False):
 
         db.session.commit()
 
-        flash(gettext(f'You changed category of ticket: {ticket_id}'), category='success')
+        flash(gettext('You changed category of ticket: {}'.format(ticket_id)), category='success')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket.id))
 
     title = gettext('Change Department / Category of Ticket')

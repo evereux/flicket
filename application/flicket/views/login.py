@@ -58,7 +58,7 @@ def before_request():
     g.user = current_user
 
     # reset the user token if the user is authenticated and token is expired.
-    if g.user.is_authenticated and hasattr(g.user, 'token'):
+    if g.user.is_authenticated and hasattr(g.user, 'token') and not g.user.disabled:
         if FlicketUser.check_token(g.user.token) is None:
             g.user.get_token()
             db.session.commit()

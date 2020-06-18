@@ -115,6 +115,12 @@
                         {% endif %}
                     </div>
                     <div class="row mb-2">
+                        <label class="col-2 col-form-label">{{ form.disabled.label.text }}</label>
+                        <div class="col-2">
+                            {{ form.disabled(class="form-control") }}
+                        </div>
+                    </div>
+                    <div class="row mb-2">
                         {% if admin_edit %}
 
                             <label class="col-2 col-form-label">Groups</label>
