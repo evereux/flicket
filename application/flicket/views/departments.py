@@ -51,7 +51,7 @@ def department_edit(department_id=False):
         if form.validate_on_submit():
             query.department = form.department.data
             db.session.commit()
-            flash(gettext('Department "%(value)s" edited.', value=form.department.data))
+            flash(gettext('Department "%(value)s" edited.', value=form.department.data), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
         form.department.data = query.department

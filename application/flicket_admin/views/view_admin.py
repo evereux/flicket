@@ -36,7 +36,7 @@ admin_only = RoleNeed('flicket_admin')
 admin_permission = Permission(admin_only)
 
 
-def create_user(username, password, email=None, name=None, job_title=None, locale=None):
+def create_user(username, password, email=None, name=None, job_title=None, locale=None, disabled=None):
     password = hash_password(password)
     register = FlicketUser(username=username,
                            email=email,
@@ -44,7 +44,8 @@ def create_user(username, password, email=None, name=None, job_title=None, local
                            password=password,
                            job_title=job_title,
                            date_added=datetime.datetime.now(),
-                           locale=locale)
+                           locale=locale,
+                           disabled=disabled)
     db.session.add(register)
     db.session.commit()
 
@@ -99,7 +100,8 @@ def add_user():
                     email=form.email.data,
                     name=form.name.data,
                     job_title=form.job_title.data,
-                    locale=form.locale.data)
+                    locale=form.locale.data,
+                    disabled=form.disabled.data)
         flash(gettext(f'You have successfully registered new user "{form.username.data}".'), category='success')
         return redirect(url_for('admin_bp.users'))
     # noinspection PyUnresolvedReferences
@@ -131,6 +133,7 @@ def edit_user():
             user.email = form.email.data
             user.name = form.name.data
             user.job_title = form.job_title.data
+            user.disabled = form.disabled.data
 
             groups = form.groups.data
             # bit hacky but until i get better at this.
@@ -151,6 +154,7 @@ def edit_user():
         form.email.data = user.email
         form.name.data = user.name
         form.job_title.data = user.job_title
+        form.disabled.data = user.disabled
         # define list of preselect groups.
         groups = []
         for g in user.flicket_groups:

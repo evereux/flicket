@@ -51,7 +51,7 @@ def category_edit(category_id=False):
         if form.validate_on_submit():
             category.category = form.category.data
             db.session.commit()
-            flash(f'Category {form.category.data} edited.')
+            flash(f'Category {form.category.data} edited.', category='success')
             return redirect(url_for('flicket_bp.departments'))
 
         form.category.data = category.category

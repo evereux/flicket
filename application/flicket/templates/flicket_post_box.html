@@ -103,6 +103,14 @@
         </div>
     {% endif %}
 
+    {% if form.file.errors %}
+        <div class="alert alert-warning small">
+            {% for error in form.file.errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if form.uploads %}
         {{ form.uploads }}
     {% endif %}

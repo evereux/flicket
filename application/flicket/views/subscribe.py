@@ -36,11 +36,11 @@ def subscribe_ticket(ticket_id=None):
             add_action(ticket, 'subscribe', recipient=g.user)
             db.session.add(subscribe)
             db.session.commit()
-            flash(gettext('You have been subscribed to this ticket.'))
+            flash(gettext('You have been subscribed to this ticket.'), category='success')
 
         else:
 
-            flash(gettext('Already subscribed to this ticket'))
+            flash(gettext('Already subscribed to this ticket'), category='warning')
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 

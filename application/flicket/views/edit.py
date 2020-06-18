@@ -107,7 +107,7 @@ def edit_post(post_id):
 
         # stop closing of ticket via edit.
         if form.status.data == 2:
-            flash('You can not edit and close ticket.')
+            flash(gettext('You can not edit and close ticket.'), category='warning')
 
         # before we make any changes store the original post content in the history table if it has changed.
         if post.modified_id:
