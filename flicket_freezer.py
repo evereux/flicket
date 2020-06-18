@@ -14,7 +14,6 @@ exclude_dirs = [
     '.idea',
     'dist',
     'env',
-    'migrations',
     'tmp',
     '__pycache__',
     '__archive__',
