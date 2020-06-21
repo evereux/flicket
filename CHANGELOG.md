@@ -21,6 +21,7 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 * Outstanding tickets email now has ticket links.
 * Changed button reply / reply close layout because Ian.
 * quote button colour change.
+* can now disable user. **this requires database update**.
 
 ## 0.2.2
 * Added favicon.
