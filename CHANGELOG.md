@@ -17,8 +17,10 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     - Files created with uppercase characters now allowed. eg new_file.png or new_file.PNG
     - User is now presented with a list of valid file extensions if file is rejected.
 * Added missing categories from flash messages.
-* Updated requirements.txt due to installation errors on Ubuntu 20.04 and Python 3.8.2.
+* Trimmed requirements.txt so child dependencies not listed.
 * Outstanding tickets email now has ticket links.
+* Changed button reply / reply close layout because Ian.
+* quote button colour change.
 
 ## 0.2.2
 * Added favicon.
