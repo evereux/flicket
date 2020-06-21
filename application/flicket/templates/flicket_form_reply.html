@@ -63,23 +63,24 @@
                     <label class="col p-0 m-0 flicket-tickets-title">{{ form.hours.label.text }}</label>
                     {{ form.hours(class="form-control form-control-xs") }}
                 </div>
-                <div class="col-auto align-self-end text-right">
-                    {{ form.submit(class="btn btn-primary btn-sm") }}
-                </div>
-            </div>
 
-            {% if ticket %}
-                {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
+            </div>
+            <div class="row mt-2">
+                <div class="col text-right">
+
+                    {% if ticket %}
+                    {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
                     <!-- reply and close if admin or ticket owner -->
                     {% if ticket.current_status.status != 'Closed' %}
-                        <div class="row mt-2">
-                            <div class="col text-right">
-                                {{ form.submit_close(class="btn btn-warning btn-sm") }}
-                            </div>
-                        </div>
+                    {{ form.submit_close(class="btn btn-light btn-outline-danger btn-sm") }}&nbsp;&nbsp;&nbsp;
                     {% endif %}
-                {% endif %}
-            {% endif %}
+                    {% endif %}
+                    {% endif %}
+
+                    {{ form.submit(class="btn btn-primary btn-sm") }}
+
+                </div>
+            </div>
         </form>
     </div>
 </div>
