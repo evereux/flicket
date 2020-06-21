@@ -17,7 +17,9 @@ exclude_dirs = [
     'tmp',
     '__pycache__',
     '__archive__',
-    'docs']
+    '.vscode',
+    'docs',
+    '__reference__']
 
 exclude_files = [
     '.gitignore',
