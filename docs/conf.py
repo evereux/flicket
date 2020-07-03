@@ -24,7 +24,7 @@ copyright = '2019, evereux@gmail.com'
 author = 'evereux@gmail.com'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.3'
+release = '0.2.4'
 
 # -- General configuration ---------------------------------------------------
 

@@ -140,8 +140,11 @@
                 <div class="col">
                     {{ subscribers_form.username(class="form-control form-control-sm mr-1", id="autocomplete-username", placeholder="User Name") }}
                 </div>
+                {% if subscribers_form.username.errors %}
+                        <div class="btn btn-warning btn-sm">Invalid username.</div>
+                {% endif %}
                 <div class="col">
-                    {{ subscribers_form.submit(class="btn btn-primary btn-sm") }}
+                    {{ subscribers_form.sub_user(class="btn btn-primary btn-sm") }}
                 </div>
             </form>
         </div>

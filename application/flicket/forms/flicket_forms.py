@@ -237,9 +237,12 @@ class EditReplyForm(ReplyForm):
 class SearchUserForm(FlaskForm):
     """ Search user. """
     username = StringField(lazy_gettext('username'),
-                           validators=[DataRequired(), Length(min=user_field_size['username_min'],
-                                                              max=user_field_size[
-                                                                  'username_max'])])
+                           validators=[
+                               DataRequired(),
+                               Length(min=user_field_size['username_min'], max=user_field_size['username_max']),
+                               does_user_exist
+                           ]
+                           )
     submit = SubmitField(lazy_gettext('find user'), render_kw=form_class_button)
 
 
@@ -250,7 +253,7 @@ class AssignUserForm(SearchUserForm):
 
 class SubscribeUser(SearchUserForm):
     """ Search user. """
-    submit = SubmitField(lazy_gettext('subscribe user'), render_kw=form_class_button)
+    sub_user = SubmitField(lazy_gettext('subscribe user'), render_kw=form_class_button)
 
 
 class DepartmentForm(FlaskForm):

@@ -50,16 +50,19 @@ def ticket_view(ticket_id, page=1):
     subscribers_form = SubscribeUser()
 
     # add subscribed user
-    if subscribers_form.validate_on_submit():
+    if subscribers_form.sub_user.data and subscribers_form.validate_on_submit():
         user = FlicketUser.query.filter_by(username=subscribers_form.username.data).first()
-        if subscribe_user(ticket, user):
-            flash(gettext('User subscribed.'), category='success')
+        if user:
+            if subscribe_user(ticket, user):
+                flash(gettext('User subscribed.'), category='success')
+            else:
+                flash(gettext('User already subscribed.'), category="warning")
         else:
-            flash(gettext('User already subscribed.'), category="warning")
+            flash(gettext('Invalid username.'), category='warning')
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # add reply post
-    if form.validate_on_submit():
+    if form.submit.data and form.validate_on_submit():
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
