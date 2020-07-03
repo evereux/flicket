@@ -22,12 +22,6 @@ the latest frozen zip file or use the latest master branch.
 .. WARNING::
     If you are upgrading from a previous version please read the CHANGELOG.
 
-Zip Package
-~~~~~~~~~~~
-
-Download `Flicket Dist.zip <https://github.com/evereux/flicket/tree/master/dist>`_
-and unzip.
-
 
 Master Branch
 ~~~~~~~~~~~~~
