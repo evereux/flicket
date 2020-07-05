@@ -62,7 +62,7 @@ def ticket_view(ticket_id, page=1):
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
     # add reply post
-    if form.submit.data and form.validate_on_submit():
+    if (form.submit.data or form.submit_close.data) and form.validate_on_submit():
         # upload file if user has selected one and the file is in accepted list of
         files = request.files.getlist("file")
         upload_attachments = UploadAttachment(files)
