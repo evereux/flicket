@@ -10,6 +10,12 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     
 *   Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.2.5
+* fixed bug when trying to close ticket.
+
+## 0.2.4
+* fixed bug when subscribing a non-existent user.
+
 ## 0.2.3
 * Assigned notification email now states who was assigned in ticket title.
 * File Uploads
