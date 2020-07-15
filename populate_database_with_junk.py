@@ -59,16 +59,16 @@ def get_random_category():
 def create_ticket_reply(new_ticket):
     t = Text()
 
-    new_reply = FlicketPost(
-        ticket=new_ticket,
-        content=t.text(randint(3, 15)),
-        user=get_random_user(),
-        date_added=datetime.datetime.now()
-    )
+    new_reply = FlicketPost()
+    new_reply.ticket = new_ticket
+    new_reply.content = t.text(randint(3, 15))
+    new_reply.user = get_random_user()
+    new_reply.date_added = datetime.datetime.now()
 
     new_reply.user.total_posts += 1
 
     db.session.add(new_reply)
+    db.session.commit()
 
 
 def create_random_user():
@@ -126,16 +126,15 @@ def topic_creation(num_topics_):
 
         t = Text()
 
-        new_ticket = FlicketTicket(
-            title=t.title()[0:field_size['title_max_length']],
-            content=t.text(randint(3, 15)),
-            user=get_random_user(),
-            date_added=datetime.datetime.now(),
-            current_status=get_random_status(),
-            ticket_priority=get_random_priority(),
-            category=get_random_category(),
-            assigned=get_random_user()
-        )
+        new_ticket = FlicketTicket()
+        new_ticket.title = t.title()[0:field_size['title_max_length']]
+        new_ticket.content = t.text(randint(3, 15))
+        new_ticket.user = get_random_user()
+        new_ticket.date_added = datetime.datetime.now()
+        new_ticket.current_status = get_random_status()
+        new_ticket.ticket_priority = get_random_priority()
+        new_ticket.category = get_random_category()
+        new_ticket.assigned = get_random_user()
 
         new_ticket.user.total_posts += 1
 
@@ -143,14 +142,14 @@ def topic_creation(num_topics_):
         mess_1 = "#{}: ticket ....".format(i)
         print(mess_1, end="\r")
 
+        db.session.commit()
+
         replies = randint(0, num_replies)
 
         for ii in range(0, replies):
             create_ticket_reply(new_ticket)
             mess_2 = mess_1 + "adding replies ... # {}".format(ii)
             print(mess_2, end="\r")
-
-        db.session.commit()
 
 
 if __name__ == '__main__':
