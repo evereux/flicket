@@ -34,7 +34,7 @@ from application.flicket.scripts.jinja2_functions import display_post_box
 from application.flicket.scripts.jinja2_functions import now_year
 from application.flicket.scripts.jinja2_functions import show_markdown
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')

@@ -44,22 +44,30 @@ Install the requirements using pip:::
 Set Up
 ------
 
-1. Create your database and a database user that will access the flicket
-   database.
-
+1. If using PostgreSQL or MySQL create your database and a database user that
+   will access the flicket database. If using SQLite you can skip this step.
 
 .. _SQLAlchemy_documentation: http://docs.sqlalchemy.org/en/latest/core/engines.html
 
-2. If you are using a database server other than MySQL you should change the
-   db_type value within `config.py`. See SQLAlchemy_documentation_ for options.
+   See SQLAlchemy_documentation_ for options.
 
-
-3. Create the configuration json file::
+2. Create the configuration json file::
 
     python -m scripts.create_json
 
+3. If you aren't using SQLite edit `config.json` and change "db_driver".
+   "null" should be replaced by the driver you are using. See the
+   documentation above regarding engines, dialects and drivers. For example,
+   if you are using a MySQL database and want to use the pymysql driver. ::
 
-4. Upgrade the database using manage.py from the command line::
+    "db_driver: "pymysql"
+
+4. Install the driver you are using if not using SQLite. For example if you are
+   using a MySQL database and want to use the pymysql driver. ::
+
+    pip install pymysql
+
+5. Upgrade the database using manage.py from the command line::
 
     python manage.py db upgrade
 

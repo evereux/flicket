@@ -13,31 +13,53 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfiguration(object):
-    WriteConfigJson.json_exists()
 
-    # get data from config file
-    with open(config_file, 'r') as f:
-        config_data = json.load(f)
+    WriteConfigJson.json_exists()
 
     DEBUG = False
     TESTING = False
     EXPLAIN_TEMPLATE_LOADING = False
 
-    # user login information for database user.
-    db_username = config_data['db_username']
-    db_password = config_data['db_password']
-    # database connection details
-    db_url = config_data['db_url']
-    db_port = config_data['db_port']
-    db_name = config_data['db_name']
-    db_type = 'mysql+pymysql'
+    try:
 
-    SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(db_type,
-                                                           db_username,
-                                                           db_password,
-                                                           db_url,
-                                                           db_port,
-                                                           db_name)
+        # get data from config file
+        with open(config_file, 'r') as f:
+            config_data = json.load(f)
+
+        # user login information for database user.
+        db_username = config_data['db_username']
+        db_password = config_data['db_password']
+        # database connection details
+        db_url = config_data['db_url']
+        db_port = config_data['db_port']
+        db_name = config_data['db_name']
+        db_type = config_data['db_type']
+        db_driver = config_data['db_driver']
+
+    except KeyError:
+        raise KeyError('The file config.json appears to incorrectly formatted.')
+
+    db_dialect = None
+    SQLALCHEMY_DATABASE_URI = None
+
+    if db_type == 1:
+
+        db_dialect = 'sqlite'
+        db_path = os.path.join(basedir, db_name)
+        SQLALCHEMY_DATABASE_URI = f'{db_dialect}:////{db_path}'
+
+    else:
+
+        if db_type == 2:
+            db_dialect = 'postgresql'
+        if db_type == 3:
+            db_dialect = 'mysql'
+
+        SQLALCHEMY_DATABASE_URI = f'{db_dialect}+{db_driver}://{db_username}:{db_password}@{db_url}:{db_port}/{db_name}'
+
+    if SQLALCHEMY_DATABASE_URI is None:
+        raise ConnectionAbortedError('Incorrect database type defined in config.json.')
+
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # default flicket_admin group name

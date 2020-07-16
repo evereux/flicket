@@ -71,14 +71,15 @@ def upgrade():
             'SET ticket_id=(SELECT ticket_id FROM flicket_post WHERE id=flicket_ticket_action.post_id) '
             'WHERE post_id IS NOT NULL')
 
-    # drop old columns
-    op.drop_column('flicket_ticket_action', 'status')
-    op.drop_column('flicket_ticket_action', 'claimed')
-    op.drop_column('flicket_ticket_action', 'opened')
-    op.drop_column('flicket_ticket_action', 'released')
-    op.drop_column('flicket_ticket_action', 'priority')
-    op.drop_column('flicket_ticket_action', 'assigned')
-    op.drop_column('flicket_ticket_action', 'closed')
+    with op.batch_alter_table('flicket_ticket_action') as batch_op:
+        # drop old columns
+        batch_op.drop_column('status')
+        batch_op.drop_column('claimed')
+        batch_op.drop_column('opened')
+        batch_op.drop_column('released')
+        batch_op.drop_column('priority')
+        batch_op.drop_column('assigned')
+        batch_op.drop_column('closed')
 
 
 def downgrade():

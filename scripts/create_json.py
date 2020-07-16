@@ -33,8 +33,8 @@ class WriteConfigJson:
         :return:
         """
 
-        def random_string(bytes=24):
-            b = os.urandom(bytes)
+        def random_string(bytes_=24):
+            b = os.urandom(bytes_)
             return b64encode(b).decode('utf-8')
 
         # Check to see if the json file already exists.
@@ -52,36 +52,56 @@ class WriteConfigJson:
             print('\n\nYou have chosen not to overwrite configuration file. Skipping json creation.')
             return
 
-        db_username = input('Enter database username: ')
-        db_password = False
-        valid = False
-        while valid is False:
-            print(PasswordStrength.message_rules())
-            validity = []
-            db_password = getpass('Enter database password: ')
-            password_strength = PasswordStrength(db_password)
-            if password_strength.is_valid():
-                validity.append(True)
-            else:
-                validity.append(False)
-            db_password_confirm = getpass('Re-enter database password: ')
-            if db_password != db_password_confirm:
-                print('Passwords do not match, please try again.\n\n')
-                validity.append(False)
-            else:
-                validity.append(True)
+        db_type = False
+        while db_type is False:
+            select_type = input('Please select database type:\n'
+                                '1 = SQLite\n'
+                                '2 = PostreSQL\n'
+                                '3 = MySQL.\n'
+                                '> ')
+            if select_type == "1" or select_type == "2" or select_type == "3":
+                db_type = int(select_type)
 
-            if all(validity):
-                valid = True
+        db_username = None
+        db_password = None
+        db_url = None
+        db_port = None
 
-        db_url = input('Enter database url (don\'t include port). If running locally this would be localhost: ')
-        db_port = input('Enter database port: ')
-        db_name = input('Enter database name: ')
+        if db_type != 1:
+
+            db_username = input('Enter database username: ')
+
+            valid = False
+            while valid is False:
+                print(PasswordStrength.message_rules())
+                validity = []
+                db_password = getpass('Enter database password: ')
+                password_strength = PasswordStrength(db_password)
+                if password_strength.is_valid():
+                    validity.append(True)
+                else:
+                    validity.append(False)
+                db_password_confirm = getpass('Re-enter database password: ')
+                if db_password != db_password_confirm:
+                    print('Passwords do not match, please try again.\n\n')
+                    validity.append(False)
+                else:
+                    validity.append(True)
+
+                if all(validity):
+                    valid = True
+
+            db_url = input('Enter database url (don\'t include port). If running locally this would be localhost: ')
+            db_port = input('Enter database port: ')
+
+        db_name = input('For SQLite this should be the filename e.g. flicket.db \n'
+                        'Enter database name: ')
 
         secret_key = random_string()
         notification_user_password = random_string()
 
         config_values = {
+            'db_type': db_type,
             'db_username': db_username,
             'db_password': db_password,
             'db_url': db_url,

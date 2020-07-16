@@ -10,6 +10,27 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
     
 *   Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.2.6
+* Upgraded to better attempt SQLite support out the box.
+
+### Before Upgrading
+
+* Make a copy of your config.py!
+
+### Upgrading
+
+You will need to update config.json and add the following values:
+
+    "db_type": 1, "db_driver", null
+    
+The above text should be added between the curly brackets.
+
+db_type: 1 = SQLite, 2 = PostgreSQL, 3 = Mysql
+
+db_driver: This is the name of the driver used to connect to the database. For 
+example this could be "pymysql". 
+  
+
 ## 0.2.5
 * fixed bug when trying to close ticket.
 
