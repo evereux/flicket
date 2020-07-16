@@ -32,3 +32,6 @@ flicket_uswgi.wsgi
 # vim
 tags
 
+# script currently has a memory leak.
+populate_database_with_junk.py
+
