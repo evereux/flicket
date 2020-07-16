@@ -102,6 +102,7 @@ class WriteConfigJson:
 
         config_values = {
             'db_type': db_type,
+            'db_driver': None,
             'db_username': db_username,
             'db_password': db_password,
             'db_url': db_url,
