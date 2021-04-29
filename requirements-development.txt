@@ -17,7 +17,7 @@ Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 itsdangerous==0.24
-Jinja2==2.10.1
+Jinja2==2.11.3
 Mako==1.0.7
 MarkupSafe==1.0
 Markdown==3.0
