@@ -4,6 +4,7 @@
 
 import json
 import os
+import platform
 
 from scripts.create_json import config_file
 from scripts.create_json import WriteConfigJson
@@ -41,6 +42,10 @@ class BaseConfiguration(object):
 
     db_dialect = None
     SQLALCHEMY_DATABASE_URI = None
+
+    sql_os_path_prefix = '////'
+    if platform.system() == 'Windows':
+        sql_os_path_prefix = '///'
 
     if db_type == 1:
 
