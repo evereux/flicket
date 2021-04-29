@@ -125,7 +125,7 @@ def check_db_connection(sqlalchemy_database_uri):
     :return: 
     """
 
-    base_error_message = 'There was a problem connecting to the database. Please check your config.json file.'
+    base_error_message = f'There was a problem connecting to the database {sqlalchemy_database_uri}. Please check your config.json file.'
 
     try:
         engine = create_engine(sqlalchemy_database_uri)
