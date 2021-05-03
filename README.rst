@@ -6,20 +6,11 @@ the flask web framework which supports English and French locales. Additional
 locales can be added by following the section `Adding Additional Languages`
 within this README.
 
+
 Documentation
 -------------
 
-For documentation please visit: https://flicket.readthedocs.io/en/latest/
-
-
-Can I See It Working?
----------------------
-I have a working version at: https://flicket.evereux.uk/. If you'd like access
-drop an email to me at evereux@gmail.com. Tell me username / email you would
-like to use. Currently, all the views require login so I'll have to create an 
-account for you.
-
-Alternatively, see the screenshots that can be found in the documentation link.
+For documentation and screenshots please visit: https://flicket.readthedocs.io/en/latest/
 
 
 Upgrading From Earlier Versions
