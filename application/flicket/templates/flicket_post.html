@@ -39,11 +39,11 @@
 
         <div class="row border-bottom m-0 p-2">
             <div class="col-auto">
-                {% if replies %}
-                    <a class="anchor" id="{{ content.id }}" href="#{{ content.id }}">Reply #{{ (replies.page - 1)
+                {% if _replies %}
+                    <a class="anchor" id="{{ content.id }}" href="#{{ content.id }}">Reply #{{ (_replies.page - 1)
                     *
-                    replies.per_page
-                    + loop.index }}</a>
+                    _replies.per_page
+                    + post_loop.index }}</a>
                     |
                 {% endif %}
                 {{ content.date_added.strftime('%d-%m-%Y %H:%M') }}
@@ -78,7 +78,9 @@
 
         <div class="row border-bottom m-0  p-2">
             <div class="col">
-                {{- show_markdown(content.content)|safe -}}
+                {% filter markdown %}
+                    {{ content.content }}
+                {% endfilter %}
                 {%- if content.modified_id -%}
                     <div class="">
                         {{ _('This post was modified by') }} {{ content.modified.name }}
@@ -103,13 +105,14 @@
             <div class="col">
                 {%- if content.uploads -%}
                     {%- for upload in content.uploads %}
-                        <a class="flicket-tickets-title" href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
+                        <a class="flicket-tickets-title"
+                           href="{{ url_for('flicket_bp.view_ticket_uploads', filename=upload.filename) }}"
                            title="{{ upload.original_filename }}"
                            target="_blank">
                             {% if upload.original_filename|length > 12 %}
-                            {{ upload.original_filename[0:12] }}...{{ upload.original_filename[-3:] }}
+                                {{ upload.original_filename[0:12] }}...{{ upload.original_filename[-3:] }}
                             {% else %}
-                            {{ upload.original_filename }}
+                                {{ upload.original_filename }}
                             {% endif %}
                             <i class="fas fa-file"></i>
                         </a>
@@ -118,7 +121,7 @@
             </div>
             <div class="col-auto text-right">
                 {%- if post -%}
-                    {%-   set pid = post.id -%}
+                    {%- set pid = post.id -%}
                 {%- else -%}
                     {%- set pid = None -%}
                     {%- set rid = ticket.id -%}

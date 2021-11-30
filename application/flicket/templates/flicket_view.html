@@ -141,7 +141,7 @@
                     {{ subscribers_form.username(class="form-control form-control-sm mr-1", id="autocomplete-username", placeholder="User Name") }}
                 </div>
                 {% if subscribers_form.username.errors %}
-                        <div class="btn btn-warning btn-sm">Invalid username.</div>
+                    <div class="btn btn-warning btn-sm">Invalid username.</div>
                 {% endif %}
                 <div class="col">
                     {{ subscribers_form.sub_user(class="btn btn-primary btn-sm") }}
@@ -195,15 +195,17 @@
             </div>
         </div>
 
-        <!-- display ticket-->
-        {{ display_post_box(ticket, page=page)|safe }}
-        <!-- end display ticket -->
+        <!-- display initial ticket request -->
+        {% set content = ticket %}
+        {% set _replies = None %}
+        {% include('flicket_post.html') %}
+        <!-- end display initial ticket request -->
 
         <!-- display actions -->
         {% for action in ticket.actions_nonepost %}
             <div class="row m-3">
                 <div class="col border rounded p-1 flicket-action">
-                    {{ action.output_action()|safe }}
+                    {{ action.output_action() }}
                 </div>
             </div>
         {% endfor %}
@@ -212,13 +214,18 @@
         <!-- flicket ticket replies -->
         {% for r in replies.items %}
             <!-- display replies -->
-            {{ display_post_box(ticket=ticket, post=r, replies=replies, loop=loop, page=page)|safe }}
+            {% set ticket = ticket %}
+            {% set _replies = replies %}
+            {% set post = r %}
+            {% set post_loop = loop %}
+            {% set content = post %}
+            {% include('flicket_post.html') %}
 
             <!-- display actions -->
             {% for action in r.actions %}
                 <div class="row m-3">
                     <div class="col border rounded p-1 flicket-action">
-                        {{ action.output_action()|safe }}
+                        {{ action.output_action() }}
                     </div>
                 </div>
             {% endfor %}

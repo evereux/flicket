@@ -323,7 +323,6 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
         return ticket_query
 
-
     @staticmethod
     def my_subscribed_tickets(ticket_query):
         """

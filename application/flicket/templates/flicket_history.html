@@ -30,7 +30,11 @@
                             {% if history %}
                                 {% for h in history %}
                                     <dt>{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</dt>
-                                    <dd>{{ show_markdown(h.original_content)|safe }}</dd>
+                                    <dd>
+                                        {% filter markdown %}
+                                            {{ h.original_content }}
+                                        {% endfilter %}
+                                    </dd>
                                 {% endfor %}
                             {% else %}
                                 <dd>{{ _('No changes have been made to the post content.') }}</dd>

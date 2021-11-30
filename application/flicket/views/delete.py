@@ -138,10 +138,8 @@ def delete_category(category_id=False):
             flash('Category deleted', category='success')
             return redirect(url_for('flicket_bp.departments'))
 
-        notification = "You are trying to delete category <span class=\"label label-default\">{}</span> that belongs " \
-                       "to department <span class=\"label label-default\">{}</span>.".format(
-                        category.category,
-                        category.department.department)
+        notification = "You are trying to delete category: {} that belongs " \
+                       "to department: {}.".format(category.category.upper(), category.department.department.upper())
 
         title = gettext('Delete Category')
 
@@ -187,8 +185,8 @@ def delete_department(department_id=False):
             return redirect(url_for('flicket_bp.departments'))
 
         notification = gettext(
-            "You are trying to delete department <span class=\"label label-default\">%(value)s</span>.",
-            value=department.department)
+            "You are trying to delete department: %(value)s.",
+            value=department.department.upper())
 
         title = gettext('Delete Department')
 
