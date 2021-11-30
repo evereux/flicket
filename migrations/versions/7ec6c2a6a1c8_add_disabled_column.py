@@ -23,16 +23,17 @@ def upgrade():
 
     # update the user column so all values are disabled values are False for
     # user.
-    from application import app, db
-    from application.flicket.models.flicket_user  import FlicketUser
+    from application import db
+    from application.flicket.models.flicket_user import FlicketUser
 
     users = FlicketUser.query.all()
 
-    for user in users:
-        if user.disabled is None:
-            user.disabled = False
+    if users:
+        for user in users:
+            if user.disabled is None:
+                user.disabled = False
 
-    db.session.commit()
+        db.session.commit()
 
 
 def downgrade():

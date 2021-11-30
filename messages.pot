@@ -1,21 +1,21 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-18 18:08+0100\n"
+"POT-Creation-Date: 2021-11-30 12:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: application/flicket/forms/flicket_forms.py:51
 msgid "\"{}\" Is not a valid filename."
@@ -232,7 +232,7 @@ msgstr ""
 msgid "originally wrote on"
 msgstr ""
 
-#: application/flicket/templates/flicket_history.html:36
+#: application/flicket/templates/flicket_history.html:40
 msgid "No changes have been made to the post content."
 msgstr ""
 
@@ -345,22 +345,22 @@ msgstr ""
 msgid "Email Address"
 msgstr ""
 
-#: application/flicket/templates/flicket_post.html:84
+#: application/flicket/templates/flicket_post.html:86
 msgid "This post was modified by"
 msgstr ""
 
-#: application/flicket/templates/flicket_post.html:85
+#: application/flicket/templates/flicket_post.html:87
 msgid "on"
 msgstr ""
 
-#: application/flicket/templates/flicket_post.html:87
-#: application/flicket/templates/flicket_post.html:90
+#: application/flicket/templates/flicket_post.html:89
+#: application/flicket/templates/flicket_post.html:92
 msgid ""
 "edit\n"
 "                history"
 msgstr ""
 
-#: application/flicket/templates/flicket_post.html:127
+#: application/flicket/templates/flicket_post.html:130
 msgid "quote"
 msgstr ""
 
@@ -557,22 +557,20 @@ msgstr ""
 msgid "You are not authorised to delete categories."
 msgstr ""
 
-#: application/flicket/views/delete.py:146
+#: application/flicket/views/delete.py:144
 msgid "Delete Category"
 msgstr ""
 
-#: application/flicket/views/delete.py:162
+#: application/flicket/views/delete.py:160
 msgid "You are not authorised to delete departments."
 msgstr ""
 
 #: application/flicket/views/delete.py:189
 #, python-format
-msgid ""
-"You are trying to delete department <span class=\"label label-"
-"default\">%(value)s</span>."
+msgid "You are trying to delete department: %(value)s."
 msgstr ""
 
-#: application/flicket/views/delete.py:193
+#: application/flicket/views/delete.py:191
 msgid "Delete Department"
 msgstr ""
 
@@ -687,21 +685,25 @@ msgstr ""
 msgid "Cannot find ticket: \"%(value)s\""
 msgstr ""
 
-#: application/flicket/views/view_ticket.py:56
+#: application/flicket/views/view_ticket.py:57
 msgid "User subscribed."
 msgstr ""
 
-#: application/flicket/views/view_ticket.py:58
+#: application/flicket/views/view_ticket.py:59
 msgid "User already subscribed."
 msgstr ""
 
-#: application/flicket/views/view_ticket.py:117
+#: application/flicket/views/view_ticket.py:61
+msgid "Invalid username."
+msgstr ""
+
+#: application/flicket/views/view_ticket.py:120
 #, python-format
 msgid "You have replied to ticket %(value_1)s: %(value_2)s."
 msgstr ""
 
-#: application/flicket/views/view_ticket.py:129
-#: application/flicket/views/view_ticket.py:136
+#: application/flicket/views/view_ticket.py:132
+#: application/flicket/views/view_ticket.py:139
 #, python-format
 msgid ""
 "%(value_1)s wrote on %(value_2)s\r\n"
