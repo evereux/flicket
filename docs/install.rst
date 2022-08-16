@@ -69,12 +69,12 @@ Set Up
 
 5. Upgrade the database using manage.py from the command line::
 
-    python manage.py db upgrade
+    flask db upgrade
 
 6. Run the set-up script:. This is required to create the Admin user and site url defaults.
    These can be changed again via the admin panel once you log in::
 
-    flask run_set_up
+    flask run-set-up
 
 7. Running development server for testing::
 
