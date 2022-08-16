@@ -74,11 +74,11 @@ Set Up
 6. Run the set-up script:. This is required to create the Admin user and site url defaults.
    These can be changed again via the admin panel once you log in::
 
-    python manage.py run_set_up
+    flask run_set_up
 
 7. Running development server for testing::
 
-    python manage.py runserver
+    flask runserver
 
 
 Log into the server using the username `admin` and the password defined during
