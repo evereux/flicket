@@ -55,7 +55,8 @@ def allowed_file_extension(form, field):
             return True
         else:
             field.errors.append(gettext('"{}" Is not a an allowed extension. '
-                                        'Only the following are currently allowed: "{}"'.format(filename, valid_extensions)))
+                                        'Only the following are currently allowed: "{}"'.format(filename,
+                                                                                                valid_extensions)))
             return False
 
     field.errors.append(gettext('There was a problem with the file attachment.'))
@@ -253,7 +254,14 @@ class AssignUserForm(SearchUserForm):
 
 class SubscribeUser(SearchUserForm):
     """ Search user. """
+
     sub_user = SubmitField(lazy_gettext('subscribe user'), render_kw=form_class_button)
+
+
+class UnSubscribeUser(FlaskForm):
+    """ Search user. """
+    username = HiddenField(lazy_gettext('username'), validators=[DataRequired()])
+    unsub_user = SubmitField(lazy_gettext('Unsubscribe user'), render_kw=form_class_button)
 
 
 class DepartmentForm(FlaskForm):
