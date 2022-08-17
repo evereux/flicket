@@ -34,5 +34,7 @@ tags
 
 # script currently has a memory leak.
 temp_populate_database_with_junk.py
+
+# don't store default sqlite db
 flicket.db
 
