@@ -12,8 +12,9 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 ## 0.3.0
 
-* Updated python module dependencies due to breakages.
+* Updated python module dependencies due to breakages preventing Flicket from initialising.
 * Dropped usage of the deprecated flask-script in favour of flasks own CLI tool.
+* Unsubscribe user feature was susceptible to CSS. This has been fixed.
 
 ## 0.2.6
 
