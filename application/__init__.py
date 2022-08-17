@@ -26,6 +26,7 @@ from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 from flaskext.markdown import Markdown
+from flask_migrate import Migrate
 
 from application.flicket_admin.views import admin_bp
 from application.flicket_api.views import bp_api
@@ -33,13 +34,14 @@ from application.flicket_errors import bp_errors
 from application.flicket.views import flicket_bp
 from application.flicket.scripts.jinja2_functions import now_year
 
-__version__ = '0.2.7'
+__version__ = '0.3.0'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
 app.config.update(TEMPLATES_AUTO_RELOAD=True)
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 mail = Mail(app)
 pagedown = PageDown(app)
 
@@ -178,3 +180,8 @@ def ensure_lang_support():
     lang_code = g.get('lang_code', None)
     if lang_code and lang_code not in app.config['SUPPORTED_LANGUAGES'].keys():
         return abort(404)
+
+
+from application.commands import register_clicks
+
+register_clicks(app)

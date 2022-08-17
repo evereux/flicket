@@ -22,7 +22,6 @@ from . import flicket_bp
 
 
 def clean_csv_data(input_text):
-
     output_text = input_text.replace('"', "'")
 
     return output_text
@@ -162,8 +161,9 @@ def tickets_csv():
         csv_contents,
         mimetype='text/csv',
         headers={"Content-disposition":
-                 f"attachment; filename={file_name}"}
+                     f"attachment; filename={file_name}"}
     )
+
 
 @flicket_bp.route(app.config['FLICKET'] + 'my_tickets/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKET'] + 'my_tickets/<int:page>/', methods=['GET', 'POST'])
@@ -173,6 +173,7 @@ def my_tickets(page=1):
 
     return response
 
+
 @flicket_bp.route(app.config['FLICKET'] + 'subscribed/', methods=['GET', 'POST'])
 @flicket_bp.route(app.config['FLICKET'] + 'subscribed/<int:page>/', methods=['GET', 'POST'])
 @login_required
@@ -180,4 +181,3 @@ def subscribed(page=1):
     response = tickets_view(page, subscribed=True)
 
     return response
-

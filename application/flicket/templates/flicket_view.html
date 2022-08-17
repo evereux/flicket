@@ -205,7 +205,7 @@
         {% for action in ticket.actions_nonepost %}
             <div class="row m-3">
                 <div class="col border rounded p-1 flicket-action">
-                    {{ action.output_action() }}
+                    {{ action.output_action()|safe }}
                 </div>
             </div>
         {% endfor %}
@@ -225,7 +225,7 @@
             {% for action in r.actions %}
                 <div class="row m-3">
                     <div class="col border rounded p-1 flicket-action">
-                        {{ action.output_action() }}
+                        {{ action.output_action()|safe }}
                     </div>
                 </div>
             {% endfor %}

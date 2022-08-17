@@ -343,11 +343,12 @@ class FlicketTicket(PaginatedAPIMixin, Base):
 
         ticket_query = FlicketTicket.query
 
-        if kwargs['status'] is None:
+        if kwargs['status']:
             ticket_query = ticket_query.filter(FlicketTicket.current_status.has(FlicketStatus.status != 'Closed'))
 
-        if kwargs['assigned_id']:
-            ticket_query = ticket_query.filter_by(assigned_id=kwargs['assigned_id'])
+        if 'assigned_id' in kwargs:
+            if kwargs['assigned_id']:
+                ticket_query = ticket_query.filter_by(assigned_id=kwargs['assigned_id'])
 
         if kwargs['created_id']:
             ticket_query = ticket_query.filter_by(started_id=kwargs['created_id'])
