@@ -12,6 +12,6 @@ flask-principal==0.4.0
 flask-script==2.0.6
 flask-wtf==1.0.1
 markdown==3.4.1
-plotly==5.10.1
+plotly==5.13.1
 PyMySQL==1.0.2
 python-dotenv==0.20.0
