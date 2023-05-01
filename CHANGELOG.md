@@ -10,6 +10,14 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.3.1
+
+* fixed flask-sqlalchemy and sqlalchemy versions as later versions will currently break flicket.
+* fixed migration file that could lock the database preventing future migrations.
+* minimum python version now 3.10. However, earlier versions may still work.
+* updated installation on how to run the development server.
+* plotly version updated due to older version being incompatible with python 3.10.
+
 ## 0.3.0
 
 * Updated python module dependencies due to breakages preventing Flicket from initialising.
