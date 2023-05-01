@@ -18,7 +18,6 @@ So, decided to have a crack at creating something written in Python.
    install
    admin
    export_import_users
-   install_webserver_windows
    languages
    faq
    screenshots

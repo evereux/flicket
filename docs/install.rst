@@ -78,7 +78,7 @@ Set Up
 
 7. Running development server for testing::
 
-    flask runserver
+    flask run
 
 
 Log into the server using the username `admin` and the password defined during
