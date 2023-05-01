@@ -58,6 +58,8 @@ def upgrade():
         print("Commiting changes to database.")
         db.session.commit()
     else:
+        # prevent thread locking of database for next migration.
+        db.session.commit()
         print("No database updates required.")
 
 
