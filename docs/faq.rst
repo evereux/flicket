@@ -69,6 +69,14 @@ General
     The text contents of a ticket can be made easier to read by employing
     markdown syntax.
 
+6. How do I change the locale (language settings)?
+
+    In the top right hand corner click on your profile and select `User Details`.
+    Within the `Edit User Details` page you can pick your locale. Locales can
+    also be set on user creation.
+
+    If you'd like to add a new locale see the section `Adding Additional Languages`.
+
 
 Searching
 ~~~~~~~~~

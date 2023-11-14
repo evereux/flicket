@@ -11,7 +11,7 @@ This will run on either Linux or Windows. Mac is untested.
 
 Python
 ------
-Python =>3.10.
+Python =>3.9.
 
 
 
