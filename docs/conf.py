@@ -20,11 +20,11 @@ sys.path.insert(0, os.path.abspath('../application/'))
 # -- Project information -----------------------------------------------------
 
 project = 'flicket'
-copyright = '2019, evereux@gmail.com'
+copyright = '2023, evereux@gmail.com'
 author = 'evereux@gmail.com'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.1'
+release = '0.3.2'
 
 # -- General configuration ---------------------------------------------------
 
