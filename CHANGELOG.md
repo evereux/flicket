@@ -10,6 +10,11 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.3.2
+
+* fixed bug when trying to export tickets to csv file.
+* updated requirements to later versions of packages which also induced code updates to support them.
+
 ## 0.3.1
 
 * fixed flask-sqlalchemy and sqlalchemy versions as later versions will currently break flicket.
