@@ -45,7 +45,7 @@ migrate = Migrate(app, db)
 mail = Mail(app)
 pagedown = PageDown(app)
 
-babel = Babel(app)
+
 Markdown(app)
 
 # import jinja function
@@ -149,7 +149,6 @@ app.register_blueprint(bp_errors)
 #    print(rule)
 
 
-@babel.localeselector
 def get_locale():
     # if a user is logged in, use the locale from the user settings
     user = getattr(g, 'user', None)
@@ -160,6 +159,9 @@ def get_locale():
     # example.  The best match wins.
     return request.accept_languages.best_match(app.config['SUPPORTED_LANGUAGES'].keys())
 
+
+babel = Babel(app)
+babel.init_app(app, locale_selector=get_locale)
 
 @app.url_defaults
 def set_language_code(endpoint, values):

@@ -29,7 +29,7 @@ def departments(page=1):
         flash(gettext('New department "{}" added.'.format(form.department.data)), category='success')
         return redirect(url_for('flicket_bp.departments'))
 
-    _departments = query.paginate(page, app.config['posts_per_page'])
+    _departments = query.paginate(page=page, per_page=app.config['posts_per_page'])
 
     title = gettext('Departments')
 

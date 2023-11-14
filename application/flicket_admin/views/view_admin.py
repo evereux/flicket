@@ -82,7 +82,7 @@ def index():
 @admin_permission.require(http_exception=403)
 def users(page=1):
     users = FlicketUser.query.order_by(FlicketUser.username)
-    users = users.paginate(page, app.config['posts_per_page'])
+    users = users.paginate(page=page, per_page=app.config['posts_per_page'])
 
     # noinspection PyUnresolvedReferences
     return render_template('admin_users.html', title='Users', users=users)

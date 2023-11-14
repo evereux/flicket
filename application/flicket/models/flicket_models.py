@@ -718,7 +718,7 @@ class FlicketSubscription(PaginatedAPIMixin, Base):
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser)
 
-    user_def = db.deferred(db.select([FlicketUser.name]).where(FlicketUser.id == user_id))
+    user_def = db.deferred(db.select(FlicketUser.name).where(FlicketUser.id == user_id))
 
     def to_dict(self):
         """
@@ -855,19 +855,19 @@ class FlicketAction(PaginatedAPIMixin, Base):
 # that is similar to SQL VIEW, it is simple SELECT FROM flicket_category JOIN flicket_department
 # query, setting primary_key, so Flask SqlAlchemy ORM can be used as on regular SQL table
 class FlicketDepartmentCategory(PaginatedAPIMixin, Base):
-    __table__ = select([
+    __table__ = select(
         func.concat(FlicketDepartment.department, ' / ', FlicketCategory.category).label('department_category'),
         FlicketCategory.id.label('category_id'),
         FlicketCategory.category.label('category'),
         FlicketDepartment.id.label('department_id'),
         FlicketDepartment.department.label('department')
-    ]).select_from(join(
+    ).select_from(join(
         FlicketCategory,
         FlicketDepartment,
         FlicketCategory.department_id == FlicketDepartment.id)
     ).alias()
     __mapper_args__ = {
-        'primary_key': [FlicketCategory.id]
+        'primary_key': FlicketCategory.id
     }
 
     def to_dict(self):

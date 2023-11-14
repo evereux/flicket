@@ -142,7 +142,7 @@ def ticket_view(ticket_id, page=1):
                                  value_3=ticket.content)
         form.content.data = block_quoter(reply_contents)
 
-    replies = replies.paginate(page, app.config['posts_per_page'])
+    replies = replies.paginate(page=page, per_page=app.config['posts_per_page'])
 
     form.status.data = ticket.status_id
     form.priority.data = ticket.ticket_priority_id

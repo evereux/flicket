@@ -77,7 +77,7 @@ def tickets_view(page, is_my_view=False, subscribed=False):
 
     number_results = ticket_query.count()
 
-    ticket_query = ticket_query.paginate(page, app.config['posts_per_page'])
+    ticket_query = ticket_query.paginate(page=page, per_page=app.config['posts_per_page'])
 
     title = gettext('Tickets')
     if is_my_view:

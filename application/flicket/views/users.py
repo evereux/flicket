@@ -34,7 +34,7 @@ def flicket_users(page=1):
         form.username.data = __filter
 
     users = users.order_by(FlicketUser.username.asc())
-    users = users.paginate(page, app.config['posts_per_page'])
+    users = users.paginate(page=page, per_page=app.config['posts_per_page'])
 
     title = gettext('Users')
 
