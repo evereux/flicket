@@ -350,8 +350,9 @@ class FlicketTicket(PaginatedAPIMixin, Base):
             if kwargs['assigned_id']:
                 ticket_query = ticket_query.filter_by(assigned_id=kwargs['assigned_id'])
 
-        if kwargs['created_id']:
-            ticket_query = ticket_query.filter_by(started_id=kwargs['created_id'])
+        if 'created_id' in kwargs:
+            if kwargs['created_id']:
+                ticket_query = ticket_query.filter_by(started_id=kwargs['created_id'])
 
         for key, value in kwargs.items():
 
