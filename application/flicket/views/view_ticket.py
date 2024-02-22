@@ -108,7 +108,6 @@ def ticket_view(ticket_id, page=1):
         # add count of 1 to users total posts.
         g.user.total_posts += 1
 
-        print('updating updating')
         ticket.last_updated = datetime.datetime.now()
 
         db.session.commit()
