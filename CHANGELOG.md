@@ -10,6 +10,13 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.3.3
+
+* Removed print statements.
+* Updated queries so sqlalchemy no longer gives warnings about relationships and 
+  scalar_subquery().
+* Bumped jinja2 requirement to 3.1.3.
+
 ## 0.3.2
 
 * fixed bug when trying to export tickets to csv file.

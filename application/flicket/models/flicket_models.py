@@ -206,7 +206,8 @@ class FlicketTicket(PaginatedAPIMixin, Base):
     # finds all the actions associated with the ticket and not associated with any post
     actions_nonepost = db.relationship('FlicketAction',
                                        primaryjoin="and_(FlicketTicket.id == FlicketAction.ticket_id, "
-                                                   "FlicketAction.post_id == None)")
+                                                   "FlicketAction.post_id == None)",
+                                       overlaps="actions")
 
     @property
     def num_replies(self):
@@ -600,10 +601,10 @@ class FlicketUploads(PaginatedAPIMixin, Base):
     id = db.Column(db.Integer, primary_key=True)
 
     posts_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
-    post = db.relationship(FlicketPost)
+    post = db.relationship(FlicketPost, overlaps="uploads")
 
     topic_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
-    topic = db.relationship(FlicketTicket)
+    topic = db.relationship(FlicketTicket, overlaps="uploads")
 
     filename = db.Column(db.String(field_size['filename_max_length']))
     original_filename = db.Column(db.String(field_size['filename_max_length']))
@@ -713,12 +714,12 @@ class FlicketSubscription(PaginatedAPIMixin, Base):
     id = db.Column(db.Integer, primary_key=True)
 
     ticket_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
-    ticket = db.relationship(FlicketTicket)
+    ticket = db.relationship(FlicketTicket, overlaps="subscribers")
 
     user_id = db.Column(db.Integer, db.ForeignKey(FlicketUser.id))
     user = db.relationship(FlicketUser)
 
-    user_def = db.deferred(db.select(FlicketUser.name).where(FlicketUser.id == user_id))
+    user_def = db.deferred(db.select(FlicketUser.name).where(FlicketUser.id == user_id).scalar_subquery())
 
     def to_dict(self):
         """
@@ -757,10 +758,10 @@ class FlicketAction(PaginatedAPIMixin, Base):
     id = db.Column(db.Integer, primary_key=True)
 
     ticket_id = db.Column(db.Integer, db.ForeignKey(FlicketTicket.id))
-    ticket = db.relationship(FlicketTicket)
+    ticket = db.relationship(FlicketTicket, overlaps="actions, actions_nonepost")
 
     post_id = db.Column(db.Integer, db.ForeignKey(FlicketPost.id))
-    post = db.relationship(FlicketPost)
+    post = db.relationship(FlicketPost, overlaps="actions")
 
     action = db.Column(db.String(field_size['action_max_length']))
     data = db.Column(db.JSON(none_as_null=True))

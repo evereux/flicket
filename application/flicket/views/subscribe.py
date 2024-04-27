@@ -79,7 +79,7 @@ def unsubscribe_ticket(ticket_id=None, user_id=None):
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
 
-    else:
-        print(form.errors)
+    # else:
+    #     print(form.errors)
 
     return render_template('flicket_unsubscribe_user.html', form=form, title='Unsubscribe', ticket=ticket, user=user)

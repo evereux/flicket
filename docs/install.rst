@@ -67,7 +67,7 @@ Set Up
 
     pip install pymysql
 
-5. Upgrade the database using manage.py from the command line::
+5. Upgrade the database by running the following from the command line::
 
     flask db upgrade
 
