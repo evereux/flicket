@@ -38,7 +38,5 @@ temp_populate_database_with_junk.py
 # don't store default sqlite db
 flicket.db
 
-
+# don't store backup config
 config_old.json
-
-config - Copy.json
