@@ -34,7 +34,7 @@ from application.flicket_errors import bp_errors
 from application.flicket.views import flicket_bp
 from application.flicket.scripts.jinja2_functions import now_year
 
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')

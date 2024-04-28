@@ -134,6 +134,8 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
         :return bool:
         """
         user = FlicketUser.query.filter_by(token=token).first()
+        if not user.token_expiration:
+            return None
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         if user.disabled:
