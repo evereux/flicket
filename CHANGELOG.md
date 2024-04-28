@@ -10,6 +10,14 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.3.4
+
+* fixed bug on submitting config changes to a SQLite database. Looking at the 
+ bug fix I don't know why this didn't materialise when using MySQL or PostGres.
+* bug fix for when User.token_expiration is None when checking token.
+* set boolean values to False for config settings on set-up.
+ 
+
 ## 0.3.3
 
 * Removed print statements.
