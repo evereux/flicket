@@ -14,7 +14,7 @@ flask-script==2.0.6
 flask-wtf==1.2.1
 markdown==3.5.1
 plotly==5.18.0
-pymysql==1.1.0
+pymysql==1.1.1
 python-dotenv==0.20.0
 sqlalchemy==2.0.23
 Werkzeug==2.3.8
