@@ -14,6 +14,9 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * fixed cross site scripting vulnerability in username rendering within the action
  block.
+* bumped werkzeug requirement to 3.0.3 #77
+* bumped jinja2 requirement to 3.1.4 #78
+* bumped pymysql requirement to 1.1.1 #79
 
 ## 0.3.4
 
