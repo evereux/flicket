@@ -10,6 +10,11 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.3.5
+
+* fixed cross site scripting vulnerability in username rendering within the action
+ block.
+
 ## 0.3.4
 
 * fixed bug on submitting config changes to a SQLite database. Looking at the 

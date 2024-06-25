@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 import datetime
+from html import escape
 
 from flask import url_for, g
 from sqlalchemy import select, join, func
@@ -782,46 +783,51 @@ class FlicketAction(PaginatedAPIMixin, Base):
 
         _date = self.date.strftime('%d-%m-%Y %H:%M')
 
+        recipient_name = escape(self.recipient.name) or None
+        recipient_email = escape(self.recipient.email) or None
+        user_name = escape(self.user.name) or None
+        user_email = escape(self.user.email) or None
+
         if self.action == 'open':
             return (f'Ticket opened'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'assign':
-            return (f'Ticket assigned to <a href="mailto:{self.recipient.email}">{self.recipient.name}</a>'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+            return (f'Ticket assigned to <a href="mailto:{recipient_name}">{recipient_name}</a>'
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'claim':
             return (f'Ticked claimed'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'status':
             return (f'Ticket status has been changed to "{self.data["status"]}"'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'priority':
             return (f'Ticket priority has been changed to "{self.data["priority"]}"'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'release':
             return (f'Ticket released'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'close':
             return (f'Ticked closed'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'department_category':
             return (f'Ticket category has been changed to "{self.data["department_category"]}"'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a> | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a> | {_date}')
 
         if self.action == 'subscribe':
-            return (f'<a href="mailto:{self.recipient.email}">{self.recipient.name}</a> has been subscribed to ticket'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a>. | {_date}')
+            return (f'<a href="mailto:{recipient_email}">{recipient_name}</a> has been subscribed to ticket'
+                    f' by <a href="mailto:{user_email}">{user_name}</a>. | {_date}')
 
         if self.action == 'unsubscribe':
-            return (f'<a href="mailto:{self.recipient.email}">{self.recipient.name}</a> '
+            return (f'<a href="mailto:{recipient_email}">{recipient_name}</a> '
                     f'has been un-subscribed from ticket'
-                    f' by <a href="mailto:{self.user.email}">{self.user.name}</a>. | {_date}')
+                    f' by <a href="mailto:{user_email}">{user_name}</a>. | {_date}')
 
     def to_dict(self):
         """
