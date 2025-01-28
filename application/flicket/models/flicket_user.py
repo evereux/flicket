@@ -24,7 +24,7 @@ user_field_size = {
     'name_max': 60,
     'email_min': 6,
     'email_max': 60,
-    'password_min': 6,
+    'password_min': 5,
     'password_max': 60,
     'group_min': 3,
     'group_max': 64,
