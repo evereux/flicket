@@ -783,8 +783,11 @@ class FlicketAction(PaginatedAPIMixin, Base):
 
         _date = self.date.strftime('%d-%m-%Y %H:%M')
 
-        recipient_name = escape(self.recipient.name) or None
-        recipient_email = escape(self.recipient.email) or None
+        recipient_name = None
+        recipient_email = None
+        if self.recipient:
+            recipient_name = escape(self.recipient.name) or None
+            recipient_email = escape(self.recipient.email) or None
         user_name = escape(self.user.name) or None
         user_email = escape(self.user.email) or None
 
