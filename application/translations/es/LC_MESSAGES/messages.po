@@ -1,0 +1,677 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-01-28 01:08+0100\n"
+"PO-Revision-Date: 2025-01-28 00:26+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#~ msgid "\"{}\" Is not a valid filename."
+#~ msgstr "\"{}\" no es un nombre de archivo válido."
+
+#~ msgid ""
+#~ "\"{}\" Is not a an allowed "
+#~ "extension. Only the following are "
+#~ "currently allowed: \"{}\""
+#~ msgstr ""
+#~ "\"{}\" no es una extensión permitida."
+#~ " Solo se permiten las siguientes: "
+#~ "\"{}\""
+
+#~ msgid "There was a problem with the file attachment."
+#~ msgstr "Hubo un problema con el archivo adjunto."
+
+#~ msgid "Can't find user."
+#~ msgstr "No se puede encontrar al usuario."
+
+#~ msgid "Department already exists."
+#~ msgstr "El departamento ya existe."
+
+#~ msgid "Category already exists."
+#~ msgstr "La categoría ya existe."
+
+#~ msgid "Category does not exist."
+#~ msgstr "La categoría no existe."
+
+#~ msgid "Ambiguous department / category, contact administrator to fix it!"
+#~ msgstr ""
+#~ "Departamento/categoría ambiguos, ¡contacte al "
+#~ "administrador para solucionarlo!"
+
+#~ msgid ""
+#~ "Passwords shall adhere to the "
+#~ "following:<br>1. Be a minimum of 8 "
+#~ "characters.<br>2. Contain at least one "
+#~ "digit.<br>3. Contain at least one upper"
+#~ " and lower case character.<br>4. Not "
+#~ "contain your username.<br>"
+#~ msgstr ""
+#~ "Las contraseñas deben cumplir con lo "
+#~ "siguiente:<br>1. Tener un mínimo de 8"
+#~ " caracteres.<br>2. Contener al menos un "
+#~ "dígito.<br>3. Contener al menos una "
+#~ "letra mayúscula y una minúscula.<br>4. "
+#~ "No contener su nombre de usuario.<br>"
+
+#~ msgid "403 Error - Forbidden"
+#~ msgstr "Error 403 - Prohibido"
+
+#~ msgid "Sorry, you don't have permission to access this resource."
+#~ msgstr "Lo siento, no tiene permiso para acceder a este recurso."
+
+#~ msgid "404 Error - File Not Found"
+#~ msgstr "Error 404 - Archivo no encontrado"
+
+#~ msgid "Back"
+#~ msgstr "Regresar"
+
+#~ msgid "An unexpected error has occurred"
+#~ msgstr "Ha ocurrido un error inesperado"
+
+#~ msgid ""
+#~ "Please report this error to your "
+#~ "administrator. Please provide the following"
+#~ " details:"
+#~ msgstr ""
+#~ "Por favor, reporte este error a su"
+#~ " administrador. Proporcione los siguientes "
+#~ "detalles:"
+
+#~ msgid "Page you were navigating."
+#~ msgstr "Página que estaba navegando."
+
+#~ msgid "Time you saw this error."
+#~ msgstr "Hora en que vio este error."
+
+#~ msgid "Any other information that may help reproduce the error."
+#~ msgstr "Cualquier otra información que pueda ayudar a reproducir el error."
+
+#~ msgid "It appears your view request url was incomplete."
+#~ msgstr "Parece que la URL de su solicitud de vista estaba incompleta."
+
+#~ msgid "Source code available at:"
+#~ msgstr "El código fuente está disponible en:"
+
+#~ msgid "Status"
+#~ msgstr "Estado"
+
+#~ msgid "Priority"
+#~ msgstr "Prioridad"
+
+#~ msgid "Assigned"
+#~ msgstr "Asignado"
+
+#~ msgid "Content"
+#~ msgstr "Contenido"
+
+#~ msgid "has been assigned to ticket:"
+#~ msgstr "ha sido asignado al ticket:"
+
+#~ msgid "Ticket has been closed:"
+#~ msgstr "El ticket ha sido cerrado:"
+
+#~ msgid "You have successfully created a new ticket:"
+#~ msgstr "Ha creado un nuevo ticket con éxito:"
+
+#~ msgid "Department"
+#~ msgstr "Departamento"
+
+#~ msgid "Category"
+#~ msgstr "Categoría"
+
+#~ msgid ""
+#~ "Ticket has been released. Ticket is "
+#~ "now no longer assigned to anyone. "
+#~ "Ticket:"
+#~ msgstr ""
+#~ "El ticket ha sido liberado. El "
+#~ "ticket ya no está asignado a "
+#~ "nadie. Ticket:"
+
+#~ msgid "There are new replies to ticket:"
+#~ msgstr "Hay nuevas respuestas al ticket:"
+
+#~ msgid "Type name and pick from drop down list to assign ticket. "
+#~ msgstr ""
+#~ "Escriba el nombre y seleccione de "
+#~ "la lista desplegable para asignar el "
+#~ "ticket."
+
+#~ msgid "a simple ticket system"
+#~ msgstr "un sistema de tickets simple"
+
+#~ msgid "Existing Categories"
+#~ msgstr "Categorías existentes"
+
+#~ msgid "Password"
+#~ msgstr "Contraseña"
+
+#~ msgid ""
+#~ "Type department and/or category and pick"
+#~ " from drop down list to change "
+#~ "category."
+#~ msgstr ""
+#~ "Escriba el departamento y/o categoría y"
+#~ " seleccione de la lista desplegable "
+#~ "para cambiar la categoría."
+
+#~ msgid ""
+#~ "If you require new departments and "
+#~ "/ or categories added / deleted, "
+#~ "please raise a ticket."
+#~ msgstr ""
+#~ "Si necesita agregar o eliminar nuevos"
+#~ " departamentos y/o categorías, por favor,"
+#~ " cree un ticket."
+
+#~ msgid "Categories"
+#~ msgstr "Categorías"
+
+#~ msgid "Enter details below only if you want to change your password."
+#~ msgstr ""
+#~ "Ingrese los detalles a continuación solo"
+#~ " si desea cambiar su contraseña."
+
+#~ msgid "MarkDown Help"
+#~ msgstr "Ayuda de Markdown"
+
+#~ msgid "Show / Hide Markdown"
+#~ msgstr "Mostrar / Ocultar Markdown"
+
+#~ msgid "Post edit history."
+#~ msgstr "Historial de ediciones del post."
+
+#~ msgid "originally wrote on"
+#~ msgstr "escribió originalmente el"
+
+#~ msgid "No changes have been made to the post content."
+#~ msgstr "No se han realizado cambios en el contenido del post."
+
+#~ msgid "Open High Priority Tickets"
+#~ msgstr "Tickets de alta prioridad abiertos"
+
+#~ msgid "Statistics"
+#~ msgstr "Estadísticas"
+
+#~ msgid "Replies"
+#~ msgstr "Respuestas"
+
+#~ msgid "priority"
+#~ msgstr "prioridad"
+
+#~ msgid "submitted by"
+#~ msgstr "enviado por"
+
+#~ msgid "date"
+#~ msgstr "fecha"
+
+#~ msgid "department / category"
+#~ msgstr "departamento / categoría"
+
+#~ msgid "status"
+#~ msgstr "estado"
+
+#~ msgid "assigned"
+#~ msgstr "asignado"
+
+#~ msgid "Username"
+#~ msgstr "Nombre de usuario"
+
+#~ msgid "Remember Me"
+#~ msgstr "Recuérdame"
+
+#~ msgid "My Tickets"
+#~ msgstr "Mis Tickets"
+
+#~ msgid "Created"
+#~ msgstr "Creado"
+
+#~ msgid "Subscribed"
+#~ msgstr "Suscrito"
+
+#~ msgid "Tickets"
+#~ msgstr "Tickets"
+
+#~ msgid "Create Ticket"
+#~ msgstr "Crear Ticket"
+
+#~ msgid "Departments"
+#~ msgstr "Departamentos"
+
+#~ msgid "Users"
+#~ msgstr "Usuarios"
+
+#~ msgid "Admin View"
+#~ msgstr "Vista de Administrador"
+
+#~ msgid "User Details"
+#~ msgstr "Detalles del Usuario"
+
+#~ msgid "Log Out"
+#~ msgstr "Cerrar sesión"
+
+#~ msgid "Log In"
+#~ msgstr "Iniciar sesión"
+
+#~ msgid "Email Address"
+#~ msgstr "Dirección de correo electrónico"
+
+#~ msgid "This post was modified by"
+#~ msgstr "Este post fue modificado por"
+
+#~ msgid "on"
+#~ msgstr "el"
+
+#~ msgid ""
+#~ "edit\n"
+#~ "                history"
+#~ msgstr ""
+#~ "editar\n"
+#~ "                historial"
+
+#~ msgid "quote"
+#~ msgstr "citar"
+
+#~ msgid "Ticket content supports markdown syntax. Please refer to the"
+#~ msgstr ""
+#~ "El contenido del ticket admite la "
+#~ "sintaxis markdown. Por favor, consulte "
+#~ "la"
+
+#~ msgid "markdown_primer"
+#~ msgstr "markdown_primer"
+
+#~ msgid "Ticket Title"
+#~ msgstr "Título del ticket"
+
+#~ msgid "Priority Level"
+#~ msgstr "Nivel de prioridad"
+
+#~ msgid "Download results as a csv file"
+#~ msgstr "Descargar resultados como archivo csv"
+
+#~ msgid "search"
+#~ msgstr "buscar"
+
+#~ msgid "Sort"
+#~ msgstr "Ordenar"
+
+#~ msgid "Ticket ID"
+#~ msgstr "ID del ticket"
+
+#~ msgid "Title"
+#~ msgstr "Título"
+
+#~ msgid "Submitted By"
+#~ msgstr "Enviado por"
+
+#~ msgid "Date"
+#~ msgstr "Fecha"
+
+#~ msgid "Last Updated"
+#~ msgstr "Última actualización"
+
+#~ msgid "Department / Category"
+#~ msgstr "Departamento / Categoría"
+
+#~ msgid "Hours"
+#~ msgstr "Horas"
+
+#~ msgid "created"
+#~ msgstr "creado"
+
+#~ msgid "date of last reply, action, edit ..."
+#~ msgstr "fecha de la última respuesta, acción, edición..."
+
+#~ msgid "updated"
+#~ msgstr "actualizado"
+
+#~ msgid "category"
+#~ msgstr "categoría"
+
+#~ msgid "department"
+#~ msgstr "departamento"
+
+#~ msgid "Total Hours"
+#~ msgstr "Horas Totales"
+
+#~ msgid "Email"
+#~ msgstr "Correo electrónico"
+
+#~ msgid "Date Joined"
+#~ msgstr "Fecha de unión"
+
+#~ msgid "Job Title"
+#~ msgstr "Puesto de trabajo"
+
+#~ msgid "Number Of Posts"
+#~ msgstr "Número de publicaciones"
+
+#~ msgid "Number Assigned"
+#~ msgstr "Número asignado"
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
+#~ msgid "Posts"
+#~ msgstr "Publicaciones"
+
+#~ msgid "claim"
+#~ msgstr "reclamar"
+
+#~ msgid "release"
+#~ msgstr "liberar"
+
+#~ msgid "assign"
+#~ msgstr "asignar"
+
+#~ msgid "Can't assign a closed ticket."
+#~ msgstr "No se puede asignar un ticket cerrado."
+
+#~ msgid "User is already assigned to ticket."
+#~ msgstr "El usuario ya está asignado al ticket."
+
+#~ msgid "You reassigned ticket: {} to {}"
+#~ msgstr "Has reasignado el ticket: {} a {}"
+
+#~ msgid "Assign Ticket"
+#~ msgstr "Asignar Ticket"
+
+#~ msgid "New category {} added."
+#~ msgstr "Nueva categoría {} añadida."
+
+#~ msgid "Edit Category"
+#~ msgstr "Editar Categoría"
+
+#~ msgid "You have already been assigned this ticket."
+#~ msgstr "Ya se te ha asignado este ticket."
+
+#~ msgid "You claimed ticket: %(value)s"
+#~ msgstr "Has reclamado el ticket: %(value)s"
+
+#~ msgid "New Ticket created."
+#~ msgstr "Nuevo ticket creado."
+
+#~ msgid "You are not authorised to delete tickets."
+#~ msgstr "No estás autorizado para eliminar tickets."
+
+#~ msgid "Ticket deleted."
+#~ msgstr "Ticket eliminado."
+
+#~ msgid "You are not authorised to delete posts"
+#~ msgstr "No estás autorizado para eliminar publicaciones."
+
+#~ msgid "Delete Post"
+#~ msgstr "Eliminar publicación"
+
+#~ msgid "You are not authorised to delete categories."
+#~ msgstr "No estás autorizado para eliminar categorías."
+
+#~ msgid "Delete Category"
+#~ msgstr "Eliminar categoría"
+
+#~ msgid "You are not authorised to delete departments."
+#~ msgstr "No estás autorizado para eliminar departamentos."
+
+#~ msgid "You are trying to delete department: %(value)s."
+#~ msgstr "Estás intentando eliminar el departamento: %(value)s."
+
+#~ msgid "Delete Department"
+#~ msgstr "Eliminar departamento"
+
+#~ msgid "Can't change the department and category on a closed ticket."
+#~ msgstr ""
+#~ "No se puede cambiar el departamento "
+#~ "y la categoría de un ticket "
+#~ "cerrado."
+
+#~ msgid "Category \"{} / {}\" is already assigned to ticket."
+#~ msgstr "La categoría \"{} / {}\" ya está asignada al ticket."
+
+#~ msgid "You changed category of ticket: {}"
+#~ msgstr "Has cambiado la categoría del ticket: {}"
+
+#~ msgid "Change Department / Category of Ticket"
+#~ msgstr "Cambiar Departamento / Categoría del Ticket"
+
+#~ msgid "New department \"{}\" added."
+#~ msgstr "Nuevo departamento \"{}\" añadido."
+
+#~ msgid "Department \"%(value)s\" edited."
+#~ msgstr "Departamento \"%(value)s\" editado."
+
+#~ msgid "Could not find ticket."
+#~ msgstr "No se pudo encontrar el ticket."
+
+#~ msgid "You are not authorised to edit this ticket."
+#~ msgstr "No estás autorizado para editar este ticket."
+
+#~ msgid "Edit Ticket"
+#~ msgstr "Editar Ticket"
+
+#~ msgid "You can not edit and close ticket."
+#~ msgstr "No puedes editar y cerrar el ticket."
+
+#~ msgid ""
+#~ "Only the person to which the "
+#~ "ticket has been assigned, creator or "
+#~ "Admin can close this ticket."
+#~ msgstr ""
+#~ "Solo la persona a la que se "
+#~ "ha asignado el ticket, el creador "
+#~ "o un administrador puede cerrar este "
+#~ "ticket."
+
+#~ msgid "Ticket is already closed."
+#~ msgstr "El ticket ya está cerrado."
+
+#~ msgid "Ticket %(value)s closed."
+#~ msgstr "Ticket %(value)s cerrado."
+
+#~ msgid "History"
+#~ msgstr "Historial"
+
+#~ msgid "Please set your email and job title."
+#~ msgstr "Por favor, establece tu correo electrónico y título profesional."
+
+#~ msgid "You were logged in successfully."
+#~ msgstr "Has iniciado sesión correctamente."
+
+#~ msgid "You were logged out successfully."
+#~ msgstr "Has cerrado sesión correctamente."
+
+#~ msgid "Password reset. Please check your email for your new password"
+#~ msgstr ""
+#~ "Restablecimiento de contraseña. Por favor, "
+#~ "revisa tu correo electrónico para "
+#~ "obtener tu nueva contraseña."
+
+#~ msgid "Ticket has not been assigned"
+#~ msgstr "El ticket no ha sido asignado."
+
+#~ msgid "You can not release a ticket you are not working on."
+#~ msgstr "No puedes liberar un ticket en el que no estás trabajando."
+
+#~ msgid "You released ticket: %(value)s"
+#~ msgstr "Has liberado el ticket: %(value)s"
+
+#~ msgid "\"{}\" has been unsubscribed from this ticket."
+#~ msgstr "\"{}\" ha sido desuscrito de este ticket."
+
+#~ msgid ""
+#~ "Could not unsubscribe \"{}\" from ticket"
+#~ " due to permission restrictions."
+#~ msgstr ""
+#~ "No se pudo desuscribir a \"{}\" "
+#~ "del ticket debido a restricciones de "
+#~ "permisos."
+
+#~ msgid "Cannot find ticket: \"%(value)s\""
+#~ msgstr "No se puede encontrar el ticket: \"%(value)s\""
+
+#~ msgid "User subscribed."
+#~ msgstr "Usuario suscrito."
+
+#~ msgid "User already subscribed."
+#~ msgstr "Usuario ya suscrito."
+
+#~ msgid "Invalid username."
+#~ msgstr "Nombre de usuario inválido."
+
+#~ msgid "You have replied to ticket %(value_1)s: %(value_2)s."
+#~ msgstr "Has respondido al ticket %(value_1)s: %(value_2)s."
+
+#~ msgid ""
+#~ "%(value_1)s wrote on %(value_2)s\r\n"
+#~ "\r\n"
+#~ "%(value_3)s"
+#~ msgstr ""
+#~ "%(value_1)s escribió el %(value_2)s\r\n"
+#~ "\r\n"
+#~ "%(value_3)s"
+
+#~ msgid "Configuration"
+#~ msgstr "Configuración"
+
+#~ msgid "Field"
+#~ msgstr "Campo"
+
+#~ msgid "Value"
+#~ msgstr "Valor"
+
+#~ msgid "This must be a comma delimited list."
+#~ msgstr "Debe ser una lista delimitada por comas."
+
+#~ msgid "Are you sure you want to delete the group:"
+#~ msgstr "¿Estás seguro de que deseas eliminar el grupo?"
+
+#~ msgid "Please enter your password to delete group."
+#~ msgstr "Por favor, ingresa tu contraseña para eliminar el grupo."
+
+#~ msgid ""
+#~ "Are you sure you want to delete"
+#~ " the following user? This may impact"
+#~ " relational query look ups."
+#~ msgstr ""
+#~ "¿Estás seguro de que deseas eliminar "
+#~ "al siguiente usuario? Esto puede afectar"
+#~ " las consultas relacionales."
+
+#~ msgid "Enter password"
+#~ msgstr "Ingresa la contraseña"
+
+#~ msgid "Please add new users credentials."
+#~ msgstr "Por favor, añade las credenciales de los nuevos usuarios."
+
+#~ msgid "Group Name"
+#~ msgstr "Nombre del grupo"
+
+#~ msgid "Click on group name to edit."
+#~ msgstr "Haz clic en el nombre del grupo para editar."
+
+#~ msgid "Delete"
+#~ msgstr "Eliminar"
+
+#~ msgid "delete"
+#~ msgstr "eliminar"
+
+#~ msgid "Add Group"
+#~ msgstr "Añadir Grupo"
+
+#~ msgid "Please enter group name."
+#~ msgstr "Por favor, ingresa el nombre del grupo."
+
+#~ msgid "Administration"
+#~ msgstr "Administración"
+
+#~ msgid "Admin Home"
+#~ msgstr "Inicio de Admin"
+
+#~ msgid "Flicket Config"
+#~ msgstr "Configuración de Flicket"
+
+#~ msgid "Add User"
+#~ msgstr "Añadir Usuario"
+
+#~ msgid "Groups"
+#~ msgstr "Grupos"
+
+#~ msgid "Click on username to edit."
+#~ msgstr "Haz clic en el nombre de usuario para editar."
+
+#~ msgid "edit"
+#~ msgstr "editar"
+
+#~ msgid "Delete User"
+#~ msgstr "Eliminar Usuario"
+
+#~ msgid "You have successfully registered new user \"{}\"."
+#~ msgstr "Has registrado exitosamente al nuevo usuario \"{}\"."
+
+#~ msgid "Username already exists"
+#~ msgstr "El nombre de usuario ya existe"
+
+#~ msgid "User {} edited."
+#~ msgstr "Usuario {} editado."
+
+#~ msgid "Could not find user."
+#~ msgstr "No se pudo encontrar el usuario."
+
+#~ msgid "Can't delete default flicket_admin user."
+#~ msgstr "No se puede eliminar el usuario predeterminado flicket_admin."
+
+#~ msgid "Deleted user {}s"
+#~ msgstr "Usuario {}s eliminado"
+
+#~ msgid "New group \"{}\" added."
+#~ msgstr "Nuevo grupo \"{}\" añadido."
+
+#~ msgid "Could not find group {}"
+#~ msgstr "No se pudo encontrar el grupo {}"
+
+#~ msgid "Can't edit group {}s."
+#~ msgstr "No se puede editar el grupo {}s."
+
+#~ msgid "Group name changed to {}."
+#~ msgstr "El nombre del grupo cambió a {}."
+
+#~ msgid "Can't delete default flicket_admin group."
+#~ msgstr "No se puede eliminar el grupo predeterminado flicket_admin."
+
+#~ msgid "Deleted group {}s"
+#~ msgstr "Grupo {}s eliminado"
+
+#~ msgid "Delete Group"
+#~ msgstr "Eliminar Grupo"
+
+#~ msgid "Config details updated."
+#~ msgstr "Detalles de configuración actualizados."
+
+#~ msgid ""
+#~ "Flicket has tried to send an email"
+#~ " to the address you entered. Please"
+#~ " check your inbox. If no email "
+#~ "has arrived please double check the "
+#~ "<a href=\"{}{url_for(\"admin_bp.config\")}\">config</a> "
+#~ "settings."
+#~ msgstr ""
+#~ "Flicket ha intentado enviar un correo"
+#~ " electrónico a la dirección que "
+#~ "ingresaste. Por favor revisa tu bandeja"
+#~ " de entrada. Si no ha llegado "
+#~ "el correo, por favor verifica ajustes"
+#~ " de <a "
+#~ "href=\"{}{url_for(\"admin_bp.config\")}\">configuración</a>."
+
