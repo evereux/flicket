@@ -33,5 +33,4 @@ Production Environment
 ----------------------
 
 To serve Flicket within a production environment webservers such as Apache
-or nginx are typically used. See the documentation for how to install Apache
-on Windows.
+or nginx are typically used.
