@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../application/'))
 # -- Project information -----------------------------------------------------
 
 project = 'flicket'
-copyright = '2025, evereux@gmail.com'
+copyright = '2026, evereux@gmail.com'
 author = 'evereux@gmail.com'
 
 # The full version, including alpha/beta/rc tags
