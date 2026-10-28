@@ -1,0 +1,1128 @@
+# German translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-08-17 11:08+0100\n"
+"PO-Revision-Date: 2026-10-28 11:34+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.3\n"
+
+#: application/flicket/forms/flicket_forms.py:51
+msgid "\"{}\" Is not a valid filename."
+msgstr "\"{}\" ist kein gültiger Dateiname."
+
+#: application/flicket/forms/flicket_forms.py:58
+msgid ""
+"\"{}\" Is not a an allowed extension. Only the following are currently "
+"allowed: \"{}\""
+msgstr ""
+"\"{}\" ist keine erlaubte Dateiendung. Derzeit sind nur die folgenden "
+"erlaubt: \"{}\""
+
+#: application/flicket/forms/flicket_forms.py:62
+msgid "There was a problem with the file attachment."
+msgstr "Es gab ein Problem mit dem Dateianhang."
+
+#: application/flicket/forms/flicket_forms.py:76
+#: application/flicket/forms/flicket_forms.py:94
+msgid "Can't find user."
+msgstr "Benutzer konnte nicht gefunden werden."
+
+#: application/flicket/forms/flicket_forms.py:111
+msgid "Department already exists."
+msgstr "Abteilung existiert bereits."
+
+#: application/flicket/forms/flicket_forms.py:127
+msgid "Category already exists."
+msgstr "Kategorie existiert bereits."
+
+#: application/flicket/forms/flicket_forms.py:142
+#, fuzzy
+msgid "Category does not exist."
+msgstr "Kategorie existiert nicht."
+
+#: application/flicket/forms/flicket_forms.py:145
+msgid "Ambiguous department / category, contact administrator to fix it!"
+msgstr ""
+"Mehrdeutige Abteilung / Kategorie, bitte wenden Sie sich an den "
+"Administrator, um das Problem zu beheben!"
+
+#: application/flicket/scripts/functions_login.py:13
+msgid ""
+"Passwords shall adhere to the following:<br>1. Be a minimum of 8 "
+"characters.<br>2. Contain at least one digit.<br>3. Contain at least one "
+"upper and lower case character.<br>4. Not contain your username.<br>"
+msgstr ""
+"Passwörter müssen folgende Anforderungen erfüllen:<br>1. Mindestens 8 "
+"Zeichen lang sein.<br>2. Mindestens eine Ziffer enthalten.<br>3. Mindestens "
+"einen Groß- und einen Kleinbuchstaben enthalten.<br>4. Nicht Ihren "
+"Benutzernamen enthalten.<br>"
+
+#: application/flicket/templates/403.html:5
+msgid "403 Error - Forbidden"
+msgstr "403 Fehler - Verboten"
+
+#: application/flicket/templates/403.html:6
+msgid "Sorry, you don't have permission to access this resource."
+msgstr ""
+"Es tut uns leid, Sie haben keine Berechtigung für den Zugriff auf diese "
+"Ressource."
+
+#: application/flicket/templates/404.html:5
+msgid "404 Error - File Not Found"
+msgstr "404 Fehler - Datei nicht gefunden"
+
+#: application/flicket/templates/404.html:6
+#: application/flicket/templates/500.html:14
+msgid "Back"
+msgstr "Zurück"
+
+#: application/flicket/templates/500.html:5
+msgid "An unexpected error has occurred"
+msgstr "Ein unerwarteter Fehler ist aufgetreten"
+
+#: application/flicket/templates/500.html:7
+msgid ""
+"Please report this error to your administrator. Please provide the "
+"following details:"
+msgstr ""
+"Bitte melden Sie diesen Fehler an Ihren Administrator. Bitte geben Sie dabei "
+"die folgenden Details an:"
+
+#: application/flicket/templates/500.html:10
+msgid "Page you were navigating."
+msgstr "Seite, auf der Sie sich befunden haben."
+
+#: application/flicket/templates/500.html:11
+msgid "Time you saw this error."
+msgstr "Zeitpunkt, an dem Sie diesen Fehler gesehen haben."
+
+#: application/flicket/templates/500.html:12
+msgid "Any other information that may help reproduce the error."
+msgstr ""
+"Alle weiteren Informationen, die helfen können, den Fehler zu "
+"reproduzieren."
+
+#: application/flicket/templates/__empty__.html:1
+msgid "It appears your view request url was incomplete."
+msgstr "Es scheint, als ob die URL Ihrer Anzeigeanforderung unvollständig war."
+
+#: application/flicket/templates/email_footer.html:4
+#: application/flicket/templates/flicket_footer.html:4
+msgid "Source code available at:"
+msgstr "Quellcode verfügbar unter:"
+
+#: application/flicket/templates/email_include_details.html:3
+#: application/flicket/templates/flicket_tickets.html:158
+#: application/flicket/templates/flicket_tickets.html:163
+#: application/flicket/templates/flicket_unsubscribe_user.html:50
+#: application/flicket/templates/flicket_view.html:51
+msgid "Status"
+msgstr "Status"
+
+#: application/flicket/templates/email_include_details.html:7
+#: application/flicket/templates/flicket_tickets.html:81
+#: application/flicket/templates/flicket_tickets.html:86
+#: application/flicket/templates/flicket_unsubscribe_user.html:54
+#: application/flicket/templates/flicket_view.html:55
+msgid "Priority"
+msgstr "Priorität"
+
+#: application/flicket/templates/email_include_details.html:11
+#: application/flicket/templates/flicket_navbar.html:19
+#: application/flicket/templates/flicket_tickets.html:169
+#: application/flicket/templates/flicket_tickets.html:174
+#: application/flicket/templates/flicket_unsubscribe_user.html:69
+#: application/flicket/templates/flicket_users.html:158
+#: application/flicket/templates/flicket_view.html:70
+msgid "Assigned"
+msgstr "Zugewiesen"
+
+#: application/flicket/templates/email_include_details.html:15
+#: application/flicket/templates/email_ticket_create.html:11
+#: application/flicket/templates/flicket_post_box.html:33
+msgid "Content"
+msgstr "Inhalt"
+
+#: application/flicket/templates/email_ticket_assign.html:8
+#: application/flicket/templates/email_ticket_department_category.html:8
+msgid "has been assigned to ticket:"
+msgstr "wurde dem Ticket zugewiesen:"
+
+#: application/flicket/templates/email_ticket_close.html:8
+msgid "Ticket has been closed:"
+msgstr "Ticket wurde geschlossen:"
+
+#: application/flicket/templates/email_ticket_create.html:8
+msgid "You have successfully created a new ticket:"
+msgstr "Sie haben erfolgreich ein neues Ticket erstellt:"
+
+#: application/flicket/templates/email_ticket_department_category.html:8
+#: application/flicket/templates/flicket_category_edit.html:15
+#: application/flicket/templates/flicket_department_edit.html:21
+#: application/flicket/templates/flicket_departments.html:83
+#: application/flicket/templates/flicket_unsubscribe_user.html:26
+#: application/flicket/templates/flicket_view.html:27
+msgid "Department"
+msgstr "Abteilung"
+
+#: application/flicket/templates/email_ticket_department_category.html:8
+#: application/flicket/templates/flicket_category_edit.html:24
+#: application/flicket/templates/flicket_post_box.html:61
+#: application/flicket/templates/flicket_unsubscribe_user.html:38
+#: application/flicket/templates/flicket_view.html:39
+msgid "Category"
+msgstr "Kategorie"
+
+#: application/flicket/templates/email_ticket_release.html:8
+msgid ""
+"Ticket has been released. Ticket is now no longer assigned to anyone. "
+"Ticket:"
+msgstr ""
+"Ticket wurde freigegeben. Das Ticket ist nun niemandem mehr zugewiesen. "
+"Ticket:"
+
+#: application/flicket/templates/email_ticket_replies.html:9
+msgid "There are new replies to ticket:"
+msgstr "Es gibt neue Antworten auf das Ticket:"
+
+#: application/flicket/templates/flicket_assign.html:21
+msgid "Type name and pick from drop down list to assign ticket. "
+msgstr ""
+"Namen eingeben und aus der Dropdown-Liste auswählen, um das Ticket "
+"zuzuweisen. "
+
+#: application/flicket/templates/flicket_base.html:47
+msgid "a simple ticket system"
+msgstr "ein einfaches Ticketsystem"
+
+#: application/flicket/templates/flicket_categories.html:52
+msgid "Existing Categories"
+msgstr "Bestehende Kategorien"
+
+#: application/flicket/templates/flicket_delete.html:22
+#: application/flicket/templates/flicket_deletepost.html:20
+#: application/flicket/templates/flicket_deletetopic.html:25
+#: application/flicket/templates/flicket_login.html:32
+msgid "Password"
+msgstr "Passwort"
+
+#: application/flicket/templates/flicket_department_category.html:18
+msgid ""
+"Type department and/or category and pick from drop down list to change "
+"category."
+msgstr ""
+"Abteilung und/oder Kategorie eingeben und aus der Dropdown-Liste "
+"auswählen, um die Kategorie zu ändern."
+
+#: application/flicket/templates/flicket_departments.html:8
+msgid ""
+"If you require new departments and / or categories added / deleted, "
+"please raise a ticket."
+msgstr ""
+"Wenn Sie das Hinzufügen / Löschen neuer Abteilungen und / oder Kategorien "
+"wünschen, erstellen Sie bitte ein Ticket."
+
+#: application/flicket/templates/flicket_departments.html:86
+#: application/flicket/views/categories.py:33
+msgid "Categories"
+msgstr "Kategorien"
+
+#: application/flicket/templates/flicket_edituser.html:143
+msgid "Enter details below only if you want to change your password."
+msgstr ""
+"Geben Sie die Details unten nur ein, wenn Sie Ihr Passwort ändern möchten."
+
+#: application/flicket/templates/flicket_form_reply.html:39
+#: application/flicket/templates/flicket_post_box.html:41
+msgid "MarkDown Help"
+msgstr "Markdown-Hilfe"
+
+#: application/flicket/templates/flicket_form_reply.html:44
+#: application/flicket/templates/flicket_post_box.html:47
+msgid "Show / Hide Markdown"
+msgstr "Markdown einblenden / ausblenden"
+
+#: application/flicket/templates/flicket_history.html:17
+msgid "Post edit history."
+msgstr "Bearbeitungsverlauf des Beitrags."
+
+#: application/flicket/templates/flicket_history.html:32
+msgid "originally wrote on"
+msgstr "ursprünglich geschrieben am"
+
+#: application/flicket/templates/flicket_history.html:40
+msgid "No changes have been made to the post content."
+msgstr "Es wurden keine Änderungen am Inhalt des Beitrags vorgenommen."
+
+#: application/flicket/templates/flicket_index.html:13
+msgid "Open High Priority Tickets"
+msgstr "Offene Tickets mit hoher Priorität"
+
+#: application/flicket/templates/flicket_index.html:41
+msgid "Statistics"
+msgstr "Statistiken"
+
+#: application/flicket/templates/flicket_items.html:12
+#: application/flicket/templates/flicket_tickets.html:180
+#: application/flicket/templates/flicket_tickets.html:185
+msgid "Replies"
+msgstr "Antworten"
+
+#: application/flicket/templates/flicket_items.html:23
+#, fuzzy
+msgid "priority"
+msgstr "Priorität"
+
+#: application/flicket/templates/flicket_items.html:39
+#: application/flicket/templates/flicket_tickets.html:246
+#, fuzzy
+msgid "submitted by"
+msgstr "eingereicht von"
+
+#: application/flicket/templates/flicket_items.html:47
+#, fuzzy
+msgid "date"
+msgstr "Datum"
+
+#: application/flicket/templates/flicket_items.html:55
+#: application/flicket/templates/flicket_tickets.html:270
+#, fuzzy
+msgid "department / category"
+msgstr "Abteilung / Kategorie"
+
+#: application/flicket/templates/flicket_items.html:63
+#: application/flicket/templates/flicket_tickets.html:278
+#, fuzzy
+msgid "status"
+msgstr "Status"
+
+#: application/flicket/templates/flicket_items.html:71
+#: application/flicket/templates/flicket_tickets.html:286
+#, fuzzy
+msgid "assigned"
+msgstr "zugewiesen"
+
+#: application/flicket/templates/flicket_login.html:21
+#: application/flicket/templates/flicket_user_details.html:21
+#: application/flicket/templates/flicket_users.html:99
+#: application/flicket_admin/templates/admin_delete_user.html:30
+#: application/flicket_admin/templates/admin_users.html:49
+msgid "Username"
+msgstr "Benutzername"
+
+#: application/flicket/templates/flicket_login.html:44
+msgid "Remember Me"
+msgstr "Angemeldet bleiben"
+
+#: application/flicket/templates/flicket_navbar.html:17
+#: application/flicket/views/tickets.py:84
+msgid "My Tickets"
+msgstr "Meine Tickets"
+
+#: application/flicket/templates/flicket_navbar.html:18
+msgid "Created"
+msgstr "Erstellt"
+
+#: application/flicket/templates/flicket_navbar.html:20
+#, fuzzy
+msgid "Subscribed"
+msgstr "Abonniert"
+
+#: application/flicket/templates/flicket_navbar.html:23
+#: application/flicket/views/tickets.py:82
+msgid "Tickets"
+msgstr "Tickets"
+
+#: application/flicket/templates/flicket_navbar.html:26
+#: application/flicket/views/create.py:47
+msgid "Create Ticket"
+msgstr "Ticket erstellen"
+
+#: application/flicket/templates/flicket_navbar.html:28
+#: application/flicket/views/departments.py:34
+msgid "Departments"
+msgstr "Abteilungen"
+
+#: application/flicket/templates/flicket_navbar.html:30
+#: application/flicket/views/users.py:39
+#: application/flicket_admin/templates/admin_menu.html:17
+msgid "Users"
+msgstr "Benutzer"
+
+#: application/flicket/templates/flicket_navbar.html:33
+msgid "Admin View"
+msgstr "Admin-Ansicht"
+
+#: application/flicket/templates/flicket_navbar.html:47
+#: application/flicket/views/users.py:53
+msgid "User Details"
+msgstr "Benutzerdetails"
+
+#: application/flicket/templates/flicket_navbar.html:52
+msgid "Log Out"
+msgstr "Abmelden"
+
+#: application/flicket/templates/flicket_navbar.html:62
+msgid "Log In"
+msgstr "Anmelden"
+
+#: application/flicket/templates/flicket_password_reset.html:15
+msgid "Email Address"
+msgstr "E-Mail-Adresse"
+
+#: application/flicket/templates/flicket_post.html:84
+msgid "This post was modified by"
+msgstr "Dieser Beitrag wurde geändert von"
+
+#: application/flicket/templates/flicket_post.html:85
+msgid "on"
+msgstr "am"
+
+#: application/flicket/templates/flicket_post.html:87
+#: application/flicket/templates/flicket_post.html:90
+msgid ""
+"edit\n"
+"                history"
+msgstr ""
+"Bearbeitungs-\n"
+"                verlauf"
+
+#: application/flicket/templates/flicket_post.html:128
+msgid "quote"
+msgstr "zitieren"
+
+#: application/flicket/templates/flicket_post_box.html:11
+msgid "Ticket content supports markdown syntax. Please refer to the"
+msgstr "Ticketinhalte unterstützen die Markdown-Syntax. Bitte beachten Sie die"
+
+#: application/flicket/templates/flicket_post_box.html:13
+msgid "markdown_primer"
+msgstr "Markdown-Einführung"
+
+#: application/flicket/templates/flicket_post_box.html:19
+msgid "Ticket Title"
+msgstr "Tickettitel"
+
+#: application/flicket/templates/flicket_post_box.html:57
+msgid "Priority Level"
+msgstr "Prioritätsstufe"
+#: application/flicket/templates/flicket_tickets.html:19
+msgid "Download results as a csv file"
+msgstr "Ergebnisse als CSV-Datei herunterladen"
+
+#: application/flicket/templates/flicket_tickets.html:54
+msgid "search"
+msgstr "Suchen"
+
+#: application/flicket/templates/flicket_tickets.html:75
+msgid "Sort"
+msgstr "Sortieren"
+
+#: application/flicket/templates/flicket_tickets.html:92
+#: application/flicket/templates/flicket_tickets.html:97
+msgid "Ticket ID"
+msgstr "Ticket-ID"
+
+#: application/flicket/templates/flicket_tickets.html:103
+#: application/flicket/templates/flicket_tickets.html:108
+msgid "Title"
+msgstr "Titel"
+
+#: application/flicket/templates/flicket_tickets.html:114
+#: application/flicket/templates/flicket_tickets.html:119
+msgid "Submitted By"
+msgstr "Eingereicht von"
+
+#: application/flicket/templates/flicket_tickets.html:125
+#: application/flicket/templates/flicket_tickets.html:130
+msgid "Date"
+msgstr "Datum"
+
+#: application/flicket/templates/flicket_tickets.html:136
+#: application/flicket/templates/flicket_tickets.html:141
+msgid "Last Updated"
+msgstr "Zuletzt aktualisiert"
+
+#: application/flicket/templates/flicket_tickets.html:147
+#: application/flicket/templates/flicket_tickets.html:152
+#, fuzzy
+msgid "Department / Category"
+msgstr "Abteilung / Kategorie"
+
+#: application/flicket/templates/flicket_tickets.html:191
+#: application/flicket/templates/flicket_tickets.html:196
+msgid "Hours"
+msgstr "Stunden"
+
+#: application/flicket/templates/flicket_tickets.html:254
+msgid "created"
+msgstr "erstellt"
+
+#: application/flicket/templates/flicket_tickets.html:261
+#: application/flicket/templates/flicket_tickets.html:264
+msgid "date of last reply, action, edit ..."
+msgstr "Datum der letzten Antwort, Aktion, Bearbeitung ..."
+
+#: application/flicket/templates/flicket_tickets.html:262
+msgid "updated"
+msgstr "aktualisiert"
+
+#: application/flicket/templates/flicket_unsubscribe_user.html:31
+#: application/flicket/templates/flicket_view.html:32
+#, fuzzy
+msgid "category"
+msgstr "Kategorie"
+
+#: application/flicket/templates/flicket_unsubscribe_user.html:43
+#: application/flicket/templates/flicket_view.html:44
+#, fuzzy
+msgid "department"
+msgstr "Abteilung"
+
+#: application/flicket/templates/flicket_unsubscribe_user.html:78
+#: application/flicket/templates/flicket_view.html:79
+msgid "Total Hours"
+msgstr "Gesamtstunden"
+
+#: application/flicket/templates/flicket_user_details.html:24
+#: application/flicket/templates/flicket_users.html:126
+#: application/flicket_admin/templates/admin_delete_user.html:44
+#: application/flicket_admin/templates/admin_users.html:85
+msgid "Email"
+msgstr "E-Mail"
+
+#: application/flicket/templates/flicket_user_details.html:27
+msgid "Date Joined"
+msgstr "Beitrittsdatum"
+
+#: application/flicket/templates/flicket_user_details.html:30
+#: application/flicket/templates/flicket_users.html:140
+#: application/flicket_admin/templates/admin_users.html:96
+msgid "Job Title"
+msgstr "Berufsbezeichnung"
+
+#: application/flicket/templates/flicket_user_details.html:33
+msgid "Number Of Posts"
+msgstr "Anzahl der Beiträge"
+
+#: application/flicket/templates/flicket_user_details.html:36
+msgid "Number Assigned"
+msgstr "Anzahl zugewiesener Tickets"
+
+#: application/flicket/templates/flicket_users.html:117
+#: application/flicket_admin/templates/admin_delete_user.html:38
+#: application/flicket_admin/templates/admin_users.html:67
+msgid "Name"
+msgstr "Name"
+
+#: application/flicket/templates/flicket_users.html:149
+msgid "Posts"
+msgstr "Beiträge"
+
+#: application/flicket/templates/flicket_view.html:94
+msgid "claim"
+msgstr "Übernehmen"
+
+#: application/flicket/templates/flicket_view.html:104
+msgid "release"
+msgstr "Freigeben"
+
+#: application/flicket/templates/flicket_view.html:112
+msgid "assign"
+msgstr "Zuweisen"
+
+#: application/flicket/views/assign.py:29
+msgid "Can't assign a closed ticket."
+msgstr "Ein geschlossenes Ticket kann nicht zugewiesen werden."
+
+#: application/flicket/views/assign.py:37
+msgid "User is already assigned to ticket."
+msgstr "Der Benutzer ist diesem Ticket bereits zugewiesen."
+
+#: application/flicket/views/assign.py:69
+#, fuzzy
+msgid "You reassigned ticket: {} to {}"
+msgstr "Sie haben das Ticket {} neu zugewiesen an {}"
+
+#: application/flicket/views/assign.py:72
+msgid "Assign Ticket"
+msgstr "Ticket zuweisen"
+
+#: application/flicket/views/categories.py:30
+#, fuzzy
+msgid "New category {} added."
+msgstr "Neue Kategorie {} hinzugefügt."
+
+#: application/flicket/views/categories.py:59
+msgid "Edit Category"
+msgstr "Kategorie bearbeiten"
+
+#: application/flicket/views/claim.py:28
+msgid "You have already been assigned this ticket."
+msgstr "Dieses Ticket wurde Ihnen bereits zugewiesen."
+
+#: application/flicket/views/claim.py:46
+#, python-format
+msgid "You claimed ticket: %(value)s"
+msgstr "Sie haben das Ticket übernommen: %(value)s"
+
+#: application/flicket/views/create.py:41
+msgid "New Ticket created."
+msgstr "Neues Ticket erstellt."
+
+#: application/flicket/views/delete.py:29
+msgid "You are not authorised to delete tickets."
+msgstr "Sie sind nicht berechtigt, Tickets zu löschen."
+
+#: application/flicket/views/delete.py:61
+#: application/flicket/views/delete.py:95
+msgid "Ticket deleted."
+msgstr "Ticket gelöscht."
+
+#: application/flicket/views/delete.py:76
+msgid "You are not authorised to delete posts"
+msgstr "Sie sind nicht berechtigt, Beiträge zu löschen."
+
+#: application/flicket/views/delete.py:98
+msgid "Delete Post"
+msgstr "Beitrag löschen"
+
+#: application/flicket/views/delete.py:114
+msgid "You are not authorised to delete categories."
+msgstr "Sie sind nicht berechtigt, Kategorien zu löschen."
+
+#: application/flicket/views/delete.py:144
+msgid "Delete Category"
+msgstr "Kategorie löschen"
+
+#: application/flicket/views/delete.py:160
+msgid "You are not authorised to delete departments."
+msgstr "Sie sind nicht berechtigt, Abteilungen zu löschen."
+
+#: application/flicket/views/delete.py:189
+#, fuzzy, python-format
+msgid "You are trying to delete department: %(value)s."
+msgstr "Sie versuchen, die folgende Abteilung zu löschen: %(value)s."
+
+#: application/flicket/views/delete.py:191
+msgid "Delete Department"
+msgstr "Abteilung löschen"
+
+#: application/flicket/views/department_category.py:33
+msgid "Can't change the department and category on a closed ticket."
+msgstr "Abteilung und Kategorie eines geschlossenen Tickets können nicht geändert werden."
+
+#: application/flicket/views/department_category.py:43
+#, fuzzy
+msgid "Category \"{} / {}\" is already assigned to ticket."
+msgstr "Die Kategorie \"{} / {}\" ist diesem Ticket bereits zugewiesen."
+
+#: application/flicket/views/department_category.py:60
+msgid "You changed category of ticket: {}"
+msgstr "Sie haben die Kategorie des Tickets geändert: {}"
+
+#: application/flicket/views/department_category.py:63
+msgid "Change Department / Category of Ticket"
+msgstr "Abteilung / Kategorie des Tickets ändern"
+
+#: application/flicket/views/departments.py:29
+#, fuzzy
+msgid "New department \"{}\" added."
+msgstr "Neue Abteilung \"{}\" hinzugefügt."
+
+#: application/flicket/views/departments.py:54
+#, python-format
+msgid "Department \"%(value)s\" edited."
+msgstr "Abteilung \"%(value)s\" bearbeitet."
+
+#: application/flicket/views/edit.py:37
+msgid "Could not find ticket."
+msgstr "Ticket konnte nicht gefunden werden."
+
+#: application/flicket/views/edit.py:50
+msgid "You are not authorised to edit this ticket."
+msgstr "Sie sind nicht berechtigt, dieses Ticket zu bearbeiten."
+
+#: application/flicket/views/edit.py:75
+msgid "Edit Ticket"
+msgstr "Ticket bearbeiten"
+
+#: application/flicket/views/edit.py:110
+#, fuzzy
+msgid "You can not edit and close ticket."
+msgstr "Sie können ein Ticket nicht gleichzeitig bearbeiten und schließen."
+
+#: application/flicket/views/edit_status.py:36
+msgid ""
+"Only the person to which the ticket has been assigned, creator or Admin "
+"can close this ticket."
+msgstr ""
+"Nur die Person, der das Ticket zugewiesen wurde, der Ersteller oder ein Admin "
+"können dieses Ticket schließen."
+
+#: application/flicket/views/edit_status.py:42
+msgid "Ticket is already closed."
+msgstr "Das Ticket ist bereits geschlossen."
+
+#: application/flicket/views/edit_status.py:56
+#, python-format
+msgid "Ticket %(value)s closed."
+msgstr "Ticket %(value)s geschlossen."
+
+#: application/flicket/views/history.py:21
+#: application/flicket/views/history.py:40
+msgid "History"
+msgstr "Verlauf"
+
+#: application/flicket/views/login.py:113
+msgid "Please set your email and job title."
+msgstr "Bitte legen Sie Ihre E-Mail-Adresse und Berufsbezeichnung fest."
+
+#: application/flicket/views/login.py:116
+msgid "You were logged in successfully."
+msgstr "Sie wurden erfolgreich eingeloggt."
+
+#: application/flicket/views/login.py:128
+msgid "You were logged out successfully."
+msgstr "Sie wurden erfolgreich abgemeldet."
+
+#: application/flicket/views/login.py:147
+msgid "Password reset. Please check your email for your new password"
+msgstr ""
+"Passwort zurückgesetzt. Bitte überprüfen Sie Ihre E-Mails auf Ihr neues "
+"Passwort"
+
+#: application/flicket/views/release.py:30
+msgid "Ticket has not been assigned"
+msgstr "Das Ticket wurde noch nicht zugewiesen"
+
+#: application/flicket/views/release.py:35
+msgid "You can not release a ticket you are not working on."
+msgstr ""
+"Sie können kein Ticket freigeben, an dem Sie nicht selbst arbeiten."
+
+#: application/flicket/views/release.py:55
+#, python-format
+msgid "You released ticket: %(value)s"
+msgstr "Sie haben das Ticket freigegeben: %(value)s"
+
+#: application/flicket/views/subscribe.py:73
+#, fuzzy
+msgid "\"{}\" has been unsubscribed from this ticket."
+msgstr "\"{}\" wurde von diesem Ticket abgemeldet."
+
+#: application/flicket/views/subscribe.py:77
+#, fuzzy
+msgid "Could not unsubscribe \"{}\" from ticket due to permission restrictions."
+msgstr ""
+"\"{}\" konnte aufgrund von Berechtigungsbeschränkungen nicht vom Ticket "
+"abgemeldet werden."
+
+#: application/flicket/views/view_ticket.py:39
+#, python-format
+msgid "Cannot find ticket: \"%(value)s\""
+msgstr "Ticket konnte nicht gefunden werden: \"%(value)s\""
+
+#: application/flicket/views/view_ticket.py:57
+msgid "User subscribed."
+msgstr "Benutzer abonniert."
+
+#: application/flicket/views/view_ticket.py:59
+msgid "User already subscribed."
+msgstr "Benutzer hat bereits abonniert."
+
+#: application/flicket/views/view_ticket.py:61
+msgid "Invalid username."
+msgstr "Ungültiger Benutzername."
+
+#: application/flicket/views/view_ticket.py:120
+#, python-format
+msgid "You have replied to ticket %(value_1)s: %(value_2)s."
+msgstr "Sie haben auf das Ticket %(value_1)s geantwortet: %(value_2)s."
+
+#: application/flicket/views/view_ticket.py:132
+#: application/flicket/views/view_ticket.py:139
+#, python-format
+msgid ""
+"%(value_1)s wrote on %(value_2)s\r\n"
+"\r\n"
+"%(value_3)s"
+msgstr ""
+"%(value_1)s schrieb am %(value_2)s\r\n"
+"\r\n"
+"%(value_3)s"
+
+#: application/flicket_admin/templates/admin_config.html:13
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: application/flicket_admin/templates/admin_config.html:24
+msgid "Field"
+msgstr "Feld"
+
+#: application/flicket_admin/templates/admin_config.html:27
+msgid "Value"
+msgstr "Wert"
+
+#: application/flicket_admin/templates/admin_config.html:42
+msgid "This must be a comma delimited list."
+msgstr "Dies muss eine kommagetrennte Liste sein."
+
+#: application/flicket_admin/templates/admin_delete_group.html:21
+#, fuzzy
+msgid "Are you sure you want to delete the group:"
+msgstr "Sind Sie sicher, dass Sie die Gruppe löschen möchten:"
+
+#: application/flicket_admin/templates/admin_delete_group.html:31
+msgid "Please enter your password to delete group."
+msgstr "Bitte geben Sie Ihr Passwort ein, um die Gruppe zu löschen."
+
+#: application/flicket_admin/templates/admin_delete_user.html:24
+msgid ""
+"Are you sure you want to delete the following user? This may impact "
+"relational query look ups."
+msgstr ""
+"Sind Sie sicher, dass Sie den folgenden Benutzer löschen möchten? Dies kann "
+"Auswirkungen auf relationale Abfragen haben."
+
+#: application/flicket_admin/templates/admin_delete_user.html:52
+#, fuzzy
+msgid "Enter password"
+msgstr "Passwort eingeben"
+
+#: application/flicket_admin/templates/admin_edit_group.html:26
+msgid "Please add new users credentials."
+msgstr "Bitte fügen Sie neue Benutzeranmeldedaten hinzu."
+
+#: application/flicket_admin/templates/admin_edit_group.html:32
+#: application/flicket_admin/templates/admin_groups.html:20
+#: application/flicket_admin/templates/admin_groups.html:47
+msgid "Group Name"
+msgstr "Gruppenname"
+
+#: application/flicket_admin/templates/admin_groups.html:12
+msgid "Click on group name to edit."
+msgstr "Klicken Sie zum Bearbeiten auf den Gruppennamen."
+
+#: application/flicket_admin/templates/admin_groups.html:21
+msgid "Delete"
+msgstr "Löschen"
+
+#: application/flicket_admin/templates/admin_groups.html:32
+#: application/flicket_admin/templates/admin_users.html:108
+msgid "delete"
+msgstr "löschen"
+
+#: application/flicket_admin/templates/admin_groups.html:39
+msgid "Add Group"
+msgstr "Gruppe hinzufügen"
+
+#: application/flicket_admin/templates/admin_groups.html:43
+msgid "Please enter group name."
+msgstr "Bitte Gruppennamen eingeben."
+
+#: application/flicket_admin/templates/admin_menu.html:2
+msgid "Administration"
+msgstr "Administration"
+
+#: application/flicket_admin/templates/admin_menu.html:7
+msgid "Admin Home"
+msgstr "Admin-Startseite"
+
+#: application/flicket_admin/templates/admin_menu.html:12
+msgid "Flicket Config"
+msgstr "Flicket-Konfiguration"
+
+#: application/flicket_admin/templates/admin_menu.html:12
+msgid "Users"
+msgstr "Benutzer"
+
+#: application/flicket_admin/templates/admin_menu.html:22
+msgid "Add User"
+msgstr "Benutzer hinzufügen"
+
+#: application/flicket_admin/templates/admin_menu.html:27
+msgid "Groups"
+msgstr "Gruppen"
+
+#: application/flicket_admin/templates/admin_users.html:12
+msgid "Click on username to edit."
+msgstr "Klicken Sie zum Bearbeiten auf den Benutzernamen."
+
+#: application/flicket_admin/templates/admin_users.html:53
+#: application/flicket_admin/templates/admin_users.html:71
+msgid "edit"
+msgstr "bearbeiten"
+
+#: application/flicket_admin/templates/admin_users.html:105
+msgid "Delete User"
+msgstr "Benutzer löschen"
+
+#: application/flicket_admin/views/view_admin.py:105
+#, fuzzy
+msgid "You have successfully registered new user \"{}\"."
+msgstr "Sie haben den neuen Benutzer \"{}\" erfolgreich registriert."
+
+#: application/flicket_admin/views/view_admin.py:125
+msgid "Username already exists"
+msgstr "Benutzername existiert bereits"
+
+#: application/flicket_admin/views/view_admin.py:148
+#, fuzzy
+msgid "User {} edited."
+msgstr "Benutzer {} bearbeitet."
+
+#: application/flicket_admin/views/view_admin.py:164
+msgid "Could not find user."
+msgstr "Benutzer konnte nicht gefunden werden."
+
+#: application/flicket_admin/views/view_admin.py:185
+msgid "Can't delete default flicket_admin user."
+msgstr "Der Standard-Benutzer flicket_admin kann nicht gelöscht werden."
+
+#: application/flicket_admin/views/view_admin.py:190
+#, fuzzy
+msgid "Deleted user {}s"
+msgstr "Benutzer {} gelöscht"
+
+#: application/flicket_admin/views/view_admin.py:214
+#, fuzzy
+msgid "New group \"{}\" added."
+msgstr "Neue Gruppe \"{}\" hinzugefügt."
+
+#: application/flicket_admin/views/view_admin.py:232
+#, fuzzy
+msgid "Could not find group {}"
+msgstr "Gruppe {} konnte nicht gefunden werden."
+
+#: application/flicket_admin/views/view_admin.py:237
+#, fuzzy
+msgid "Can't edit group {}s."
+msgstr "Gruppe {} kann nicht bearbeitet werden."
+
+#: application/flicket_admin/views/view_admin.py:243
+msgid "Group name changed to {}."
+msgstr "Gruppenname geändert in {}."
+
+#: application/flicket_admin/views/view_admin.py:262
+msgid "Can't delete default flicket_admin group."
+msgstr "Die Standard-Gruppe flicket_admin kann nicht gelöscht werden."
+
+#: application/flicket_admin/views/view_admin.py:267
+#, fuzzy
+msgid "Deleted group {}s"
+msgstr "Gruppe {} gelöscht"
+
+#: application/flicket_admin/views/view_admin.py:273
+msgid "Delete Group"
+msgstr "Gruppe löschen"
+
+#: application/flicket_admin/views/view_config.py:63
+msgid "Config details updated."
+msgstr "Konfigurationsdetails aktualisiert."
+
+#: application/flicket_admin/views/view_email_test.py:35
+msgid ""
+"Flicket has tried to send an email to the address you entered. Please "
+"check your inbox. If no email has arrived please double check the <a "
+"href=\"{}{url_for(\"admin_bp.config\")}\">config</a> settings."
+msgstr ""
+"Flicket hat versucht, eine E-Mail an die von Ihnen eingegebene Adresse zu senden. Bitte "
+"überprüfen Sie Ihren Posteingang. Wenn keine E-Mail angekommen ist, überprüfen Sie bitte noch einmal die <a "
+"href=\"{}{url_for(\"admin_bp.config\")}\">Konfigurations-Einstellungen</a>."
+
+#~ msgid ""
+#~ "Category is linked to posts. Category"
+#~ " can not be deleted unless all "
+#~ "posts / topics are removed / "
+#~ "relinked."
+#~ msgstr ""
+#~ "Die Kategorie ist mit Beiträgen verknüpft. Die Kategorie"
+#~ " kann nicht gelöscht werden, außer alle "
+#~ "Beiträge / Themen wurden entfernt / "
+#~ "neu verknüpft."
+
+#~ msgid ""
+#~ "Department has categories linked to it."
+#~ " Department can not be deleted unless"
+#~ " all categories are first removed."
+#~ msgstr ""
+#~ "Mit der Abteilung sind Kategorien verknüpft."
+#~ " Die Abteilung kann nicht gelöscht werden, außer"
+#~ " alle Kategorien wurden zuerst entfernt."
+
+#~ msgid "Flicket - Create Ticket"
+#~ msgstr "Flicket - Ticket erstellen"
+
+#~ msgid "Flicket - Delete Post"
+#~ msgstr "Flicket - Beitrag löschen"
+
+#~ msgid "Flicket - Delete Category"
+#~ msgstr "Flicket - Kategorie löschen"
+
+#~ msgid "Flicket - Delete Department"
+#~ msgstr "Flicket - Abteilung löschen"
+
+#~ msgid "Flicket - Departments"
+#~ msgstr "Flicket - Abteilungen"
+
+#~ msgid "Flicket - Edit Ticket"
+#~ msgstr "Flicket - Ticket bearbeiten"
+
+#~ msgid "Flicket - History"
+#~ msgstr "Flicket - Verlauf"
+
+#~ msgid "Type name and pick from drop down list to. For a complete list of"
+#~ msgstr ""
+#~ "Namen eingeben und aus der Dropdown-Liste auswählen. Für eine vollständige Liste von"
+
+#~ msgid "MarkDown reference"
+#~ msgstr "Markdown-Referenz"
+
+#~ msgid "Ticket contents supports markdown syntax. Please refer to"
+#~ msgstr "Ticketinhalte unterstützen die Markdown-Syntax. Bitte beachten Sie"
+
+#~ msgid "md help"
+#~ msgstr "Markdown-Hilfe"
+
+#~ msgid "FAQ"
+#~ msgstr "FAQ"
+
+#~ msgid "edit history"
+#~ msgstr "Bearbeitungsverlauf"
+
+#~ msgid "You are already subscribed to this ticket"
+#~ msgstr "Sie haben dieses Ticket bereits abonniert"
+
+#~ msgid "Upload Documents"
+#~ msgstr "Dokumente hochladen"
+
+#~ msgid "Submit"
+#~ msgstr "Absenden"
+
+#~ msgid "Reply"
+#~ msgstr "Antworten"
+
+#~ msgid "Add Files"
+#~ msgstr "Dateien hinzufügen"
+
+#~ msgid "submit reply"
+#~ msgstr "Antwort absenden"
+
+#~ msgid "reply and close"
+#~ msgstr "Antworten und schließen"
+
+#~ msgid "Edit Reply"
+#~ msgstr "Antwort bearbeiten"
+
+#~ msgid "search user"
+#~ msgstr "Benutzer suchen"
+
+#~ msgid "assign user"
+#~ msgstr "Benutzer zuweisen"
+
+#~ msgid "subscribe user"
+#~ msgstr "Benutzer anmelden"
+
+#~ msgid "add department"
+#~ msgstr "Abteilung hinzufügen"
+
+#~ msgid "This site uses:"
+#~ msgstr "Diese Website verwendet:"
+
+#~ msgid "This page shows history of edits for a given post."
+#~ msgstr "Diese Seite zeigt den Bearbeitungsverlauf für einen bestimmten Beitrag."
+
+#~ msgid "Ticket contents supports markdown syntax. Please refer to the"
+#~ msgstr "Ticketinhalte unterstützen die Markdown-Syntax. Bitte beachten Sie die"
+
+#~ msgid "Stats"
+#~ msgstr "Statistiken"
+
+#~ msgid "Overall"
+#~ msgstr "Gesamt"
+
+#~ msgid "tickets have been raised"
+#~ msgstr "Tickets wurden erstellt"
+
+#~ msgid "tickets"
+#~ msgstr "Tickets"
+
+#~ msgid "have"
+#~ msgstr "haben"
+
+#~ msgid "has"
+#~ msgstr "hat"
+
+#~ msgid "been raised over the last"
+#~ msgstr "wurden erstellt in den letzten"
+
+#~ msgid "days"
+#~ msgstr "Tagen"
+
+#~ msgid "There are currently"
+#~ msgstr "Aktuell gibt es"
+
+#~ msgid "reply"
+#~ msgstr "antworten"
+
+#~ msgid "unsubscribe"
+#~ msgstr "abmelden"
+
+#~ msgid "Please enter your credentials to login."
+#~ msgstr "Bitte geben Sie Ihre Anmeldedaten ein, um sich einzuloggen."
+
+#~ msgid ""
+#~ "You are trying to delete department "
+#~ "<span class=\"label label-"
+#~ "default\">%(value)s</span>."
+#~ msgstr ""
+#~ "Sie versuchen, die Abteilung "
+#~ "<span class=\"label label-"
+#~ "default\">%(value)s</span> zu löschen."
+
+#~ msgid "You are already subscribed from this ticket"
+#~ msgstr "Sie haben dieses Ticket bereits abbestellt"
+
+#~ msgid "View Ticket"
+#~ msgstr "Ticket anzeigen"
+
+#~ msgid "Administration home page."
+#~ msgstr "Administration-Startseite."
+
+#~ msgid "Administration - Configuration"
+#~ msgstr "Administration - Konfiguration"
+
+#~ msgid "Please enter your password to delete user."
+#~ msgstr "Bitte geben Sie Ihr Passwort ein, um den Benutzer zu löschen."
+
+#~ msgid ""
+#~ "Flicket has tried to send an email"
+#~ " to the address you entered. Please"
+#~ " check your inbox. If no email "
+#~ "has arrived please double check the "
+#~ "<a href=\"{}{}\">config</a> settings."
+#~ msgstr ""
+#~ "Flicket hat versucht, eine E-Mail"
+#~ " an die von Ihnen eingegebene Adresse zu senden. Bitte"
+#~ " überprüfen Sie Ihren Posteingang. Wenn keine E-Mail "
+#~ "angekommen ist, überprüfen Sie bitte noch einmal die "
+#~ "<a href=\"{}{}\">Konfigurations</a>-Einstellungen."
+
+#~ msgid "You have been subscribed to this ticket."
+#~ msgstr "Sie haben dieses Ticket abonniert."
+
+#~ msgid "Already subscribed to this ticket"
+#~ msgstr "Dieses Ticket ist bereits abonniert"
