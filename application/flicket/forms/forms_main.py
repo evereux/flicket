@@ -5,8 +5,8 @@
 
 import bcrypt
 from flask import g
-from flask_wtf import FlaskForm
 from flask_babel import lazy_gettext
+from flask_wtf import FlaskForm
 from wtforms import (PasswordField,
                      StringField,
                      FileField,
@@ -18,7 +18,6 @@ from wtforms.validators import (DataRequired,
 from application import app
 from application.flicket.models.flicket_user import (FlicketUser,
                                                      user_field_size)
-
 from application.flicket.scripts.functions_login import check_email_format
 
 
@@ -123,29 +122,69 @@ class EditUserForm(FlaskForm):
         form = super(EditUserForm, self).__init__(*args, **kwargs)
         self.locale.choices = [(_id, lang) for _id, lang in app.config['SUPPORTED_LANGUAGES'].items()]
 
-    username = StringField(lazy_gettext('username'))
-    name = StringField(lazy_gettext('name'),
-                       validators=[Length(min=user_field_size['name_min'], max=user_field_size['name_max'])])
-    email = StringField(lazy_gettext('email'),
-                        validators=[Length(min=user_field_size['email_min'], max=user_field_size['email_max']),
-                                    change_email])
-    avatar = FileField(lazy_gettext('avatar'))
-    password = PasswordField(lazy_gettext('password'),
-                             validators=[DataRequired(),
-                                         CheckPasswordCorrect(),
-                                         Length(min=user_field_size['password_min'],
-                                                max=user_field_size['password_max'])])
-    new_password = PasswordField(lazy_gettext('new_password'),
-                                 validators=[EqualTo('confirm',
-                                                     message='Passwords must match'),
-                                             ])
+    username = StringField(
+        lazy_gettext('username')
+    )
+    name = StringField(
+        lazy_gettext('name'),
+        validators=[
+            Length(min=user_field_size['name_min'],
+                   max=user_field_size['name_max'])
+        ]
+    )
+    email = StringField(
+        lazy_gettext('email'),
+        validators=[
+            Length(
+                min=user_field_size['email_min'],
+                max=user_field_size['email_max']),
+            change_email
+        ]
+    )
+    avatar = FileField(
+        lazy_gettext('avatar'),
+        render_kw={
+            'class': 'form-control'
+        }
+    )
+    password = PasswordField(
+        lazy_gettext('password'),
+        validators=[
+            DataRequired(),
+            CheckPasswordCorrect(),
+            Length(
+                min=user_field_size['password_min'],
+                max=user_field_size['password_max']
+            )
+        ]
+    )
+    new_password = PasswordField(
+        lazy_gettext('new_password'),
+        validators=[EqualTo('confirm',
+                            message='Passwords must match'),
+                    ])
     confirm = PasswordField(lazy_gettext('Repeat Password'))
-    job_title = StringField(lazy_gettext('job_title'), validators=[Length(max=user_field_size['job_title'])])
-    locale = SelectField(lazy_gettext('Locale'), validators=[DataRequired()], )
+    job_title = StringField(
+        lazy_gettext('job_title'),
+        validators=[
+            Length(
+                max=user_field_size['job_title']
+            )
+        ]
+    )
+    locale = SelectField(
+        lazy_gettext('Locale'),
+        validators=[
+            DataRequired()
+        ],
+    )
 
 
 class ConfirmPassword(FlaskForm):
-    password = PasswordField(lazy_gettext('password'),
-                             validators=[DataRequired(),
-                                         check_password
-                                         ])
+    password = PasswordField(
+        lazy_gettext('password'),
+        validators=[
+            DataRequired(),
+            check_password
+        ]
+    )
