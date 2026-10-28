@@ -71,6 +71,7 @@ def delete_ticket(ticket_id):
 @flicket_bp.route(app.config['FLICKET'] + 'delete_post/<post_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
+
     # check user is authorised to delete posts. Only admin can do this.
     if not g.user.is_admin:
         flash(gettext('You are not authorised to delete posts'), category='warning')

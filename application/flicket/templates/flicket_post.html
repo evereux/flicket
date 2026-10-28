@@ -78,7 +78,7 @@
 
         <div class="row border-bottom m-0  p-2">
             <div class="col">
-                {{ content.content|markdown }}
+                {{ render_markdown(content.content) }}
                 {%- if content.modified_id -%}
                     <div class="">
                         {{ _('This post was modified by') }} {{ content.modified.name }}
