@@ -1,8 +1,8 @@
-"""migrations before source code control
+"""Squashed migrations
 
-Revision ID: fe0f77ef3f46
+Revision ID: 918f2db0f857
 Revises: 
-Create Date: 2019-09-19 16:45:11.414861
+Create Date: 2026-10-28 10:19:50.842840
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fe0f77ef3f46'
+revision = '918f2db0f857'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,6 +40,8 @@ def upgrade():
     sa.Column('auth_domain', sa.String(length=64), nullable=True),
     sa.Column('use_auth_domain', sa.BOOLEAN(), nullable=True),
     sa.Column('csv_dump_limit', sa.Integer(), nullable=True),
+    sa.Column('change_category', sa.BOOLEAN(), nullable=True),
+    sa.Column('change_category_only_admin_or_super_user', sa.BOOLEAN(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('flicket_department',
@@ -77,11 +79,14 @@ def upgrade():
     sa.Column('token', sa.String(length=32), nullable=True),
     sa.Column('token_expiration', sa.DateTime(), nullable=True),
     sa.Column('locale', sa.String(length=10), nullable=True),
+    sa.Column('disabled', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
-    op.create_index(op.f('ix_flicket_users_token'), 'flicket_users', ['token'], unique=True)
-    op.create_index(op.f('ix_flicket_users_username'), 'flicket_users', ['username'], unique=True)
+    with op.batch_alter_table('flicket_users', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_flicket_users_token'), ['token'], unique=True)
+        batch_op.create_index(batch_op.f('ix_flicket_users_username'), ['username'], unique=True)
+
     op.create_table('flicket_category',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('category', sa.String(length=30), nullable=True),
@@ -107,6 +112,8 @@ def upgrade():
     sa.Column('category_id', sa.Integer(), nullable=True),
     sa.Column('assigned_id', sa.Integer(), nullable=True),
     sa.Column('ticket_priority_id', sa.Integer(), nullable=True),
+    sa.Column('hours', sa.Numeric(precision=10, scale=2), server_default='0', nullable=True),
+    sa.Column('last_updated', sa.DateTime(), server_default='2026-10-28', nullable=True),
     sa.ForeignKeyConstraint(['assigned_id'], ['flicket_users.id'], ),
     sa.ForeignKeyConstraint(['category_id'], ['flicket_category.id'], ),
     sa.ForeignKeyConstraint(['modified_id'], ['flicket_users.id'], ),
@@ -115,7 +122,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['ticket_priority_id'], ['flicket_priorities.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_flicket_topic_title'), 'flicket_topic', ['title'], unique=False)
+    with op.batch_alter_table('flicket_topic', schema=None) as batch_op:
+        batch_op.create_index(batch_op.f('ix_flicket_topic_title'), ['title'], unique=False)
+
     op.create_table('flicket_post',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('ticket_id', sa.Integer(), nullable=True),
@@ -124,6 +133,7 @@ def upgrade():
     sa.Column('date_added', sa.DateTime(), nullable=True),
     sa.Column('date_modified', sa.DateTime(), nullable=True),
     sa.Column('modified_id', sa.Integer(), nullable=True),
+    sa.Column('hours', sa.Numeric(precision=10, scale=2), server_default='0', nullable=True),
     sa.ForeignKeyConstraint(['modified_id'], ['flicket_users.id'], ),
     sa.ForeignKeyConstraint(['ticket_id'], ['flicket_topic.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['flicket_users.id'], ),
@@ -153,13 +163,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('ticket_id', sa.Integer(), nullable=True),
     sa.Column('post_id', sa.Integer(), nullable=True),
-    sa.Column('assigned', sa.Boolean(), nullable=True),
-    sa.Column('claimed', sa.Boolean(), nullable=True),
-    sa.Column('released', sa.Boolean(), nullable=True),
-    sa.Column('closed', sa.Boolean(), nullable=True),
-    sa.Column('opened', sa.Boolean(), nullable=True),
-    sa.Column('status', sa.String(length=20), nullable=True),
-    sa.Column('priority', sa.String(length=12), nullable=True),
+    sa.Column('action', sa.String(length=30), nullable=True),
+    sa.Column('data', sa.JSON(none_as_null=True), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('recipient_id', sa.Integer(), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=True),
@@ -189,12 +194,16 @@ def downgrade():
     op.drop_table('flicket_history')
     op.drop_table('flicket_ticket_subscription')
     op.drop_table('flicket_post')
-    op.drop_index(op.f('ix_flicket_topic_title'), table_name='flicket_topic')
+    with op.batch_alter_table('flicket_topic', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_flicket_topic_title'))
+
     op.drop_table('flicket_topic')
     op.drop_table('flicket_groups')
     op.drop_table('flicket_category')
-    op.drop_index(op.f('ix_flicket_users_username'), table_name='flicket_users')
-    op.drop_index(op.f('ix_flicket_users_token'), table_name='flicket_users')
+    with op.batch_alter_table('flicket_users', schema=None) as batch_op:
+        batch_op.drop_index(batch_op.f('ix_flicket_users_username'))
+        batch_op.drop_index(batch_op.f('ix_flicket_users_token'))
+
     op.drop_table('flicket_users')
     op.drop_table('flicket_status')
     op.drop_table('flicket_priorities')
