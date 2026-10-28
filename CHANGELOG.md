@@ -5,15 +5,26 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 * you upgrade the database:
 
     ```
-    python manage.py db upgrade
+    flask db upgrade
     ```
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
-# 0.3.6
+## 0.4.0
+
+* migrations squashed
+  - no database changes 
+* updated python requirement to be minimum 3.12.
 * removed bug where non admin users could delete a post. please update ASAP.
-* Bump jinja2 from 3.1.4 to 3.1.5
-* Bump werkzeug from 3.0.3 to 3.0.6
+* Bumped the following dependencies:
+- jinja2
+- markdown
+- cryptography
+- flask-httpauth
+- python-dotenv
+- flask
+- werkzeug
+- pymysql
 
 ## 0.3.5
 

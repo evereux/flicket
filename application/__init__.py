@@ -25,7 +25,6 @@ from flask_mail import Mail
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
-from flaskext.markdown import Markdown
 from flask_migrate import Migrate
 
 from application.flicket_admin.views import admin_bp
@@ -33,6 +32,7 @@ from application.flicket_api.views import bp_api
 from application.flicket_errors import bp_errors
 from application.flicket.views import flicket_bp
 from application.flicket.scripts.jinja2_functions import now_year
+from application.flicket.scripts.jinja2_functions import render_markdown
 
 __version__ = '0.3.6'
 
@@ -45,11 +45,9 @@ migrate = Migrate(app, db)
 mail = Mail(app)
 pagedown = PageDown(app)
 
-
-Markdown(app)
-
 # import jinja function
 app.jinja_env.globals.update(now_year=now_year)
+app.jinja_env.globals.update(render_markdown=render_markdown)
 
 # import models so alembic can see them
 # noinspection PyPep8

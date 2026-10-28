@@ -4,8 +4,6 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import flash
-from flask import Markup
-from flask import url_for
 from flask import render_template
 from flask_babel import gettext
 from flask_login import login_required
@@ -29,10 +27,8 @@ def email_test():
         # send email notification
         mail = FlicketMail()
         mail.test_email([form.email_address.data])
-        flash(Markup(gettext(
-            'Flicket has tried to send an email to the address you entered. Please check your inbox. If no email has '
-            'arrived please double check the <a href="{}{url_for("admin_bp.config")}">config</a>'
-            ' settings.'.format(app.config["base_url"]))),
+        flash(gettext('Flicket has tried to send an email to the address you entered. Please check your inbox. If no email has '
+            'arrived please double check your config settings.'),
             category='warning')
 
     return render_template('admin_email_test.html',
