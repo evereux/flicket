@@ -34,7 +34,7 @@ from application.flicket.views import flicket_bp
 from application.flicket.scripts.jinja2_functions import now_year
 from application.flicket.scripts.jinja2_functions import render_markdown
 
-__version__ = '0.3.6'
+__version__ = '0.4.0'
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfiguration')
