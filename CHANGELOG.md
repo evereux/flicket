@@ -10,6 +10,10 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## 0.4.1 [unreleased]
+
+* fixed XSS vulnerability for Markdown preview. @p-w
+
 ## 0.4.0
 
 * migrations squashed
