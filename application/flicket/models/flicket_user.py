@@ -56,6 +56,9 @@ class FlicketUser(PaginatedAPIMixin, UserMixin, Base):
     token_expiration = db.Column(db.DateTime)
     locale = db.Column(db.String(10))
     disabled = db.Column(db.Boolean, default=False)
+    # subject claim from the SSO identity provider (Zitadel). Links the local
+    # account to the remote identity. Null for locally created accounts.
+    oidc_sub = db.Column(db.String(64), index=True, unique=True, nullable=True)
 
     def __init__(self, username, name, email, password, date_added, job_title=None, locale='en', disabled=False):
         """

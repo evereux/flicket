@@ -91,6 +91,8 @@ from .flicket.views import index
 # noinspection PyPep8
 from .flicket.views import login
 # noinspection PyPep8
+from .flicket.views import sso
+# noinspection PyPep8
 from .flicket.views import help
 # noinspection PyPep8
 from .flicket.views import tickets

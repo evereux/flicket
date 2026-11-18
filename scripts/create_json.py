@@ -100,6 +100,20 @@ class WriteConfigJson:
         secret_key = random_string()
         notification_user_password = random_string()
 
+        # Zitadel SSO (OIDC) - optional.
+        zitadel_enabled_input = input('Enable login via Zitadel SSO? (y/N) > ')
+        zitadel_enabled = zitadel_enabled_input.strip().lower() == 'y'
+        zitadel_issuer = None
+        zitadel_client_id = None
+        zitadel_client_secret = None
+        if zitadel_enabled:
+            zitadel_issuer = input('Zitadel issuer URL [https://id.exam-studio.com]: ').strip()
+            if not zitadel_issuer:
+                zitadel_issuer = 'https://id.exam-studio.com'
+            zitadel_client_id = input('Zitadel client ID: ').strip()
+            while not zitadel_client_secret:
+                zitadel_client_secret = getpass('Zitadel client secret: ')
+
         config_values = {
             'db_type': db_type,
             'db_driver': None,
@@ -109,7 +123,11 @@ class WriteConfigJson:
             'db_port': db_port,
             'db_name': db_name,
             'SECRET_KEY': secret_key,
-            'NOTIFICATION_USER_PASSWORD': notification_user_password
+            'NOTIFICATION_USER_PASSWORD': notification_user_password,
+            'ZITADEL_ENABLED': zitadel_enabled,
+            'ZITADEL_ISSUER': zitadel_issuer,
+            'ZITADEL_CLIENT_ID': zitadel_client_id,
+            'ZITADEL_CLIENT_SECRET': zitadel_client_secret
         }
 
         # write json file

@@ -54,6 +54,18 @@
 
                 </div>
             </div>
+
+            {% if config['ZITADEL_ENABLED'] %}
+                <div class="row mt-2">
+                    <div class="col text-center">
+                        <a class="btn btn-outline-primary btn-sm"
+                           href="{{ url_for('flicket_bp.login_sso', next=request.args.get('next')) }}">
+                            {{ _('Sign in with SSO') }}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+
             <div class="row">
                 <div class="col text-center">
                     <a href="{{ url_for('flicket_bp.password_reset') }}">reset password</a>
