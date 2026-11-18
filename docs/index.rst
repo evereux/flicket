@@ -19,6 +19,7 @@ So, decided to have a crack at creating something written in Python.
    admin
    export_import_users
    languages
+   sso
    faq
    screenshots
 
