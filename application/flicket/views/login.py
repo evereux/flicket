@@ -29,6 +29,7 @@ from application.flicket.models.flicket_user import FlicketUser
 from application.flicket.scripts.email import FlicketMail
 from application.flicket.scripts.flicket_config import set_flicket_config
 from application.flicket.scripts.hash_password import hash_password
+from application.flicket.views.sso import sso_logout
 
 
 # functions for redirecting user back from whence they came.
@@ -126,6 +127,10 @@ def logout():
     db.session.commit()
     logout_user()
     flash(gettext('You were logged out successfully.'), category='success')
+    # sso logins also end the session at the identity provider.
+    sso_response = sso_logout()
+    if sso_response is not None:
+        return sso_response
     return redirect(url_for('flicket_bp.index'))
 
 
