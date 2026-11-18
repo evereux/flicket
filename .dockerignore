@@ -1,0 +1,28 @@
+# Keep the build context small and never bake local state/secrets into images.
+.git
+.gitignore
+.gitignore.bak
+
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.mypy_cache
+
+env/
+env*/
+venv/
+venv*/
+tmp/
+docs/_build/
+
+# Runtime state and secrets are provided at container start, not in the image.
+config.json
+config_old.json
+users.json
+*.db
+.env
+.env.*
+
+flicket.ini
+flicket_uswgi.wsgi
+*.log

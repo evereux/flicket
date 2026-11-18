@@ -1,0 +1,64 @@
+# ---------------------------------------------------------------------------
+# Shared base stack: app + MariaDB.
+# Use together with an override:
+#   docker compose -f compose.yaml -f compose.dev.yaml  up -d
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d
+# Compose interpolates ${...} from .env (see .env.example / make docker-init).
+# ---------------------------------------------------------------------------
+name: flicket
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    environment:
+      FLASK_APP: application
+      DB_TYPE: "3"
+      DB_DRIVER: pymysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: ${DB_NAME:-flicket}
+      DB_USER: ${DB_USER:-flicket}
+      DB_PASSWORD: ${DB_PASSWORD:-flicket}
+      SECRET_KEY: ${SECRET_KEY:-}
+      NOTIFICATION_USER_PASSWORD: ${NOTIFICATION_USER_PASSWORD:-}
+      ZITADEL_ENABLED: ${ZITADEL_ENABLED:-false}
+      ZITADEL_ISSUER: ${ZITADEL_ISSUER:-https://id.exam-studio.com}
+      ZITADEL_CLIENT_ID: ${ZITADEL_CLIENT_ID:-}
+      ZITADEL_CLIENT_SECRET: ${ZITADEL_CLIENT_SECRET:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${PORT:-5000}:5000"
+    # Needed for the interactive `flask run-set-up` (make docker-setup).
+    stdin_open: true
+    tty: true
+    volumes:
+      - uploads-data:/app/application/flicket/static/flicket_uploads
+      - avatars-data:/app/application/flicket/static/flicket_avatars
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-rootpass}
+      MARIADB_DATABASE: ${DB_NAME:-flicket}
+      MARIADB_USER: ${DB_USER:-flicket}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-flicket}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h 127.0.0.1 -u root -p\"$$MARIADB_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  uploads-data:
+  avatars-data:

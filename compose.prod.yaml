@@ -1,0 +1,17 @@
+# ---------------------------------------------------------------------------
+# Production override: -f compose.yaml -f compose.prod.yaml
+# No bind mounts: code comes from the image, data from named volumes.
+# The production image switches to the non-root "app" user and gunicorn.
+# ---------------------------------------------------------------------------
+services:
+  app:
+    image: flicket:prod
+    build:
+      target: production
+    restart: always
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

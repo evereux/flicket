@@ -1,0 +1,5 @@
+# Production-only dependencies. The base image already installs
+# requirements.txt; this file is self-contained for standalone installs too.
+-r requirements.txt
+
+gunicorn>=21.2.0

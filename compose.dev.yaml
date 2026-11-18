@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Development override: -f compose.yaml -f compose.dev.yaml
+# Source bind mount + Flask reloader; the dev target runs as root so it can
+# write config.json / caches into the bind-mounted tree.
+# ---------------------------------------------------------------------------
+services:
+  app:
+    image: flicket:dev
+    build:
+      target: development
+    environment:
+      FLASK_DEBUG: "1"
+      TEMPLATES_AUTO_RELOAD: "1"
+    volumes:
+      - .:/app
+    restart: "no"
+    command: ["flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+
+  db:
+    ports:
+      - "${DB_PORT_HOST:-3307}:3306"

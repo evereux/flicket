@@ -21,19 +21,10 @@ def upgrade():
     op.add_column('flicket_users', sa.Column('disabled', sa.Boolean(), nullable=True))
     # ### end Alembic commands ###
 
-    # update the user column so all values are disabled values are False for
-    # user.
-    from application import db
-    from application.flicket.models.flicket_user import FlicketUser
-
-    users = FlicketUser.query.all()
-
-    if users:
-        for user in users:
-            if user.disabled is None:
-                user.disabled = False
-
-        db.session.commit()
+    # Set existing rows to False. Use plain SQL instead of the live ORM model:
+    # later revisions add columns to flicket_users, so loading FlicketUser here
+    # would SELECT columns that do not exist yet on a fresh database.
+    op.execute(sa.text('UPDATE flicket_users SET disabled = false WHERE disabled IS NULL'))
 
 
 def downgrade():
