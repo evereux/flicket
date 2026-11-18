@@ -72,6 +72,16 @@ class BaseConfiguration(object):
 
     SECRET_KEY = config_data['SECRET_KEY']
 
+    # SSO via Zitadel (OIDC). Optional: absent keys fall back to disabled.
+    ZITADEL_ENABLED = config_data.get('ZITADEL_ENABLED', False)
+    ZITADEL_ISSUER = config_data.get('ZITADEL_ISSUER', 'https://id.exam-studio.com')
+    ZITADEL_CLIENT_ID = config_data.get('ZITADEL_CLIENT_ID', None)
+    ZITADEL_CLIENT_SECRET = config_data.get('ZITADEL_CLIENT_SECRET', None)
+
+    if ZITADEL_ENABLED and not (ZITADEL_CLIENT_ID and ZITADEL_CLIENT_SECRET):
+        raise ValueError('Zitadel SSO is enabled in config.json '
+                         'but ZITADEL_CLIENT_ID / ZITADEL_CLIENT_SECRET are missing.')
+
     # The base url for your application.
     WEBHOME = '/'
     # The base url for flicket.
@@ -101,5 +111,6 @@ class TestConfiguration(BaseConfiguration):
     SESSION_PROTECTION = None
     LOGIN_DISABLED = False
     SERVER_NAME = 'localhost:5001'
+    ZITADEL_ENABLED = False
     config_data = {"db_username": "", "db_port": "", "db_password": "",
                    "db_name": "", "db_url": ""}
