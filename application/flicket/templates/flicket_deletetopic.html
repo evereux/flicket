@@ -1,48 +1,15 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <form class="form" action="" method="post" name="create_ticket">
-                {{ form.hidden_tag() }}
-
-                <div class="col">
-
-                    <div class="row">
-                        <div class="col">
-                            <h1>{{ title }}</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h2>{{ ticket.id_zfill }} - {{ ticket.title }}</h2>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <label class="col-3 col-form-label">{{ _('Password') }}</label>
-                        <div class="col-5">
-                            {{ form.password(class="form-control form-control-sm") }}
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-danger btn-sm" type="submit" name="delete" value="delete ticket"/>
-                        </div>
-                    </div>
-
-                    {% if form.password.errors %}
-                        <div class="row m-2"></div>
-                        <div class="alert alert-warning small">
-                            {% for error in form.password.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                        </div>
-                    {% endif %}
-
-            </form>
-        </div>
-
-    </div>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="create_ticket">
+            {{ form.hidden_tag() }}
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ ticket.id_zfill }} - {{ ticket.title }}</p>
+            {{ ui.text_field(form.password, text=_('Password'), type='password', keep_value=False) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('delete ticket'), type='submit', appearance='outline', name='delete', value='delete ticket', classes='fl-danger') }}
+            </div>
+        </form>
+    </section>
 {% endblock %}

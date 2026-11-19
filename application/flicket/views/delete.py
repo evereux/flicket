@@ -64,7 +64,7 @@ def delete_ticket(ticket_id):
     return render_template('flicket_deletetopic.html',
                            form=form,
                            ticket=ticket,
-                           title='Delete Ticket')
+                           title=gettext('Delete Ticket'))
 
 
 # delete post

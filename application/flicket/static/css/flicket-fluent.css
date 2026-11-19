@@ -579,6 +579,24 @@ img.fl-avatar {
     place-items: center;
 }
 
+/* Markdown help */
+
+.fl-markdown-help td pre {
+    margin: 0;
+    padding: var(--spacingVerticalXS) var(--spacingHorizontalS);
+    white-space: pre-wrap;
+    font-size: var(--fontSizeBase200);
+    background-color: var(--colorNeutralBackground3);
+    border-radius: var(--borderRadiusMedium);
+}
+
+.fl-markdown-help .fl-markdown h1,
+.fl-markdown-help .fl-markdown h2,
+.fl-markdown-help .fl-markdown h3 {
+    margin: 0;
+    font-size: var(--fontSizeBase400);
+}
+
 /* Dashboard */
 
 .fl-carousel {

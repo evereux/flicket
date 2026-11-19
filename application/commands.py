@@ -5,9 +5,6 @@ import datetime
 import json
 from getpass import getpass
 import os
-import time
-
-from sqlalchemy import or_
 
 from scripts.create_json import WriteConfigJson
 from application import db, app
@@ -16,10 +13,8 @@ from application.flicket.models.flicket_models import FlicketCategory
 from application.flicket.models.flicket_models import FlicketDepartment
 from application.flicket.models.flicket_models import FlicketPriority
 from application.flicket.models.flicket_models import FlicketStatus
-from application.flicket.models.flicket_models import FlicketTicket
 from application.flicket.models.flicket_user import FlicketGroup
 from application.flicket.models.flicket_user import FlicketUser
-from application.flicket.scripts.email import FlicketMail
 from application.flicket.scripts.flicket_user_details import FlicketUserDetails
 from application.flicket.scripts.hash_password import hash_password
 
@@ -401,19 +396,8 @@ def register_clicks(app):
             print('Updates were made.')
 
     @app.cli.command('email-outstanding-tickets',
-                     help='Update all users total post count. Use when upgrading from 1.4.')
+                     help='Email users a list of their outstanding tickets. This also runs daily '
+                          'via the Celery beat schedule (09:00).')
     def email_outstanding_tickets():
-        # find all users
-        users = FlicketUser.query.all()
-        for user in users:
-            # that have created a ticket or have a ticket assigned to them.
-            tickets = FlicketTicket.query.filter(or_(
-                FlicketTicket.user == user,
-                FlicketTicket.assigned == user,
-            )).filter(
-                FlicketTicket.status_id != 2)
-
-            if tickets.count() > 0:
-                mail = FlicketMail()
-                mail.tickets_not_closed(user, tickets)
-                time.sleep(10)
+        from application.tasks import email_outstanding_tickets as email_outstanding_tickets_task
+        email_outstanding_tickets_task.apply()

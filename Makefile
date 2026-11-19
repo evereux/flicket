@@ -129,6 +129,12 @@ setup: install require-config db-upgrade  ## Initialise defaults + admin user (i
 run: install require-config  ## Run the dev server (make run PORT=8080)
 	$(FLASKAPP) $(FLASK) run --host=$(HOST) --port=$(PORT)
 
+celery-worker: install require-config  ## Run a Celery worker for background tasks
+	$(VENV_PY) -m celery -A application.celery_app:celery worker -l info
+
+celery-beat: install require-config  ## Run the Celery beat scheduler (periodic tasks)
+	$(VENV_PY) -m celery -A application.celery_app:celery beat -l info
+
 dev: run  ## Alias for run
 
 shell: install require-config  ## Open a Flask shell

@@ -58,6 +58,7 @@ def config():
         config_details.auth_domain = form.auth_domain.data or False
 
         config_details.csv_dump_limit = form.csv_dump_limit.data
+        config_details.task_log_retention_days = form.task_log_retention_days.data
 
         config_details.change_category = form.change_category.data or False
         config_details.change_category_only_admin_or_super_user = form.change_category_only_admin_or_super_user.data
@@ -112,6 +113,7 @@ def config():
     form.auth_domain.data = config_details.auth_domain
 
     form.csv_dump_limit.data = config_details.csv_dump_limit
+    form.task_log_retention_days.data = config_details.task_log_retention_days
 
     form.change_category.data = config_details.change_category
     form.change_category_only_admin_or_super_user.data = config_details.change_category_only_admin_or_super_user

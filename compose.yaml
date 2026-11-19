@@ -28,8 +28,12 @@ services:
       ZITADEL_ISSUER: ${ZITADEL_ISSUER:-https://id.exam-studio.com}
       ZITADEL_CLIENT_ID: ${ZITADEL_CLIENT_ID:-}
       ZITADEL_CLIENT_SECRET: ${ZITADEL_CLIENT_SECRET:-}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND:-redis://redis:6379/1}
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     ports:
       - "${PORT:-5000}:5000"
@@ -39,6 +43,45 @@ services:
     volumes:
       - uploads-data:/app/application/flicket/static/flicket_uploads
       - avatars-data:/app/application/flicket/static/flicket_avatars
+    restart: unless-stopped
+
+  worker:
+    image: flicket:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+    command: ["celery", "-A", "application.celery_app:celery", "worker", "-l", "info"]
+    restart: unless-stopped
+
+  beat:
+    image: flicket:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL:-redis://redis:6379/0}
+    command: ["celery", "-A", "application.celery_app:celery", "beat", "-l", "info"]
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     restart: unless-stopped
 
   db:

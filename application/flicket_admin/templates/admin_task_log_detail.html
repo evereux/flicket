@@ -1,0 +1,30 @@
+{% extends "flicket_base_fluent.html" %}
+{% block content %}
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted"><a href="{{ url_for('admin_bp.task_logs') }}">{{ _('Back to Task Logs') }}</a></p>
+        </div>
+    </section>
+
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <tbody>
+                <tr><th scope="row">{{ _('ID') }}</th><td>{{ log.id }}</td></tr>
+                <tr><th scope="row">{{ _('Celery ID') }}</th><td class="fl-nowrap">{{ log.celery_id }}</td></tr>
+                <tr><th scope="row">{{ _('Task') }}</th><td>{{ log.task_name }}</td></tr>
+                <tr><th scope="row">{{ _('Status') }}</th><td>{{ log.status }}</td></tr>
+                <tr><th scope="row">{{ _('Started') }}</th><td class="fl-nowrap">{{ log.started_at }}</td></tr>
+                <tr><th scope="row">{{ _('Finished') }}</th><td class="fl-nowrap">{{ log.finished_at }}</td></tr>
+                <tr><th scope="row">{{ _('Duration') }}</th><td>
+                    {%- if log.duration_seconds is not none %}{{ ("%0.3f"|format(log.duration_seconds)) }}s{% endif -%}
+                </td></tr>
+                <tr><th scope="row">{{ _('Worker') }}</th><td class="fl-nowrap">{{ log.worker_id }}</td></tr>
+                <tr><th scope="row">{{ _('Args') }}</th><td><pre>{{ log.args }}</pre></td></tr>
+                <tr><th scope="row">{{ _('Kwargs') }}</th><td><pre>{{ log.kwargs }}</pre></td></tr>
+                <tr><th scope="row">{{ _('Result') }}</th><td><pre>{{ log.result }}</pre></td></tr>
+                <tr><th scope="row">{{ _('Error') }}</th><td><pre>{{ log.error }}</pre></td></tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

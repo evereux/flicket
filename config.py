@@ -82,6 +82,12 @@ class BaseConfiguration(object):
         raise ValueError('Zitadel SSO is enabled in config.json '
                          'but ZITADEL_CLIENT_ID / ZITADEL_CLIENT_SECRET are missing.')
 
+    # Celery settings for periodic tasks (see application/celery_app.py).
+    # The defaults point at a local Redis on DB 0 (results on DB 1).
+    CELERY_BROKER_URL = config_data.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+    CELERY_RESULT_BACKEND = config_data.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379/1')
+    CELERY_TIMEZONE = config_data.get('CELERY_TIMEZONE', 'UTC')
+
     # The base url for your application.
     WEBHOME = '/'
     # The base url for flicket.

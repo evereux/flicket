@@ -5,4 +5,6 @@
     {{ ui.link_button(_('Users'), url_for('admin_bp.users'), appearance='primary' if request.endpoint in ('admin_bp.users', 'admin_bp.edit_user') else 'subtle') }}
     {{ ui.link_button(_('Add User'), url_for('admin_bp.add_user'), appearance='primary' if request.endpoint == 'admin_bp.add_user' else 'subtle') }}
     {{ ui.link_button(_('Groups'), url_for('admin_bp.groups'), appearance='primary' if request.endpoint in ('admin_bp.groups', 'admin_bp.admin_edit_group') else 'subtle') }}
+    {{ ui.link_button(_('Celery Status'), url_for('admin_bp.celery_status'), appearance='subtle', icon_name='clock') }}
+    {{ ui.link_button(_('Task Logs'), url_for('admin_bp.task_logs'), appearance='subtle', icon_name='table') }}
 </nav>

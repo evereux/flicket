@@ -1,0 +1,57 @@
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
+{% block content %}
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% include 'admin_menu.html' %}
+            <form method="get" class="fl-stack">
+                <fluent-dropdown id="status" name="status" appearance="outline" value="{{ status_filter or '' }}">
+                    <fluent-listbox>
+                        <fluent-option value="" text="{{ _('All') }}" selected></fluent-option>
+                        <fluent-option value="STARTED" text="{{ _('Started') }}"></fluent-option>
+                        <fluent-option value="SUCCESS" text="{{ _('Success') }}"></fluent-option>
+                        <fluent-option value="FAILURE" text="{{ _('Failure') }}"></fluent-option>
+                    </fluent-listbox>
+                </fluent-dropdown>
+                {{ ui.button(_('Filter'), type='submit', appearance='primary') }}
+            </form>
+        </div>
+    </section>
+
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ _('ID') }}</th>
+                    <th scope="col">{{ _('Task') }}</th>
+                    <th scope="col">{{ _('Status') }}</th>
+                    <th scope="col">{{ _('Started') }}</th>
+                    <th scope="col">{{ _('Duration') }}</th>
+                    <th scope="col">{{ _('Details') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for log in logs.items %}
+                <tr>
+                    <td class="fl-nowrap">{{ log.id }}</td>
+                    <td class="fl-nowrap">{{ log.task_name }}</td>
+                    <td class="fl-nowrap">{{ log.status }}</td>
+                    <td class="fl-nowrap">{{ log.started_at }}</td>
+                    <td class="fl-nowrap">
+                        {%- if log.duration_seconds is not none %}{{ ("%0.3f"|format(log.duration_seconds)) }}s{% endif -%}
+                    </td>
+                    <td class="fl-nowrap">
+                        {{ ui.icon_action(url_for('admin_bp.task_log_detail', log_id=log.id), 'search',
+                                          _('Details'), 'task-log-details-%d' % log.id) }}
+                    </td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="fl-toolbar">
+        {{ ui.pager(logs, 'admin_bp.task_logs', request.args.to_dict()) }}
+    </div>
+{% endblock %}

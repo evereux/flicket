@@ -12,6 +12,13 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 ## Unreleased
 
+* periodic tasks via Celery: `email_outstanding_tickets` now runs daily at
+  09:00 via the Celery beat schedule instead of via cron (the CLI command still
+  works and runs it synchronously). New "Celery Status" and "Task Logs" pages
+  in the Admin Panel, and a "Task log retention (days)" setting on the
+  configuration panel (0 = keep forever). Adds a `delete_old_task_logs` beat
+  task that runs daily at 03:00. Docker stack adds `redis`, `worker` and `beat`
+  services.
 * branding: company name, phone and email can now be set via the configuration
   page and a logo can be uploaded there too. The branding is shown in the page
   navbar and in the page footer.

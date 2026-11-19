@@ -56,6 +56,12 @@ app.jinja_env.globals.update(now_year=now_year)
 from application.flicket.models import flicket_user, flicket_models
 # noinspection PyPep8
 from application.flicket_admin.models import flicket_config
+# noinspection PyPep8
+from application.flicket_admin.models import flicket_task_log
+# noinspection PyPep8
+from application import celery_app
+# noinspection PyPep8
+from application import tasks
 
 lm = LoginManager()
 lm.init_app(app)
@@ -67,6 +73,10 @@ from .flicket_admin.views import view_admin
 from .flicket_admin.views import view_config
 # noinspection PyPep8
 from .flicket_admin.views import view_email_test
+# noinspection PyPep8
+from .flicket_admin.views import view_celery
+# noinspection PyPep8
+from .flicket_admin.views import view_task_logs
 
 # noinspection PyPep8
 from .flicket.views import assign

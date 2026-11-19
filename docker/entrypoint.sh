@@ -35,7 +35,8 @@ SKIP_DB_WAIT=${SKIP_DB_WAIT:-0}
 
 export DB_TYPE DB_DRIVER DB_HOST DB_PORT DB_NAME DB_USER DB_PASSWORD \
        SECRET_KEY NOTIFICATION_USER_PASSWORD ZITADEL_ENABLED ZITADEL_ISSUER \
-       ZITADEL_CLIENT_ID ZITADEL_CLIENT_SECRET
+       ZITADEL_CLIENT_ID ZITADEL_CLIENT_SECRET \
+       CELERY_BROKER_URL CELERY_RESULT_BACKEND CELERY_TIMEZONE
 
 random_secret() {
     python -c 'import base64, os; print(base64.urlsafe_b64encode(os.urandom(24)).decode().rstrip("="))'
@@ -90,6 +91,9 @@ config = {
     "ZITADEL_ISSUER": optional("ZITADEL_ISSUER", "https://id.exam-studio.com"),
     "ZITADEL_CLIENT_ID": optional("ZITADEL_CLIENT_ID"),
     "ZITADEL_CLIENT_SECRET": optional("ZITADEL_CLIENT_SECRET"),
+    "CELERY_BROKER_URL": optional("CELERY_BROKER_URL", "redis://redis:6379/0"),
+    "CELERY_RESULT_BACKEND": optional("CELERY_RESULT_BACKEND", "redis://redis:6379/1"),
+    "CELERY_TIMEZONE": optional("CELERY_TIMEZONE", "UTC"),
 }
 
 with open(sys.argv[1], "w") as handle:

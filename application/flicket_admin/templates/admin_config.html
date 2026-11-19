@@ -43,6 +43,11 @@
             </div>
             <p class="fl-muted fl-small">{{ _('This must be a comma delimited list.') }}</p>
 
+            <h2 class="fl-title">{{ _('Tasks') }}</h2>
+            {{ ui.text_field(form.task_log_retention_days, text=form.task_log_retention_days.label.text) }}
+            <p class="fl-muted fl-small">{{ _('Task logs older than this are deleted by a daily Celery task. '
+                                             'Set to 0 to keep them forever.') }}</p>
+
             <h2 class="fl-title">{{ _('Authentication') }}</h2>
             {{ ui.checkbox_field(form.use_auth_domain) }}
             {{ ui.text_field(form.auth_domain, text=form.auth_domain.label.text) }}

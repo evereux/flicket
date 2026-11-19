@@ -1,51 +1,31 @@
-{% extends 'flicket_base.html' %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
 {% block content %}
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-
-                <div class="row">
-                    <div class="col">
-                        <h1>{{ title }}</h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p>
-                            {{ _('Post edit history.') }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <h2>
-                            <a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">
-                                #{{ ticket.id_zfill }} | {{ ticket.title }}
-                            </a>
-                        </h2>
-                        <dl>
-                            {% if history %}
-                                {% for h in history %}
-                                    <dt>{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</dt>
-                                    <dd>
-                                        {% filter markdown %}
-                                            {{ h.original_content }}
-                                        {% endfilter %}
-                                    </dd>
-                                {% endfor %}
-                            {% else %}
-                                <dd>{{ _('No changes have been made to the post content.') }}</dd>
-                            {% endif %}
-                        </dl>
-
-                    </div>
-                </div>
-
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ _('Post edit history.') }}</p>
+            <h2 class="fl-slide__title">
+                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">#{{ ticket.id_zfill }} | {{ ticket.title }}</a>
+            </h2>
         </div>
+    </section>
 
-    </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            {% if history %}
+                {% for h in history %}
+                    <article class="fl-stack">
+                        <p class="fl-muted">{{ h.user.name }} {{ _('originally wrote on') }} {{ h.date_modified }}</p>
+                        <div class="fl-markdown">
+                            {% filter markdown %}
+                                {{ h.original_content }}
+                            {% endfilter %}
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p>{{ _('No changes have been made to the post content.') }}</p>
+            {% endif %}
+        </div>
+    </section>
 {% endblock %}

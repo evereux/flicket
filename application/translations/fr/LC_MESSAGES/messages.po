@@ -237,7 +237,7 @@ msgstr "Montrer / Cacher Markdown"
 
 #: application/flicket/templates/flicket_history.html:17
 msgid "Post edit history."
-msgstr ""
+msgstr "Historique des modifications du message."
 
 #: application/flicket/templates/flicket_history.html:32
 msgid "originally wrote on"
@@ -1292,6 +1292,98 @@ msgstr "Réinitialisation du mot de passe"
 #: application/flicket/templates/flicket_password_reset.html
 msgid "reset password"
 msgstr "réinitialiser le mot de passe"
+
+#: application/flicket/templates
+msgid "Flicket Markdown Help"
+msgstr "Aide Markdown de Flicket"
+
+#: application/flicket/templates
+msgid "Markdown is a lightweight markup language with plain text formatting syntax."
+msgstr "Markdown est un langage de balisage léger utilisant une syntaxe de mise en forme du texte brut."
+
+#: application/flicket/templates
+msgid "Type"
+msgstr "Type"
+
+#: application/flicket/templates
+msgid "Syntax"
+msgstr "Syntaxe"
+
+#: application/flicket/templates
+msgid "Example"
+msgstr "Exemple"
+
+#: application/flicket/templates
+msgid "Output"
+msgstr "Rendu"
+
+#: application/flicket/templates
+msgid "Heading 1"
+msgstr "Titre 1"
+
+#: application/flicket/templates
+msgid "Heading 2"
+msgstr "Titre 2"
+
+#: application/flicket/templates
+msgid "Heading 3"
+msgstr "Titre 3"
+
+#: application/flicket/templates
+msgid "Paragraphs / New Lines"
+msgstr "Paragraphes / retours à la ligne"
+
+#: application/flicket/templates
+msgid "Bold"
+msgstr "Gras"
+
+#: application/flicket/templates
+msgid "Italic"
+msgstr "Italique"
+
+#: application/flicket/templates
+msgid "Hyperlink"
+msgstr "Lien"
+
+#: application/flicket/templates
+msgid "Image"
+msgstr "Image"
+
+#: application/flicket/templates
+msgid "List Item"
+msgstr "Élément de liste"
+
+#: application/flicket/templates
+msgid "Ordered List Item"
+msgstr "Élément de liste numérotée"
+
+#: application/flicket/templates
+msgid "Horizontal Rule"
+msgstr "Ligne horizontale"
+
+#: application/flicket/templates
+msgid "Inline Code"
+msgstr "Code en ligne"
+
+#: application/flicket/templates
+msgid "Code Block"
+msgstr "Bloc de code"
+
+#: application/flicket/templates
+msgid "indent 4 spaces"
+msgstr "indentation de 4 espaces"
+
+#: application/flicket/templates
+msgid "Delete Ticket"
+msgstr "Supprimer la demande"
+
+#: application/flicket/templates
+msgid "delete ticket"
+msgstr "supprimer la demande"
+
+#: application/flicket/templates
+msgid "Post"
+msgstr "Post"
 
 #~ msgid ""
 #~ "Category is linked to posts. Category"

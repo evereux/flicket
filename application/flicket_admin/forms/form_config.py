@@ -72,6 +72,9 @@ class ConfigForm(FlaskForm):
 
     csv_dump_limit = IntegerField(lazy_gettext('CSV dump limit'), validators=[])
 
+    task_log_retention_days = IntegerField(lazy_gettext('Task log retention (days)'),
+                                           validators=[NumberRange(min=0)])
+
     change_category = BooleanField(lazy_gettext('Allow changing category'), validators=[])
     change_category_only_admin_or_super_user = BooleanField(lazy_gettext('Only admins and super users can change category'),
                                                             validators=[])

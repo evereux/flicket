@@ -1,45 +1,20 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-
-                <div class="row">
-                    <div class="col">
-                        <h2>{{ title }}</h2>
-                    </div>
-                </div>
-
-                <p><b>post_id:</b> {{ post.id }} | <b>content:</b> {{ post.content }}</p>
-
-                <form class="form-horizontal" action="" method="post" name="create_ticket">
-                    {{ form.hidden_tag() }}
-                    <div class="row">
-                        <label class="col-3 col-form-label">{{ _('Password') }}</label>
-                        <div class="col">
-                            {{ form.password(class="form-control") }}
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-danger" type="submit" name="delete" value="{{ _('delete post') }}"/>
-                        </div>
-                    </div>
-                    {% if form.password.errors %}
-                        <div class="row">
-                            <div class="alert alert-warning small">
-                                {% for error in form.password.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                </form>
-
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="create_ticket">
+            {{ form.hidden_tag() }}
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ _('Post') }} #{{ post.id }}</p>
+            <div class="fl-markdown">
+                {% filter markdown %}
+                    {{ post.content }}
+                {% endfilter %}
             </div>
-
-        </div>
-
-    </div>
-
+            {{ ui.text_field(form.password, text=_('Password'), type='password', keep_value=False) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('delete post'), type='submit', appearance='outline', name='delete', value='delete post', classes='fl-danger') }}
+            </div>
+        </form>
+    </section>
 {% endblock %}

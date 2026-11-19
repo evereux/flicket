@@ -38,6 +38,8 @@ class FlicketConfig(Base):
     :param str csv_dump_limit: The maximum number of rows exported to csv.
     :param bool change_category: Enable/disable change category.
     :param bool change_category_only_admin_or_super_user: Only admins or super users can change category.
+    :param int task_log_retention_days: Number of days to keep task log rows
+      (background tasks). 0 keeps them forever. See `/flicket_admin/task_logs/`.
 
     """
     __tablename__ = 'flicket_config'
@@ -84,6 +86,9 @@ class FlicketConfig(Base):
     use_auth_domain = db.Column(db.BOOLEAN, default=False)
 
     csv_dump_limit = db.Column(db.Integer, default=1000)
+
+    # celery / periodic tasks
+    task_log_retention_days = db.Column(db.Integer, default=30)
 
     # features
     change_category = db.Column(db.BOOLEAN, default=False)
