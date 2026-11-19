@@ -668,12 +668,23 @@ fluent-badge {
     align-items: end;
 }
 
+/* Application name shown to anonymous users in place of the app bar */
+
+.fl-brand {
+    margin: var(--spacingVerticalXL) 0 0;
+    text-align: center;
+    font-size: var(--fontSizeBase500);
+    font-weight: var(--fontWeightSemibold);
+    line-height: var(--lineHeightBase500);
+    color: var(--colorNeutralForeground1);
+}
+
 /* Login */
 
 .fl-login {
     width: 100%;
     max-width: 420px;
-    margin: var(--spacingVerticalXXL) auto 0;
+    margin: 0 auto;
 }
 
 .fl-login__title {

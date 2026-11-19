@@ -31,7 +31,6 @@
     </fluent-button>
     <fluent-tooltip anchor="theme-toggle" id="theme-toggle-tooltip">{{ _('Switch theme') }}</fluent-tooltip>
 
-    {%- if g.user.is_authenticated %}
     <fluent-menu>
         <fluent-menu-button slot="trigger" appearance="subtle">{{ ui.icon('person', 'start') }}{{ g.user.name }}</fluent-menu-button>
         <fluent-menu-list>
@@ -39,9 +38,6 @@
             <fluent-menu-item><a href="{{ url_for('flicket_bp.logout') }}">{{ _('Log Out') }}</a></fluent-menu-item>
         </fluent-menu-list>
     </fluent-menu>
-    {%- else %}
-    {{ ui.link_button(_('Log In'), url_for('flicket_bp.login'), appearance='primary', icon_name='arrow-enter') }}
-    {%- endif %}
 </header>
 
 <fluent-drawer id="fl-drawer" type="modal" position="start" size="small">
@@ -59,12 +55,8 @@
             {%- if g.user.is_admin %}
             <a href="{{ url_for('admin_bp.index') }}">{{ _('Admin View') }}</a>
             {%- endif %}
-            {%- if g.user.is_authenticated %}
             <a href="{{ url_for('flicket_bp.user_details') }}">{{ _('User Details') }}</a>
             <a href="{{ url_for('flicket_bp.logout') }}">{{ _('Log Out') }}</a>
-            {%- else %}
-            <a href="{{ url_for('flicket_bp.login') }}">{{ _('Log In') }}</a>
-            {%- endif %}
         </nav>
     </div>
 </fluent-drawer>

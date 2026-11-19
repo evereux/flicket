@@ -37,6 +37,7 @@
 </head>
 <body>
 
+{% if g.user.is_authenticated %}
 {% include 'flicket_navbar.html' %}
 <header>
     <div class="container-fluid">
@@ -50,6 +51,9 @@
         </div>
     </div>
 </header>
+{% else %}
+<p class="text-center font-weight-bold h4 mt-4 mb-0">{{ g.application_title }}</p>
+{% endif %}
 {% include 'flicket_flashmessages.html' %}
 {% block content %}{% endblock %}
 {% include 'flicket_footer.html' %}

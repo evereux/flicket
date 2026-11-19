@@ -39,9 +39,14 @@
 </head>
 <body data-api-base="{{ config['FLICKET_API'] }}">
 
+{% if g.user.is_authenticated %}
 {% include 'flicket_navbar_fluent.html' %}
+{% endif %}
 
 <main class="fl-main">
+    {% if not g.user.is_authenticated %}
+    <p class="fl-brand">{{ g.application_title }}</p>
+    {% endif %}
     {% include 'flicket_flashmessages_fluent.html' %}
     {% block content %}{% endblock %}
 </main>
