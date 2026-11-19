@@ -10,6 +10,12 @@ If you are migrating from earlier version (since 0.2.1) you should ensure:
 
 * Please read the changelog descriptions. Particularly those for 0.2.1.
 
+## Unreleased
+
+* branding: company name, phone and email can now be set via the configuration
+  page and a logo can be uploaded there too. The branding is shown in the page
+  navbar and in the page footer.
+
 ## 0.3.5
 
 * fixed cross site scripting vulnerability in username rendering within the action

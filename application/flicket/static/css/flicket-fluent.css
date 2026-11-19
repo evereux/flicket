@@ -124,6 +124,14 @@ footer {
     text-decoration: none;
 }
 
+.fl-navbar-brand-logo {
+    display: inline-block;
+    height: 28px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: var(--spacingHorizontalS);
+}
+
 .fl-appbar__nav {
     display: flex;
     align-items: center;
@@ -812,6 +820,29 @@ img.fl-avatar {
     font-weight: var(--fontWeightSemibold);
     line-height: var(--lineHeightBase500);
     color: var(--colorNeutralForeground1);
+}
+
+/* Branding: company name, phone and email shown in the navbar and footer */
+
+.fl-branding {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacingHorizontalS);
+    margin-top: var(--spacingVerticalS);
+}
+
+.fl-branding__logo {
+    display: inline-block;
+    height: 28px;
+    width: auto;
+}
+
+.fl-branding__name,
+.fl-branding__phone,
+.fl-branding__email {
+    font-size: var(--fontSizeBase200);
+    color: var(--colorNeutralForeground2);
 }
 
 /* Login */

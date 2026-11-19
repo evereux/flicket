@@ -2,7 +2,13 @@
 <header class="fl-appbar">
     <fluent-button class="fl-appbar__menu" appearance="subtle" icon-only data-drawer-open="fl-drawer" aria-label="{{ _('Menu') }}">{{ ui.icon('navigation') }}</fluent-button>
 
-    <a class="fl-appbar__brand" href="{{ url_for('flicket_bp.index') }}">{{ g.application_title }}</a>
+    <a class="fl-appbar__brand" href="{{ url_for('flicket_bp.index') }}">
+        {%- if g.branding_logo %}
+            <img class="fl-navbar-brand-logo" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/' + g.branding_logo) }}"
+                 alt="{{ g.branding_company_name or '' }}">
+        {%- endif %}
+        {{ g.branding_company_name or g.application_title }}
+    </a>
 
     <nav class="fl-appbar__nav" aria-label="{{ _('Main') }}">
         <fluent-menu>
@@ -43,7 +49,7 @@
 <fluent-drawer id="fl-drawer" type="modal" position="start" size="small">
     <div class="fl-drawer">
         <div class="fl-row fl-row--between">
-            <span class="fl-drawer__title">{{ g.application_title }}</span>
+            <span class="fl-drawer__title">{{ g.branding_company_name or g.application_title }}</span>
             <fluent-button appearance="subtle" icon-only data-drawer-close="fl-drawer" aria-label="{{ _('Close') }}">{{ ui.icon('dismiss') }}</fluent-button>
         </div>
         <nav class="fl-drawer__nav" aria-label="{{ _('Main') }}">
