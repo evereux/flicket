@@ -67,10 +67,13 @@ def before_request():
     # used in the page footer
     g.__version__ = __version__
 
-    # page title
-    application_title = FlicketConfig.query.first().application_title
-
-    g.application_title = application_title
+    # page title and branding details
+    config = FlicketConfig.query.first()
+    g.application_title = config.application_title
+    g.branding_company_name = config.branding_company_name
+    g.branding_phone = config.branding_phone
+    g.branding_email = config.branding_email
+    g.branding_logo = config.branding_logo
 
 
 # add 403 error handler

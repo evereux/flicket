@@ -3,14 +3,18 @@
 #
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
+import os
+
 from flask import (flash,
                    redirect,
                    render_template,
+                   request,
                    url_for)
 from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, db
+from application.flicket.scripts.flicket_upload import UploadFile
 from application.flicket_admin.forms.form_config import ConfigForm
 from application.flicket_admin.models.flicket_config import FlicketConfig
 
@@ -42,6 +46,9 @@ def config():
         config_details.mail_ascii_attachments = form.mail_ascii_attachments.data or False
 
         config_details.application_title = form.application_title.data
+        config_details.branding_company_name = form.branding_company_name.data
+        config_details.branding_phone = form.branding_phone.data
+        config_details.branding_email = form.branding_email.data
         config_details.posts_per_page = form.posts_per_page.data
         config_details.allowed_extensions = form.allowed_extensions.data
         config_details.ticket_upload_folder = form.ticket_upload_folder.data
@@ -58,6 +65,22 @@ def config():
         # Don't change the password if nothing was entered.
         if form.mail_password.data != '':
             config_details.mail_password = form.mail_password.data
+        # save the branding logo if a new one was selected.
+        logo_file = request.files.get('branding_logo')
+        if logo_file is not None and logo_file.filename != '':
+            uploaded_logo = UploadFile(logo_file)
+            uploaded_logo.upload_folder = app.config['avatar_upload_folder']
+            if uploaded_logo.upload_file():
+                # delete the old logo if it exists and is different.
+                if (config_details.branding_logo
+                        and config_details.branding_logo != uploaded_logo.file_name):
+                    old_logo = os.path.join(app.config['avatar_upload_folder'], config_details.branding_logo)
+                    if os.path.exists(old_logo):
+                        os.remove(old_logo)
+                config_details.branding_logo = uploaded_logo.file_name
+            else:
+                flash(gettext('There was a problem uploading the logo file.'), category='warning')
+
         db.session.commit()
         flash(gettext('Config details updated.'), category='success')
         return redirect(url_for('admin_bp.config'))
@@ -76,6 +99,9 @@ def config():
     form.mail_ascii_attachments.data = config_details.mail_ascii_attachments
 
     form.application_title.data = config_details.application_title
+    form.branding_company_name.data = config_details.branding_company_name
+    form.branding_phone.data = config_details.branding_phone
+    form.branding_email.data = config_details.branding_email
 
     form.posts_per_page.data = config_details.posts_per_page
     form.allowed_extensions.data = config_details.allowed_extensions
@@ -92,4 +118,5 @@ def config():
 
     return render_template('admin_config.html',
                            title=gettext('Flicket Configuration'),
-                           form=form)
+                           form=form,
+                           config_details=config_details)

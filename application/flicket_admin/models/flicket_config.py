@@ -25,6 +25,10 @@ class FlicketConfig(Base):
     :param bool mail_suppress_send:
     :param bool mail_ascii_attachments:
     :param str application_title: Changes the default banner text from `Flicket`. Can typically be your company name.
+    :param str branding_company_name: Company name shown in the page footer.
+    :param str branding_phone: Phone number shown in the page footer.
+    :param str branding_email: Email address shown in the page footer.
+    :param str branding_logo: Filename of the uploaded branding logo (stored in the avatar upload folder).
     :param str posts_per_page: Maximum number of posts / topics displayed per page.
     :param str allowed_extensions: A comma delimited list of file extensions users are allowed to upload. DO NOT include
       the . before the extension letter.
@@ -67,6 +71,12 @@ class FlicketConfig(Base):
     avatar_upload_folder = db.Column(db.String(256))
 
     application_title = db.Column(db.String(32))
+
+    # branding
+    branding_company_name = db.Column(db.String(64))
+    branding_phone = db.Column(db.String(32))
+    branding_email = db.Column(db.String(128))
+    branding_logo = db.Column(db.String(128))
 
     base_url = db.Column(db.String(128))
 

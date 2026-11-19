@@ -5,7 +5,7 @@
 
 from flask_babel import lazy_gettext
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField, BooleanField, PasswordField
+from wtforms import StringField, SubmitField, IntegerField, BooleanField, PasswordField, FileField
 from wtforms.validators import DataRequired, NumberRange, Length
 
 from application.flicket.scripts.functions_login import check_email_format
@@ -28,6 +28,17 @@ def check_email_formatting(form, field):
     return ok
 
 
+def check_branding_email(form, field):
+    """
+    Checks that the branding email is correctly formatted.
+    :param form:
+    :param field:
+    :return:
+    """
+    if field.data and not check_email_format(field.data):
+        field.errors.append('Please enter a correctly formatted email address.')
+
+
 class ConfigForm(FlaskForm):
     mail_server = StringField(lazy_gettext('Mail server'), validators=[])
     mail_port = IntegerField(lazy_gettext('Mail port'), validators=[NumberRange(min=1, max=65535)])
@@ -43,6 +54,13 @@ class ConfigForm(FlaskForm):
 
     application_title = StringField(lazy_gettext('Application title'),
                                     validators=[DataRequired(), Length(min=3, max=32)])
+
+    branding_company_name = StringField(lazy_gettext('Company name'),
+                                         validators=[DataRequired(), Length(min=1, max=64)])
+    branding_phone = StringField(lazy_gettext('Phone'), validators=[Length(min=0, max=32)])
+    branding_email = StringField(lazy_gettext('Email'),
+                                 validators=[Length(max=128), check_branding_email])
+    branding_logo = FileField(lazy_gettext('Logo'), validators=[])
     posts_per_page = IntegerField(lazy_gettext('Posts per page'),
                                   validators=[DataRequired(), NumberRange(min=10, max=200)])
     allowed_extensions = StringField(lazy_gettext('Allowed extensions'), validators=[DataRequired()])

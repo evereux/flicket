@@ -51,6 +51,23 @@
             {{ ui.checkbox_field(form.change_category) }}
             {{ ui.checkbox_field(form.change_category_only_admin_or_super_user) }}
 
+            <h2 class="fl-title">{{ _('Branding') }}</h2>
+            <div class="fl-grid">
+                {{ ui.text_field(form.branding_company_name, text=form.branding_company_name.label.text) }}
+                {{ ui.text_field(form.branding_phone, text=form.branding_phone.label.text) }}
+                {{ ui.text_field(form.branding_email, text=form.branding_email.label.text) }}
+            </div>
+            <div class="fl-row">
+                <fluent-field label-position="above" class="fl-field">
+                    <label slot="label" class="fl-label">{{ form.branding_logo.label.text }}</label>
+                    <input slot="input" type="file" name="branding_logo" class="fl-input">
+                </fluent-field>
+                {%- if config_details.branding_logo %}
+                    <img class="fl-branding-logo" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/' + config_details.branding_logo) }}"
+                         alt="{{ config_details.branding_company_name or '' }}">
+                {%- endif %}
+            </div>
+
             <div class="fl-actions fl-actions--end">
                 {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
             </div>
