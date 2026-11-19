@@ -39,7 +39,7 @@ def delete_ticket(ticket_id):
         images = FlicketUploads.query.filter_by(topic_id=ticket_id)
         for i in images:
             # delete files
-            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.file_name))
+            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.filename))
             # remove from database
             db.session.delete(i)
 
@@ -74,6 +74,7 @@ def delete_post(post_id):
     # check user is authorised to delete posts. Only admin can do this.
     if not g.user.is_admin:
         flash(gettext('You are not authorised to delete posts'), category='warning')
+        return redirect(url_for('flicket_bp.tickets'))
 
     form = ConfirmPassword()
 
@@ -85,14 +86,14 @@ def delete_post(post_id):
         images = FlicketUploads.query.filter_by(posts_id=post_id)
         for i in images:
             # delete files
-            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.file_name))
+            os.remove(os.path.join(os.getcwd(), app.config['ticket_upload_folder'] + '/' + i.filename))
             # remove from database
             db.session.delete(i)
 
         db.session.delete(post)
         # commit changes
         db.session.commit()
-        flash(gettext('Ticket deleted.'), category='success')
+        flash(gettext('Post deleted.'), category='success')
         return redirect(url_for('flicket_bp.tickets'))
 
     title = gettext('Delete Post')
@@ -135,11 +136,12 @@ def delete_category(category_id=False):
             db.session.delete(category)
             # commit changes
             db.session.commit()
-            flash('Category deleted', category='success')
+            flash(gettext('Category deleted'), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
-        notification = "You are trying to delete category: {} that belongs " \
-                       "to department: {}.".format(category.category.upper(), category.department.department.upper())
+        notification = gettext(
+            "You are trying to delete category: %(category)s that belongs to department: %(department)s.",
+            category=category.category.upper(), department=category.department.department.upper())
 
         title = gettext('Delete Category')
 
@@ -181,7 +183,7 @@ def delete_department(department_id=False):
             db.session.delete(department)
             # commit changes
             db.session.commit()
-            flash('Department "{}" deleted.'.format(department.department), category='success')
+            flash(gettext('Department "%(value)s" deleted.', value=department.department), category='success')
             return redirect(url_for('flicket_bp.departments'))
 
         notification = gettext(

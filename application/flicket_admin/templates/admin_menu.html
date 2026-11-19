@@ -1,31 +1,8 @@
-<!-- {{ self._TemplateReference__context.name }} -->
-<h1 class="m-2 p-2 border rounded bg-white text-center">{{ _('Administration') }}</h1>
-<nav class="navbar navbar-expand navbar-dark bg-dark m-2 rounded">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_bp.index') }}">
-                {{ _('Admin Home') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_bp.config') }}">
-                {{ _('Flicket Config') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_bp.users') }}">
-                {{ _('Users') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_bp.add_user') }}">
-                {{ _('Add User') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin_bp.groups') }}">
-                {{ _('Groups') }}
-            </a>
-        </li>
-    </ul>
+{% import 'flicket_fluent_macros.html' as ui with context %}
+<nav class="fl-row" aria-label="{{ _('Administration') }}">
+    {{ ui.link_button(_('Admin Home'), url_for('admin_bp.index'), appearance='primary' if request.endpoint == 'admin_bp.index' else 'subtle') }}
+    {{ ui.link_button(_('Flicket Config'), url_for('admin_bp.config'), appearance='primary' if request.endpoint == 'admin_bp.config' else 'subtle') }}
+    {{ ui.link_button(_('Users'), url_for('admin_bp.users'), appearance='primary' if request.endpoint in ('admin_bp.users', 'admin_bp.edit_user') else 'subtle') }}
+    {{ ui.link_button(_('Add User'), url_for('admin_bp.add_user'), appearance='primary' if request.endpoint == 'admin_bp.add_user' else 'subtle') }}
+    {{ ui.link_button(_('Groups'), url_for('admin_bp.groups'), appearance='primary' if request.endpoint in ('admin_bp.groups', 'admin_bp.admin_edit_group') else 'subtle') }}
 </nav>

@@ -49,6 +49,15 @@
     function initCombobox(wrapper) {
         var input = wrapper.querySelector('input');
         var listbox = wrapper.querySelector('[role="listbox"]');
+        var kind = wrapper.getAttribute('data-kind') || 'user';
+
+        function labelFor(item) {
+            return kind === 'department_category' ? item.department_category : item.name + ' (' + item.username + ')';
+        }
+
+        function valueFor(item) {
+            return kind === 'department_category' ? item.department_category : item.username;
+        }
         var timer = null;
         var lastRequest = 0;
         var options = [];
@@ -92,8 +101,8 @@
                 option.className = 'fl-combobox__option';
                 option.setAttribute('role', 'option');
                 option.setAttribute('aria-selected', 'false');
-                option.setAttribute('data-value', item.username);
-                option.textContent = item.name + ' (' + item.username + ')';
+                option.setAttribute('data-value', valueFor(item));
+                option.textContent = labelFor(item);
                 option.addEventListener('mousedown', function (event) {
                     event.preventDefault();
                     choose(index);
@@ -114,7 +123,11 @@
                 return;
             }
 
-            apiGet('users/', {name: term}).then(function (data) {
+            var source = kind === 'department_category'
+                ? apiGet('department_categories/', {department_category: term})
+                : apiGet('users/', {name: term});
+
+            source.then(function (data) {
                 if (request === lastRequest) {
                     render(data.items || []);
                 }
@@ -191,7 +204,9 @@
                 listbox.appendChild(option);
             });
             window.setTimeout(function () {
-                category.value = selected;
+                if (category.value !== selected) {
+                    category.value = selected;
+                }
             }, 0);
         }
 
@@ -223,12 +238,47 @@
         load(true);
     }
 
+    function initCarousels() {
+        document.querySelectorAll('[data-carousel]').forEach(function (carousel) {
+            var slides = carousel.querySelectorAll('[data-carousel-slide]');
+            var controls = carousel.querySelector('[data-carousel-controls]');
+            var count = carousel.querySelector('[data-carousel-count]');
+            var prev = carousel.querySelector('#carousel-prev');
+            var next = carousel.querySelector('#carousel-next');
+            var index = 0;
+
+            if (!controls || slides.length < 2) {
+                return;
+            }
+
+            function show(i) {
+                index = (i + slides.length) % slides.length;
+                slides.forEach(function (slide, n) {
+                    slide.hidden = n !== index;
+                });
+                count.textContent = (index + 1) + ' / ' + slides.length;
+            }
+
+            prev.addEventListener('click', function () {
+                show(index - 1);
+            });
+            next.addEventListener('click', function () {
+                show(index + 1);
+            });
+
+            controls.hidden = false;
+            show(0);
+        });
+    }
+
     function applyInitialDropdownValues() {
         document.querySelectorAll('fluent-dropdown[value]').forEach(function (dropdown) {
             var initial = dropdown.getAttribute('value');
             if (initial && dropdown.value !== initial) {
                 window.setTimeout(function () {
-                    dropdown.value = initial;
+                    if (dropdown.value !== initial) {
+                        dropdown.value = initial;
+                    }
                 }, 0);
             }
         });
@@ -257,4 +307,5 @@
     initMenuLinks();
     document.querySelectorAll('[data-combobox]').forEach(initCombobox);
     initDependentCategories();
+    initCarousels();
 })();

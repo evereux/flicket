@@ -1,119 +1,42 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
-
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        {% include 'admin_menu.html' %}
-        <div class=" m-2 p-2 row border rounded bg-white">
-            <div class="col">
-                <h2>{{ title }}</h2>
-                <p>
-                    {{ _('Click on username to edit.') }}
-                </p>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ _('Click on username to edit.') }}</p>
+            {% include 'admin_menu.html' %}
         </div>
-        <ul class="m-2 pagination pagination-sm">{% for page in users.iter_pages() %}
-            {% if page %}
-                {% if page != users.page %}
-                    <li class="page-item">
-                        <a class="page-link" href="{{ url_for('admin_bp.users', page=page, **request.args) }}">
-                            {{ page }}
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="page-item active">
-                        <a class="page-link" href="{{ url_for('admin_bp.users', page=page, **request.args) }}">
-                            {{ page }}
-                        </a>
-                    </li>
-                {% endif %}
-            {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="">...</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-        </ul>
+    </section>
 
-        <div class="row">
-            <div class="col">
-                {% for u in users.items %}
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ _('Username') }}</th>
+                    <th scope="col">{{ _('Name') }}</th>
+                    <th scope="col">{{ _('Email') }}</th>
+                    <th scope="col">{{ _('Job Title') }}</th>
+                    <th scope="col">{{ _('Delete User') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for u in users.items %}
+                <tr>
+                    <td class="fl-nowrap">
+                        <a class="fl-user-link{% if u.is_super_user %} is-super{% elif u.is_admin %} is-admin{% endif %}" href="{{ url_for('admin_bp.edit_user', id=u.id) }}">{{ u.username }}</a>
+                    </td>
+                    <td>{{ u.name }}</td>
+                    <td><a href="mailto:{{ u.email }}">{{ u.email }}</a></td>
+                    <td>{{ u.job_title }}</td>
+                    <td>{{ ui.icon_action(url_for('admin_bp.delete_user', id=u.id), 'delete', _('delete'), 'delete-user-' ~ u.id) }}</td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
+    </div>
 
-                    <div class="border rounded bg-white m-2 p-1 pl-3 pr-3">
-
-                        <div class="row">
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Username') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.username }}
-                                    <a href="{{ url_for('admin_bp.edit_user', id=u.id) }}" title="{{ _('edit') }}">
-                                        <i class="fas fa-edit"
-                                                {%- if u.is_super_user -%}
-                                           style="color: blue"
-                                                {%- elif u.is_admin -%}
-                                           style="color: red"
-                                                {%- endif -%}
-                                        ></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Name') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.name }}
-                                    <a href="{{ url_for('admin_bp.edit_user', id=u.id) }}" title="{{ _('edit') }}">
-                                        <i class="fas fa-edit"
-                                                {%- if u.is_super_user -%}
-                                           style="color: blue"
-                                                {%- elif u.is_admin -%}
-                                           style="color: red"
-                                                {%- endif -%}
-                                        ></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Email') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    <a href="mailto:{{ u.email }}" title="{{ u.email }}">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Job Title') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.job_title }}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Delete User') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    <a href="{{ url_for('admin_bp.delete_user', id=u.id) }}" title="{{ _('delete') }}">
-                                        <i class="fas fa-trash" style="color: red;"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="fl-toolbar">
+        {{ ui.pager(users, 'admin_bp.users', request.args.to_dict()) }}
     </div>
 {% endblock %}

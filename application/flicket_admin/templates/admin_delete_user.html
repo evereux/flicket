@@ -1,76 +1,35 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        {% include 'admin_menu.html' %}
-        <div class="row m-2 b-2 border rounded bg-white">
-            <div class="col">
-                <h1>{{ title }}</h1>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% include 'admin_menu.html' %}
         </div>
+    </section>
 
-        <div class="row m-2 b-2 border rounded bg-white">
-            <div class="col ml-5 mr-5">
-
-                <div class="col w-25"></div>
-
-                <div class="col">
-                    <form action="" method="post" name="delete_user">
-                        {{ form.hidden_tag() }}
-                        {{ form.id() }}
-                        <div class="row m-2 text-center">
-                            <div class="col">
-                                {{ _('Are you sure you want to delete the following user? This may impact relational query look ups.') }}
-                            </div>
-                        </div>
-
-                        <div class="row m-2">
-                            <div class="col-4 text-right">
-                                {{ _('Username') }}
-                            </div>
-                            <div class="col">
-                                {{ user_details.username }}
-                            </div>
-                        </div>
-                        <div class="row m-2">
-                            <div class="col-4 text-right">
-                                {{ _('Name') }}
-                            </div>
-                            <div class="col">{{ user_details.name }}</div>
-                        </div>
-                        <div class="row m-2">
-                            <div class="col-4 text-right">
-                                {{ _('Email') }}
-                            </div>
-                            <div class="col">
-                                {{ user_details.email }}
-                            </div>
-                        </div>
-                        <div class="row m-2">
-                            <div class="col-4 text-right">
-                                {{ _('Enter password') }}
-                            </div>
-                            <div class="col">
-                                {{ form.password(class="form-control form-control-sm") }}
-                                {% if form.password.errors %}
-                                    <span style="color: red;">
-                            {% for error in form.password.errors %}
-                                [{{ error }}]
-                            {% endfor %}
-                            </span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="row m-2">
-                            <div class="col text-center">
-                                <input class="btn btn-danger btn-sm" type="submit" value="delete user"/>
-                            </div>
-                        </div>
-                    </form>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="delete_user">
+            {{ form.hidden_tag() }}
+            <p>{{ _('Are you sure you want to delete the following user? This may impact relational query look ups.') }}</p>
+            <dl class="fl-meta">
+                <div>
+                    <dt>{{ _('Username') }}</dt>
+                    <dd>{{ user_details.username }}</dd>
                 </div>
-                <div class="col w-25"></div>
+                <div>
+                    <dt>{{ _('Name') }}</dt>
+                    <dd>{{ user_details.name }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Email') }}</dt>
+                    <dd>{{ user_details.email }}</dd>
+                </div>
+            </dl>
+            {{ ui.text_field(form.password, text=_('Enter password'), type='password', keep_value=False) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('delete user'), type='submit', appearance='outline', classes='fl-danger') }}
             </div>
-        </div>
-    </div>
+        </form>
+    </section>
 {% endblock %}

@@ -91,5 +91,5 @@ def config():
     form.change_category_only_admin_or_super_user.data = config_details.change_category_only_admin_or_super_user
 
     return render_template('admin_config.html',
-                           title='Flicket Configuration',
+                           title=gettext('Flicket Configuration'),
                            form=form)

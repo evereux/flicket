@@ -1,9 +1,9 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        {% include 'admin_menu.html' %}
-    </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ _('Administration') }}</h1>
+            {% include 'admin_menu.html' %}
+        </div>
+    </section>
 {% endblock %}

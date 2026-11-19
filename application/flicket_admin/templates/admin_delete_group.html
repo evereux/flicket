@@ -1,57 +1,23 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        {% include 'admin_menu.html' %}
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h2>{{ title }}</h2>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% include 'admin_menu.html' %}
         </div>
+    </section>
 
-        <div class="row m-3 p-2 border rounded bg-white">
-            <div class="w-25"></div>
-            <div class="col">
-                <form action="" method="post" name="delete_group">
-                    {{ form.hidden_tag() }}
-                    {{ form.id() }}
-                    <div class="row">
-                        <div class="col text-center">
-                            {{ _('Are you sure you want to delete the group:') }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-center">
-                            <b style="font-size: 2rem;">{{ group_details.group_name }}</b>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col text-center">
-                            {{ _('Please enter your password to delete group.') }}
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col">
-                            {{ form.password(class="form-control form-control-sm") }}
-                            {%- if form.password.errors -%}
-                                <span style="color: red;">
-                        {%- for error in form.password.errors -%}
-                            [{{ error }}]<br/>
-                        {%- endfor -%}
-                            </span>
-                            {%- endif -%}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-center">
-                            <input class="btn btn-danger btn-sm" type="submit" value="delete group"/>
-                        </div>
-                    </div>
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="delete_group">
+            {{ form.hidden_tag() }}
+            <p>{{ _('Are you sure you want to delete the group:') }}</p>
+            <p class="fl-title">{{ group_details.group_name }}</p>
+            <p class="fl-muted">{{ _('Please enter your password to delete group.') }}</p>
+            {{ ui.text_field(form.password, text=_('Enter password'), type='password', keep_value=False) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('delete group'), type='submit', appearance='outline', classes='fl-danger') }}
             </div>
-            <div class="w-25"></div>
-        </div>
-
-    </div>
+        </form>
+    </section>
 {% endblock %}

@@ -156,7 +156,7 @@ class AddUserForm(FlaskForm):
     confirm = PasswordField(lazy_gettext('Repeat Password'))
     locale = SelectField(lazy_gettext('Locale'), validators=[DataRequired()], )
     disabled = BooleanField(lazy_gettext('Disabled'))
-    submit = SubmitField(lazy_gettext('add_user'))
+    submit = SubmitField(lazy_gettext('Add user'))
 
 
 class EditUserForm(AddUserForm):
@@ -172,7 +172,7 @@ class EditUserForm(AddUserForm):
         EqualTo('confirm', message='Passwords must match'), check_password_edit])
     confirm = PasswordField(lazy_gettext('Repeat Password'))
     groups = SelectMultipleField(lazy_gettext('groups'), coerce=int)
-    submit = SubmitField(lazy_gettext('edit_user'))
+    submit = SubmitField(lazy_gettext('Edit user'))
 
     def __init__(self, *args, **kwargs):
         form = super(EditUserForm, self).__init__(*args, **kwargs)

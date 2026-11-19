@@ -70,11 +70,11 @@ def unsubscribe_ticket(ticket_id=None, user_id=None):
             add_action(ticket, 'unsubscribe', recipient=user)
             db.session.delete(subscription)
             db.session.commit()
-            flash(gettext('"{}" has been unsubscribed from this ticket.'.format(user.name)), category='success')
+            flash(gettext('"%(value)s" has been unsubscribed from this ticket.', value=user.name), category='success')
 
         else:
 
-            flash(gettext('Could not unsubscribe "{}" from ticket due to permission restrictions.'.format(user.name)),
+            flash(gettext('Could not unsubscribe "%(value)s" from ticket due to permission restrictions.', value=user.name),
                   category='warning')
 
         return redirect(url_for('flicket_bp.ticket_view', ticket_id=ticket_id))
@@ -82,4 +82,4 @@ def unsubscribe_ticket(ticket_id=None, user_id=None):
     # else:
     #     print(form.errors)
 
-    return render_template('flicket_unsubscribe_user.html', form=form, title='Unsubscribe', ticket=ticket, user=user)
+    return render_template('flicket_unsubscribe_user.html', form=form, title=gettext('Unsubscribe'), ticket=ticket, user=user)

@@ -1,60 +1,20 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container" xmlns="http://www.w3.org/1999/html">
-        {% include 'admin_menu.html' %}
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h2>{{ title }}</h2>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% include 'admin_menu.html' %}
         </div>
+    </section>
 
-        <div class="row m-2 p-2 border rounded bg-white">
-
-            <div class="w-25"></div>
-
-            <div class="col">
-
-
-                <form action="" method="post" name="edit_group">
-                    {{ form.hidden_tag() }}
-
-
-                    <div class="row m-2">
-                        <div class="col">
-                            {{ _('Please add new users credentials.') }}
-                        </div>
-                    </div>
-
-                    <div class="row m-2">
-                        <div class="col-5">
-                            {{ _('Group Name') }}
-                        </div>
-                        <div class="col">
-                            {{ form.group_name(class="form-control form-control-sm") }}
-                            {% if form.group_name.errors %}
-                                <span style="color: red;">
-                                {% for error in form.group_name.errors %}
-                                    [{{ error }}]
-                                {% endfor %}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col text-center">
-                            <input class="btn btn-primary" type="submit" value="edit group"/>
-                        </div>
-                    </div>
-
-
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="edit_group">
+            {{ form.hidden_tag() }}
+            {{ ui.text_field(form.group_name, text=_('Group Name')) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('edit group'), type='submit', appearance='primary') }}
             </div>
-            <div class="w-25"></div>
-
-        </div>
-    </div>
-
+        </form>
+    </section>
 {% endblock %}

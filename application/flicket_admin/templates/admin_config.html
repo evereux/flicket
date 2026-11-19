@@ -1,80 +1,59 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        {% include 'admin_menu.html' %}
-
-        <div class="row m-2 border rounded p-2 bg-white">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h2 class="text-center">{{ _('Configuration') }}</h2>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-
-                        <form class="form" action="" method="post" name="register">
-                            {{ form.hidden_tag() }}
-                            <div class="row p-2">
-                                <div class="col-3 text-lg">
-                                    {{ _('Field') }}
-                                </div>
-                                <div class="col text-lg">
-                                    {{ _('Value') }}
-                                </div>
-                            </div>
-                            {% set insert_button = False %}
-                            {%- for field in form if field.widget.input_type != 'hidden' and field.widget.input_type != 'submit' -%}
-                                <div class="row form-group p-2">
-                                {{ field.label(class="col-3") }}
-                                {% if field.type == 'BooleanField' %}
-                                    <div class="col-1">
-                                {% else %}
-                                    <div class="col-9">
-                                {% endif %}
-
-                            {{ field(class="form-control form-control-sm") }}
-                            {%- if field.name == 'allowed_extensions' -%}
-                                {{ _('This must be a comma delimited list.') }}
-                            {% endif %}
-                            {%- if field.errors -%}
-                                <span class="alert alert-warning">
-                                        {%- for error in field.errors -%}
-                                            {{ error }}.
-                                        {%- endfor -%}
-                                     </span>
-                            {%- endif -%}
-
-                            {%- if field.name == "mail_ascii_attachments" -%}
-                                {% set insert_button = True %}
-                            {%- endif -%}
-                            </div>
-                            </div>
-                                {%- if insert_button -%}
-                                    <div class="row">
-                                        <div class="col offset-3">
-                                            <a class="btn btn-info" href="{{ url_for('admin_bp.email_test') }}">Test
-                                                Email</a>
-                                        </div>
-                                    </div>
-                                {%- endif -%}
-                            {%- endfor -%}
-                            <div class="form-group">
-                                <div class="text-center">
-                                    {{ form.submit }}
-                                </div>
-                            </div>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ _('Configuration') }}</h1>
+            {% include 'admin_menu.html' %}
         </div>
-    </div>
+    </section>
+
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="register">
+            {{ form.hidden_tag() }}
+
+            <h2 class="fl-title">{{ _('Mail') }}</h2>
+            <div class="fl-grid">
+                {{ ui.text_field(form.mail_server, text=form.mail_server.label.text) }}
+                {{ ui.text_field(form.mail_port, text=form.mail_port.label.text) }}
+                {{ ui.text_field(form.mail_username, text=form.mail_username.label.text) }}
+                {{ ui.text_field(form.mail_password, text=form.mail_password.label.text, type='password', keep_value=False) }}
+                {{ ui.text_field(form.mail_default_sender, text=form.mail_default_sender.label.text) }}
+                {{ ui.text_field(form.mail_max_emails, text=form.mail_max_emails.label.text) }}
+            </div>
+            <div class="fl-row">
+                {{ ui.checkbox_field(form.mail_use_tls) }}
+                {{ ui.checkbox_field(form.mail_use_ssl) }}
+                {{ ui.checkbox_field(form.mail_debug) }}
+                {{ ui.checkbox_field(form.mail_suppress_send) }}
+                {{ ui.checkbox_field(form.mail_ascii_attachments) }}
+            </div>
+            <div class="fl-actions">
+                {{ ui.link_button(_('Test Email'), url_for('admin_bp.email_test'), appearance='outline') }}
+            </div>
+
+            <h2 class="fl-title">{{ _('Application') }}</h2>
+            <div class="fl-grid">
+                {{ ui.text_field(form.application_title, text=form.application_title.label.text) }}
+                {{ ui.text_field(form.posts_per_page, text=form.posts_per_page.label.text) }}
+                {{ ui.text_field(form.allowed_extensions, text=form.allowed_extensions.label.text) }}
+                {{ ui.text_field(form.ticket_upload_folder, text=form.ticket_upload_folder.label.text) }}
+                {{ ui.text_field(form.base_url, text=form.base_url.label.text) }}
+                {{ ui.text_field(form.csv_dump_limit, text=form.csv_dump_limit.label.text) }}
+            </div>
+            <p class="fl-muted fl-small">{{ _('This must be a comma delimited list.') }}</p>
+
+            <h2 class="fl-title">{{ _('Authentication') }}</h2>
+            {{ ui.checkbox_field(form.use_auth_domain) }}
+            {{ ui.text_field(form.auth_domain, text=form.auth_domain.label.text) }}
+
+            <h2 class="fl-title">{{ _('Tickets') }}</h2>
+            {{ ui.checkbox_field(form.change_category) }}
+            {{ ui.checkbox_field(form.change_category_only_admin_or_super_user) }}
+
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
+            </div>
+        </form>
+    </section>
 {% endblock %}

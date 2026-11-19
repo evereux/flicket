@@ -1,144 +1,41 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        {% include 'admin_menu.html' %}
-
-        <div class="row rounded border m-2 p-2 bg-white">
-            <div class="col">
-                <h2 class="text-center">{{ title }}</h2>
-                {% if admin_edit %}
-                    <p>
-                        Edit user details. Use "CTRL" to deselect within group column.
-                    </p>
-                {% endif %}
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% if admin_edit %}
+                <p class="fl-muted">{{ _('Edit user details. Select the groups this user belongs to.') }}</p>
+            {% endif %}
+            {% include 'admin_menu.html' %}
         </div>
+    </section>
 
-        <div class="row border rounded m-2 p-2 bg-white">
-            <div class="col">
-                <form class="form" action="" method="post" name="register">
-                    {{ form.hidden_tag() }}
-                    {% if form.user_id %}{{ form.user_id() }}{% endif %}
-
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.username.label.text }}</label>
-                        <div class="col">
-                            {{ form.username(class="form-control") }}
-                        </div>
-                    </div>
-                    {% if form.username.errors %}
-                        <div class="alert alert-warning small">
-                            {% for error in form.username.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.name.label.text }}</label>
-                        <div class="col">
-                            {{ form.name(class="form-control", placeholder="name") }}
-                        </div>
-                        {% if form.name.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.name.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.email.label.text }}</label>
-                        <div class="col">
-                            {{ form.email(class="form-control", placeholder="email") }}
-                        </div>
-                    </div>
-                    {% if form.email.errors %}
-                        <div class="alert alert-warning small">
-                            {% for error in form.email.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.job_title.label.text }}</label>
-                        <div class="col">
-                            {{ form.job_title(class="form-control", placeholder="job title / role") }}
-                        </div>
-                    </div>
-                    {% if form.job_title.errors %}
-                        <div class="alert alert-warning small">
-                            {% for error in form.job_title.errors %}
-                                {{ error }}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.locale.label.text }}</label>
-                        <div class="col">
-                            {{ form.locale(class="form-control", placeholder="locale") }}
-                        </div>
-                        {% if form.locale.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.locale.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.password.label.text }}</label>
-                        <div class="col">
-                            {{ form.password(class="form-control", placeholder="password") }}
-                        </div>
-                        {% if form.password.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.password.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.confirm.label.text }}</label>
-                        <div class="col">
-                            {{ form.confirm(class="form-control", placeholder="repeat password") }}
-                        </div>
-                        {% if form.confirm.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.confirm.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="row mb-2">
-                        <label class="col-2 col-form-label">{{ form.disabled.label.text }}</label>
-                        <div class="col-2">
-                            {{ form.disabled(class="form-control") }}
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        {% if admin_edit %}
-
-                            <label class="col-2 col-form-label">Groups</label>
-                            <div class="col">
-                                {{ form.groups(class="form-control") }}
-
-                            </div>
-
-                        {% endif %}
-                    </div>
-                    <div class="row">
-                        <div class="col text-center">
-                            {{ form.submit(class="btn btn-primary") }}
-                        </div>
-                    </div>
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="register">
+            {{ form.hidden_tag() }}
+            {{ ui.text_field(form.username, text=form.username.label.text) }}
+            {{ ui.text_field(form.name, text=form.name.label.text) }}
+            {{ ui.text_field(form.email, text=form.email.label.text) }}
+            {{ ui.text_field(form.job_title, text=form.job_title.label.text) }}
+            {{ ui.select_field(form.locale, text=form.locale.label.text) }}
+            {{ ui.text_field(form.password, text=form.password.label.text, type='password', keep_value=False) }}
+            {{ ui.text_field(form.confirm, text=form.confirm.label.text, type='password', keep_value=False) }}
+            {{ ui.checkbox_field(form.disabled) }}
+            {%- if admin_edit %}
+            <fieldset class="fl-fieldset">
+                <legend class="fl-label">{{ _('Groups') }}</legend>
+                {%- for value, label in form.groups.choices %}
+                <div class="fl-check">
+                    <input type="checkbox" id="groups-{{ value }}" name="groups" value="{{ value }}" class="fl-check__input"{% if value in (form.groups.data or []) %} checked{% endif %}>
+                    <label for="groups-{{ value }}" class="fl-check__label">{{ label }}</label>
+                </div>
+                {%- endfor %}
+            </fieldset>
+            {%- endif %}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
             </div>
-        </div>
-
-    </div>
+        </form>
+    </section>
 {% endblock %}

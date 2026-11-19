@@ -1,48 +1,20 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        {% include 'admin_menu.html' %}
-
-        <div class="row m-2 p2 border rounded bg-white">
-            <div class="col">
-                <h1>{{ title }}</h1>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            {% include 'admin_menu.html' %}
         </div>
-        <div class="row m-2 p2 border rounded bg-white">
-            <div class="col">
-                <form class="form" action="" method="post" name="email_test">
-                    {{ form.hidden_tag() }}
+    </section>
 
-                    <div class="row m-2">
-                        <div class="col">
-                            {{ form.email_address.label }}
-                        </div>
-                        <div class="col">{{ form.email_address(class="form-control form-control-sm") }}</div>
-                    </div>
-
-                    <div class="row m-2">
-                        <div class="col text-center">
-                            {{ form.submit }}
-                        </div>
-                    </div>
-
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="email_test">
+            {{ form.hidden_tag() }}
+            {{ ui.text_field(form.email_address, text=form.email_address.label.text) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                {% if form.email_address.errors %}
-                    <div class="alert alert-warning small">
-                        {% for error in form.email_address.errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-
-    </div>
+        </form>
+    </section>
 {% endblock %}

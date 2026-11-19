@@ -1,71 +1,62 @@
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 <!-- extend from base layout -->
 {% block content %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <script src="{{ url_for('flicket_bp.static', filename='js/plotly.min.js') }}"></script>
 
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <div class="row">
-                    <div class="col text-center">
-                        <h1 class=>{{ _('Open High Priority Tickets') }}</h1>
+    <section class="fl-card">
+        <h1 class="fl-title">{{ _('Open High Priority Tickets') }}</h1>
+        {% if tickets.count() > 0 %}
+            <div class="fl-carousel" data-carousel>
+                {% for t in tickets %}
+                    <div class="fl-carousel__slide" data-carousel-slide>
+                        {% include 'flicket_items.html' %}
                     </div>
-
-
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {% if tickets.count() > 0 %}
-                            <div id="carouselExampleControls" class="carousel slide mt-3" data-ride="carousel">
-                                <div class="carousel-inner">
-                                    {% for t in tickets %}
-                                        <div class="bg-white carousel-item {% if loop.first %} active {% endif %}">
-                                            {% include('flicket_items.html') %}
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
+                {% endfor %}
+                {% if tickets.count() > 1 %}
+                    <div class="fl-carousel__controls" data-carousel-controls hidden>
+                        <fluent-button id="carousel-prev" type="button" appearance="subtle" icon-only aria-label="{{ _('Previous') }}">{{ ui.icon('chevron-left') }}</fluent-button>
+                        <span class="fl-muted" data-carousel-count aria-live="polite"></span>
+                        <fluent-button id="carousel-next" type="button" appearance="subtle" icon-only aria-label="{{ _('Next') }}">{{ ui.icon('chevron-right') }}</fluent-button>
                     </div>
-                </div>
+                {% endif %}
             </div>
+        {% endif %}
+    </section>
+
+    <section class="fl-card">
+        <h2 class="fl-title">{{ _('Statistics') }}</h2>
+        <div class="fl-chart-grid">
+            {% for id in ids %}
+                <div id="{{ id }}" class="fl-chart"></div>
+            {% endfor %}
         </div>
-
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h1 class="text-center">{{ _('Statistics') }}</h1>
-                    </div>
-                </div>
-                <div class="row">
-
-                    {% for id in ids %}
-                        <div class="col-md-4 col-sm-6">
-                            <div id="{{ id }}"></div>
-                        </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
+    </section>
 
     <script type="text/javascript">
-        var graphs = {{graph_json | safe}};
-        var ids = {{ids | safe}};
-        for (var i in graphs) {
-            Plotly.plot(ids[i], // the ID of the div, created above
-                graphs[i].data,
-                graphs[i].layout || {},
-                {responsive: true});
-        }
-    </script>
+        (function () {
+            var graphs = {{ graph_json | safe }};
+            var ids = {{ ids | safe }};
 
+            function textColor() {
+                return getComputedStyle(document.documentElement).getPropertyValue('--colorNeutralForeground1').trim();
+            }
+
+            for (var i in graphs) {
+                var layout = Object.assign({}, graphs[i].layout || {}, {
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    font: {color: textColor()}
+                });
+                Plotly.plot(ids[i], graphs[i].data, layout, {responsive: true});
+            }
+
+            new MutationObserver(function () {
+                ids.forEach(function (id) {
+                    Plotly.relayout(id, {'font.color': textColor()});
+                });
+            }).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+        })();
+    </script>
 {% endblock %}

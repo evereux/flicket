@@ -1,73 +1,35 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h1 class="text-center">{{ title }}</h1>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ _('Department') }}: {{ department.department }}</p>
         </div>
+    </section>
 
-        <div class="row m-2 p-2 border rounded bg-white">
-
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <h3><span class="small">Department:</span> {{ department.department }}</h3>
-                    </div>
-                </div>
-                <form action=""
-                      class="form form-inline"
-                      enctype="multipart/form-data"
-                      method="post"
-                      name="create_ticket">
-                    {{ form.hidden_tag() }}
-                    {{ form.department_id() }}
-                    <div class="row">
-                        <label class="sr-only">{{ form.category.label }}</label>
-                        <div class="col">
-                            {{ form.category(class="form-control form-control-sm", placeholder="category") }}
-                        </div>
-                        <div class="col">{{ form.submit() }}
-                        </div>
-                    </div>
-                    {% if form.category.errors %}
-                        <div class="row">
-                            <div class="alert alert-warning small">
-                                {% for error in form.category.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-form-row" enctype="multipart/form-data" method="post" name="create_ticket">
+            {{ form.hidden_tag() }}
+            <div class="fl-grow">
+                {{ ui.text_field(form.category, text=form.category.label.text) }}
             </div>
+            {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
+        </form>
+    </section>
+
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h2 class="fl-title">{{ _('Existing Categories') }}</h2>
+            <ul class="fl-list">
+                {%- for c in categories %}
+                <li class="fl-row">
+                    <span>{{ c.category }}</span>
+                    {{ ui.icon_action(url_for('flicket_bp.category_edit', category_id=c.id), 'edit', _('edit'), 'edit-category-' ~ c.id) }}
+                    {{ ui.icon_action(url_for('flicket_bp.delete_category', category_id=c.id), 'delete', _('delete'), 'delete-category-' ~ c.id) }}
+                </li>
+                {%- endfor %}
+            </ul>
         </div>
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <div class="row">
-                    <div class="col"><h3>{{ _('Existing Categories') }}</h3></div>
-                </div>
-                {% for c in categories %}
-                    <div class="row">
-                        <div class="col">
-                            {{ c.category }}&nbsp;
-                            <a href="{{ url_for('flicket_bp.category_edit', category_id=c.id) }}" title="edit">
-                                <i class="fas fa-edit"></i>
-                            </a>
-
-                            <a href="{{ url_for('flicket_bp.delete_category', category_id=c.id) }}" title="delete">
-                                <i class="fas fa-trash" style="color: red"></i>
-                            </a>
-
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-    </div>
+    </section>
 {% endblock %}

@@ -4,6 +4,7 @@
 # Flicket - copyright Paul Bourne: evereux@gmail.com
 
 from flask import flash, g, redirect, render_template, request, url_for
+from flask_babel import gettext
 from flask_login import login_required
 
 from application import app, db
@@ -81,4 +82,4 @@ def user_details():
     form.job_title.data = g.user.job_title
     form.locale.data = g.user.locale
 
-    return render_template('flicket_edituser.html', form=form, title='Edit User Details')
+    return render_template('flicket_edituser.html', form=form, title=gettext('Edit User Details'))

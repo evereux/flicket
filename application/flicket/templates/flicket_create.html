@@ -1,9 +1,17 @@
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
 <!-- extend from base layout -->
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        <h1 class="m-2 border rounded bg-white p-2">{{ title }}</h1>
-        {% include 'flicket_post_box.html' %}
-    </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">
+                {{ _('Ticket content supports markdown syntax. Please refer to the') }}
+                <a href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank" rel="noopener">{{ _('Markdown primer') }}</a>.
+            </p>
+        </div>
+    </section>
+
+    <section class="fl-card">
+        {% include 'flicket_post_box_fluent.html' %}
+    </section>
 {% endblock %}

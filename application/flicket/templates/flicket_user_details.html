@@ -1,44 +1,43 @@
-{% extends 'flicket_base.html' %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h1 class="offset-3">{{ title }}</h1>
-                <dl class="row">
-                    <dt class="col-3 text-right">{{ user.name }}</dt>
-                    <dd class="col-9">{% if user.avatar %}
-                        <img alt="avatar"
-                             src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}"
-                             style="width: 100pt">
-                    {% else %}
-                        <i class="fas fa-user"></i>
-                    {% endif %}
-                    </dd>
-
-                    <dt class="col-3 text-right">{{ _('Username') }}</dt>
-                    <dd class="col-9">{{ user.username }}</dd>
-
-                    <dt class="col-3 text-right">{{ _('Email') }}</dt>
-                    <dd class="col-9"><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
-
-                    <dt class="col-3 text-right">{{ _('Date Joined') }}</dt>
-                    <dd class="col-9">{{ user.date_added }}</dd>
-
-                    <dt class="col-3 text-right">{{ _('Job Title') }}</dt>
-                    <dd class="col-9">{{ user.job_title }}</dd>
-
-                    <dt class="col-3 text-right">{{ _('Number Of Posts') }}</dt>
-                    <dd class="col-9">{{ user.total_posts }}</dd>
-
-                    <dt class="col-3 text-right">{{ _('Number Assigned') }}</dt>
-                    <dd class="col-9">{{ user.total_assigned }}</dd>
-
-                </dl>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <div class="fl-row">
+                {%- if user.avatar %}
+                <img class="fl-avatar" alt="" src="{{ url_for('flicket_bp.static', filename='flicket_avatars/') }}{{ user.avatar }}">
+                {%- else %}
+                <span class="fl-avatar fl-avatar--placeholder" aria-hidden="true">{{ ui.icon('person') }}</span>
+                {%- endif %}
+                <strong>{{ user.name }}</strong>
             </div>
+            <dl class="fl-meta">
+                <div>
+                    <dt>{{ _('Username') }}</dt>
+                    <dd>{{ user.username }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Email') }}</dt>
+                    <dd><a href="mailto:{{ user.email }}">{{ user.email }}</a></dd>
+                </div>
+                <div>
+                    <dt>{{ _('Date Joined') }}</dt>
+                    <dd>{{ user.date_added }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Job Title') }}</dt>
+                    <dd>{{ user.job_title }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Number Of Posts') }}</dt>
+                    <dd>{{ user.total_posts }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Number Assigned') }}</dt>
+                    <dd>{{ user.total_assigned }}</dd>
+                </div>
+            </dl>
         </div>
-
-    </div>
+    </section>
 {% endblock %}

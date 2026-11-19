@@ -206,7 +206,7 @@ msgstr "Mot de passe"
 msgid ""
 "Type department and/or category and pick from drop down list to change "
 "category."
-msgstr ""
+msgstr "Saisissez un département et/ou une catégorie, puis choisissez dans la liste déroulante pour modifier la catégorie."
 
 #: application/flicket/templates/flicket_departments.html:8
 msgid ""
@@ -219,16 +219,16 @@ msgstr ""
 #: application/flicket/templates/flicket_departments.html:86
 #: application/flicket/views/categories.py:33
 msgid "Categories"
-msgstr "Catégorie"
+msgstr "Catégories"
 
 #: application/flicket/templates/flicket_edituser.html:143
 msgid "Enter details below only if you want to change your password."
-msgstr ""
+msgstr "Renseignez les champs ci-dessous uniquement si vous souhaitez modifier votre mot de passe."
 
 #: application/flicket/templates/flicket_form_reply.html:39
 #: application/flicket/templates/flicket_post_box.html:41
 msgid "MarkDown Help"
-msgstr ""
+msgstr "Aide Markdown"
 
 #: application/flicket/templates/flicket_form_reply.html:44
 #: application/flicket/templates/flicket_post_box.html:47
@@ -249,11 +249,11 @@ msgstr "Aucun changement n'a été effectué au contenu de ce post."
 
 #: application/flicket/templates/flicket_index.html:13
 msgid "Open High Priority Tickets"
-msgstr ""
+msgstr "Tickets ouverts à haute priorité"
 
 #: application/flicket/templates/flicket_index.html:41
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiques"
 
 #: application/flicket/templates/flicket_items.html:12
 #: application/flicket/templates/flicket_tickets.html:180
@@ -262,36 +262,30 @@ msgid "Replies"
 msgstr "Réponses"
 
 #: application/flicket/templates/flicket_items.html:23
-#, fuzzy
 msgid "priority"
 msgstr "Priorité"
 
 #: application/flicket/templates/flicket_items.html:39
 #: application/flicket/templates/flicket_tickets.html:246
-#, fuzzy
 msgid "submitted by"
 msgstr "Soumise par"
 
 #: application/flicket/templates/flicket_items.html:47
-#, fuzzy
 msgid "date"
 msgstr "Date"
 
 #: application/flicket/templates/flicket_items.html:55
 #: application/flicket/templates/flicket_tickets.html:270
-#, fuzzy
 msgid "department / category"
-msgstr "Ajouter une catégorie"
+msgstr "département / catégorie"
 
 #: application/flicket/templates/flicket_items.html:63
 #: application/flicket/templates/flicket_tickets.html:278
-#, fuzzy
 msgid "status"
 msgstr "Statut"
 
 #: application/flicket/templates/flicket_items.html:71
 #: application/flicket/templates/flicket_tickets.html:286
-#, fuzzy
 msgid "assigned"
 msgstr "Assignée"
 
@@ -334,7 +328,7 @@ msgstr "Créer une demande"
 #: application/flicket/templates/flicket_navbar.html:28
 #: application/flicket/views/departments.py:34
 msgid "Departments"
-msgstr "Département"
+msgstr "Départements"
 
 #: application/flicket/templates/flicket_navbar.html:30
 #: application/flicket/views/users.py:39
@@ -349,7 +343,7 @@ msgstr "Administrateur"
 #: application/flicket/templates/flicket_navbar.html:47
 #: application/flicket/views/users.py:53
 msgid "User Details"
-msgstr "Utilisateurs"
+msgstr "Détails de l'utilisateur"
 
 #: application/flicket/templates/flicket_navbar.html:52
 msgid "Log Out"
@@ -361,7 +355,7 @@ msgstr "Connexion"
 
 #: application/flicket/templates/flicket_password_reset.html:15
 msgid "Email Address"
-msgstr ""
+msgstr "Adresse e-mail"
 
 #: application/flicket/templates/flicket_post.html:84
 msgid "This post was modified by"
@@ -384,11 +378,11 @@ msgstr ""
 
 #: application/flicket/templates/flicket_post_box.html:11
 msgid "Ticket content supports markdown syntax. Please refer to the"
-msgstr ""
+msgstr "Le contenu des demandes prend en charge la syntaxe Markdown. Veuillez consulter"
 
 #: application/flicket/templates/flicket_post_box.html:13
-msgid "markdown_primer"
-msgstr ""
+msgid "Markdown primer"
+msgstr "l'aide-mémoire Markdown"
 
 #: application/flicket/templates/flicket_post_box.html:19
 msgid "Ticket Title"
@@ -437,18 +431,17 @@ msgstr ""
 
 #: application/flicket/templates/flicket_tickets.html:147
 #: application/flicket/templates/flicket_tickets.html:152
-#, fuzzy
 msgid "Department / Category"
-msgstr "Ajouter une catégorie"
+msgstr "Département / catégorie"
 
 #: application/flicket/templates/flicket_tickets.html:191
 #: application/flicket/templates/flicket_tickets.html:196
 msgid "Hours"
-msgstr ""
+msgstr "Heures"
 
 #: application/flicket/templates/flicket_tickets.html:254
 msgid "created"
-msgstr ""
+msgstr "Créée"
 
 #: application/flicket/templates/flicket_tickets.html:261
 #: application/flicket/templates/flicket_tickets.html:264
@@ -457,7 +450,7 @@ msgstr ""
 
 #: application/flicket/templates/flicket_tickets.html:262
 msgid "updated"
-msgstr ""
+msgstr "Mise à jour"
 
 #: application/flicket/templates/flicket_unsubscribe_user.html:31
 #: application/flicket/templates/flicket_view.html:32
@@ -474,14 +467,14 @@ msgstr "Département"
 #: application/flicket/templates/flicket_unsubscribe_user.html:78
 #: application/flicket/templates/flicket_view.html:79
 msgid "Total Hours"
-msgstr ""
+msgstr "Heures totales"
 
 #: application/flicket/templates/flicket_user_details.html:24
 #: application/flicket/templates/flicket_users.html:126
 #: application/flicket_admin/templates/admin_delete_user.html:44
 #: application/flicket_admin/templates/admin_users.html:85
 msgid "Email"
-msgstr "Courielle"
+msgstr "Courriel"
 
 #: application/flicket/templates/flicket_user_details.html:27
 msgid "Date Joined"
@@ -547,7 +540,7 @@ msgstr "Nouvelle catégorie %(value)s ajoutée."
 
 #: application/flicket/views/categories.py:59
 msgid "Edit Category"
-msgstr "Modifier Catégorie"
+msgstr "Modifier la catégorie"
 
 #: application/flicket/views/claim.py:28
 msgid "You have already been assigned this ticket."
@@ -571,13 +564,21 @@ msgstr "Vous n'êtes pas autorisé à supprimer des demandes."
 msgid "Ticket deleted."
 msgstr "Demande supprimée."
 
+#: application/flicket/views/delete.py:96
+msgid "Post deleted."
+msgstr "Post supprimé."
+
 #: application/flicket/views/delete.py:76
 msgid "You are not authorised to delete posts"
 msgstr "Vous n'êtes pas autorisé à supprimer des posts"
 
 #: application/flicket/views/delete.py:98
 msgid "Delete Post"
-msgstr ""
+msgstr "Supprimer le post"
+
+#: application/flicket/templates/flicket_deletepost.html:25
+msgid "delete post"
+msgstr "supprimer le post"
 
 #: application/flicket/views/delete.py:114
 msgid "You are not authorised to delete categories."
@@ -585,24 +586,24 @@ msgstr "Vous n'êtes pas autorisé à supprimer des catégories."
 
 #: application/flicket/views/delete.py:144
 msgid "Delete Category"
-msgstr ""
+msgstr "Supprimer la catégorie"
 
 #: application/flicket/views/delete.py:160
 msgid "You are not authorised to delete departments."
 msgstr "Vous n'êtes pas autorisé à supprimer les départements."
 
 #: application/flicket/views/delete.py:189
-#, fuzzy, python-format
+#, python-format
 msgid "You are trying to delete department: %(value)s."
-msgstr "Vous n'êtes pas autorisé à supprimer les départements."
+msgstr "Vous êtes sur le point de supprimer le département : %(value)s."
 
 #: application/flicket/views/delete.py:191
 msgid "Delete Department"
-msgstr ""
+msgstr "Supprimer le département"
 
 #: application/flicket/views/department_category.py:33
 msgid "Can't change the department and category on a closed ticket."
-msgstr ""
+msgstr "Impossible de modifier le département et la catégorie d'une demande fermée."
 
 #: application/flicket/views/department_category.py:43
 #, fuzzy
@@ -615,7 +616,7 @@ msgstr ""
 
 #: application/flicket/views/department_category.py:63
 msgid "Change Department / Category of Ticket"
-msgstr ""
+msgstr "Modifier le département / la catégorie de la demande"
 
 #: application/flicket/views/departments.py:29
 #, fuzzy
@@ -625,7 +626,7 @@ msgstr "Nouveau département \"%(value)s\" ajouté."
 #: application/flicket/views/departments.py:54
 #, python-format
 msgid "Department \"%(value)s\" edited."
-msgstr "Départment \"%(value)s\" modifié."
+msgstr "Département \"%(value)s\" modifié."
 
 #: application/flicket/views/edit.py:37
 msgid "Could not find ticket."
@@ -741,7 +742,7 @@ msgstr ""
 
 #: application/flicket_admin/templates/admin_config.html:13
 msgid "Configuration"
-msgstr ""
+msgstr "Configuration"
 
 #: application/flicket_admin/templates/admin_config.html:24
 msgid "Field"
@@ -756,9 +757,8 @@ msgid "This must be a comma delimited list."
 msgstr "Doit être une liste délimitée par des virgules"
 
 #: application/flicket_admin/templates/admin_delete_group.html:21
-#, fuzzy
 msgid "Are you sure you want to delete the group:"
-msgstr "Etes vous sûr(e) de vouloir supprimer ce groupe ?"
+msgstr "Êtes-vous sûr de vouloir supprimer ce groupe :"
 
 #: application/flicket_admin/templates/admin_delete_group.html:31
 msgid "Please enter your password to delete group."
@@ -773,7 +773,6 @@ msgstr ""
 "impacter les requêtes relationelles."
 
 #: application/flicket_admin/templates/admin_delete_user.html:52
-#, fuzzy
 msgid "Enter password"
 msgstr "Mot de passe"
 
@@ -839,7 +838,7 @@ msgstr "Modifier"
 
 #: application/flicket_admin/templates/admin_users.html:105
 msgid "Delete User"
-msgstr "Supprimer Utilisateur"
+msgstr "Supprimer l'utilisateur"
 
 #: application/flicket_admin/views/view_admin.py:105
 #, fuzzy
@@ -898,7 +897,7 @@ msgstr "Suppression du groupe %(value)s"
 
 #: application/flicket_admin/views/view_admin.py:273
 msgid "Delete Group"
-msgstr "Supprimer Groupe"
+msgstr "Supprimer le groupe"
 
 #: application/flicket_admin/views/view_config.py:63
 msgid "Config details updated."
@@ -910,6 +909,389 @@ msgid ""
 "check your inbox. If no email has arrived please double check the <a "
 "href=\"{}{url_for(\"admin_bp.config\")}\">config</a> settings."
 msgstr ""
+
+#: application/flicket/forms/flicket_forms.py:177
+msgid "Upload Documents"
+msgstr "Télécharger des documents"
+
+#: application/flicket/templates/flicket_post_box_fluent.html
+msgid "Remove attachments"
+msgstr "Supprimer les pièces jointes"
+
+#: application/flicket/templates/flicket_post_box_fluent.html
+msgid "Selected attachments are deleted when you save."
+msgstr "Les pièces jointes cochées sont supprimées à l'enregistrement."
+
+#: application/flicket/templates/flicket_post_box_fluent.html
+msgid "Open"
+msgstr "Ouvrir"
+
+#: application/flicket/templates/flicket_fluent_macros.html
+msgid "Previous"
+msgstr "Précédent"
+
+#: application/flicket/templates/flicket_fluent_macros.html
+msgid "Next"
+msgstr "Suivant"
+
+#: application/flicket/views/departments.py
+msgid "Edit Department"
+msgstr "Modifier le département"
+
+#: application/flicket/templates/flicket_department_edit.html
+msgid "edit department"
+msgstr "modifier le département"
+
+#: application/flicket/templates/flicket_category_edit.html
+msgid "edit category"
+msgstr "modifier la catégorie"
+
+#: application/flicket/templates/flicket_departments.html
+msgid "add department"
+msgstr "ajouter un département"
+
+#: application/flicket/templates/flicket_departments.html
+msgid "add category"
+msgstr "ajouter une catégorie"
+
+#: application/flicket/templates/flicket_department_category.html
+msgid "Available departments and categories"
+msgstr "Départements et catégories disponibles"
+
+#: application/flicket/forms/flicket_forms.py
+msgid "change department / category"
+msgstr "modifier le département / la catégorie"
+
+#: application/flicket/views/departments.py
+#, python-format
+msgid "New department \"%(value)s\" added."
+msgstr "Nouveau département \"%(value)s\" ajouté."
+
+#: application/flicket/views/categories.py
+#, python-format
+msgid "New category %(value)s added."
+msgstr "Nouvelle catégorie %(value)s ajoutée."
+
+#: application/flicket/views/categories.py
+#, python-format
+msgid "Category %(value)s edited."
+msgstr "Catégorie %(value)s modifiée."
+
+#: application/flicket/views/delete.py
+msgid "Category deleted"
+msgstr "Catégorie supprimée"
+
+#: application/flicket/views/delete.py
+#, python-format
+msgid "Department \"%(value)s\" deleted."
+msgstr "Département \"%(value)s\" supprimé."
+
+#: application/flicket/views/delete.py
+#, python-format
+msgid "You are trying to delete category: %(category)s that belongs to department: %(department)s."
+msgstr "Vous êtes sur le point de supprimer la catégorie : %(category)s, qui appartient au département : %(department)s."
+
+#: application/flicket/views/department_category.py
+#, python-format
+msgid "Category \"%(category)s / %(department)s\" is already assigned to ticket."
+msgstr "La catégorie \"%(category)s / %(department)s\" est déjà assignée à la demande."
+
+#: application/flicket/views/department_category.py
+#, python-format
+msgid "You changed category of ticket: %(ticket)s"
+msgstr "Vous avez modifié la catégorie de la demande : %(ticket)s"
+
+#: application/flicket/templates/flicket_navbar_fluent.html
+msgid "Switch theme"
+msgstr "Changer de thème"
+
+#: application/flicket/templates/flicket_assign.html
+msgid "Type name and pick from drop down list to assign ticket."
+msgstr "Saisissez un nom et choisissez dans la liste déroulante pour assigner la demande."
+
+#: application/flicket/templates/flicket_assign.html
+msgid "Available users"
+msgstr "Utilisateurs disponibles"
+
+#: application/flicket/templates/flicket_edituser.html
+msgid "You can't edit your user name / login id:"
+msgstr "Vous ne pouvez pas modifier votre nom d'utilisateur / identifiant :"
+
+#: application/flicket/templates/flicket_edituser.html
+msgid "edit user"
+msgstr "modifier l'utilisateur"
+
+#: application/flicket/views/user_edit.py
+msgid "Edit User Details"
+msgstr "Modifier les détails de l'utilisateur"
+
+#: application/flicket/templates/flicket_unsubscribe_user.html
+msgid "Unsubscribe user"
+msgstr "Désabonner l'utilisateur"
+
+#: application/flicket/views/subscribe.py
+msgid "Unsubscribe"
+msgstr "Désabonnement"
+
+#: application/flicket/templates/flicket_unsubscribe_user.html
+msgid "ticket not assigned"
+msgstr "demande non assignée"
+
+#: application/flicket/templates/flicket_users.html
+msgid "reset"
+msgstr "réinitialiser"
+
+#: application/flicket/forms/flicket_forms.py
+msgid "username"
+msgstr "nom d'utilisateur"
+
+#: application/flicket/forms/forms_main.py
+msgid "name"
+msgstr "nom"
+
+#: application/flicket/forms/forms_main.py
+msgid "email"
+msgstr "courriel"
+
+#: application/flicket/forms/forms_main.py
+msgid "avatar"
+msgstr "avatar"
+
+#: application/flicket/forms/forms_main.py
+msgid "Locale"
+msgstr "Langue"
+
+#: application/flicket/forms/forms_main.py
+msgid "password"
+msgstr "mot de passe"
+
+#: application/flicket/forms/forms_main.py
+msgid "new_password"
+msgstr "nouveau mot de passe"
+
+#: application/flicket/forms/forms_main.py
+msgid "Repeat Password"
+msgstr "Répéter le mot de passe"
+
+#: application/flicket/forms/forms_main.py
+msgid "job_title"
+msgstr "fonction"
+
+#: application/flicket/views/subscribe.py
+#, python-format
+msgid "\"%(value)s\" has been unsubscribed from this ticket."
+msgstr "\"%(value)s\" a été désabonné de cette demande."
+
+#: application/flicket/views/subscribe.py
+#, python-format
+msgid "Could not unsubscribe \"%(value)s\" from ticket due to permission restrictions."
+msgstr "Impossible de désabonner \"%(value)s\" de cette demande en raison de restrictions d'accès."
+
+#: application/flicket/forms/flicket_forms.py
+msgid "find user"
+msgstr "rechercher un utilisateur"
+
+#: application/flicket/forms/flicket_forms.py
+msgid "assign user"
+msgstr "assigner l'utilisateur"
+
+#: application/flicket_admin
+msgid "Mail server"
+msgstr "Serveur de messagerie"
+
+#: application/flicket_admin
+msgid "Mail port"
+msgstr "Port de messagerie"
+
+#: application/flicket_admin
+msgid "Use TLS"
+msgstr "Utiliser TLS"
+
+#: application/flicket_admin
+msgid "Use SSL"
+msgstr "Utiliser SSL"
+
+#: application/flicket_admin
+msgid "Mail debug"
+msgstr "Débogage de la messagerie"
+
+#: application/flicket_admin
+msgid "Mail username"
+msgstr "Nom d'utilisateur de la messagerie"
+
+#: application/flicket_admin
+msgid "Mail password"
+msgstr "Mot de passe de la messagerie"
+
+#: application/flicket_admin
+msgid "Default sender"
+msgstr "Expéditeur par défaut"
+
+#: application/flicket_admin
+msgid "Max emails"
+msgstr "Nombre maximal d'e-mails"
+
+#: application/flicket_admin
+msgid "Suppress sending"
+msgstr "Désactiver l'envoi"
+
+#: application/flicket_admin
+msgid "ASCII attachments"
+msgstr "Pièces jointes ASCII"
+
+#: application/flicket_admin
+msgid "Application title"
+msgstr "Titre de l'application"
+
+#: application/flicket_admin
+msgid "Posts per page"
+msgstr "Messages par page"
+
+#: application/flicket_admin
+msgid "Allowed extensions"
+msgstr "Extensions autorisées"
+
+#: application/flicket_admin
+msgid "Ticket upload folder"
+msgstr "Dossier de téléversement des demandes"
+
+#: application/flicket_admin
+msgid "Base URL"
+msgstr "URL de base"
+
+#: application/flicket_admin
+msgid "Use auth domain"
+msgstr "Utiliser le domaine d'authentification"
+
+#: application/flicket_admin
+msgid "Auth domain"
+msgstr "Domaine d'authentification"
+
+#: application/flicket_admin
+msgid "CSV dump limit"
+msgstr "Limite d'export CSV"
+
+#: application/flicket_admin
+msgid "Allow changing category"
+msgstr "Autoriser le changement de catégorie"
+
+#: application/flicket_admin
+msgid "Only admins and super users can change category"
+msgstr "Seuls les administrateurs et les super-utilisateurs peuvent changer la catégorie"
+
+#: application/flicket_admin
+msgid "Email address"
+msgstr "Adresse e-mail"
+
+#: application/flicket_admin
+msgid "Test Email"
+msgstr "Tester l'envoi d'e-mails"
+
+#: application/flicket_admin
+msgid "Mail"
+msgstr "Messagerie"
+
+#: application/flicket_admin
+msgid "Application"
+msgstr "Application"
+
+#: application/flicket_admin
+msgid "Authentication"
+msgstr "Authentification"
+
+#: application/flicket_admin
+msgid "Add user"
+msgstr "Ajouter l'utilisateur"
+
+#: application/flicket_admin
+msgid "Edit user"
+msgstr "Modifier l'utilisateur"
+
+#: application/flicket_admin
+msgid "Edit User"
+msgstr "Modifier l'utilisateur"
+
+#: application/flicket_admin
+msgid "Edit Group"
+msgstr "Modifier le groupe"
+
+#: application/flicket_admin
+msgid "Delete user"
+msgstr "Supprimer l'utilisateur"
+
+#: application/flicket_admin
+msgid "add group"
+msgstr "ajouter le groupe"
+
+#: application/flicket_admin
+msgid "edit group"
+msgstr "modifier le groupe"
+
+#: application/flicket_admin
+msgid "delete group"
+msgstr "supprimer le groupe"
+
+#: application/flicket_admin
+msgid "delete user"
+msgstr "supprimer l'utilisateur"
+
+#: application/flicket_admin
+msgid "Disabled"
+msgstr "Désactivé"
+
+#: application/flicket_admin
+msgid "Edit user details. Select the groups this user belongs to."
+msgstr "Modifiez les informations de l'utilisateur. Sélectionnez les groupes auxquels il appartient."
+
+#: application/flicket_admin
+msgid "Send Email Test"
+msgstr "Test d'envoi d'e-mail"
+
+#: application/flicket_admin
+msgid "Flicket Configuration"
+msgstr "Configuration de Flicket"
+
+#: application/flicket_admin
+#, python-format
+msgid "You have successfully registered new user \"%(value)s\"."
+msgstr "Le nouvel utilisateur \"%(value)s\" a été enregistré avec succès."
+
+#: application/flicket_admin
+#, python-format
+msgid "User %(value)s edited."
+msgstr "Utilisateur %(value)s modifié."
+
+#: application/flicket_admin
+#, python-format
+msgid "Deleted user %(value)s"
+msgstr "Utilisateur %(value)s supprimé."
+
+#: application/flicket_admin
+#, python-format
+msgid "New group \"%(value)s\" added."
+msgstr "Nouveau groupe \"%(value)s\" ajouté."
+
+#: application/flicket_admin
+#, python-format
+msgid "Group name changed to %(value)s."
+msgstr "Nom du groupe modifié en %(value)s."
+
+#: application/flicket_admin
+#, python-format
+msgid "Deleted group %(value)s"
+msgstr "Groupe %(value)s supprimé."
+
+#: application/flicket_admin
+msgid "Could not find group"
+msgstr "Groupe introuvable."
+
+#: application/flicket/templates/flicket_password_reset.html
+msgid "Password Reset"
+msgstr "Réinitialisation du mot de passe"
+
+#: application/flicket/templates/flicket_password_reset.html
+msgid "reset password"
+msgstr "réinitialiser le mot de passe"
 
 #~ msgid ""
 #~ "Category is linked to posts. Category"
@@ -979,11 +1361,9 @@ msgstr ""
 #~ msgid "You are already subscribed to this ticket"
 #~ msgstr "Vous êtes déjà abonné à cette demande."
 
-#~ msgid "Upload Documents"
-#~ msgstr "Télécharger_Documents"
-
-#~ msgid "Submit"
-#~ msgstr "Enregistrer"
+#: application/flicket/forms/flicket_forms.py:182
+msgid "Submit"
+msgstr "Enregistrer"
 
 #~ msgid "Reply"
 #~ msgstr "Répondre"

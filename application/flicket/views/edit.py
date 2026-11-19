@@ -71,12 +71,14 @@ def edit_ticket(ticket_id):
     form.priority.data = ticket.ticket_priority_id
     form.title.data = ticket.title
     form.category.data = ticket.category_id
+    form.hours.data = ticket.hours
 
     title = gettext('Edit Ticket')
 
     return render_template('flicket_edittopic.html',
                            title=title,
-                           form=form)
+                           form=form,
+                           uploads=ticket.uploads)
 
 
 # edit post

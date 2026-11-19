@@ -1,8 +1,13 @@
-{% extends "flicket_base.html" %}
-<!-- extend base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
+<!-- extend from base layout -->
 {% block content %}
-<div class="container">
-    <h1>{{ _('404 Error - File Not Found') }}</h1>
-    <p><a href="{{ url_for('flicket_bp.index') }}">{{ _('Back') }}</a></p>
-</div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ _('404 Error - File Not Found') }}</h1>
+            <div class="fl-row">
+                {{ ui.link_button(_('Back'), url_for('flicket_bp.index'), appearance='primary') }}
+            </div>
+        </div>
+    </section>
 {% endblock %}

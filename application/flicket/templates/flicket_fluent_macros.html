@@ -17,14 +17,15 @@
 <label slot="label" for="{{ f.id }}" class="fl-label">{{ text or f.label.text }}</label>
 {%- endmacro %}
 
-{% macro text_field(f, text=None, type='text', placeholder=None, keep_value=True) -%}
+{% macro text_field(f, text=None, type='text', placeholder=None, keep_value=True, readonly=False) -%}
 <fluent-field label-position="above" class="fl-field">
     {{ field_label(f, text) }}
     <fluent-text-input slot="input" id="{{ f.id }}" name="{{ f.name }}" type="{{ type }}" appearance="outline"
         value="{{ f._value() if keep_value else '' }}"
         {%- if placeholder %} placeholder="{{ placeholder }}"{% endif %}
         {%- if f.flags.required %} required{% endif %}
-        {%- if f.errors %} aria-invalid="true"{% endif %}></fluent-text-input>
+        {%- if f.errors %} aria-invalid="true"{% endif %}
+        {%- if readonly %} readonly{% endif %}></fluent-text-input>
 </fluent-field>
 {{ field_errors(f) }}
 {%- endmacro %}
@@ -49,14 +50,14 @@
 
 {% macro checkbox_field(f, text=None) -%}
 <div class="fl-check">
-    <fluent-checkbox id="{{ f.id }}" name="{{ f.name }}" value="y"{% if f.data %} checked{% endif %}></fluent-checkbox>
+    <input type="checkbox" id="{{ f.id }}" name="{{ f.name }}" value="y" class="fl-check__input"{% if f.data %} checked{% endif %}>
     <label for="{{ f.id }}" class="fl-check__label">{{ text or f.label.text }}</label>
 </div>
 {{ field_errors(f) }}
 {%- endmacro %}
 
-{% macro combobox_field(f, placeholder=None) -%}
-<div class="fl-combobox" data-combobox>
+{% macro combobox_field(f, placeholder=None, kind='user') -%}
+<div class="fl-combobox" data-combobox data-kind="{{ kind }}">
     <fluent-field label-position="above" class="fl-field">
         {{ field_label(f) }}
         <input slot="input" class="fl-input" id="{{ f.id }}" name="{{ f.name }}" type="text" value="{{ f._value() }}"

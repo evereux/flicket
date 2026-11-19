@@ -1,16 +1,19 @@
-{% extends "flicket_base.html" %}
-<!-- extend base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
+<!-- extend from base layout -->
 {% block content %}
-<div class="container">
-    <h1>{{ _('An unexpected error has occurred') }}</h1>
-    <p>
-        {{ _('Please report this error to your administrator. Please provide the following details:') }}
-    </p>
-    <ul>
-        <li>{{ _('Page you were navigating.') }}</li>
-        <li>{{ _('Time you saw this error.') }}</li>
-        <li>{{ _('Any other information that may help reproduce the error.') }}</li>
-    </ul>
-    <p><a href="{{ url_for('flicket_bp.index') }}">{{ _('Back') }}</a></p>
-</div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ _('An unexpected error has occurred') }}</h1>
+            <p>{{ _('Please report this error to your administrator. Please provide the following details:') }}</p>
+            <ul>
+                <li>{{ _('Page you were navigating.') }}</li>
+                <li>{{ _('Time you saw this error.') }}</li>
+                <li>{{ _('Any other information that may help reproduce the error.') }}</li>
+            </ul>
+            <div class="fl-row">
+                {{ ui.link_button(_('Back'), url_for('flicket_bp.index'), appearance='primary') }}
+            </div>
+        </div>
+    </section>
 {% endblock %}

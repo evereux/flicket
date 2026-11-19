@@ -178,7 +178,7 @@ class CreateTicketForm(FlaskForm):
                      validators=[allowed_file_extension],
                      render_kw={'multiple': True}
                      )
-    hours = DecimalField(lazy_gettext('hours'), default=0)
+    hours = DecimalField(lazy_gettext('Hours'), default=0)
     submit = SubmitField(lazy_gettext('Submit'), render_kw=form_class_button, validators=[DataRequired()])
 
 
@@ -221,7 +221,7 @@ class ReplyForm(FlaskForm):
     file = FileField(lazy_gettext('Add Files'), validators=[allowed_file_extension], render_kw={'multiple': True})
     status = SelectField(lazy_gettext('Status'), validators=[DataRequired()], coerce=int)
     priority = SelectField(lazy_gettext('Priority'), validators=[DataRequired()], coerce=int)
-    hours = DecimalField(lazy_gettext('hours'), default=0)
+    hours = DecimalField(lazy_gettext('Hours'), default=0)
     submit = SubmitField(lazy_gettext('reply'), render_kw=form_class_button)
     submit_close = SubmitField(lazy_gettext('reply and close'), render_kw=form_danger_button)
 

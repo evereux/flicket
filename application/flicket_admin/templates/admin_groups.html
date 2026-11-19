@@ -1,69 +1,44 @@
-<!-- extend from base layout -->
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-
-        {% include 'admin_menu.html' %}
-
-        <div class="row border rounded m-2 p-2 bg-white">
-            <div class="col"><h2>{{ title }}</h2>
-                <p>
-                    {{ _('Click on group name to edit.') }}
-                </p>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">{{ _('Click on group name to edit.') }}</p>
+            {% include 'admin_menu.html' %}
         </div>
+    </section>
 
-        <div class="row border rounded bg-white m-2 p-2">
-            <div class="col">
-                <div class="row border-bottom m-2">
-                    <div class="col">{{ _('Group Name') }}</div>
-                    <div class="col">{{ _('Delete') }}</div>
-                </div>
-                {%- for group in groups -%}
-                    <div class="row m-2">
-                        <div class="col">
-                            <a href="{{ url_for('admin_bp.admin_edit_group', id=group.id) }}">
-                                {{ group.group_name }}
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="{{ url_for('admin_bp.admin_delete_group', id=group.id) }}">
-                                {{ _('delete') }}
-                            </a>
-                        </div>
-                    </div>
-                {%- endfor -%}
-
-                <hr/>
-                <h2>{{ _('Add Group') }}</h2>
-                <form action="" method="post" name="add_group">
-                    {{ form.hidden_tag() }}
-                    <p>
-                        {{ _('Please enter group name.') }}
-                    </p>
-                    <div class="row mb-2">
-                        <div class="col">
-                            {{ _('Group Name') }}
-
-                        </div>
-                        <div class="col">
-                            {{ form.group_name(size=(24)) }}
-                            {% if form.group_name.errors %}
-                                <span style="color: red;">
-                            {% for error in form.group_name.errors %}
-                                [{{ error }}]
-                            {% endfor %}
-                                </span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-center">
-                            <input class="btn btn-primary" type="submit" value="add group"/></div>
-                    </div>
-                </form>
-            </div>
-        </div>
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ _('Group Name') }}</th>
+                    <th scope="col">{{ _('Delete') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for group in groups %}
+                <tr>
+                    <td><a href="{{ url_for('admin_bp.admin_edit_group', id=group.id) }}">{{ group.group_name }}</a></td>
+                    <td>{{ ui.icon_action(url_for('admin_bp.admin_delete_group', id=group.id), 'delete', _('delete'), 'delete-group-' ~ group.id) }}</td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
     </div>
+
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h2 class="fl-title">{{ _('Add Group') }}</h2>
+            <p class="fl-muted">{{ _('Please enter group name.') }}</p>
+            <form action="" class="fl-form-row" method="post" name="add_group">
+                {{ form.hidden_tag() }}
+                <div class="fl-grow">
+                    {{ ui.text_field(form.group_name, text=_('Group Name')) }}
+                </div>
+                {{ ui.button(_('add group'), type='submit', appearance='primary') }}
+            </form>
+        </div>
+    </section>
 {% endblock %}

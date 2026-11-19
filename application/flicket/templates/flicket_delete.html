@@ -1,41 +1,15 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h1 class="text-center">{{ title }}</h1>
+    <section class="fl-card">
+        <form action="" class="fl-stack" method="post" name="create_ticket">
+            {{ form.hidden_tag() }}
+            <h1 class="fl-title">{{ title }}</h1>
+            <p>{{ notification }}</p>
+            {{ ui.text_field(form.password, text=_('Password'), type='password', keep_value=False) }}
+            <div class="fl-actions fl-actions--end">
+                {{ ui.button(_('delete'), type='submit', appearance='outline', name='delete', value='delete', classes='fl-danger') }}
             </div>
-        </div>
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <form class="form-horizontal" action="" method="post" name="create_ticket">
-                {{ form.hidden_tag() }}
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <p>{{ notification }}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <label class="col col-form-label">{{ _('Password') }}</label>
-                        <div class="col-5">
-                            {{ form.password(class="form-control form-control-sm") }}
-                        </div>
-                        <div class="col">
-                            <input class="btn btn-danger btn-sm" type="submit" name="delete" value="delete"/>
-                        </div>
-                        {% if form.password.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.password.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+        </form>
+    </section>
 {% endblock %}

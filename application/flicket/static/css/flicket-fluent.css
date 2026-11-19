@@ -229,6 +229,12 @@ fluent-menu-item a:hover {
     align-items: start;
 }
 
+@media (min-width: 720px) {
+    .fl-span-2 {
+        grid-column: span 2;
+    }
+}
+
 .fl-card {
     background-color: var(--colorNeutralBackground1);
     border: 1px solid var(--colorNeutralStroke2);
@@ -254,7 +260,14 @@ fluent-button.fl-danger {
 
 .fl-field {
     display: block;
+    width: 100%;
     margin-bottom: var(--spacingVerticalS);
+}
+
+.fl-field fluent-text-input,
+.fl-field fluent-dropdown {
+    width: 100%;
+    max-width: none;
 }
 
 .fl-label {
@@ -263,6 +276,10 @@ fluent-button.fl-danger {
     font-size: var(--fontSizeBase300);
     font-weight: var(--fontWeightSemibold);
     color: var(--colorNeutralForeground1);
+}
+
+.fl-required {
+    color: var(--colorStatusDangerForeground1);
 }
 
 .fl-field-error {
@@ -281,7 +298,32 @@ fluent-button.fl-danger {
 }
 
 .fl-check__label {
+    min-width: 0;
     color: var(--colorNeutralForeground1);
+    overflow-wrap: anywhere;
+}
+
+.fl-check__input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--colorBrandBackground);
+}
+
+.fl-check__input:focus-visible {
+    outline: 2px solid var(--colorStrokeFocus2);
+    outline-offset: 2px;
+}
+
+.fl-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.fl-fieldset > legend {
+    padding: 0;
 }
 
 .fl-input,
@@ -475,6 +517,99 @@ fluent-badge {
     align-items: center;
     justify-content: space-between;
     gap: var(--spacingHorizontalS);
+}
+
+/* Forms with a field and a button side by side */
+
+.fl-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--spacingHorizontalS);
+}
+
+.fl-grow {
+    flex: 1 1 240px;
+    min-width: 0;
+}
+
+/* Lists */
+
+.fl-list {
+    display: grid;
+    gap: var(--spacingVerticalXS);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fl-inline-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacingVerticalXS) var(--spacingHorizontalM);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Users */
+
+.fl-user-link.is-admin {
+    color: var(--colorPaletteRedForeground1);
+}
+
+.fl-user-link.is-super {
+    color: var(--colorPalettePurpleForeground2);
+}
+
+img.fl-avatar {
+    object-fit: cover;
+}
+
+.fl-avatar--placeholder {
+    display: grid;
+    place-items: center;
+}
+
+/* Dashboard */
+
+.fl-carousel {
+    display: grid;
+    gap: var(--spacingVerticalM);
+    margin-top: var(--spacingVerticalM);
+}
+
+.fl-carousel__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacingHorizontalS);
+}
+
+.fl-carousel__controls[hidden] {
+    display: none;
+}
+
+.fl-slide {
+    display: grid;
+    gap: var(--spacingVerticalS);
+}
+
+.fl-slide__title {
+    margin: 0;
+    font-size: var(--fontSizeBase400);
+    font-weight: var(--fontWeightSemibold);
+}
+
+.fl-chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacingVerticalL) var(--spacingHorizontalL);
+    margin-top: var(--spacingVerticalM);
+}
+
+.fl-chart {
+    min-width: 0;
 }
 
 /* Ticket view */

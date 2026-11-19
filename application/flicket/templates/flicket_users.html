@@ -1,174 +1,51 @@
-{% extends 'flicket_base.html' %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <div class="container">
-        <div class="row border rounded m-2 bg-white">
-            <div class="col">
-                <h1>{{ title }}</h1>
-            </div>
-        </div>
+    <section class="fl-card">
+        <h1 class="fl-title">{{ title }}</h1>
+    </section>
 
-
-        {% include 'flicket_apijson_users.html' %}
-
-        <form action=""
-              class="form form-inline border rounded bg-white m-2 p-2"
-              enctype="multipart/form-data"
-              method="post"
-              name="create_ticket">
+    <section class="fl-card">
+        <form action="" class="fl-form-row" enctype="multipart/form-data" method="post" name="create_ticket">
             {{ form.hidden_tag() }}
-
-
-            <div class="form-group">
-                <label class="col control-label" for="autocomplete-username">Name</label>
-                <div class="col mb-1 text-center">
-                    {{ form.username(class="form-control", id="autocomplete-username") }}
-                </div>
-                <div class="col mb-1 text-center">
-                    {{ form.submit }}
-                </div>
-                <div class="col mb-1 text-center">
-                    <a class="btn btn-outline-primary btn-sm" href="{{ url_for('flicket_bp.flicket_users') }}">reset</a>
-                </div>
+            <div class="fl-grow">
+                {{ ui.combobox_field(form.username) }}
             </div>
-            {% if form.username.errors %}
-                <div class="alert alert-warning small">
-                    {% for error in form.username.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
+            {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
+            {{ ui.link_button(_('reset'), url_for('flicket_bp.flicket_users'), appearance='outline') }}
         </form>
+    </section>
 
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ _('Username') }}</th>
+                    <th scope="col">{{ _('Name') }}</th>
+                    <th scope="col">{{ _('Email') }}</th>
+                    <th scope="col">{{ _('Job Title') }}</th>
+                    <th scope="col">{{ _('Posts') }}</th>
+                    <th scope="col">{{ _('Assigned') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for u in users.items %}
+                <tr>
+                    <td class="fl-nowrap">
+                        <a class="fl-user-link{% if u.is_super_user %} is-super{% elif u.is_admin %} is-admin{% endif %}" href="{{ url_for('flicket_bp.flicket_user', user_id=u.id) }}">{{ u.username }}</a>
+                    </td>
+                    <td>{{ u.name }}</td>
+                    <td><a href="mailto:{{ u.email }}">{{ u.email }}</a></td>
+                    <td>{{ u.job_title }}</td>
+                    <td>{{ u.total_posts }}</td>
+                    <td>{{ u.total_assigned }}</td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        <ul class="pagination pagination-sm m-2">
-
-            <li class="page-item {% if not users.has_prev -%} disabled {%- endif -%} ">
-                <a class="page-link"
-                   href="{{ url_for('flicket_bp.flicket_users', page=users.prev_num, **request.args) }}">
-                    <<
-                </a>
-            </li>
-
-
-            {% for page in users.iter_pages() %}
-                {%- if page -%}
-                    {%- if page != users.page -%}
-                        <li class="page-item">
-                            <a class="page-link"
-                               href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
-                                {{ page }}
-                            </a>
-                        </li>
-                    {%- else -%}
-                        <li class="page-item active">
-                            <a class="page-link"
-                               href="{{ url_for('flicket_bp.flicket_users', page=page, **request.args) }}">
-                                {{ page }}
-                            </a>
-                        </li>
-                    {%- endif -%}
-                {%- else -%}
-                    <li class="page-item">
-                        <a class="page-link" href="">...</a>
-                    </li>
-                {%- endif -%}
-            {% endfor %}
-
-            <li class="page-item {% if not users.has_next -%} disabled {%- endif -%} ">
-                <a class="page-link"
-                   href="{{ url_for('flicket_bp.flicket_users', page=users.next_num, **request.args) }}">
-                    >>
-                </a>
-            </li>
-        </ul>
-
-
-        <div class="row">
-            <div class="col">
-                {% for u in users.items %}
-
-                    <div class="border rounded bg-white m-2 p-1 pl-3 pr-3">
-
-                        <div class="row mb-2">
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Username') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    <a href="{{ url_for('flicket_bp.flicket_user', user_id=u.id) }}">
-                                        <i class="fas fa-id-card"
-                                                {% if u.is_super_user %}
-                                           style="color: blue;"
-                                                {% elif u.is_admin %}
-                                           style="color: red;"
-                                                {% endif -%}
-                                        ></i>
-                                    </a>
-                                    {{ u.username }}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Name') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.name }}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Email') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    <a href="mailto:{{ u.email }}">{{ u.email }}</a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Job Title') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.job_title }}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Posts') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.total_posts }}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">
-                                    {{ _('Assigned') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ u.total_assigned }}
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-                {% endfor %}
-            </div>
-        </div>
+    <div class="fl-toolbar">
+        {{ ui.pager(users, 'flicket_bp.flicket_users', request.args.to_dict()) }}
     </div>
 {% endblock %}

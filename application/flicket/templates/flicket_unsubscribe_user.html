@@ -1,128 +1,58 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- flicket_unscribe_user.html -->
-    <div class="container">
+    {% set priority_colors = {'high': 'danger', 'medium': 'warning', 'low': 'informative'} %}
+    {% set status_colors = {'Open': 'brand', 'In Work': 'informative', 'Awaiting Information': 'warning', 'Closed': 'subtle'} %}
 
-        <h2>{{ title }}</h2>
-
-        <!-- ticket header details -->
-        <div class="row m-2">
-            <div class="col p-2 border rounded bg-white">
-                <div class="row">
-                    <div class="col">
-
-                        <div class="row m-0">
-                            <div class="col-2 align-self-center">
-                                {{ ticket.id_zfill }}
-                            </div>
-                            <div class="col flicket-ticket-title">
-                                {{ ticket.title }}
-                            </div>
-                        </div>
-
-                        <div class="row m-0">
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Department') }}</div>
-                                <div class="flicket-tickets-content">
-                                    {{ ticket.category.department.department }}
-                                    {%- if change_category %}
-                                        <a href="{{ url_for('flicket_bp.ticket_department_category', ticket_id = ticket.id) }}"
-                                           title="{{ _('category') }}">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    {%- endif %}
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Category') }}</div>
-                                <div class="flicket-tickets-content">
-                                    {{ ticket.category.category }}
-                                    {%- if change_category %}
-                                        <a href="{{ url_for('flicket_bp.ticket_department_category', ticket_id = ticket.id) }}"
-                                           title="{{ _('department') }}">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    {%- endif %}
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Status') }}</div>
-                                <div class="flicket-tickets-content">{{ ticket.current_status.status }}</div>
-                            </div>
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Priority') }}</div>
-                                <div class="flicket-tickets-content
-                                {%- if ticket.current_status.status == 'Closed' -%}
-                                    {{ ' ' }}flicket-status-closed
-                                {%- endif -%}
-                                {%- if ticket.ticket_priority.priority == 'high' -%}
-                                    {{ ' ' }}flicket-status-high
-                                {%- elif ticket.ticket_priority.priority == 'medium' -%}
-                                    {{ ' ' }}flicket-status-medium
-                                {%- elif ticket.ticket_priority.priority == 'low' -%}
-                                    {{ ' ' }}flicket-status-low
-                                {%- endif %}">{{ ticket.ticket_priority.priority }}</div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Assigned') }}</div>
-                                <div class="flicket-tickets-content">
-                                    {% if ticket.assigned.username %}
-                                        {{ ticket.assigned.name }}
-                                    {% else %}ticket not assigned{% endif %}
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="flicket-tickets-title">{{ _('Total Hours') }}</div>
-                                <div class="flicket-tickets-content">
-                                    {{ ticket.total_hours }}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <div class="fl-row fl-row--between">
+                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id=ticket.id) }}">{{ ticket.id_zfill }}</a>
+                <span class="fl-muted">{{ ticket.date_added.strftime('%d-%m-%Y %H:%M') }}</span>
             </div>
-        </div>
-
-        <!-- ticket content -->
-        <div class="row m-2">
-            <div class="col border rounded p-0 bg-white">
-                <div class="row border-bottom m-0 p-2">
-                    <div class="col-auto">
-                        {{ ticket.date_added.strftime('%d-%m-%Y %H:%M') }}
-                    </div>
-                    <div class="col text-right">
-                        &nbsp;
-                    </div>
+            <h2 class="fl-slide__title">{{ ticket.title }}</h2>
+            <dl class="fl-meta">
+                <div>
+                    <dt>{{ _('Department') }}</dt>
+                    <dd>{{ ticket.category.department.department }}</dd>
                 </div>
-                <div class="row border-bottom m-0  p-2">
-                    <div class="col">
-                        <p>{{ ticket.content }}</p>
-                    </div>
+                <div>
+                    <dt>{{ _('Category') }}</dt>
+                    <dd>{{ ticket.category.category }}</dd>
                 </div>
-            </div>
+                <div>
+                    <dt>{{ _('Status') }}</dt>
+                    <dd>{{ ui.badge(ticket.current_status.status, status_colors.get(ticket.current_status.status, 'informative')) }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Priority') }}</dt>
+                    <dd>{{ ui.badge(ticket.ticket_priority.priority, priority_colors.get(ticket.ticket_priority.priority, 'subtle')) }}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Assigned') }}</dt>
+                    <dd>{% if ticket.assigned.username %}{{ ticket.assigned.name }}{% else %}{{ _('ticket not assigned') }}{% endif %}</dd>
+                </div>
+                <div>
+                    <dt>{{ _('Total Hours') }}</dt>
+                    <dd>{{ ticket.total_hours }}</dd>
+                </div>
+            </dl>
         </div>
+    </section>
 
+    <section class="fl-card">
+        <p>{{ ticket.content }}</p>
+    </section>
 
-        <!-- -->
-        <div class="row m-2 ">
-            <div class="col p-2 border rounded bg-white">
-                <form class="form-horizontal" action="" method="post" name="unsubscribe">
-                    {{ form.hidden_tag() }}
-                    {{ form.username() }}
-                    <div class="row">
-                        <label class="col-3 col-form-label">Unsubscribe user: {{ user.name }}</label>
-                        <div class="col">
-                            {{ form.unsub_user() }}
-                        </div>
-                    </div>
-                </form>
+    <section class="fl-card">
+        <form action="" class="fl-form-row" method="post" name="unsubscribe">
+            {{ form.hidden_tag() }}
+            <input type="hidden" name="username" value="{{ form.username.data }}">
+            <div class="fl-grow">
+                <span class="fl-muted">{{ _('Unsubscribe user') }}: {{ user.name }}</span>
             </div>
-        </div>
-
-    </div>
-
+            {{ ui.button(form.unsub_user.label.text, type='submit', appearance='primary', name=form.unsub_user.name, value=form.unsub_user.label.text) }}
+        </form>
+    </section>
 {% endblock %}
