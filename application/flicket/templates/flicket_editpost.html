@@ -1,11 +1,9 @@
-{% extends "flicket_base.html" %}
+{% extends "flicket_base_fluent.html" %}
 <!-- extend from base layout -->
 {% block content %}
-    <div class="container">
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col"><h1 class="text-center">{{ title }}</h1></div>
-        </div>
+    <section class="fl-card">
+        <h1 class="fl-title">{{ title }}</h1>
+    </section>
 
-        {% include('flicket_form_reply.html') %}
-    </div>
+    {% include('flicket_form_reply.html') %}
 {% endblock %}

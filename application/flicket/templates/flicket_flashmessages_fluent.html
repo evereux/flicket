@@ -1,0 +1,14 @@
+{% import 'flicket_fluent_macros.html' as ui with context %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="fl-flashes">
+            {% for category, message in messages %}
+                {% set intent = {'success': 'success', 'warning': 'warning', 'danger': 'error', 'error': 'error'}.get(category, 'info') %}
+                <fluent-message-bar intent="{{ intent }}">
+                    {{ message }}
+                    <fluent-button slot="dismiss" appearance="transparent" icon-only data-dismiss-message aria-label="{{ _('Dismiss') }}">{{ ui.icon('dismiss') }}</fluent-button>
+                </fluent-message-bar>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}

@@ -1,87 +1,52 @@
 <!-- ticket reply -->
+{% import 'flicket_fluent_macros.html' as ui with context %}
 
 {{ pagedown.html_head() }}
 
-<div class="row m-2 p-2 border rounded bg-white">
-    <div class="col">
-        <form action=""
-              class="form"
-              enctype="multipart/form-data"
-              method="post"
-              name="add_reply">
-            {{ form.hidden_tag() }}
+<section class="fl-card" id="reply">
+    <form action="" class="fl-stack" enctype="multipart/form-data" method="post" name="add_reply">
+        {{ form.hidden_tag() }}
 
-            <!-- post content -->
-            <div class="row">
-                <div class="col-2">
-                    <a title="reply" name="reply"><label class="col-form-label-sm">{{ form.content.label }}</label></a>
-                </div>
-                <div class="col-10">
-                    {{ form.content(class="form-control") }}
-                </div>
+        <div class="fl-field">
+            <label class="fl-label" for="flask-pagedown-content">{{ form.content.label.text }}</label>
+            {{ form.content() }}
+            {{ ui.field_errors(form.content) }}
+        </div>
+
+        <div class="fl-row fl-row--between">
+            <a class="fl-small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank" rel="noopener">
+                {{ _('MarkDown Help') }}
+            </a>
+            <fluent-button type="button" appearance="subtle" onclick="hide_element()">
+                {{ _('Show / Hide Markdown') }}
+            </fluent-button>
+        </div>
+
+        {% if form.uploads %}
+            {{ form.uploads }}
+        {% endif %}
+
+        <div class="fl-grid fl-reply-options">
+            <div class="fl-field">
+                <label class="fl-label" for="file">{{ form.file.label.text }}</label>
+                {{ form.file(class="fl-file") }}
+                {{ ui.field_errors(form.file) }}
             </div>
-            {% if form.content.errors %}
-                <div class="alert alert-warning small mt-2">
-                    {% for error in form.content.errors %}
-                        {{ error }}
-                    {% endfor %}
-                </div>
-            {% endif %}
+            {{ ui.select_field(form.status) }}
+            {{ ui.select_field(form.priority) }}
+            {{ ui.text_field(form.hours) }}
+        </div>
 
-            {% if form.uploads %}
-                {{ form.uploads }}
-            {% endif %}
-
-            <!-- markdown links -->
-            <div class="row mt-1">
-                <div class="col offset-2">
-                    <a class="small" href="{{ url_for('flicket_bp.markdown_primer') }}" target="_blank">
-                        {{ _('MarkDown Help') }}
-                    </a>
-                </div>
-                <div class="col text-right">
-                    <button type="button" class="btn btn-info btn-sm" onclick="hide_element()">
-                        {{ _('Show / Hide Markdown') }}
-                    </button>
-                </div>
-            </div>
-
-            <!-- optional buttons -->
-            <div class="row mt-1">
-                <div class="col small align-self-end">
-                    {{ form.file(class="form-control-file border-0") }}
-                </div>
-                <div class="col-auto">
-                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.status.name }}</label>
-                    {{ form.status(class="form-control form-control-xs") }}
-                </div>
-                <div class="col-auto">
-                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.priority.name }}</label>
-                    {{ form.priority(class="form-control form-control-xs") }}
-                </div>
-                <div class="col-1">
-                    <label class="col p-0 m-0 flicket-tickets-title">{{ form.hours.label.text }}</label>
-                    {{ form.hours(class="form-control form-control-xs") }}
-                </div>
-
-            </div>
-            <div class="row mt-2">
-                <div class="col text-right">
-
-                    {% if ticket %}
-                    {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
-                    <!-- reply and close if admin or ticket owner -->
+        <div class="fl-actions fl-actions--end">
+            {% if ticket %}
+                {% if g.user.is_admin or (ticket.user == g.user) or (ticket.assigned_id == g.user.id) %}
                     {% if ticket.current_status.status != 'Closed' %}
-                    {{ form.submit_close(class="btn btn-light btn-outline-danger btn-sm") }}&nbsp;&nbsp;&nbsp;
+                        {{ ui.button(form.submit_close.label.text, type='submit', appearance='outline', name=form.submit_close.name, value=form.submit_close.label.text, classes='fl-danger') }}
                     {% endif %}
-                    {% endif %}
-                    {% endif %}
-
-                    {{ form.submit(class="btn btn-primary btn-sm") }}
-
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+                {% endif %}
+            {% endif %}
+            {{ ui.button(form.submit.label.text, type='submit', appearance='primary', name=form.submit.name, value=form.submit.label.text) }}
+        </div>
+    </form>
+</section>
 <!-- ticket reply /end -->

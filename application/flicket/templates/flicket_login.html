@@ -1,79 +1,27 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <div class="container">
+    <section class="fl-card fl-login">
+        <h1 class="fl-title fl-login__title">{{ title }}</h1>
 
-    <div class="row m-2 p-2 border rounded bg-white">
-        <div class="col">
+        <form action="" class="fl-stack" method="post" name="login">
+            {{ form.hidden_tag() }}
 
-            <div class="row">
-                <div class="col">
-                    <h1 class="text-center">{{ title }}</h1>
-                </div>
+            {{ ui.text_field(form.username, text=_('Username')) }}
+            {{ ui.text_field(form.password, text=_('Password'), type='password', keep_value=False) }}
+            {{ ui.checkbox_field(form.remember_me, text=_('Remember Me')) }}
+
+            {{ ui.button(_('log in'), type='submit', appearance='primary', classes='fl-block') }}
+        </form>
+
+        {% if config['ZITADEL_ENABLED'] %}
+            <div class="fl-stack">
+                {{ ui.link_button(_('Sign in with SSO'), url_for('flicket_bp.login_sso', next=request.args.get('next')), appearance='outline', classes='fl-block') }}
             </div>
+        {% endif %}
 
-            <div class="row">
-                <div class="col-md-4 offset-md-4 col-6 offset-3">
-
-                    <form action="" class="form justify-content-center" method="post" name="login">
-                        {{ form.hidden_tag() }}
-                        <div class="form-group">
-                            <label class="sr-only">{{ _('Username') }}</label>
-                            {{ form.username(class="form-control") }}
-                        </div>
-                        {% if form.username.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.username.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        <div class="form-group">
-                            <label class="sr-only">{{ _('Password') }}</label>
-                            {{ form.password(class="form-control") }}
-                        </div>
-                        {% if form.password.errors %}
-                            <div class="alert alert-warning small">
-                                {% for error in form.password.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        <div class="form-group text-center">
-                            <label class="col-form-label">{{ _('Remember Me') }}</label>
-                            {{ form.remember_me }}
-                        </div>
-
-                        <br>
-                        <div class="form-group text-center">
-                            <input class="btn btn-primary btn-sm" type="submit" value="log in"/>
-                        </div>
-
-                    </form>
-
-                </div>
-            </div>
-
-            {% if config['ZITADEL_ENABLED'] %}
-                <div class="row mt-2">
-                    <div class="col text-center">
-                        <a class="btn btn-outline-primary btn-sm"
-                           href="{{ url_for('flicket_bp.login_sso', next=request.args.get('next')) }}">
-                            {{ _('Sign in with SSO') }}
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="row">
-                <div class="col text-center">
-                    <a href="{{ url_for('flicket_bp.password_reset') }}">reset password</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    </div>
+        <p class="fl-small">
+            <a href="{{ url_for('flicket_bp.password_reset') }}">{{ _('reset password') }}</a>
+        </p>
+    </section>
 {% endblock %}

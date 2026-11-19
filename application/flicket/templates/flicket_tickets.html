@@ -1,306 +1,92 @@
-{% extends "flicket_base.html" %}
-<!-- extend from base layout -->
+{% extends "flicket_base_fluent.html" %}
+{% import 'flicket_fluent_macros.html' as ui with context %}
 {% block content %}
-    <!-- {{ self._TemplateReference__context.name }} -->
-    <script src="{{ url_for('flicket_bp.static', filename='js/uri.js') }}"></script>
+    {% set sort_keys = [
+        ('priority', _('Priority')), ('ticketid', _('Ticket ID')), ('title', _('Title')),
+        ('addedby', _('Submitted By')), ('addedon', _('Date')), ('last_updated', _('Last Updated')),
+        ('department_category', _('Department / Category')), ('status', _('Status')),
+        ('assigned', _('Assigned')), ('replies', _('Replies')), ('time', _('Hours'))
+    ] %}
+    {% set priority_colors = {'high': 'danger', 'medium': 'warning', 'low': 'informative'} %}
+    {% set status_colors = {'Open': 'brand', 'In Work': 'informative', 'Awaiting Information': 'warning', 'Closed': 'subtle'} %}
 
-    {% include('flicket_apijson_users.html') %}
-    {% include('flicket_apijson_categories.html') %}
-    {% include('flicket_apijson_departments.html') %}
-    {% include('flicket_apijson_statuses.html') %}
-
-
-    <div class="container">
-
-        <div class="row m-2 p-2 border rounded bg-white">
-            <div class="col">
-                <h1>{{ title }}</h1>
-                <p>
-                    {{ _('Download results as a csv file') }} <a
-                        href="{{ url_for('flicket_bp.tickets_csv', status=status, department=department, category=category, content=content, user_id=user_id) }}"
-                        title="csv file">
-                    <i class="fas fa-file-csv"></i>
-                </a>.
-                </p>
-            </div>
+    <section class="fl-card">
+        <div class="fl-stack">
+            <h1 class="fl-title">{{ title }}</h1>
+            <p class="fl-muted">
+                {{ _('Download results as a csv file') }}
+                {{ ui.icon_action(url_for('flicket_bp.tickets_csv', status=status, department=department, category=category, content=content, user_id=user_id), 'arrow-download', _('csv file'), 'csv-download') }}
+            </p>
         </div>
+    </section>
 
-        <!-- search bar -->
-        <div class="row m-2 bg-white p-2 rounded border">
-            <form action=""
-                  class="form-inline col-12 p-0"
-                  enctype="multipart/form-data"
-                  method="post"
-                  name="search_ticket">
-                {{ form.hidden_tag() }}
-                <div class="col-md col-6 text-center">
-                    {{ form.department(class="form-control form-control-sm flicket-tickets-content p-0", id="department") }}
-                </div>
-                <div class="col-md col-6 text-center">
-                    {{ form.category(class="form-control form-control-sm flicket-tickets-content p-0", id="category") }}
-                </div>
-                <div class="col-md col-6 text-center">
-                    {{ form.status(class="form-control form-control-sm flicket-tickets-content p-0", id="status") }}
-                </div>
-                <div class="col-md col-6 text-center">
-                    {{ form.username(class="form-control form-control-sm flicket-tickets-content", placeholder="username", id="autocomplete-username",
-                        **{'data-toggle': "tool-tip",
-                        'title':'Filter results by user. Results will include all tickets user has either submitted or replied to.'}) }}
-                </div>
-                <div class="col-md col-12 text-center">
-                    {{ form.content(class="form-control form-control-sm flicket-tickets-content", placeholder="contents") }}
-                </div>
-                <div class="col-md col-6 text-center">
-                    <input class="btn btn-primary btn-sm" type="submit" value={{ _('search') }}>
-                </div>
-                <div class="col-md col-6 text-center">
-                    <button class="btn btn-link btn-sm border-primary">
-                        <a href="{{ url_for('flicket_bp.tickets') }}">reset</a>
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div class="row">
-            <!-- pagination -->
-            <div class="col m-2">
-                {% include('flicket_tickets_pag.html') %}
+    <section class="fl-card">
+        <form action="" class="fl-search" enctype="multipart/form-data" method="post" name="search_ticket">
+            {{ form.hidden_tag() }}
+            <div class="fl-grid">
+                {{ ui.select_field(form.department) }}
+                {{ ui.select_field(form.category) }}
+                {{ ui.select_field(form.status) }}
+                {{ ui.combobox_field(form.username, placeholder=_('username')) }}
+                {{ ui.text_field(form.content, placeholder=_('contents')) }}
             </div>
-
-            <!-- sort dropdown -->
-            <div class="col-auto m-2">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"
-                            data-display="static" aria-haspopup="true" aria-expanded="false">
-                        {{ _('Sort') }}
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item small{% if sort == 'priority_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='priority_desc', **request.args) }}">
-                            <i class="fas fa-sort-amount-down"></i>
-                            {{ _('Priority') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'priority' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='priority', **request.args) }}">
-                            <i class="fas fa-sort-amount-up"></i>
-                            {{ _('Priority') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'ticketid' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='ticketid', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Ticket ID') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'ticketid_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='ticketid_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Ticket ID') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'title' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='title', **request.args) }}">
-                            <i class="fas fa-sort-alpha-down"></i>
-                            {{ _('Title') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'title_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='title_desc', **request.args) }}">
-                            <i class="fas fa-sort-alpha-up"></i>
-                            {{ _('Title') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'addedby' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='addedby', **request.args) }}">
-                            <i class="fas fa-sort-alpha-down"></i>
-                            {{ _('Submitted By') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'addedby_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='addedby_desc', **request.args) }}">
-                            <i class="fas fa-sort-alpha-up"></i>
-                            {{ _('Submitted By') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'addedon' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='addedon', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Date') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'addedon_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='addedon_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Date') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'last_updated' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='last_updated', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Last Updated') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'last_updated_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='last_updated_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Last Updated') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'department_category' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='department_category', **request.args) }}">
-                            <i class="fas fa-sort-alpha-down"></i>
-                            {{ _('Department / Category') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'department_category_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='department_category_desc', **request.args) }}">
-                            <i class="fas fa-sort-alpha-up"></i>
-                            {{ _('Department / Category') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'status' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='status', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Status') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'status_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='status_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Status') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'assigned' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='assigned', **request.args) }}">
-                            <i class="fas fa-sort-alpha-down"></i>
-                            {{ _('Assigned') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'assigned_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='assigned_desc', **request.args) }}">
-                            <i class="fas fa-sort-alpha-up"></i>
-                            {{ _('Assigned') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'replies' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='replies', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Replies') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'replies_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='replies_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Replies') }}
-                        </a>
-
-                        <a class="dropdown-item small{% if sort == 'time' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='time', **request.args) }}">
-                            <i class="fas fa-sort-numeric-down"></i>
-                            {{ _('Hours') }}
-                        </a>
-                        <a class="dropdown-item small{% if sort == 'time_desc' %} active{% endif %}"
-                           href="{{ url_for(base_url, sort='time_desc', **request.args) }}">
-                            <i class="fas fa-sort-numeric-up"></i>
-                            {{ _('Hours') }}
-                        </a>
-                    </div>
-                </div>
+            <div class="fl-actions">
+                {{ ui.button(_('search'), type='submit', appearance='primary') }}
+                {{ ui.link_button(_('reset'), url_for('flicket_bp.tickets'), appearance='outline') }}
             </div>
-        </div>
+        </form>
+    </section>
 
-        <!-- search results -->
-        <div class="row">
-            <div class="col">
-                {% for t in tickets.items %}
-                    <div class="border rounded p-1 m-2 mb-3 bg-white">
+    <div class="fl-toolbar">
+        {% include 'flicket_tickets_pag.html' %}
 
-                        <div class="row m-1 pb-2 border-bottom {%- if t.current_status.status == 'Closed' %}
-                                        flicket-status-closed{% endif %}">
-                            <div class="col-md-1 col-6 order-1">
-                                <a href="{{ url_for('flicket_bp.ticket_view', ticket_id = t.id) }}"
-                                   title="ticket number">{{ t.id_zfill }}</a>
-                            </div>
-                            <div class="col-md-7 col-12 order-md-2 order-4" title="title">
-                                {{ t.title }}
-                            </div>
-                            <div class="col-md-2 col-6 order-2 flicket-tickets-content">
-                                Replies: {{ t.num_replies }}
-                            </div>
-                            <div class="col-md-2 col-6 order-3 flicket-tickets-content">
-                                Hours: {{ t.total_hours }}
-                            </div>
-                        </div>
-
-                        <div class="row m-1 {%- if t.current_status.status == 'Closed' %}
-                                        flicket-status-closed{% endif %}">
-                            <div class="col-md-1 col-6">
-                                <div class="flicket-tickets-title">
-                                    priority
-                                </div>
-                                <div class="flicket-tickets-content  {%- if t.current_status.status == 'Closed' %}
-                                        flicket-status-closed{% endif %}
-                                            {%- if t.ticket_priority.priority == 'high' %}
-                                        flicket-status-high
-                                            {% elif t.ticket_priority.priority == 'medium' %}
-                                        flicket-status-medium
-                                            {% elif t.ticket_priority.priority == 'low' %}
-                                        flicket-status-low
-                                            {% endif %}">
-                                    {{ t.ticket_priority.priority }}
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6">
-                                <div class="flicket-tickets-title">
-                                    {{ _('submitted by') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ t.user.name }}
-                                </div>
-                            </div>
-                            <div class="col-md-1 col-6">
-                                <div class="flicket-tickets-title">
-                                    {{ _('created') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ t.date_added.strftime('%Y-%m-%d') }}
-                                </div>
-                            </div>
-                            <div class="col-md-1 col-6">
-                                <div class="flicket-tickets-title" title=" {{ _('date of last reply, action, edit ...') }}">
-                                    {{ _('updated') }}
-                                </div>
-                                <div class="flicket-tickets-content" title=" {{ _('date of last reply, action, edit ...') }}">
-                                    {{ t.last_updated.strftime('%Y-%m-%d') }}
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="flicket-tickets-title">
-                                    {{ _('department / category') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ t.category.department.department }} / {{ t.category.category }}
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6">
-                                <div class="flicket-tickets-title">
-                                    {{ _('status') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ t.current_status.status }}
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6">
-                                <div class="flicket-tickets-title">
-                                    {{ _('assigned') }}
-                                </div>
-                                <div class="flicket-tickets-content">
-                                    {{ t.assigned.name }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <!-- pagination -->
-        <div class="row">
-            <div class="col m-2">
-                {% include('flicket_tickets_pag.html') %}
-            </div>
-        </div>
-
+        <fluent-menu>
+            <fluent-menu-button slot="trigger" appearance="outline">{{ ui.icon('arrow-sort', 'start') }}{{ _('Sort') }}</fluent-menu-button>
+            <fluent-menu-list>
+                {%- for key, label in sort_keys %}
+                <fluent-menu-item><a href="{{ url_for(base_url, sort=key, **request.args) }}"{% if sort == key %} class="is-current"{% endif %}>{{ ui.icon('arrow-sort-up') }} {{ label }}</a></fluent-menu-item>
+                <fluent-menu-item><a href="{{ url_for(base_url, sort=key ~ '_desc', **request.args) }}"{% if sort == key ~ '_desc' %} class="is-current"{% endif %}>{{ ui.icon('arrow-sort-down') }} {{ label }}</a></fluent-menu-item>
+                {%- endfor %}
+            </fluent-menu-list>
+        </fluent-menu>
     </div>
+
+    <div class="fl-table-wrap">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th scope="col">{{ _('ID') }}</th>
+                    <th scope="col">{{ _('Title') }}</th>
+                    <th scope="col">{{ _('priority') }}</th>
+                    <th scope="col">{{ _('status') }}</th>
+                    <th scope="col">{{ _('department / category') }}</th>
+                    <th scope="col">{{ _('submitted by') }}</th>
+                    <th scope="col">{{ _('assigned') }}</th>
+                    <th scope="col">{{ _('created') }}</th>
+                    <th scope="col">{{ _('updated') }}</th>
+                    <th scope="col">{{ _('Replies') }}</th>
+                    <th scope="col">{{ _('Hours') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%- for t in tickets.items %}
+                <tr{% if t.current_status.status == 'Closed' %} class="is-closed"{% endif %}>
+                    <td class="fl-nowrap"><a href="{{ url_for('flicket_bp.ticket_view', ticket_id=t.id) }}" title="{{ _('ticket number') }}">{{ t.id_zfill }}</a></td>
+                    <td class="fl-title-cell"><a href="{{ url_for('flicket_bp.ticket_view', ticket_id=t.id) }}">{{ t.title }}</a></td>
+                    <td>{{ ui.badge(t.ticket_priority.priority, priority_colors.get(t.ticket_priority.priority, 'subtle')) }}</td>
+                    <td>{{ ui.badge(t.current_status.status, status_colors.get(t.current_status.status, 'informative')) }}</td>
+                    <td class="fl-cell-small">{{ t.category.department.department }} / {{ t.category.category }}</td>
+                    <td>{{ t.user.name }}</td>
+                    <td>{{ t.assigned.name }}</td>
+                    <td class="fl-cell-small fl-nowrap">{{ t.date_added.strftime('%Y-%m-%d') }}</td>
+                    <td class="fl-cell-small fl-nowrap" title="{{ _('date of last reply, action, edit ...') }}">{{ t.last_updated.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ t.num_replies }}</td>
+                    <td>{{ t.total_hours }}</td>
+                </tr>
+                {%- endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'flicket_tickets_pag.html' %}
 {% endblock %}
